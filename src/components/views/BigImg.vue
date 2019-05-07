@@ -30,6 +30,21 @@ export default {
 .fade-leave-active {
   transform: translate3D(100%, 0, 0);
 }
+
+
+.img-view{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  align-items: center;
+}
 .img-view .img-layer {
   position: fixed;
   z-index: 999;
@@ -38,17 +53,11 @@ export default {
   background: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100%;
-  order: 1px solid #f00;
   overflow: hidden;
 }
 .img-view .img img {
-  height: 60%;
-  display: block;
-  position: absolute;
-  top: 20%;
-  left: 0;
-  right: 0;
-  margin: auto;
+  max-width:100%;
+  position: relative;
   z-index: 1000;
 }
 </style>
