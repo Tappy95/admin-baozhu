@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="用户id:">
+          <el-form-item label="用户ID:">
             <el-input :style="styleObject"  v-model="formInline.accountId" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
@@ -114,9 +114,9 @@
         <el-dialog title="反馈详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo" >
             <el-row>
-              <el-col :span="24">
-                <el-form-item label="用户id:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.accountId" auto-complete="off"  clearable>
+              <el-col :span="20">
+                <el-form-item label="用户ID:" :label-width="formLabelWidth" >
+                  <el-input :disabled="true"   v-model="formtwoInfo.accountId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>

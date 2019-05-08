@@ -234,7 +234,7 @@
                 <el-form-item label="公司简称:"
                               prop="name"
                               :label-width="formLabelWidth">
-                  <el-input v-model="formtwo.shortName"
+                  <el-input :disabled="true" v-model="formtwo.shortName"
                             auto-complete="off"
                             clearable
                             style="width: 400px"></el-input>

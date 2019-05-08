@@ -43,7 +43,7 @@
             </el-table-column>
             <el-table-column width="150px" prop="status" label="状态">
             </el-table-column>
-            <el-table-column width="150px" prop="downloadUrl" label="下载链接">
+            <el-table-column width="250px" prop="downloadUrl" label="下载链接">
             </el-table-column>
 
             <el-table-column fixed="right" label="操作" :width="optionW">
@@ -555,7 +555,7 @@
                   type: 'success',
                   message: '添加成功！'
                 })
-                this.accountList()
+                this.channelList()
               } else {
                 this.$message({
                   type: 'error',

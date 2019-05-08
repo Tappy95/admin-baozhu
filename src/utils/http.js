@@ -13,16 +13,17 @@ var ua = navigator.userAgent.toLowerCase();
 var ua2 = window.navigator.userAgent.toLowerCase();
 
 //本地
-var https='';
-var httpsTask='';
+// var https='';
 
 ////测试环境
-//  var https='http://192.168.1.193:8088';
-//  var httpsTask='http://192.168.1.193:8088';
+ var https='http://192.168.1.193:8088';
 
 //正式环境
-// var httpsTask='https://admin.bzlyplay.com';
 // var https='https://admin.bzlyplay.com';
+// var https='http://103.44.31.228:8088';
+
+
+
 
 axios.interceptors.request.use(
   config => {
@@ -91,13 +92,8 @@ axios.interceptors.response.use(
 )
 
 export function fetch(url,params={}){
-  if(url.indexOf("/task") != -1){
-    url=httpsTask+url;
-  }else{
-    url=https+url;
-  }
   return new Promise((resolve,reject) => {
-    axios.get(url,{
+    axios.get(https+url,{
       params:params,
     })
     .then(response => {
@@ -109,13 +105,8 @@ export function fetch(url,params={}){
   })
 }
  export function post(url,data = {}){
-  if(url.indexOf("/task") != -1){
-    url=httpsTask+url;
-  }else{
-    url=https+url;
-  }
    return new Promise((resolve,reject) => {
-     axios.post(url,data,{
+     axios.post(https+url,data,{
             emulateJSON: true
           }).then(response => {
             resolve(response.data);
@@ -126,13 +117,8 @@ export function fetch(url,params={}){
  }
 
 export function patch(url,data = {}){
-   if(url.indexOf("/task") != -1){
-     url=httpsTask+url;
-   }else{
-     url=https+url;
-   }
   return new Promise((resolve,reject) => {
-    axios.patch(url,data)
+    axios.patch(https+url,data)
          .then(response => {
            resolve(response.data);
          },err => {
@@ -142,13 +128,8 @@ export function patch(url,data = {}){
 }
 
 export function put(url,data = {}){
-   if(url.indexOf("/task") != -1){
-     url=httpsTask+url;
-   }else{
-     url=https+url;
-   }
   return new Promise((resolve,reject) => {
-          axios.post(url,data,{
+          axios.post(https+url,data,{
             emulateJSON: true
           }).then(response => {
            resolve(response.data);
@@ -159,13 +140,8 @@ export function put(url,data = {}){
 }
 
 export function del(url){
-   if(url.indexOf("/task") != -1){
-     url=httpsTask+url;
-   }else{
-     url=https+url;
-   }
   return new Promise((resolve,reject) => {
-          axios.delete(url).then(response => {
+          axios.delete(https+url).then(response => {
            resolve(response.data);
          },err => {
            reject(err)
@@ -184,13 +160,8 @@ export function delNew(url,data = {}){
 }
 
 export function uploadFile(url,data){
-  if(url.indexOf("/task") != -1){
-    url=httpsTask+url;
-  }else{
-    url=https+url;
-  }
   return new Promise((resolve,reject) => {
-          axios.post(url,data).then(response => {
+          axios.post(https+url,data).then(response => {
            resolve(response.data);
          },err => {
            reject(err)
@@ -199,13 +170,8 @@ export function uploadFile(url,data){
 }
 
 export function quit(url,data = {}){
-  if(url.indexOf("/task") != -1){
-    url=httpsTask+url;
-  }else{
-    url=https+url;
-  }
   return new Promise((resolve,reject) => {
-          axios.put(url,data,{
+          axios.put(https+url,data,{
             emulateJSON: true
           }).then(response => {
            resolve(response.data);

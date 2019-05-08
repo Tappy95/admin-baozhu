@@ -61,7 +61,15 @@ import LotteryType  from '@/components/views/LotteryType' //抽奖类型
 import LotteryGoods  from '@/components/views/LotteryGoods' //奖品类型
 import LotteryOrder  from '@/components/views/LotteryOrder' //中奖订单
 
+import OddsManage from '@/components/views/OddsManage' //赔率
+import PlayGroup from '@/components/views/PlayGroup' //玩法组
+import FeedBack from '@/components/views/FeedBack' //意见反馈
 
+import ChannelManage from '@/components/views/ChannelManage' //渠道
+import ResourceType from '@/components/views/ResourceType' //资源类型
+import ResourceCollect from '@/components/views/ResourceCollect' //资源采集
+
+import VersionManage from '@/components/views/VersionManage' //版本管理
 
 //
 Vue.use(Router)
@@ -278,6 +286,41 @@ const routes = [
         path: 'lottery-order',
         name: 'LotteryOrder',
         component: LotteryOrder
+      },
+      {
+        path: 'odds-manage',
+        name: 'OddsManage',
+        component: OddsManage
+      },
+      {
+        path: 'play-group',
+        name: 'PlayGroup',
+        component: PlayGroup
+      },
+      {
+        path: 'feed-back',
+        name: 'FeedBack',
+        component: FeedBack
+      },
+      {
+        path: 'channel-manage',
+        name: 'ChannelManage',
+        component: ChannelManage
+      },
+      {
+        path: 'resource-type',
+        name: 'ResourceType',
+        component: ResourceType
+      },
+      {
+        path: 'resource-collect',
+        name: 'ResourceCollect',
+        component: ResourceCollect
+      },
+      {
+        path: 'VersionManage',
+        name: 'VersionManage',
+        component: VersionManage
       },
     ]
   }

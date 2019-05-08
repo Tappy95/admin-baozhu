@@ -310,13 +310,7 @@
         this.$fetch('/api/appNotice/info', {
           id: id
         }).then(res => {
-          if(res.data != null ){
-          if (res.data.staffType == '2') {
-            this.isShow = false
-          } else {
-            this.isShow = true
-          }
-
+          if ((res.statusCode+"").startsWith("2")) {
           this.formtwo = res.data
         }
       })
@@ -338,13 +332,8 @@
         this.$fetch('/api/appNotice/info', {
           id: id
         }).then(res => {
-          if(res.data != null ){
-          if (res.data.staffType == '2') {
-            this.isShow = false
-          } else {
-            this.isShow = true
-          }          res.data.createrTime =  formatDate(new Date(res.data.createrTime), 'yyyy-MM-dd hh:mm:sss')
-
+          if ((res.statusCode+"").startsWith("2")) {
+          res.data.createrTime =  formatDate(new Date(res.data.createrTime), 'yyyy-MM-dd hh:mm:sss')
           this.formtwoInfo = res.data
         }
       })

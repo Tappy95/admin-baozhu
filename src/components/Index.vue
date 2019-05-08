@@ -11,6 +11,7 @@
 				</div>
 			</div>
 			<div class="index-side">
+        <!--<i class="fa fa-gamepad" aria-hidden="true"></i>-->
 				<el-menu class="el-menu-vertical"
 				  background-color="rgb(50, 65, 87)"
 				  text-color="#fff"

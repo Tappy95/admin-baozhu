@@ -5,7 +5,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/api': {
+        '/': {
             // target: 'http://192.168.1.193:8088',//测试环境小伟
           // target: 'http://192.168.1.226:8082/',//小明
           target: 'http://192.168.1.21:8088',//小伟
@@ -13,8 +13,8 @@ module.exports = {
             pathRewrite: {
                 //'^/api': '/'
             }
-        },
-      '/task': {
+        }
+      /*'/task': {
          // target: 'http://192.168.1.193:8088',//测试环境
         // target: 'http://192.168.1.226:8085/',//小明
         target: 'http://192.168.1.21:8088',//小伟
@@ -22,7 +22,7 @@ module.exports = {
         pathRewrite: {
           // '^/task': '/'
         }
-      }
+      }*/
     },
 
     host: '0.0.0.0',
