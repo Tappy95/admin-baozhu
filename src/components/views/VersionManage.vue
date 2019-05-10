@@ -72,6 +72,15 @@
               </el-col>
 
               <el-col :span="12">
+                <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.openNoviceTask" placeholder="">
+                    <el-option label="开启" value="1"></el-option>
+                    <el-option label="关闭" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
                 <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.needUpdate" placeholder="">
                     <el-option label="需要" value="1"></el-option>
@@ -79,6 +88,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="22">
                 <el-form-item v-if="form.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
                   <el-input   min="0" v-model="form.updateUrl" auto-complete="off"  clearable>
@@ -125,6 +135,15 @@
               </el-col>
 
               <el-col :span="12">
+                <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.openNoviceTask" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
                 <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.needUpdate" placeholder="">
                     <el-option label="需要" :value="1"></el-option>
@@ -132,6 +151,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="22">
                 <el-form-item v-if="formtwo.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
                   <el-input   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
@@ -176,6 +196,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.openNoviceTask" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="创建时间:" prop="status" :label-width="formLabelWidth">
                   <el-input :disabled="true" :style="styleObject"  min="0" v-model="formtwoInfo.createTime" auto-complete="off"  clearable>
@@ -196,7 +226,6 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
 
             </el-row>
           </el-form>
@@ -238,6 +267,11 @@
           updateUrl:'', // 更新地址
     },
         rules: {
+          openNoviceTask: [{
+            required: true,
+            message: '请选择是否开启新手引导',
+            trigger: 'change'
+          }],
           needUpdate: [{
             required: true,
             message: '请选择是否需要更新',

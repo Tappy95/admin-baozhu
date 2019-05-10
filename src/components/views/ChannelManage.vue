@@ -129,12 +129,6 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="20">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
-                  <el-input  v-model="form.downloadUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
 
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
@@ -144,6 +138,15 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="20">
+                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
+                  <el-input  v-model="form.downloadUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -206,13 +209,6 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="20">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
-                  <el-input  v-model="formtwo.downloadUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
@@ -221,6 +217,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+
+              <el-col :span="20">
+                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
+                  <el-input  v-model="formtwo.downloadUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -289,7 +295,6 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.status" placeholder="">

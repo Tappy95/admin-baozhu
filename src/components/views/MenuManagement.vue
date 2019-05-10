@@ -20,21 +20,21 @@
           <el-table :data="tableData" height="580">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column prop="icon" label="小图标">
+            <el-table-column min-width="120px" prop="icon" label="小图标">
             </el-table-column>
-            <el-table-column prop="menuName" label="菜单名称">
-            </el-table-column>
-
-            <el-table-column prop="menuUrl" label="菜单访问地址">
+            <el-table-column min-width="150px" prop="menuName" label="菜单名称">
             </el-table-column>
 
-            <el-table-column prop="fileName" label="文件名">
+            <el-table-column min-width="170px"  prop="menuUrl" label="菜单访问地址">
             </el-table-column>
 
-            <el-table-column prop="parentName" label="父级名称">
+            <el-table-column min-width="170px" prop="fileName" label="文件名">
             </el-table-column>
 
-            <el-table-column prop="orderId" label="排序">
+            <el-table-column min-width="150px" prop="parentName" label="父级名称">
+            </el-table-column>
+
+            <el-table-column min-width="120px" prop="orderId" label="排序">
             </el-table-column>
 
             <el-table-column prop="createTime" width="200px" label="创建时间" :formatter="dateFormat">
@@ -55,13 +55,13 @@
           <el-button class="but" @click="butLoad()">添加</el-button>
           <template>
             <el-table :data="tableData1" height="500" :visible.sync="dialogFormVisibleBtn">
-              <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+              <el-table-column label="序号" type="index" :index="indexMethod" width='100'>
               </el-table-column>
               <el-table-column prop="btnName" label="按钮名称">
               </el-table-column>
               <el-table-column prop="btnCode" label="按钮代码">
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="200">
+              <el-table-column fixed="right" label="操作" width="75px">
                 <template slot-scope="scope">
                   <el-button  size="mini" @click="butDelete(scope.row.id)">删除</el-button>
                 </template>
@@ -75,24 +75,24 @@
         </el-dialog>
         <el-dialog title="添加菜单" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="小图标:" :label-width="formLabelWidth"  width="217px" prop="icon">
-              <el-input v-model="form.icon" style="width: 217px" auto-complete="off"  clearable>
+            <el-form-item label="小图标:" :label-width="formLabelWidth"  width="217px">
+              <el-input v-model="form.icon"  auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="菜单名称:" :label-width="formLabelWidth"  width="217px" prop="menuName">
-              <el-input v-model="form.menuName" style="width: 217px" auto-complete="off"  clearable>
+              <el-input v-model="form.menuName"  auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="菜单url:" :label-width="formLabelWidth"  width="217px" prop="menuUrl">
-              <el-input v-model="form.menuUrl" style="width: 217px" auto-complete="off"  clearable>
+              <el-input v-model="form.menuUrl"  auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="文件名:" :label-width="formLabelWidth"  width="217px" prop="fileName">
-              <el-input v-model="form.fileName" style="width: 217px" auto-complete="off"  clearable>
+              <el-input v-model="form.fileName"  auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="排序:" :label-width="formLabelWidth"  width="217px" prop="orderId">
-              <el-input min="0" type="number" v-model="form.orderId" style="width: 217px" auto-complete="off"  clearable>
+              <el-input min="0" type="number" v-model="form.orderId" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
            <el-form-item label="父级:" :label-width="formLabelWidth" prop="parentId">
@@ -125,7 +125,7 @@
               <el-input  v-model="formtwo.menuUrl" auto-complete="off" style="" clearable></el-input>
             </el-form-item>
             <el-form-item label="文件名:" :label-width="formLabelWidth"  width="217px" prop="fileName">
-              <el-input v-model="formtwo.fileName" style="width: 217px" auto-complete="off"  clearable>
+              <el-input v-model="formtwo.fileName"  auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="排序:" :label-width="formLabelWidth">
@@ -209,7 +209,7 @@
           }],
           fileName:[{
             required: true,
-            message: '请输入排序值',
+            message: '请输入文件名',
             trigger: 'blur'
           }],
           parentId: [{

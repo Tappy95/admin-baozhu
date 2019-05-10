@@ -23,11 +23,11 @@
             <el-table-column fixed="left" min-width="150px"  prop="lotteryTypeName" label="彩种分类">
             </el-table-column>
 
-            <el-table-column min-width="150px" width="120px" prop="lotteryGrabName"  label="彩种组">
+            <el-table-column min-width="150px"  prop="lotteryGrabName"  label="彩种组">
             </el-table-column>
 
-            <el-table-column min-width="150px" prop="lotteryPlayedName" label="彩种模版">
-            </el-table-column>
+            <!--<el-table-column min-width="150px" prop="lotteryPlayedName" label="彩种模版">-->
+            <!--</el-table-column>-->
 
             <el-table-column min-width="150px" prop="lotteryGroupName" label="彩种采集">
             </el-table-column>
@@ -70,12 +70,12 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
-              <el-form-item label="彩种模版:" prop="lotteryPlayedTplId"  :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  type="number" min="0" v-model="form.lotteryPlayedTplId" auto-complete="off"  clearable>
-                  </el-input>
-              </el-form-item>
-              </el-col>
+              <!--<el-col :span="12">-->
+              <!--<el-form-item label="彩种模版:" prop="lotteryPlayedTplId"  :label-width="formLabelWidth">-->
+                  <!--<el-input :style="styleObject"  type="number" min="0" v-model="form.lotteryPlayedTplId" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+              <!--</el-form-item>-->
+              <!--</el-col>-->
 
               <el-col :span="12">
                 <el-form-item label="kjFunName:" :label-width="formLabelWidth" prop="kjFunName">
@@ -129,7 +129,7 @@
               </el-col>
               <el-col :span="20">
                 <el-form-item  label="开奖表后缀:" prop="kjName" :label-width="formLabelWidth">
-                  <el-input aria-placeholder="该彩种所对应的开奖表后缀，仅适用信用玩法"  v-model="form.kjName" auto-complete="off"  clearable>
+                  <el-input placeholder="该彩种所对应的开奖表后缀，仅适用信用玩法"  v-model="form.kjName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -171,12 +171,12 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="彩种模版:" prop="lotteryPlayedTplId"  :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  type="number" min="0" v-model="formtwo.lotteryPlayedTplId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="彩种模版:" prop="lotteryPlayedTplId"  :label-width="formLabelWidth">-->
+                  <!--<el-input :style="styleObject"  type="number" min="0" v-model="formtwo.lotteryPlayedTplId" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
 
               <el-col :span="12">
                 <el-form-item label="kjFunName:" :label-width="formLabelWidth" prop="kjFunName">
@@ -230,7 +230,7 @@
               </el-col>
               <el-col :span="20">
                 <el-form-item  label="开奖表后缀:" prop="kjName" :label-width="formLabelWidth">
-                  <el-input aria-placeholder="该彩种所对应的开奖表后缀，仅适用信用玩法"  v-model="formtwo.kjName" auto-complete="off"  clearable>
+                  <el-input placeholder="该彩种所对应的开奖表后缀，仅适用信用玩法"  v-model="formtwo.kjName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -272,12 +272,12 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="彩种模版:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :disabled="true" type="number" min="0" v-model="formtwoInfo.lotteryPlayedTplId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="彩种模版:" :label-width="formLabelWidth">-->
+                  <!--<el-input :style="styleObject" :disabled="true" type="number" min="0" v-model="formtwoInfo.lotteryPlayedTplId" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
 
               <el-col :span="12">
                 <el-form-item label="kjFunName:" :label-width="formLabelWidth" >
@@ -331,7 +331,7 @@
               </el-col>
               <el-col :span="20">
                 <el-form-item  label="开奖表后缀:" :label-width="formLabelWidth">
-                  <el-input :disabled="true" aria-placeholder="该彩种所对应的开奖表后缀，仅适用信用玩法"  v-model="formtwoInfo.kjName" auto-complete="off"  clearable>
+                  <el-input :disabled="true" placeholder="该彩种所对应的开奖表后缀，仅适用信用玩法"  v-model="formtwoInfo.kjName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -468,6 +468,13 @@
       this.lotteryGroup();
       //彩种采集
       this.lotteryGrab();
+    },
+    filters: {
+      tirmFullData(data) {
+        console.log(data);
+        console.log(data.replace(/\s/g, ''));
+        return data.replace(/\s/g, '');
+      }
     },
     methods: {
       //选择彩种玩法组id
