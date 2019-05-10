@@ -70,6 +70,9 @@ import ResourceType from '@/components/views/ResourceType' //资源类型
 import ResourceCollect from '@/components/views/ResourceCollect' //资源采集
 
 import VersionManage from '@/components/views/VersionManage' //版本管理
+import ResourceList from '@/components/views/ResourceList' //资源列表
+import LotteryResult from '@/components/views/LotteryResult' //开奖结果
+
 
 //
 Vue.use(Router)
@@ -318,9 +321,19 @@ const routes = [
         component: ResourceCollect
       },
       {
-        path: 'VersionManage',
+        path: 'version-manage',
         name: 'VersionManage',
         component: VersionManage
+      },
+      {
+        path: 'resource-list',
+        name: 'ResourceList',
+        component: ResourceList
+      },
+      {
+        path: 'lottery-result',
+        name: 'LotteryResult',
+        component: LotteryResult
       },
     ]
   }

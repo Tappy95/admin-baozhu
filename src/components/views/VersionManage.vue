@@ -13,17 +13,21 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column prop="channelCode" label="渠道标识">
+            <el-table-column min-width="200px" fixed="left" prop="channelCode" label="渠道标识">
             </el-table-column>
-            <el-table-column prop="versionNo" label="版本号">
+            <el-table-column min-width="150px" prop="versionNo" label="版本号">
             </el-table-column>
-            <el-table-column prop="open28" label="发布状态">
+            <el-table-column min-width="100px" prop="open28" label="发布状态">
             </el-table-column>
-            <el-table-column prop="status" label="状态">
+            <el-table-column min-width="120px" prop="needUpdate" label="是否需要更新">
             </el-table-column>
-            <el-table-column prop="createTime" :formatter="dateFormat" label="创建时间">
+            <el-table-column min-width="250px" prop="updateUrl" label="更新地址">
+            </el-table-column>
+            <el-table-column min-width="120px" prop="status" label="状态">
+            </el-table-column>
+            <el-table-column min-width="150px" prop="createTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
@@ -49,6 +53,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
                 <el-form-item label="是否开启28:" prop="open28" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.open28" placeholder="">
@@ -63,6 +68,21 @@
                     <el-option label="启用" value="1"></el-option>
                     <el-option label="停用" value="2"></el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.needUpdate" placeholder="">
+                    <el-option label="需要" value="1"></el-option>
+                    <el-option label="不需要" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item v-if="form.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                  <el-input   min="0" v-model="form.updateUrl" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -101,6 +121,21 @@
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.needUpdate" placeholder="">
+                    <el-option label="需要" :value="1"></el-option>
+                    <el-option label="不需要" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item v-if="formtwo.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                  <el-input   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -147,6 +182,22 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+              <el-col :span="12">
+                <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.needUpdate" placeholder="">
+                    <el-option label="需要" :value="1"></el-option>
+                    <el-option label="不需要" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item v-if="formtwoInfo.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                  <el-input :disabled="true" min="0" v-model="formtwoInfo.updateUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -183,8 +234,15 @@
         dialogTableDetail:false,
         formtwoInfo:{},
         form: {
-        },
+          needUpdate:2, // 是否需要更新（1-需要 2-不需要）
+          updateUrl:'', // 更新地址
+    },
         rules: {
+          needUpdate: [{
+            required: true,
+            message: '请选择是否需要更新',
+            trigger: 'change'
+          }],
           channelCode: [{
             required: true,
             message: '请输入渠道标识',
@@ -284,9 +342,12 @@
               } else {
                 res.data.list[i].status = '已停用'
               }
-
+              if(res.data.list[i].needUpdate == '1') {
+                res.data.list[i].needUpdate = '需要'
+              } else {
+                res.data.list[i].needUpdate = '不需要'
+              }
             }
-
             this.tableData = res.data.list
             this.totalCount = res.data.total
           } else {
@@ -376,6 +437,9 @@
         })
       },
       update(formtwo) {
+        if (this.formtwo.needUpdate==2){
+          this.formtwo.updateUrl=''
+        }
         this.$put('/api/pVersion/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({

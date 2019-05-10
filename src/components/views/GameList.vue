@@ -41,10 +41,11 @@
             <el-table-column prop="status" label="状态">
             </el-table-column>
 
-            <el-table-column prop="status" width="75px" label="操作">
+            <el-table-column prop="status"  label="操作" :width="optionW">
             <template slot-scope="scope">
-              <el-button size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status=='正常'">下架</el-button>
-              <el-button size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status=='下架'">上架</el-button>
+              <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
+              <el-button size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status=='正常' && UpperShelf">下架</el-button>
+              <el-button size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status=='下架' && UpperShelf">上架</el-button>
             </template>
           </el-table-column>
           </el-table>
@@ -70,18 +71,47 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
-        message:{}
+        message:{},
+        menuId:'',
+        del:false,
+        UpperShelf:false,
+        optionW:'0px',
       }
     },
     created() {
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'del') {
+                this.optionW = '75px';
+                this.del=true;
+              }
+              if(res.data[i].btnCode == 'UpperShelf') {
+                this.optionW = '75px';
+                this.UpperShelf=true;
+              }
+
+              if( this.del && this.UpperShelf) {
+                this.optionW = '150px';
+
+              }
+
+
+            }
+          } else {
+          }
+        })
+      },
+
       indexMethod(index) {
         return index * 1 + 1
       },
@@ -137,6 +167,32 @@
             duration: 3000
           })
          }
+        })
+      },
+
+      Delete(id) {
+        this.$confirm('此操作将永久删除游戏, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消删除' })
+          })
+      },
+      delData(id) {
+        this.$fetch('/api/tpGame/remove', {
+          id: id
+        }).then(res => {
+          if ((res.statusCode + "").startsWith("2")) {
+            this.$message({type: 'success', message: '删除成功！'})
+            this.accountList()
+          } else {
+          }
         })
       },
 

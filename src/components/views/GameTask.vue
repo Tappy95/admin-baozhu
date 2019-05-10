@@ -29,61 +29,124 @@
         </el-form>
       </div>
       <div>
-        <el-dialog title="添加任务" width="700px"
+        <el-dialog title="添加任务" width="800px"
                    :visible.sync="dialogFormVisible">
           <el-form :model="form"
                    :rules="rules"
                    ref="form">
             <div class="form">
-              <el-form-item label="任务名称:"
-                            prop="taskName"
-                            :label-width="formLabelWidth">
-                <el-input v-model="form.taskName"
-                          auto-complete="off"
-                          clearable
-                          style="width: 324px;"></el-input>
-              </el-form-item>
-              <el-form-item label="任务类型:"
-                            prop="taskType"
-                            :label-width="formLabelWidth">
-                <el-select style="width: 224px;"  v-model="form.taskType" placeholder="">
-                  <el-option  v-for="(item,index) in tasks" :label="item.typeName" :value="item.id" :key="index"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="奖励数量:"
-                            prop="reward"
-                            :label-width="formLabelWidth">
-                <el-input min="0" type="number" v-model="form.reward"
-                          auto-complete="off"
-                          clearable
-                          style="width: 224px;"></el-input>
-              </el-form-item>
-              <el-form-item label="奖励单位:"
-                            prop="rewardUnit"
-                            :label-width="formLabelWidth">
-                <el-select  style="width: 224px;" v-model="form.rewardUnit" placeholder="">
-                  <el-option label="金币" value="1"></el-option>
-                  <el-option label="金猪" value="2"></el-option>
-                  <el-option label="金币%" value="3"></el-option>
-                  <el-option label="金猪%" value="4"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="描述:"
-                            prop="remark"
-                            :label-width="formLabelWidth">
-                <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remark"
-                          auto-complete="off"
-                          clearable
-                          style="width: 324px;"></el-input>
-              </el-form-item>
-              <el-form-item label="状态:"
-                            prop="status"
-                            :label-width="formLabelWidth">
-                <el-select  style="width: 224px;" v-model="form.status" placeholder="">
-                  <el-option label="启用" value="1"></el-option>
-                  <el-option label="禁用" value="2"></el-option>
-                </el-select>
-              </el-form-item>
+              <el-row>
+                <el-col :span="23">
+                  <el-form-item label="任务名称:"
+                                prop="taskName"
+                                :label-width="formLabelWidth">
+                    <el-input v-model="form.taskName"
+                              auto-complete="off"
+                              clearable
+                             ></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="任务类型:"
+                                prop="taskType"
+                                :label-width="formLabelWidth">
+                    <el-select :style="styleObject"  v-model="form.taskType" placeholder="">
+                      <el-option  v-for="(item,index) in tasks" :label="item.typeName" :value="item.id" :key="index"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="排序:"
+
+                                :label-width="formLabelWidth">
+                    <el-input min="0" type="number" v-model="form.sort"
+                              auto-complete="off"
+                              clearable
+                              :style="styleObject"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="奖励数量:"
+                                prop="reward"
+                                :label-width="formLabelWidth">
+                    <el-input min="0" type="number" v-model="form.reward"
+                              auto-complete="off"
+                              clearable
+                              :style="styleObject"></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="奖励单位:"
+                                prop="rewardUnit"
+                                :label-width="formLabelWidth">
+                    <el-select  :style="styleObject" v-model="form.rewardUnit" placeholder="">
+                      <el-option label="金币" value="1"></el-option>
+                      <el-option label="金猪" value="2"></el-option>
+                      <el-option label="金币%" value="3"></el-option>
+                      <el-option label="金猪%" value="4"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="状态:"
+                                prop="status"
+                                :label-width="formLabelWidth">
+                    <el-select :style="styleObject"  v-model="form.status" placeholder="">
+                      <el-option label="启用" value="1"></el-option>
+                      <el-option label="禁用" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="图标类型:"
+                                :label-width="formLabelWidth">
+                    <el-select :style="styleObject"  v-model="form.iconType" placeholder="">
+                      <el-option label="无" value="1"></el-option>
+                      <el-option label="金猪" value="2"></el-option>
+                      <el-option label="金币" value="3"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="20">
+                  <el-form-item label="描述:"
+                                prop="remark"
+                                :label-width="formLabelWidth">
+                    <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remark"
+                              auto-complete="off"
+                              clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="20">
+                  <el-form-item label="备注:"
+                                :label-width="formLabelWidth">
+                    <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remarks"
+                              auto-complete="off"
+                              clearable></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="任务图片:"
+                                :label-width="formLabelWidth">
+                    <el-upload class="bannerAvatar-uploader"
+                               action="/api/upload"
+                               :data="uploadData"
+                               :show-file-list="false"
+                               :on-success="handleAvatarSuccess"
+                               :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </div>
           </el-form>
           <div slot="footer"
@@ -147,64 +210,119 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog title="修改任务" width="700px"
+        <el-dialog title="修改任务" width="800px"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
+            <el-row>
+              <el-col :span="23">
+                <el-form-item label="任务名称:"
+                              prop="taskName"
+                              :label-width="formLabelWidth">
+                  <el-input v-model="formtwo.taskName"
+                            auto-complete="off"
+                            clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="任务类型:"
+                              prop="taskType"
+                              :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="formtwo.taskType" placeholder="">
+                    <el-option  v-for="(item,index) in tasks" :label="item.typeName" :value="item.id" :key="index"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="排序:"
+                              :label-width="formLabelWidth">
+                  <el-input min="0" type="number" v-model="formtwo.sort"
+                            auto-complete="off"
+                            clearable
+                            :style="styleObject"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="奖励数量:"
+                              prop="reward"
+                              :label-width="formLabelWidth">
+                  <el-input min="0" type="number" v-model="formtwo.reward"
+                            auto-complete="off"
+                            clearable
+                            :style="styleObject"></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="任务名称:"
-                          prop="taskName"
-                          :label-width="formLabelWidth">
-              <el-input v-model="formtwo.taskName"
-                        auto-complete="off"
-                        clearable
-                        style="width: 324px;"></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="奖励单位:"
+                              prop="rewardUnit"
+                              :label-width="formLabelWidth">
+                  <el-select  :style="styleObject" v-model="formtwo.rewardUnit" placeholder="">
+                    <el-option label="金币" :value="1"></el-option>
+                    <el-option label="金猪" :value="2"></el-option>
+                    <el-option label="金币%" :value="3"></el-option>
+                    <el-option label="金猪%" :value="4"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="状态:"
+                              prop="status"
+                              :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="formtwo.status" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="禁用" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="任务类型:"
-                          prop="taskType"
-                          :label-width="formLabelWidth">
-              <el-select style="width: 224px;"  v-model="formtwo.taskType" placeholder="">
-                <el-option  v-for="(item,index) in tasks" :label="item.typeName" :value="item.id" :key="index"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="图标类型:"
+                              :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="formtwo.iconType" placeholder="">
+                    <el-option label="无" :value="1"></el-option>
+                    <el-option label="金猪" :value="2"></el-option>
+                    <el-option label="金币" :value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="奖励数量:"
-                          prop="reward"
-                          :label-width="formLabelWidth">
-              <el-input min="0" type="number" v-model="formtwo.reward"
-                        auto-complete="off"
-                        clearable
-                        style="width: 224px;"></el-input>
-            </el-form-item>
+              <el-col :span="20">
+                <el-form-item label="描述:"
+                              prop="remark"
+                              :label-width="formLabelWidth">
+                  <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
+                            auto-complete="off"
+                            clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="备注:"
+                              :label-width="formLabelWidth">
+                  <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remarks"
+                            auto-complete="off"
+                            clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="奖励单位:"
-                          prop="rewardUnit"
-                          :label-width="formLabelWidth">
-              <el-select  style="width: 224px;" v-model="formtwo.rewardUnit" placeholder="">
-                <el-option label="金币" :value="1"></el-option>
-                <el-option label="金猪" :value="2"></el-option>
-                <el-option label="金币%" :value="3"></el-option>
-                <el-option label="金猪%" :value="4"></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item label="描述:"
-                          prop="remark"
-                          :label-width="formLabelWidth">
-              <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
-                        auto-complete="off"
-                        clearable
-                        style="width: 324px;"></el-input>
-            </el-form-item>
-
-            <el-form-item label="状态:"
-                          prop="status"
-                          :label-width="formLabelWidth">
-              <el-select  style="width: 224px;" v-model="formtwo.status" placeholder="">
-                <el-option label="启用" :value="1"></el-option>
-                <el-option label="禁用" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="任务图片:"
+                              :label-width="formLabelWidth">
+                  <el-upload class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl"
+                         :src="imageUrl"
+                         class="avatar">
+                    <i v-else
+                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer"
                class="dialog-footer">
@@ -215,31 +333,52 @@
         </el-dialog>
         <el-dialog title="任务详情" :visible.sync="dialog" width="800px">
           <el-form>
+
             <el-row>
-              <el-col :span="24" style="margin-bottom: 10px">
-                <el-form-item label="任务名称:" :label-width="formLabelWidth">
-                  <el-input :value="formtwo.taskName" style="width: 324px;" :disabled="true" auto-complete="off" clearable></el-input>
+              <el-col :span="23">
+                <el-form-item label="任务名称:"
+                              prop="taskName"
+                              :label-width="formLabelWidth">
+                  <el-input :disabled="true" v-model="formtwo.taskName"
+                            auto-complete="off"
+                            clearable
+                  ></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12">
                 <el-form-item label="任务类型:"
                               prop="taskType"
                               :label-width="formLabelWidth">
-                  <el-select :disabled="true" style="width: 224px;"  v-model="formtwo.taskType" placeholder="">
+                  <el-select :disabled="true" :style="styleObject"  v-model="formtwo.taskType" placeholder="">
                     <el-option  v-for="(item,index) in tasks" :label="item.typeName" :value="item.id" :key="index"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
-                <el-form-item label="奖励数量:" :label-width="formLabelWidth">
-                  <el-input :value="formtwo.reward" :disabled="true" auto-complete="off" style="width: 196px;" clearable></el-input>
+              <el-col :span="12">
+                <el-form-item label="排序:"
+                              :label-width="formLabelWidth">
+                  <el-input :disabled="true" min="0" type="number" v-model="formtwo.sort"
+                            auto-complete="off"
+                            clearable
+                            :style="styleObject"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="12">
+                <el-form-item label="奖励数量:"
+                              prop="reward"
+                              :label-width="formLabelWidth">
+                  <el-input :disabled="true" min="0" type="number" v-model="formtwo.reward"
+                            auto-complete="off"
+                            clearable
+                            :style="styleObject"></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
                 <el-form-item label="奖励单位:"
                               prop="rewardUnit"
                               :label-width="formLabelWidth">
-                  <el-select :disabled="true"  style="width: 224px;" v-model="formtwo.rewardUnit" placeholder="">
+                  <el-select :disabled="true"  :style="styleObject" v-model="formtwo.rewardUnit" placeholder="">
                     <el-option label="金币" :value="1"></el-option>
                     <el-option label="金猪" :value="2"></el-option>
                     <el-option label="金币%" :value="3"></el-option>
@@ -247,32 +386,72 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="12">
                 <el-form-item label="状态:"
                               prop="status"
                               :label-width="formLabelWidth">
-                  <el-select :disabled="true" style="width: 196px;" v-model="formtwo.status" placeholder="">
+                  <el-select  :disabled="true" :style="styleObject"  v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="禁用" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12">
+                <el-form-item label="图标类型:"
+                              :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject"  v-model="formtwo.iconType" placeholder="">
+                    <el-option label="无" :value="1"></el-option>
+                    <el-option label="金猪" :value="2"></el-option>
+                    <el-option label="金币" :value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="创建时间:"  :label-width="formLabelWidth">
-                  <el-input :value="formtwo.createTime"  :formatter="dateFormat" :disabled="true" auto-complete="off" style="width: 196px;" clearable></el-input>
+                <el-input :value="formtwo.createTime | formatDate"   :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
+                </el-form-item>
+                </el-col>
+              </el-col>
+
+              <el-col :span="20">
+                <el-form-item label="描述:"
+                              prop="remark"
+                              :label-width="formLabelWidth">
+                  <el-input :disabled="true" type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
+                            auto-complete="off"
+                            clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="备注:"
+                              :label-width="formLabelWidth">
+                  <el-input :disabled="true" type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remarks"
+                            auto-complete="off"
+                            clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="任务图片:"
+                              :label-width="formLabelWidth">
+                  <el-upload :disabled="true" class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl"
+                         :src="imageUrl"
+                         class="avatar">
+                    <i v-else
+                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                  </el-upload>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item label="描述:"
-                          prop="remark"
-                          :label-width="formLabelWidth">
-              <el-input type="textarea" :disabled="true" :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
-                        auto-complete="off"
-                        clearable
-                        style="width: 324px;"></el-input>
-            </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialog = false">取 消</el-button>
@@ -300,6 +479,11 @@
     name: 'GameTask',
     data() {
       return {
+        uploadData:{},
+        imageUrl:'',
+        styleObject: {
+          width: '200px',
+        },
         batchSendName:'',
         formsendPhone:'',
         batchSend:'',
@@ -364,12 +548,35 @@
       'big-img': BigImg
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
-      this.queryTaskType()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
+      this.queryTaskType();
+      this.uploadData={
+        token:getSession("token")
+      }
+    },
+    //过滤器
+    versionNo: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm:sss');
+      }
     },
     methods: {
+      clickImg(e) {
+        this.showImg = true
+        this.imgSrc = e.currentTarget.src
+      },
+      viewImg() {
+        this.showImg = false
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl=res.data
+      },
+      beforeAvatarUpload(file) {
+
+      },
       sendTap(id,name){
         this.dialogSend =true;
         this.formsend.id = id;
@@ -428,17 +635,17 @@
             if(res.data[i].btnCode == 'upd') {
               this.upd=true;
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '150px'
             }
             if(res.data[i].btnCode == 'del') {
               this.del=true;
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '150px';
             }
 
             if (this.upd && this.del) {
               this.powerTrue =true;
-              this.optionW = '230px'
+              this.optionW = '220px';
             }
           }
         } else {
@@ -450,10 +657,10 @@
         this.imgSrc = e.currentTarget.src
       },
       viewImg() {
-        this.showImg = false
+        this.showImg = false;
       },
       handleAvatarSuccess(res, file) {
-        this.imageUrl=res.data
+        this.imageUrl=res.data;
       },
       beforeAvatarUpload(file) {
 
@@ -514,28 +721,30 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       //清空添加里的各項
       load() {
+        this.formInline ={};
         this.persent='';
-        this.dialogFormVisible = true
-        this.form = {}
-        this.imageUrl=''
+        this.dialogFormVisible = true;
+        this.form = {};
+        this.imageUrl='';
         this.taskTypeName = [];
         this.taskTypes='';
-        this.queryTaskType()
+        this.queryTaskType();
       },
       addBtn(form) {
+         this.form.taskImg = this.imageUrl;
         this.$refs.form.validate(valid => {
           if (valid) {
             this.$post('/api/mTaskInfo/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-              this.dialogFormVisible = false
-              this.$message({ type: 'success', message: '添加成功！' })
-              this.accountList()
+              this.dialogFormVisible = false;
+              this.$message({ type: 'success', message: '添加成功！' });
+              this.accountList();
             }
           })
           } else {
@@ -562,7 +771,7 @@
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
           this.$message({ type: 'success', message: '删除成功！' })
-          this.accountList()
+          this.accountList();
         } else {
         }
       })
@@ -580,13 +789,15 @@
           if ((res.statusCode+"").startsWith("2")) {
           this.formtwo = res.data;
           this.queryTaskType();
+            this.imageUrl = res.data.taskImg
           if (this.dialog){
-            this.formtwo.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
+            // this.formtwo.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
           }
         }
       })
       },
       update(formtwo) {
+         this.formtwo.taskImg = this.imageUrl;
         this.$put('/api/mTaskInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
           this.$message({ type: 'success', message: '修改成功！' })
@@ -657,6 +868,6 @@
   }
   .form {
     overflow-y: scroll;
-    height: 500px;
+    height: auto;
   }
 </style>

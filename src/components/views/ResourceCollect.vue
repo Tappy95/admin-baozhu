@@ -7,10 +7,9 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="彩种:" prop="isOfficial">
-            <el-select :style="styleObject" v-model="formInline.lotteryPlayedTplId" placeholder="">
-              <el-option v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryPlayedTplId"></el-option>
-            </el-select>
+          <el-form-item label="彩种名称:">
+            <el-input  v-model="formInline.lotteryGroupName" auto-complete="off"  clearable>
+            </el-input>
           </el-form-item>
           <el-button @click="search()">查询</el-button>
           <el-button @click="load()" v-if="add">添加</el-button>
@@ -21,11 +20,13 @@
           <el-table :data="tableData" height="580">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
-            <el-table-column  prop="lotteryGroupName" label="彩种名称">
+            <el-table-column min-width="150px"  prop="lotteryGroupName" label="彩种名称">
             </el-table-column>
             <el-table-column width="150px" prop="name"  label="名称">
             </el-table-column>
             <el-table-column width="250px" prop="grabFunName" label="采集方法名">
+            </el-table-column>
+            <el-table-column width="150px" prop="lotteryGrabId" label="采集id">
             </el-table-column>
             <el-table-column width="250px" prop="url" label="采集地址">
             </el-table-column>
@@ -37,15 +38,13 @@
             </el-table-column>
             <el-table-column width="150px" prop="type" label="类型">
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" @click="Delete(scope.row.id)" v-if="del && scope.row.isDelete=='未删除'">删除</el-button>
+                <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
                 <el-button @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
                 <el-button @click="getOne(scope.row.id)" size="mini">详情</el-button>
               </template>
             </el-table-column>
-
           </el-table>
         </template>
         <el-dialog title="添加资源采集" :visible.sync="dialogFormVisible" width="800px">
@@ -62,7 +61,7 @@
                 <el-form-item label="类型:" prop="type" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.type" placeholder="">
                     <el-option label="日期" value="1"></el-option>
-                    <el-option label="备用用" value="2"></el-option>
+                    <el-option label="备用" value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -82,7 +81,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item v-if="form.lotteryPlayedTplId" label="采集方法名:"  prop="grabFunName" :label-width="formLabelWidth">
+                <el-form-item  label="采集方法名:"  prop="grabFunName" :label-width="formLabelWidth">
                   <el-input :style="styleObject"  v-model="form.grabFunName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
@@ -96,16 +95,21 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="20">
-                <el-form-item label="采集地址:" :label-width="formLabelWidth" prop="url">
-                  <el-input  v-model="form.url" auto-complete="off"  clearable>
+                <el-form-item label="采集id:" :label-width="formLabelWidth" prop="lotteryGrabId">
+                  <el-input type="number" min="0"  v-model="form.lotteryGrabId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
                 <el-form-item label="提交参数:" :label-width="formLabelWidth" prop="postParam">
                   <el-input  v-model="form.postParam" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="采集地址:" :label-width="formLabelWidth" prop="url">
+                  <el-input  v-model="form.url" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -120,10 +124,25 @@
           <el-form :model="formtwo" :rules="rules">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="彩种玩法模版:" prop="lotteryPlayedTplId"  :label-width="formLabelWidth">
-                  <el-select @change="GroupTap" :style="styleObject" v-model="formtwo.lotteryPlayedTplId" placeholder="">
-                    <el-option  v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryPlayedTplId"></el-option>
+                <el-form-item label="彩种名称:" prop="lotteryGroupName"  :label-width="formLabelWidth">
+                  <el-input  :style="styleObject"  v-model="formtwo.lotteryGroupName" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="类型:" prop="type" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.type" placeholder="">
+                    <el-option label="日期" :value="1"></el-option>
+                    <el-option label="备用" :value="2"></el-option>
                   </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="排序:" :label-width="formLabelWidth"  prop="displaysort">
+                  <el-input type="number" min="0" :style="styleObject"  v-model="formtwo.displaysort" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
 
@@ -135,50 +154,9 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="App父类:"  prop="appParentId" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.appParentId" placeholder="">
-                    <el-option  label="顶级" :value="0"></el-option>
-                    <el-option  v-for="(item,index) in PlayedGroup" :key="index" :label="item.name" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="是否有子类:" prop="hasChild" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.hasChild" placeholder="">
-                    <el-option label="有" :value="1"></el-option>
-                    <el-option label="没有" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="等级:" :label-width="formLabelWidth" prop="level">
-                  <el-input :style="styleObject" type="number" min="0" v-model="formtwo.level" auto-complete="off"  clearable>
+                <el-form-item  label="采集方法名:"  prop="grabFunName" :label-width="formLabelWidth">
+                  <el-input :style="styleObject"  v-model="formtwo.grabFunName" auto-complete="off"  clearable>
                   </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="排序:" :label-width="formLabelWidth" prop="displaysort">
-                  <el-input :style="styleObject" type="number" min="0" v-model="formtwo.displaysort" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="单项最高*1000:" :label-width="formLabelWidth"  prop="maxAmount">
-                  <el-input :style="styleObject"  v-model="formtwo.maxAmount" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="是否删除:" prop="isDelete" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.isDelete" placeholder="">
-                    <el-option label="可用" :value="1"></el-option>
-                    <el-option label="不可用" :value="0"></el-option>
-                  </el-select>
                 </el-form-item>
               </el-col>
 
@@ -190,7 +168,24 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
+              <el-col :span="20">
+                <el-form-item label="采集id:" :label-width="formLabelWidth" prop="lotteryGrabId">
+                  <el-input type="number" min="0"  v-model="formtwo.lotteryGrabId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="提交参数:" :label-width="formLabelWidth" prop="postParam">
+                  <el-input  v-model="formtwo.postParam" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="采集地址:" :label-width="formLabelWidth" prop="url">
+                  <el-input  v-model="formtwo.url" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -199,81 +194,71 @@
           </div>
         </el-dialog>
         <el-dialog title="资源采集详情" :visible.sync="dialogTableDetail" width="800px">
-          <el-form :model="formtwoInfo" :rules="rules">
+          <el-form :model="formtwoInfo">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="彩种玩法模版:" prop="lotteryPlayedTplId"  :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.lotteryPlayedTplId" placeholder="">
-                    <el-option  v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryPlayedTplId"></el-option>
+                <el-form-item label="彩种名称:"  :label-width="formLabelWidth">
+                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.lotteryGroupName" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="类型:"  :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.type" placeholder="">
+                    <el-option label="日期" :value="1"></el-option>
+                    <el-option label="备用" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="名称:" :label-width="formLabelWidth" prop="name">
+                <el-form-item label="排序:" :label-width="formLabelWidth">
+                  <el-input :disabled="true" type="number" min="0" :style="styleObject"  v-model="formtwoInfo.displaysort" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="名称:" :label-width="formLabelWidth" >
                   <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.name" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="App父类:"  prop="appParentId" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.appParentId" placeholder="">
-                    <el-option  label="顶级" :value="0"></el-option>
-                    <el-option  v-for="(item,index) in PlayedGroup" :key="index" :label="item.name" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="是否有子类:" prop="hasChild" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.hasChild" placeholder="">
-                    <el-option label="有" :value="1"></el-option>
-                    <el-option label="没有" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="等级:" :label-width="formLabelWidth" prop="level">
-                  <el-input :disabled="true" :style="styleObject" type="number" min="0" v-model="formtwoInfo.level" auto-complete="off"  clearable>
+                <el-form-item  label="采集方法名:"  :label-width="formLabelWidth">
+                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.grabFunName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="排序:" :label-width="formLabelWidth" prop="displaysort">
-                  <el-input :disabled="true" :style="styleObject" type="number" min="0" v-model="formtwoInfo.displaysort" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="单项最高*1000:" :label-width="formLabelWidth"  prop="maxAmount">
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.maxAmount" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-
-              <el-col :span="12">
-                <el-form-item label="是否删除:" prop="isDelete" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.isDelete" placeholder="">
-                    <el-option label="可用" :value="1"></el-option>
-                    <el-option label="不可用" :value="0"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="是否可用:" prop="isEnable" :label-width="formLabelWidth">
+                <el-form-item label="是否可用:" :label-width="formLabelWidth">
                   <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.isEnable" placeholder="">
                     <el-option label="可用" :value="1"></el-option>
                     <el-option label="不可用" :value="0"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
+              <el-col :span="20">
+                <el-form-item label="采集id:" :label-width="formLabelWidth">
+                  <el-input type="number" min="0" :disabled="true" v-model="formtwoInfo.lotteryGrabId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="提交参数:" :label-width="formLabelWidth" >
+                  <el-input :disabled="true"  v-model="formtwoInfo.postParam" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="采集地址:" :label-width="formLabelWidth">
+                  <el-input :disabled="true"  v-model="formtwoInfo.url" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -386,40 +371,11 @@
     },
     created() {
       this.menuId=this.$route.query.id;
-      this.playedList();
+      // this.playedList();
       this.queryBtns();
       this.accountList();
     },
     methods: {
-      //选择彩种玩法组id
-      GroupTap(){
-        //修改前查询基本信息
-        let idLottery = ''
-        if (this.dialogTableVisible == true){
-          idLottery = this.formtwo.lotteryPlayedTplId
-        }
-        //添加
-        if (this.dialogFormVisible == true){
-          idLottery = this.form.lotteryPlayedTplId
-        }
-        this.PlayedGroup=[]
-        let parameterData = {
-          lotteryPlayedTplId: idLottery
-        }
-        this.$fetch('/guess/lotteryPlayedGroup/queryParentGroup',parameterData).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            this.PlayedGroup = res.data;
-          }
-        })
-      },
-      //获取彩种玩法模版id
-      playedList(){
-        this.$fetch('/guess/lottery/page').then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            this.lotteryPlayed = res.data;
-          }
-        })
-      },
 
       queryBtns(){
         let parameterData = {
@@ -465,26 +421,20 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          lotteryPlayedTplId: this.formInline.lotteryPlayedTplId
+          lotteryGroupName: this.formInline.lotteryGroupName
         }
-        this.$fetch('/guess/lotteryPlayedGroup/queryList', parameterData).then(res => {
+        this.$fetch('/guess/lotteryGrab/queryList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             for(let i = res.data.list.length - 1; i >= 0; i--) {
-              if(res.data.list[i].hasChild == '1') {
-                res.data.list[i].hasChild = '有'
-              } else {
-                res.data.list[i].hasChild = '没有'
-              }
               if(res.data.list[i].isEnable == '1') {
                 res.data.list[i].isEnable = '可用'
               } else {
                 res.data.list[i].isEnable = '不可用'
               }
-
-              if(res.data.list[i].isDelete == '1') {
-                res.data.list[i].isDelete = '删除'
+              if(res.data.list[i].type == '1') {
+                res.data.list[i].type = '日期'
               } else {
-                res.data.list[i].isDelete = '未删除'
+                res.data.list[i].type = '备用'
               }
             }
             this.tableData = res.data.list
@@ -505,6 +455,7 @@
       },
       load() {
         this.form={};
+        this.formInline ={};
         this.dialogFormVisible = true;
       },
       addBtn(form) {
@@ -549,7 +500,7 @@
         let parameterData = {
           id: id
         }
-        this.$fetch('/guess/lotteryPlayedGroup/delete', parameterData).then(res => {
+        this.$fetch('/guess/lotteryGrab/delete', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
               type: 'success',
@@ -567,17 +518,16 @@
       getInfo(id) {
         //修改前查询基本信息
         this.dialogTableVisible = true
-        this.$fetch('/guess/lotteryPlayedGroup/queryOne', {
+        this.$fetch('/guess/lotteryGrab/queryOne', {
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.formtwo = res.data;
-            this.GroupTap();
           }
         })
       },
       update(formtwo) {
-        this.$put('/guess/lotteryPlayedGroup/update', this.formtwo).then(res => {
+        this.$put('/guess/lotteryGrab/update', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
               type: 'success',
@@ -590,7 +540,7 @@
       },
       getOne(id){
         this.dialogTableDetail = true
-        this.$fetch('/guess/lotteryPlayedGroup/queryOne', {
+        this.$fetch('/guess/lotteryGrab/queryOne', {
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

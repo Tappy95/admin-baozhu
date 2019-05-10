@@ -640,6 +640,7 @@
         this.accountList()
       },
       load() {
+        this.formInline ={};
         this.dialogFormVisible = true
         this.form = {}
         this.imageUrl =''

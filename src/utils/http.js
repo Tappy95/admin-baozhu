@@ -13,17 +13,14 @@ var ua = navigator.userAgent.toLowerCase();
 var ua2 = window.navigator.userAgent.toLowerCase();
 
 //本地
-// var https='';
+var https='';
 
 ////测试环境
- var https='http://192.168.1.193:8088';
+//  var https='http://192.168.1.193:8088';
 
 //正式环境
 // var https='https://admin.bzlyplay.com';
 // var https='http://103.44.31.228:8088';
-
-
-
 
 axios.interceptors.request.use(
   config => {

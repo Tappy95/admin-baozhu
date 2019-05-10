@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <el-form-item label="彩种:" prop="isOfficial">
+            <el-form-item label="彩种:">
               <el-select :style="styleObject" v-model="formInline.lotteryPlayedTplId" placeholder="">
                 <el-option v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryPlayedTplId"></el-option>
               </el-select>
@@ -391,7 +391,7 @@
           </div>
         </el-dialog>
         <el-dialog title="赔率详情" :visible.sync="dialogTableDetail" width="800px">
-          <el-form :model="formtwoInfo" :rules="rules">
+          <el-form :model="formtwoInfo">
             <el-row>
               <el-col :span="12">
                 <el-form-item label="彩种玩法模版:"  :label-width="formLabelWidth">
@@ -846,6 +846,7 @@
         this.accountList()
       },
       load() {
+        this.formInline ={};
         this.form={};
         this.dialogFormVisible = true;
       },

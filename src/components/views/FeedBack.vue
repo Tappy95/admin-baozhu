@@ -40,35 +40,27 @@
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
 
-            <el-table-column fixed="left" width="150px" prop="accountId" label="用户ID">
+            <el-table-column fixed="left" min-width="150px" prop="accountId" label="用户ID">
             </el-table-column>
 
-            <el-table-column width="120px" prop="vipName"  label="会员等级">
+            <el-table-column min-width="120px" prop="vipName"  label="会员等级">
             </el-table-column>
 
-            <el-table-column width="150px" prop="experience" label="用户成长值">
+            <el-table-column min-width="150px" prop="experience" label="用户成长值">
             </el-table-column>
 
-            <el-table-column width="120px" prop="opinionType" label="意见类型">
+            <el-table-column min-width="120px" prop="opinionType" label="意见类型">
             </el-table-column>
-            <el-table-column width="250px" prop="opinionContent" label="意见内容">
-            </el-table-column>
-
-            <el-table-column width="200px" label="图片">
-              <template slot-scope="scope">
-                <img :src='scope.row.imageUrl'
-                     style="max-width: 100px;max-height: 50px"
-                     @click="clickImg($event)">
-              </template>
+            <el-table-column min-width="250px" prop="opinionContent" label="意见内容">
             </el-table-column>
 
-            <el-table-column width="200px" prop="email" label="邮箱">
+            <el-table-column min-width="200px" prop="email" label="邮箱">
             </el-table-column>
 
-            <el-table-column width="100px" prop="state" label="状态">
+            <el-table-column min-width="100px" prop="state" label="状态">
             </el-table-column>
 
-            <el-table-column width="300px" prop="remarks" label="备注">
+            <el-table-column min-width="300px" prop="remarks" label="备注">
             </el-table-column>
 
             <el-table-column fixed="right" label="操作" :width="optionW">
@@ -155,26 +147,22 @@
               </el-col>
 
 
-              <el-form-item label="图片"
+              <el-form-item  label="图片:"
                             :label-width="formLabelWidth">
-                <el-upload :disabled="true" class="bannerAvatar-uploader"
-                           action="/api/upload">
-                  <img v-if="formtwoInfo.contentImg"
-                       :src="formtwoInfo.contentImg"
+                <div class="box_img">
+                  <img @click="clickImg(item)" style="float: left;margin-right: 10px" v-for="(item,index) in arrImg" :key="index" v-if="arrImg"
+                       :src="item"
                        class="avatar">
-                  <i v-else
-                     class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                </el-upload>
+                </div>
               </el-form-item>
-
               <el-col :span="20">
-                <el-form-item label="备注"  :label-width="formLabelWidth">
+                <el-form-item label="备注:"  :label-width="formLabelWidth">
                   <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remarks" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="20">
-                <el-form-item label="意见内容" :label-width="formLabelWidth">
+                <el-form-item label="意见内容:" :label-width="formLabelWidth">
                   <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.opinionContent" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
@@ -185,8 +173,6 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
-
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -254,7 +240,8 @@
         company: 2,
         lotteryPlayed:[],
         PlayedGroup:[],
-        showImg:false
+        showImg:false,
+        arrImg:[],
       }
     },
     components: {
@@ -267,9 +254,9 @@
     },
     methods: {
 
-      clickImg(e) {
-        this.showImg = true
-        this.imgSrc = e.currentTarget.src
+      clickImg(img) {
+        this.showImg = true;
+        this.imgSrc = img;
       },
       viewImg() {
         this.showImg = false
@@ -385,8 +372,11 @@
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            res.data.createrTime =  formatDate(new Date(res.data.createrTime), 'yyyy-MM-dd hh:mm:sss')
-            this.formtwoInfo = res.data
+            res.data.createrTime =  formatDate(new Date(res.data.createrTime), 'yyyy-MM-dd hh:mm:sss');
+            this.formtwoInfo = res.data;
+            if (res.data.contentImg){
+              this.arrImg = res.data.contentImg.split(',');
+            }
           }
         })
       },
@@ -405,6 +395,18 @@
   }
 </script>
 <style type="text/css">
+  .box_img{
+    width: 560px;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #dcdfe6;
+    float: left;
+    background-color: #f5f7fa;
+  }
+
+  .box_img img{
+    float: left;
+  }
   .administratormanage-wrap {
     width: 100%;
   }
@@ -450,9 +452,10 @@
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    max-width: 178px;
+    max-height: 178px;
     display: block;
+    cursor: pointer;
   }
 
 </style>

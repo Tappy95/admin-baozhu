@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="彩种:" prop="isOfficial">
+          <el-form-item label="彩种:">
             <el-select :style="styleObject" v-model="formInline.lotteryPlayedTplId" placeholder="">
               <el-option v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryPlayedTplId"></el-option>
             </el-select>
@@ -296,7 +296,7 @@
   import { formatDate } from '../../utils/date.js'
 
   export default {
-    name: 'OddsManage',
+    name: 'PlayGroup',
     data() {
       return {
         styleObject: {
@@ -514,6 +514,7 @@
       },
       load() {
         this.form={};
+        this.formInline ={};
         this.dialogFormVisible = true;
       },
       addBtn(form) {

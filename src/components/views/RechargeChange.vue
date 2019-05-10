@@ -11,7 +11,6 @@
             <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
           </el-form-item>
           <el-button @click="search()">查询</el-button>
-
         </el-form>
       </div>
       <div class="administratormanage-table">

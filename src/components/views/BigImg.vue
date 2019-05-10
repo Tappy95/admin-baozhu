@@ -38,16 +38,15 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 2010;
   display: flex;
   justify-content: center;
   align-content: center;
-
   align-items: center;
 }
 .img-view .img-layer {
   position: fixed;
-  z-index: 999;
+  z-index: 2010;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.7);
@@ -58,6 +57,6 @@ export default {
 .img-view .img img {
   max-width:100%;
   position: relative;
-  z-index: 1000;
+  z-index: 2011;
 }
 </style>
