@@ -19,23 +19,23 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
 
-            <el-table-column  prop="lotteryName" label="彩种玩法模板">
+            <el-table-column min-width="120px" fixed="left"  prop="lotteryName" label="彩种玩法模板">
             </el-table-column>
 
-            <el-table-column width="120px" prop="name"  label="名称">
+            <el-table-column min-width="120px" prop="name"  label="名称">
             </el-table-column>
 
-            <el-table-column width="250px" prop="parentName" label="父类名称">
+            <el-table-column min-width="250px" prop="parentName" label="父类名称">
             </el-table-column>
 
-            <el-table-column width="150px" prop="hasChild" label="是否有子类">
+            <el-table-column min-width="150px" prop="hasChild" label="是否有子类">
             </el-table-column>
-            <el-table-column width="150px" prop="isDelete" label="是否删除">
+            <el-table-column min-width="150px" prop="isDelete" label="是否删除">
             </el-table-column>
-            <el-table-column width="150px" prop="isEnable" label="是否可用">
+            <el-table-column min-width="150px" prop="isEnable" label="是否可用">
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
@@ -514,7 +514,7 @@
       },
       load() {
         this.form={};
-        this.formInline ={};
+        // this.formInline ={};
         this.dialogFormVisible = true;
       },
       addBtn(form) {

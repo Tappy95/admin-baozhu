@@ -2,11 +2,16 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>系统配置/版本</h3>
+        <h3>系统配置/版本管理</h3>
         <hr />
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="渠道标识:">
+            <el-input  v-model="formInline.channelCode" auto-complete="off"  clearable>
+            </el-input>
+          </el-form-item>
+          <el-button class="mar_bottom" @click="search()">查询</el-button>
           <el-button class="mar_bottom" @click="load()" v-if="add">添加版本</el-button>
         </el-form>
       </div>
@@ -95,6 +100,14 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="22">
+                <el-form-item v-if="form.needUpdate==1" label="更新描述:"  :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="form.updateRemark" auto-complete="off" clearable></el-input>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -158,6 +171,15 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+
+              <el-col :span="22">
+                <el-form-item v-if="formtwo.needUpdate==1" label="更新描述:"  :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwo.updateRemark" auto-complete="off" clearable></el-input>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -223,6 +245,13 @@
               <el-col :span="22">
                 <el-form-item v-if="formtwoInfo.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
                   <el-input :disabled="true" min="0" v-model="formtwoInfo.updateUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item v-if="formtwoInfo.needUpdate==1" label="更新描述:"  :label-width="formLabelWidth" >
+                  <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwoInfo.updateRemark" auto-complete="off" clearable></el-input>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -360,7 +389,8 @@
       accountList() {
         let parameterData = {
           pageNum: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/pVersion/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -394,9 +424,9 @@
         })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
@@ -472,7 +502,8 @@
       },
       update(formtwo) {
         if (this.formtwo.needUpdate==2){
-          this.formtwo.updateUrl=''
+          this.formtwo.updateUrl='';
+          this.formtwo.updateRemark='';
         }
         this.$put('/api/pVersion/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

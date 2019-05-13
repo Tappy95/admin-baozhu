@@ -19,9 +19,9 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
-            <el-table-column width="150px" prop="lotteryName" label="彩种玩法模板">
+            <el-table-column fixed="left" width="150px" prop="lotteryName" label="彩种玩法模板">
             </el-table-column>
             <el-table-column width="120px"  prop="palyName" label="彩种玩法组">
             </el-table-column>
@@ -846,7 +846,7 @@
         this.accountList()
       },
       load() {
-        this.formInline ={};
+        // this.formInline ={};
         this.form={};
         this.dialogFormVisible = true;
       },

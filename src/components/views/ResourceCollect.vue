@@ -18,25 +18,25 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
-            <el-table-column min-width="150px"  prop="lotteryGroupName" label="彩种名称">
+            <el-table-column fixed="left" min-width="150px"  prop="lotteryGroupName" label="彩种名称">
             </el-table-column>
-            <el-table-column width="150px" prop="name"  label="名称">
+            <el-table-column min-width="150px" prop="name"  label="名称">
             </el-table-column>
-            <el-table-column width="250px" prop="grabFunName" label="采集方法名">
+            <el-table-column min-width="250px" prop="grabFunName" label="采集方法名">
             </el-table-column>
-            <el-table-column width="150px" prop="lotteryGrabId" label="采集id">
+            <el-table-column min-width="150px" prop="lotteryGrabId" label="采集id">
             </el-table-column>
-            <el-table-column width="250px" prop="url" label="采集地址">
+            <el-table-column min-width="250px" prop="url" label="采集地址">
             </el-table-column>
-            <el-table-column width="150px" prop="postParam" label="提交参数">
+            <el-table-column min-width="150px" prop="postParam" label="提交参数">
             </el-table-column>
-            <el-table-column width="150px" prop="displaysort" label="排序">
+            <el-table-column min-width="150px" prop="displaysort" label="排序">
             </el-table-column>
-            <el-table-column width="150px" prop="isEnable" label="是否可用">
+            <el-table-column min-width="150px" prop="isEnable" label="是否可用">
             </el-table-column>
-            <el-table-column width="150px" prop="type" label="类型">
+            <el-table-column min-width="150px" prop="type" label="类型">
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
