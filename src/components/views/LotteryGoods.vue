@@ -27,6 +27,7 @@
                    ref="form">
             <div class="form">
               <el-row>
+
                 <el-col :span="24">
                   <el-form-item label="奖品名称:"
                                 prop="goodsName"
@@ -36,6 +37,33 @@
                               clearable></el-input>
                   </el-form-item>
                 </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
+                    <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+
+
+                <el-col :span="24">
+                  <el-form-item label="奖品图片:"
+                                prop="imageUrl"
+                                :label-width="formLabelWidth">
+                    <el-upload class="bannerAvatar-uploader"
+                               action="/api/upload"
+                               :data="uploadData"
+                               :show-file-list="false"
+                               :on-success="handleAvatarSuccess"
+                               :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+
                 <el-col :span="12">
                   <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
                     <el-select v-model="form.typeId" placeholder="">
@@ -49,30 +77,8 @@
                     </el-input>
                   </el-form-item>
                 </el-col>
-                <el-col :span="24">
-                  <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
-                    <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
-                  </el-form-item>
-                </el-col>
-              <el-col :span="24">
-                <el-form-item label="奖品图片:"
-                              prop="imageUrl"
-                              :label-width="formLabelWidth">
-                  <el-upload class="bannerAvatar-uploader"
-                             action="/api/upload"
-                             :data="uploadData"
-                             :show-file-list="false"
-                             :on-success="handleAvatarSuccess"
-                             :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
-                <el-col :span="24">
+
+                <el-col :span="12">
                   <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
                     <el-select v-model="form.status" placeholder="">
                       <el-option label="启用" value="1"></el-option>
@@ -80,6 +86,10 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
+
+
+
+
               </el-row>
             </div>
           </el-form>
@@ -149,19 +159,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-select v-model="formtwo.typeId" placeholder="">
-                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                  <el-input type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
               <el-col :span="24">
                 <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
                   <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
@@ -185,7 +182,22 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
+
+              <el-col :span="12">
+                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                  <el-select v-model="formtwo.typeId" placeholder="">
+                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                  <el-input type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
                 <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
                   <el-select v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
@@ -216,19 +228,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-select :disabled="true" v-model="formtwo.typeId" placeholder="">
-                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                  <el-input :disabled="true" type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
               <el-col :span="24">
                 <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
                   <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
@@ -249,6 +248,20 @@
                     <i v-else
                        class="el-icon-plus bannerAvatar-uploader-icon"></i>
                   </el-upload>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                  <el-select :disabled="true" v-model="formtwo.typeId" placeholder="">
+                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                  <el-input :disabled="true" type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">

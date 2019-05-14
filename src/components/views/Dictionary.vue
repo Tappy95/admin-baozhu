@@ -46,24 +46,17 @@
 
         <el-dialog title="添加字典" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="字典名称:" :label-width="formLabelWidth"  width="217px" prop="dicName">
-              <el-input v-model="form.dicName" style="width: 217px" auto-complete="off"  clearable>
+            <el-form-item label="字典名称:" :label-width="formLabelWidth"  prop="dicName">
+              <el-input v-model="form.dicName" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
 
-            <el-form-item label="字典类型:" :label-width="formLabelWidth" prop="valueType">
-              <el-select v-model="form.valueType" placeholder="" @change="typeChange(form.valueType)">
-                <el-option label="文本" value="1"></el-option>
-                <el-option label="图片" value="2"></el-option>
-              </el-select>
+            <el-form-item v-if="typeText" label="字典值:" prop="dicValue" :label-width="formLabelWidth">
+              <el-input v-model="form.dicValue"  auto-complete="off" clearable></el-input>
             </el-form-item>
 
             <el-form-item label="字典描述" prop="dicRemark" :label-width="formLabelWidth">
-              <el-input style="width: 350px" :autosize="{ minRows: 4, maxRows: 6}" class="text_area" type="textarea"   v-model="form.dicRemark" auto-complete="off" clearable></el-input>
-            </el-form-item>
-
-            <el-form-item v-if="typeText" label="字典值:" prop="dicValue" :label-width="formLabelWidth">
-              <el-input v-model="form.dicValue" style="width: 217px" auto-complete="off" clearable></el-input>
+              <el-input  :autosize="{ minRows: 4, maxRows: 6}" class="text_area" type="textarea"   v-model="form.dicRemark" auto-complete="off" clearable></el-input>
             </el-form-item>
 
             <el-form-item v-if="typeImg" label="url地址"
@@ -82,6 +75,13 @@
                  class="el-icon-plus bannerAvatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
+
+            <el-form-item label="字典类型:" :label-width="formLabelWidth" prop="valueType">
+              <el-select v-model="form.valueType" placeholder="" @change="typeChange(form.valueType)">
+                <el-option label="文本" value="1"></el-option>
+                <el-option label="图片" value="2"></el-option>
+              </el-select>
+            </el-form-item>
 
             <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
               <el-select v-model="form.status" placeholder="" >

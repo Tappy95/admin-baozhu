@@ -29,8 +29,7 @@
             </el-select>
           </el-form-item>
 
-          <el-button @click="search()">查询</el-button>
-          <!--<el-button @click="load()" v-if="add">添加</el-button>-->
+          <el-button style="margin-bottom: 30px" @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -129,7 +128,7 @@
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="审核" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="审核" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="14">
@@ -181,15 +180,9 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="抽奖详情" :visible.sync="dialogTableDetail" width="600px">
+        <el-dialog title="抽奖详情" :visible.sync="dialogTableDetail" width="700px">
           <el-form :model="formtwoInfo">
             <el-row>
-              <el-col :span="24">
-                <el-form-item label="账户id:" :label-width="formLabelWidth" prop="accountId">
-                  <el-input :disabled="true" v-model="formtwoInfo.accountId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
                 <el-col :span="18"  v-if="formtwoInfo.lotterySort==1 && formtwo.status==4">
                 <el-form-item label="快递公司:"  :label-width="formLabelWidth">
                   <el-input :disabled="true"   v-model="formtwoInfo.expressCompany" auto-complete="off"  clearable></el-input>
@@ -212,7 +205,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="抽奖分类:" prop="status" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwoInfo.lotterySort" placeholder="">
+                  <el-select style="width:210px" :disabled="true" v-model="formtwoInfo.lotterySort" placeholder="">
                     <el-option label="实物" :value="1"></el-option>
                     <el-option label="虚拟" :value="2"></el-option>
                   </el-select>
@@ -220,7 +213,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="审核状态:" :label-width="formLabelWidth" prop="status">
-                  <el-select :disabled="true"  v-model="formtwoInfo.status" placeholder="">
+                  <el-select style="width:210px" :disabled="true"  v-model="formtwoInfo.status" placeholder="">
                     <el-option label="审核中" :value="1"></el-option>
                     <el-option label="拒绝" :value="2"></el-option>
                     <el-option label="待发货" :value="3"></el-option>
@@ -236,6 +229,12 @@
               <el-col :span="12">
                 <el-form-item label="中奖时间:" :label-width="formLabelWidth" >
                   <el-input  :disabled="true"  min="0" v-model="formtwoInfo.createTime" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="账户id:" :label-width="formLabelWidth" prop="accountId">
+                  <el-input :disabled="true" v-model="formtwoInfo.accountId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -263,7 +262,7 @@
                               prop="imageUrl"
                               action=""
                               :label-width="formLabelWidth">
-                  <img v-if="formtwoInfo.imageUrl"
+                  <img style="max-width:178px;max-height:178px;"  v-if="formtwoInfo.imageUrl"
                        :src="formtwoInfo.imageUrl"
                        class="avatar">
                   <i v-else

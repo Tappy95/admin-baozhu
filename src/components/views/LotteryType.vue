@@ -58,6 +58,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
                 <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
                   <el-input  type="number" min="0" v-model="form.timesOneday" auto-complete="off"  clearable>
@@ -91,11 +92,8 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
+
+
               <el-col :span="12">
                 <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
                   <el-select v-model="form.status" placeholder="">
@@ -104,6 +102,12 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+              <el-col :span="24">
+                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -155,11 +159,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
                   <el-select v-model="formtwo.status" placeholder="">
@@ -168,6 +168,13 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
             </el-row>
 
           </el-form>
@@ -186,11 +193,6 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="24">
-                <el-form-item label="抽奖编号" prop="抽奖编号" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  style="width: 160px" v-model="formtwoInfo.id" auto-complete="off"  clearable></el-input>
-                </el-form-item>
-              </el-col>
 
               <el-col :span="12">
                 <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
@@ -227,16 +229,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input :disabled="true" style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remark" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="创建时间" prop="remark" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  v-model="formtwoInfo.createTime" auto-complete="off"  clearable></el-input>
-                </el-form-item>
-              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
                   <el-select :disabled="true" v-model="formtwoInfo.status" placeholder="">
@@ -245,6 +238,25 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="创建时间" prop="remark" :label-width="formLabelWidth">
+                  <el-input :disabled="true"  v-model="formtwoInfo.createTime" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="抽奖编号" prop="抽奖编号" :label-width="formLabelWidth">
+                  <el-input :disabled="true"  style="width: 160px" v-model="formtwoInfo.id" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input :disabled="true" style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
 
             </el-row>
           </el-form>

@@ -19,18 +19,16 @@
 					<el-table :data="tableData" height="580">
 						<el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
 						</el-table-column>
-						<el-table-column prop="realname" label="管理员名称">
+						<el-table-column fixed="left" min-width="150px" prop="realname" label="管理员名称">
 						</el-table-column>
-						<el-table-column prop="mobile" label="手机号">
+						<el-table-column prop="mobile" min-width="150px" label="手机号">
 						</el-table-column>
-            <el-table-column width="170px" prop="roleName"  label="角色名称">
+            <el-table-column min-width="170px" prop="roleName"  label="角色名称">
             </el-table-column>
-						<el-table-column width="170px" prop="createTime" :formatter="dateFormat" label="创建时间">
+						<el-table-column min-width="170px" prop="createTime" :formatter="dateFormat" label="创建时间">
 						</el-table-column>
-
 						<el-table-column prop="status" label="状态">
 						</el-table-column>
-
 						<el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
 							<template slot-scope="scope">
 								<el-button size="mini" @click="Delete(scope.row.adminId)" v-if="del">删除</el-button>
@@ -70,14 +68,14 @@
         <el-dialog title="添加管理员" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="管理员名称" :label-width="formLabelWidth" prop="realname">
-              <el-input class="addInput" v-model="form.realname" auto-complete="off" style="" clearable>
+              <el-input v-model="form.realname" auto-complete="off" style="" clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="手机号" prop="mobile" :label-width="formLabelWidth">
-              <el-input class="addInput" v-model="form.mobile" auto-complete="off" clearable></el-input>
+              <el-input  v-model="form.mobile" auto-complete="off" clearable></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
-              <el-input class="addInput"  type="password" v-model="form.password" auto-complete="off" clearable></el-input>
+              <el-input style="width: 187px"  v-model="form.password" auto-complete="off" clearable></el-input>
             </el-form-item>
 
             <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleName">

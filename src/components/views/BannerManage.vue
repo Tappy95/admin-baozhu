@@ -20,77 +20,94 @@
         </el-form>
       </div>
       <div>
-        <el-dialog title="添加Banner" width="600px"
+        <el-dialog title="添加Banner" width="800px"
           :visible.sync="dialogFormVisible">
           <el-form :model="form"
             :rules="rules"
             ref="form">
             <div class="form">
-              <el-form-item label="Banner标题"
-                prop="title"
-                :label-width="formLabelWidth">
-                <el-input v-model="form.title"
-                  auto-complete="off"
-                  clearable
-                  style="width: 224px;"></el-input>
-              </el-form-item>
-              <el-form-item label="开始时间"
-                prop="startTime"
-                :label-width="formLabelWidth">
-                <el-date-picker v-model="form.startTime"
-                  type="datetime"
-                  placeholder="请选择开始时间"
-                  >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="结束时间"
-                prop="endTime"
-                :label-width="formLabelWidth">
-                <el-date-picker v-model="form.endTime"
-                  type="datetime"
-                  placeholder="请选择结束时间"
-                  >
-                </el-date-picker>
-              </el-form-item>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="Banner标题:"
+                                prop="title"
+                                :label-width="formLabelWidth">
+                    <el-input v-model="form.title"
+                              auto-complete="off"
+                              clearable
+                              :style="styleObject"></el-input>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item prop="position" label="图片位置" :label-width="formLabelWidth">
-                <el-select v-model="form.position" placeholder="">
-                  <el-option label="首页底部" :value="1"></el-option>
-                </el-select>
-              </el-form-item>
+                <el-col :span="12">
+                  <el-form-item prop="position" label="图片位置:" :label-width="formLabelWidth">
+                    <el-select :style="styleObject" v-model="form.position" placeholder="">
+                      <el-option label="首页底部" :value="1"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="详情链接地址"
-                prop="linkUrl"
-                :label-width="formLabelWidth">
-                <el-input v-model="form.linkUrl"
-                  auto-complete="off"
-                  clearable
-                  style="width: 300px;"></el-input>
-              </el-form-item>
+                <el-col :span="12">
+                  <el-form-item label="开始时间:"
+                                prop="startTime"
+                                :label-width="formLabelWidth">
+                    <el-date-picker :style="styleObject" v-model="form.startTime"
+                                    type="datetime"
+                                    placeholder="请选择开始时间"
+                    >
+                    </el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="结束时间:"
+                                prop="endTime"
+                                :label-width="formLabelWidth">
+                    <el-date-picker :style="styleObject" v-model="form.endTime"
+                                    type="datetime"
+                                    placeholder="请选择结束时间"
+                    >
+                    </el-date-picker>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="图片"
-                                           prop="imageUrl"
-                                           :label-width="formLabelWidth">
-                  <el-upload class="bannerAvatar-uploader"
-                             action="/api/upload"
-                             :data="uploadData"
-                             :show-file-list="false"
-                             :on-success="handleAvatarSuccess"
-                             :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-              </el-form-item>
+                <el-col :span="24">
+                  <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                    <el-select :style="styleObject" v-model="form.status" placeholder="">
+                      <el-option label="启用" :value="1"></el-option>
+                      <el-option label="停用" :value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="是否启用"  prop="status" :label-width="formLabelWidth">
-                <el-select v-model="form.status" placeholder="">
-                  <el-option label="启用" :value="1"></el-option>
-                  <el-option label="停用" :value="2"></el-option>
-                </el-select>
-              </el-form-item>
+                <el-col :span="22">
+                  <el-form-item label="详情链接地址:"
+                                prop="linkUrl"
+                                :label-width="formLabelWidth">
+                    <el-input  v-model="form.linkUrl"
+                               auto-complete="off"
+                               clearable
+                    ></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="图片:"
+                                prop="imageUrl"
+                                :label-width="formLabelWidth">
+                    <el-upload class="bannerAvatar-uploader"
+                               action="/api/upload"
+                               :data="uploadData"
+                               :show-file-list="false"
+                               :on-success="handleAvatarSuccess"
+                               :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </div>
           </el-form>
           <div slot="footer"
@@ -154,75 +171,158 @@
         <big-img v-if="showImg"
           @clickit="viewImg"
           :imgSrc="imgSrc"></big-img>
-        <el-dialog width="600px" title="修改Banner"
+        <el-dialog width="800px" title="修改Banner"
           :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
 
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="Banner标题:"
+                              prop="title"
+                              :label-width="formLabelWidth">
+                  <el-input v-model="formtwo.title"
+                            auto-complete="off"
+                            clearable
+                            :style="styleObject"></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="Banner标题"
-                          prop="title"
-                          :label-width="formLabelWidth">
-              <el-input v-model="formtwo.title"
-                        auto-complete="off"
-                        clearable
-                        style="width: 224px;"></el-input>
-            </el-form-item>
-            <el-form-item label="开始时间"
-                          prop="startTime"
-                          :label-width="formLabelWidth">
-              <el-date-picker v-model="formtwo.startTime"
-                              type="datetime"
-                              placeholder="选择开始时间"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="结束时间"
-                          prop="endTime"
-                          :label-width="formLabelWidth">
-              <el-date-picker v-model="formtwo.endTime"
-                              type="datetime"
-                              placeholder="选择结束时间"
-              >
-              </el-date-picker>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item prop="position" label="图片位置:" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.position" placeholder="">
+                    <el-option label="首页底部" :value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item prop="position" label="图片位置" :label-width="formLabelWidth">
-              <el-select v-model="formtwo.position" placeholder="">
-                <el-option label="首页底部" :value="1"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="开始时间:"
+                              prop="startTime"
+                              :label-width="formLabelWidth">
+                  <el-date-picker :style="styleObject" v-model="formtwo.startTime"
+                                  type="datetime"
+                                  placeholder="请选择开始时间"
+                  >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="结束时间:"
+                              prop="endTime"
+                              :label-width="formLabelWidth">
+                  <el-date-picker :style="styleObject" v-model="formtwo.endTime"
+                                  type="datetime"
+                                  placeholder="请选择结束时间"
+                  >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="链接地址"
-                          prop="linkUrl"
-                          :label-width="formLabelWidth">
-              <el-input v-model="formtwo.linkUrl"
-                        auto-complete="off"
-                        clearable
-                        style="width: 300px;"></el-input>
-            </el-form-item>
-            <el-form-item label="url地址"
-                          prop="imageUrl"
-                          :label-width="formLabelWidth">
-              <el-upload class="bannerAvatar-uploader"
-                         action="/api/upload"
-                         :data="uploadData"
-                         :show-file-list="false"
-                         :on-success="handleAvatarSuccess"
-                         :before-upload="beforeAvatarUpload">
-                <img v-if="imageUrl"
-                     :src="imageUrl"
-                     class="avatar">
-                <i v-else
-                   class="el-icon-plus bannerAvatar-uploader-icon"></i>
-              </el-upload>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="停用" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="是否启用"  prop="status" :label-width="formLabelWidth">
-              <el-select v-model="formtwo.status" placeholder="">
-                <el-option label="启用" :value="1"></el-option>
-                <el-option label="停用" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="22">
+                <el-form-item label="详情链接地址:"
+                              prop="linkUrl"
+                              :label-width="formLabelWidth">
+                  <el-input  v-model="formtwo.linkUrl"
+                             auto-complete="off"
+                             clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="图片:"
+                              prop="imageUrl"
+                              :label-width="formLabelWidth">
+                  <el-upload class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl"
+                         :src="imageUrl"
+                         class="avatar">
+                    <i v-else
+                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+
+            <!--<el-form-item label="Banner标题"-->
+                          <!--prop="title"-->
+                          <!--:label-width="formLabelWidth">-->
+              <!--<el-input v-model="formtwo.title"-->
+                        <!--auto-complete="off"-->
+                        <!--clearable-->
+                        <!--style="width: 224px;"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="开始时间"-->
+                          <!--prop="startTime"-->
+                          <!--:label-width="formLabelWidth">-->
+              <!--<el-date-picker v-model="formtwo.startTime"-->
+                              <!--type="datetime"-->
+                              <!--placeholder="选择开始时间"-->
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="结束时间"-->
+                          <!--prop="endTime"-->
+                          <!--:label-width="formLabelWidth">-->
+              <!--<el-date-picker v-model="formtwo.endTime"-->
+                              <!--type="datetime"-->
+                              <!--placeholder="选择结束时间"-->
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</el-form-item>-->
+
+            <!--<el-form-item prop="position" label="图片位置" :label-width="formLabelWidth">-->
+              <!--<el-select v-model="formtwo.position" placeholder="">-->
+                <!--<el-option label="首页底部" :value="1"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+
+            <!--<el-form-item label="链接地址"-->
+                          <!--prop="linkUrl"-->
+                          <!--:label-width="formLabelWidth">-->
+              <!--<el-input v-model="formtwo.linkUrl"-->
+                        <!--auto-complete="off"-->
+                        <!--clearable-->
+                        <!--style="width: 300px;"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="url地址"-->
+                          <!--prop="imageUrl"-->
+                          <!--:label-width="formLabelWidth">-->
+              <!--<el-upload class="bannerAvatar-uploader"-->
+                         <!--action="/api/upload"-->
+                         <!--:data="uploadData"-->
+                         <!--:show-file-list="false"-->
+                         <!--:on-success="handleAvatarSuccess"-->
+                         <!--:before-upload="beforeAvatarUpload">-->
+                <!--<img v-if="imageUrl"-->
+                     <!--:src="imageUrl"-->
+                     <!--class="avatar">-->
+                <!--<i v-else-->
+                   <!--class="el-icon-plus bannerAvatar-uploader-icon"></i>-->
+              <!--</el-upload>-->
+            <!--</el-form-item>-->
+
+            <!--<el-form-item label="是否启用"  prop="status" :label-width="formLabelWidth">-->
+              <!--<el-select v-model="formtwo.status" placeholder="">-->
+                <!--<el-option label="启用" :value="1"></el-option>-->
+                <!--<el-option label="停用" :value="2"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
 
           </el-form>
           <div slot="footer"
@@ -254,6 +354,9 @@ export default {
   name: 'BannerManage',
   data() {
     return {
+      styleObject: {
+        width: '200px',
+      },
       uploadData:{},
       powerTrue:false,
       optionW:'0px',
@@ -543,8 +646,8 @@ export default {
   display: block;
 }
 .form {
-  overflow-y: scroll;
-  height: auto;
+  /*overflow-y: scroll;*/
+  /*height: auto;*/
 }
   .el-icon-plus{
     line-height:0;

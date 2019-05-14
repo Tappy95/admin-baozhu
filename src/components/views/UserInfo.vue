@@ -88,7 +88,7 @@
         <el-dialog title="用户信息详情" :visible.sync="dialogTableVisible" width="800px">
           <el-form>
             <el-row>
-              <el-col :span="18" style="margin-bottom: 10px">
+              <el-col :span="20" style="margin-bottom: 10px">
                 <el-form-item label="用户id:" :label-width="formLabelWidth">
                   <el-input :value="message.userId" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -100,7 +100,14 @@
                 <el-input :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
               </el-form-item>
             </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+
+              <el-col :span="10" style="margin-bottom: 10px">
+                <el-form-item label="昵称:" :label-width="formLabelWidth">
+                  <el-input :value="message.aliasName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="性别:" :label-width="formLabelWidth">
                  <el-input :value="message.sex" :disabled="true" auto-complete="off" style="" clearable></el-input>
                  </el-form-item>
@@ -110,17 +117,18 @@
                   <el-input :value="message.birthday" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="手机号码:" :label-width="formLabelWidth">
                   <el-input :value="message.mobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
+
               <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="昵称:" :label-width="formLabelWidth">
-                  <el-input :value="message.aliasName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
+                  <el-input :value="message.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="登录账号:" :label-width="formLabelWidth">
                   <el-input :value="message.identity" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -130,7 +138,7 @@
                   <el-input :value="message.socialDigitalNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="证件类型:" :label-width="formLabelWidth">
                   <el-input :value="message.digitalNumType" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -140,7 +148,7 @@
                   <el-input :value="'￥'+message.balance" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="代币:" :label-width="formLabelWidth">
                   <el-input :value="message.jadeCabbage" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -150,7 +158,7 @@
                   <el-input :value="message.coin" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="总奖励金额:" :label-width="formLabelWidth">
                   <el-input :value="message.reward" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -160,7 +168,7 @@
                   <el-input :value="message.apprentice" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="等级:" :label-width="formLabelWidth">
                   <el-input :value="message.level" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -170,7 +178,7 @@
                   <el-input :value="message.levelValue" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="注册时间:" :label-width="formLabelWidth">
                   <el-input :value="message.createTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -183,7 +191,7 @@
             </el-row>
             <el-form-item label="邀请人手机号:" :label-width="formLabelWidth">
               <el-row>
-                <el-col :span="10" style="margin-bottom: 10px">
+                <el-col :span="8" style="margin-bottom: 10px">
                   <el-input :value="message.referrerMobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-col>
               </el-row>

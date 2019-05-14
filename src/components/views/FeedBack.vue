@@ -31,7 +31,7 @@
                 <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
+          <el-button style="margin-bottom: 30px" @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">

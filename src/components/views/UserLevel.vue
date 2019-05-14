@@ -423,6 +423,6 @@
     display: block;
   }
   .form {
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
   }
 </style>

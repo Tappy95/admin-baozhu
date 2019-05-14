@@ -55,68 +55,84 @@
                        @click="sendBtn('formsend')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="添加卡券" width="700px"
+        <el-dialog title="添加卡券" width="800px"
                    :visible.sync="dialogFormVisible">
           <el-form :model="form"
                    :rules="rules"
                    ref="form">
             <div class="form">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="卡券名称:"
+                                prop="passbookName"
+                                :label-width="formLabelWidth">
+                    <el-input :style="styleObject" v-model="form.passbookName"
+                              auto-complete="off"
+                              clearable
+                             ></el-input>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="卡券名称:"
-                            prop="passbookName"
-                            :label-width="formLabelWidth">
-                <el-input v-model="form.passbookName"
-                          auto-complete="off"
-                          clearable
-                          style="width: 224px;"></el-input>
-              </el-form-item>
+                <el-col :span="12">
+                  <el-form-item label="卡券类型:"
+                                prop="passbookType"
+                                :label-width="formLabelWidth">
+                    <el-select :style="styleObject"  @change="typeChange(form.passbookType)" v-model="form.passbookType" placeholder="">
+                      <el-option label="翻倍券" value="1"></el-option>
+                      <el-option label="折扣券" value="2"></el-option>
+                      <el-option label="加成券" value="3"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="卡券类型:"
-                            prop="passbookType"
-                            :label-width="formLabelWidth">
-                   <el-select style="width: 224px;" @change="typeChange(form.passbookType)" v-model="form.passbookType" placeholder="">
-                       <el-option label="翻倍券" value="1"></el-option>
-                       <el-option label="折扣券" value="2"></el-option>
-                       <el-option label="加成券" value="3"></el-option>
-                   </el-select>
-              </el-form-item>
+                <el-col :span="12">
+                  <el-form-item label="有效期(天):"
+                                prop="useDay"
+                                :label-width="formLabelWidth">
+                    <el-input :style="styleObject" min="0" type="number" v-model="form.useDay"
+                              auto-complete="off"
+                              clearable
+                             ></el-input>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="有效期(天):"
-                            prop="useDay"
-                            :label-width="formLabelWidth">
-                <el-input min="0" type="number" v-model="form.useDay"
-                          auto-complete="off"
-                          clearable
-                          style="width: 224px;"></el-input>
-              </el-form-item>
+                <el-col :span="12">
+                  <el-form-item label="折扣值:"
+                                prop="passbookValue"
+                                :label-width="formLabelWidth">
+                    <el-input style="width: 180px" min="0" type="number" v-model="form.passbookValue"
+                              auto-complete="off"
+                              clearable
+                             ></el-input>
+                    {{persent}}
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="折扣值:"
-                            prop="passbookValue"
-                            :label-width="formLabelWidth">
-                <el-input min="0" type="number" v-model="form.passbookValue"
-                          auto-complete="off"
-                          clearable
-                          style="width: 224px;"></el-input>
-                          {{persent}}
-              </el-form-item>
+                <el-col :span="12">
+                  <el-form-item label="是否发放:"
+                                prop="regSend"
+                                :label-width="formLabelWidth">
+                    <el-select :style="styleObject"  v-model="form.regSend" placeholder="">
+                      <el-option label="是" value="2"></el-option>
+                      <el-option label="否" value="1"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="是否发放:"
-                            prop="regSend"
-                            :label-width="formLabelWidth">
-                <el-select  style="width: 224px;" v-model="form.regSend" placeholder="">
-                  <el-option label="是" value="2"></el-option>
-                  <el-option label="否" value="1"></el-option>
-                </el-select>
-              </el-form-item>
+                <el-col :span="24">
+                  <el-form-item label="描述:"
+                                prop="remark"
+                                :label-width="formLabelWidth">
+                    <el-input  type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remark"
+                              auto-complete="off"
+                              clearable
+                              ></el-input>
+                  </el-form-item>
+                </el-col>
 
-              <el-form-item label="描述:"
-                            prop="remark"
-                            :label-width="formLabelWidth">
-                <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remark"
-                          auto-complete="off"
-                          clearable
-                          style="width: 300px;"></el-input>
-              </el-form-item>
+                <el-col :span="12">
+                </el-col>
+              </el-row>
 
               <el-form-item label="适用任务类型:"
                             prop=""
@@ -124,12 +140,13 @@
               </el-form-item>
 
               <el-form-item label="">
-                <el-checkbox-group style="margin-top: -30px;margin-left: 20px"
+                <el-checkbox-group style="margin-top: -30px;"
                   v-model="taskTypeName">
                   <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="index">{{item.typeName}}</el-checkbox>
                 </el-checkbox-group>
               </el-form-item>
             </div>
+
           </el-form>
           <div slot="footer"
                class="dialog-footer">
@@ -202,71 +219,92 @@
         <el-dialog title="修改卡券" width="700px"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
-            <el-form-item label="卡券名称:"
-                          :label-width="formLabelWidth">
-              <el-input v-model="formtwo.passbookName"
-                        auto-complete="off"
-                        style="width: 224px;"
-                        clearable></el-input>
-            </el-form-item>
+        <div>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="卡券名称:"
+                              prop="passbookName"
+                              :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.passbookName"
+                            auto-complete="off"
+                            clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="卡券类型:"
-                          prop="passbookType"
-                          :label-width="formLabelWidth">
-              <el-select style="width: 224px;" @change="typeChange(formtwo.passbookType)" v-model="formtwo.passbookType" placeholder="">
-                <el-option label="翻倍券" :value="1"></el-option>
-                <el-option label="折扣券" :value="2"></el-option>
-                <el-option label="加成券" :value="3"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="有效期（天）:"
-                          :label-width="formLabelWidth">
-              <el-input  min="0" type="number" v-model="formtwo.useDay"
-                        auto-complete="off"
-                        style="width: 224px;"
-                        clearable></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="卡券类型:"
+                              prop="passbookType"
+                              :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  @change="typeChange(formtwo.passbookType)" v-model="formtwo.passbookType" placeholder="">
+                    <el-option label="翻倍券" :value="1"></el-option>
+                    <el-option label="折扣券" :value="2"></el-option>
+                    <el-option label="加成券" :value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="折扣值:"
-                          :label-width="formLabelWidth">
-              <el-input v-model="formtwo.passbookValue"
-                        auto-complete="off"
-                        style="width: 224px;"
-                        clearable></el-input>
-                        {{persent}}
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="有效期(天):"
+                              prop="useDay"
+                              :label-width="formLabelWidth">
+                  <el-input :style="styleObject" min="0" type="number" v-model="formtwo.useDay"
+                            auto-complete="off"
+                            clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="是否发放:"
-                          prop="regSend"
-                          :label-width="formLabelWidth">
-              <el-select  style="width: 224px;" v-model="formtwo.regSend" placeholder="">
-                <el-option label="是" :value="2"></el-option>
-                <el-option label="否" :value="1"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="折扣值:"
+                              prop="passbookValue"
+                              :label-width="formLabelWidth">
+                  <el-input style="width: 180px" min="0" type="number" v-model="formtwo.passbookValue"
+                            auto-complete="off"
+                            clearable
+                  ></el-input>
+                  {{persent}}
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="描述:"
-                          prop="remark"
-                          :label-width="formLabelWidth">
-              <el-input type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
-                        auto-complete="off"
-                        clearable
-                        style="width: 300px;"></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="是否发放:"
+                              prop="regSend"
+                              :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="formtwo.regSend" placeholder="">
+                    <el-option label="是" :value="2"></el-option>
+                    <el-option label="否" :value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="描述:"
+                              prop="remark"
+                              :label-width="formLabelWidth">
+                  <el-input  type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
+                             auto-complete="off"
+                             clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+
+            </el-row>
 
             <el-form-item label="适用任务类型:"
-                          prop=""
-                          :label-width="formLabelWidth">
+              prop=""
+              :label-width="formLabelWidth">
             </el-form-item>
 
             <el-form-item label=""
-                          prop="taskTypeName"
-            >
+              prop="taskTypeName"
+              >
               <el-checkbox-group style="margin-top: -30px;margin-left: 20px"
-                                 v-model="taskTypes">
-                <el-checkbox  v-for="(item,index) in cities" :label="item.id"  :key="item.id">{{item.typeName}}</el-checkbox>
+              v-model="taskTypes">
+               <el-checkbox  v-for="(item,index) in cities" :label="item.id"  :key="item.id">{{item.typeName}}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
+        </div>
 
           </el-form>
           <div slot="footer"
@@ -279,15 +317,15 @@
         <el-dialog title="卡券详情" :visible.sync="dialog" width="800px">
           <el-form>
             <el-row>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="卡券名称:" :label-width="formLabelWidth">
-                  <el-input :value="formtwo.passbookName" style="width: 196px;" :disabled="true" auto-complete="off" clearable></el-input>
+                  <el-input :value="formtwo.passbookName" :style="styleObject" :disabled="true" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="卡券类型:" :label-width="formLabelWidth">
-                  <el-select :disabled="true" style="width: 196px;" @change="typeChange(formtwo.passbookType)" v-model="formtwo.passbookType" placeholder="">
+                  <el-select :disabled="true" :style="styleObject" @change="typeChange(formtwo.passbookType)" v-model="formtwo.passbookType" placeholder="">
                     <el-option label="翻倍券" :value="1"></el-option>
                     <el-option label="折扣券" :value="2"></el-option>
                     <el-option label="加成券" :value="3"></el-option>
@@ -295,20 +333,20 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="有效期（天）:" :label-width="formLabelWidth">
-                  <el-input :value="formtwo.useDay" :disabled="true" auto-complete="off" style="width: 196px;" clearable></el-input>
+                  <el-input :value="formtwo.useDay" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="11" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="折扣值:"  :label-width="formLabelWidth">
-                  <el-input :value="formtwo.passbookValue" :disabled="true" auto-complete="off" style="width: 196px;" clearable></el-input>
+                  <el-input :value="formtwo.passbookValue" :disabled="true" auto-complete="off" style="width: 180px" clearable></el-input>
                   {{persent}}
                 </el-form-item>
               </el-col>
 
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="是否发放:"
                               prop="regSend"
                               :label-width="formLabelWidth">
@@ -319,22 +357,24 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="创建时间:"  :label-width="formLabelWidth">
-                  <el-input :value="formtwo.createTime"  :formatter="dateFormat" :disabled="true" auto-complete="off" style="width: 196px;" clearable></el-input>
+                  <el-input :value="formtwo.createTime"  :formatter="dateFormat" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="24" style="margin-bottom: 10px">
+                <el-form-item label="描述:"
+                              prop="remark"
+                              :label-width="formLabelWidth">
+                  <el-input type="textarea" :disabled="true" :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
+                            auto-complete="off"
+                            clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+
             </el-row>
-
-            <el-form-item label="描述:"
-                          prop="remark"
-                          :label-width="formLabelWidth">
-              <el-input type="textarea" :disabled="true" :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark"
-                        auto-complete="off"
-                        clearable
-                        style="width: 300px;"></el-input>
-            </el-form-item>
-
             <el-row>
               <el-form-item label="适用任务类型:"
                             prop=""
@@ -380,6 +420,9 @@
     name: 'CardVoucher',
     data() {
       return {
+        styleObject: {
+          width: '200px',
+        },
         batchSendName:'',
         formsendPhone:'',
         batchSend:'',
@@ -773,8 +816,5 @@
     height: 178px;
     display: block;
   }
-  .form {
-    overflow-y: scroll;
-    height: 500px;
-  }
+
 </style>

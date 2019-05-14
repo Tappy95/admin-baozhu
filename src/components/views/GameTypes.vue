@@ -34,7 +34,7 @@
         <el-dialog title="添加游戏" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="游戏名称：" :label-width="formLabelWidth" prop="typeName">
-              <el-input v-model="form.typeName" auto-complete="off" style="width: 217px" clearable>
+              <el-input v-model="form.typeName" auto-complete="off" clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="是否启用" prop="status" :label-width="formLabelWidth">
@@ -52,7 +52,7 @@
         <el-dialog title="修改游戏" :visible.sync="dialogTableVisible" width="600px">
           <el-form :model="formtwo">
             <el-form-item label="游戏名称：" :label-width="formLabelWidth" prop="typeName">
-              <el-input v-model="formtwo.typeName" auto-complete="off" style="width: 217px" clearable>
+              <el-input v-model="formtwo.typeName" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="是否启用" prop="status" :label-width="formLabelWidth">
@@ -72,7 +72,7 @@
           <el-form :model="formtwoInfo">
 
             <el-form-item label="游戏名称：" :label-width="formLabelWidth" prop="typeName">
-              <el-input :disabled="true" v-model="formtwoInfo.typeName" auto-complete="off" style="width: 217px" clearable>
+              <el-input :disabled="true" v-model="formtwoInfo.typeName" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="是否启用" prop="status" :label-width="formLabelWidth">
@@ -83,7 +83,7 @@
             </el-form-item>
 
             <el-form-item label="创建时间" :label-width="formLabelWidth">
-              <el-input  v-model="formtwoInfo.createTime" :disabled="true" auto-complete="off" style="width:220px" clearable></el-input>
+              <el-input style="width: 187px" v-model="formtwoInfo.createTime" :disabled="true" auto-complete="off"  clearable></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">

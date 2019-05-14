@@ -7,11 +7,34 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="用户姓名">
+          <el-form-item label="用户姓名:">
             <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
 
+          <el-form-item label="电话号码:">
+            <el-input v-model="formInline.mobile" placeholder="" clearable></el-input>
+          </el-form-item>
+
+          <el-form-item label="状态:" >
+            <el-select v-model="formInline.changedType"  placeholder="">
+              <el-option label="答题" value="1"></el-option>
+              <el-option label="签到" value="2"></el-option>
+              <el-option label="提现" value="3"></el-option>
+              <el-option label="推荐用户" value="4"></el-option>
+              <el-option label="徒弟贡献" value="5"></el-option>
+              <el-option label="VIP" value="6"></el-option>
+              <el-option label="游戏试玩" value="7"></el-option>
+              <el-option label="徒弟到达四级" value="8"></el-option>
+              <el-option label="新人注册" value="9"></el-option>
+              <el-option label="任务" value="10"></el-option>
+              <el-option label="出题" value="11"></el-option>
+              <el-option label="兑换金猪" value="12"></el-option>
+              <el-option label="阅读资讯" value="13"></el-option>
+              <el-option label="提现退回" value="14"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
+          <el-button @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -49,6 +72,11 @@
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="真实姓名:" :label-width="formLabelWidth">
                   <el-input :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col v-if="message.changedType=='提现'" :span="10" style="margin-bottom: 10px">
+                <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
+                  <el-input :value="message.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10" style="margin-bottom: 10px">
@@ -101,7 +129,6 @@
           </div>
         </el-dialog>
 
-
         <el-dialog title="审核" :visible.sync="dialogTableVisible" width="800px">
           <el-form>
             <el-row>
@@ -110,6 +137,13 @@
                   <el-input :value="messageForm.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col v-if="messageForm.changedType=='提现'" :span="10" style="margin-bottom: 10px">
+                <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
+                  <el-input :value="messageForm.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="变更金额:" :label-width="formLabelWidth">
                   <el-input :value="messageForm.amount" :disabled="true" auto-complete="off" style="" clearable></el-input>
@@ -231,7 +265,9 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          userName:this.formInline.userName
+          userName:this.formInline.userName,
+          changedType:this.formInline.changedType,
+          mobile:this.formInline.mobile
         }
 
         this.$fetch('/api/lCoinChange/page', parameterData).then(res => {
@@ -269,6 +305,8 @@
               res.data.list[i].changedType = '兑换金猪'
             }else if(res.data.list[i].changedType == '13'){
               res.data.list[i].changedType = '阅读资讯'
+            }else if(res.data.list[i].changedType == '14'){
+              res.data.list[i].changedType = '提现退回'
             }
 
             if(res.data.list[i].status == '1'){
@@ -297,7 +335,7 @@
         this.$fetch('/api/lCoinChange/info', {
           id: id
         }).then(res => {
-          if(res.data != null ){
+           if ((res.statusCode+"").startsWith("2")) {
           if(res.data.flowType == '1') {
             res.data.flowType = '收入'
           } else {
@@ -329,6 +367,8 @@
             res.data.changedType = '兑换金猪'
           }else if(res.data.changedType == '13'){
             res.data.changedType = '阅读资讯'
+          }else if(res.data.changedType == '14'){
+            res.data.changedType = '提现退回'
           }
           if(res.data.status==3){
             this.reasonMess=true
@@ -345,7 +385,7 @@
         this.$fetch('/api/lCoinChange/queryWithdrawalsInfo', {
           id: id
         }).then(res => {
-          if(res.data != null ){
+          if ((res.statusCode+"").startsWith("2")) {
           if(res.data.flowType == '1') {
             res.data.flowType = '收入'
           } else {
@@ -377,6 +417,8 @@
               res.data.changedType = '兑换金猪'
             }else if(res.data.changedType == '13'){
               res.data.changedType = '阅读资讯'
+            }else if(res.data.changedType == '14'){
+              res.data.changedType = '提现退回'
             }
 
           if(res.data.status==3){

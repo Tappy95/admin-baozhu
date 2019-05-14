@@ -58,7 +58,6 @@
                 </el-col>
                 <el-col :span="12">
                   <el-form-item label="排序:"
-
                                 :label-width="formLabelWidth">
                     <el-input min="0" type="number" v-model="form.sort"
                               auto-complete="off"
@@ -130,7 +129,7 @@
                 </el-col>
 
                 <el-col :span="24">
-                  <el-form-item label="任务图片:"
+                  <el-form-item label="任务未完成图标:"
                                 :label-width="formLabelWidth">
                     <el-upload class="bannerAvatar-uploader"
                                action="/api/upload"
@@ -146,6 +145,25 @@
                     </el-upload>
                   </el-form-item>
                 </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="任务完成图标:"
+                                :label-width="formLabelWidth">
+                    <el-upload class="bannerAvatar-uploader"
+                               action="/api/upload"
+                               :data="uploadData"
+                               :show-file-list="false"
+                               :on-success="filTaskImgSuccess"
+                               :before-upload="filTaskImgUpload">
+                      <img v-if="fulfilTaskImg"
+                           :src="fulfilTaskImg"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+
               </el-row>
             </div>
           </el-form>
@@ -306,7 +324,7 @@
               </el-col>
 
               <el-col :span="24">
-                <el-form-item label="任务图片:"
+                <el-form-item label="任务未完成图标:"
                               :label-width="formLabelWidth">
                   <el-upload class="bannerAvatar-uploader"
                              action="/api/upload"
@@ -322,6 +340,25 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="任务完成图标:"
+                              :label-width="formLabelWidth">
+                  <el-upload class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="filTaskImgSuccess"
+                             :before-upload="filTaskImgUpload">
+                    <img v-if="fulfilTaskImg"
+                         :src="fulfilTaskImg"
+                         class="avatar">
+                    <i v-else
+                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer"
@@ -333,7 +370,6 @@
         </el-dialog>
         <el-dialog title="任务详情" :visible.sync="dialog" width="800px">
           <el-form>
-
             <el-row>
               <el-col :span="23">
                 <el-form-item label="任务名称:"
@@ -433,9 +469,9 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
+0
               <el-col :span="24">
-                <el-form-item label="任务图片:"
+                <el-form-item label="任务未完成图标:"
                               :label-width="formLabelWidth">
                   <el-upload :disabled="true" class="bannerAvatar-uploader"
                              action="/api/upload"
@@ -445,6 +481,24 @@
                              :before-upload="beforeAvatarUpload">
                     <img v-if="imageUrl"
                          :src="imageUrl"
+                         class="avatar">
+                    <i v-else
+                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="任务完成图标:"
+                              :label-width="formLabelWidth">
+                  <el-upload :disabled="true" class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="filTaskImgSuccess"
+                             :before-upload="filTaskImgUpload">
+                    <img v-if="fulfilTaskImg"
+                         :src="fulfilTaskImg"
                          class="avatar">
                     <i v-else
                        class="el-icon-plus bannerAvatar-uploader-icon"></i>
@@ -481,6 +535,7 @@
       return {
         uploadData:{},
         imageUrl:'',
+        fulfilTaskImg:'',
         styleObject: {
           width: '200px',
         },
@@ -557,7 +612,7 @@
       }
     },
     //过滤器
-    versionNo: {
+    filters: {
       formatDate(time) {
         var date = new Date(time);
         return formatDate(date, 'yyyy-MM-dd hh:mm:sss');
@@ -571,8 +626,19 @@
       viewImg() {
         this.showImg = false
       },
+
+      filTaskImgSuccess(res, file) {
+        this.fulfilTaskImg=res.data
+        console.log(res.data)
+      },
+
+      filTaskImgUpload(file) {
+
+      },
+
       handleAvatarSuccess(res, file) {
         this.imageUrl=res.data
+        console.log(res.data)
       },
       beforeAvatarUpload(file) {
 
@@ -659,9 +725,11 @@
       viewImg() {
         this.showImg = false;
       },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl=res.data;
-      },
+
+      //
+      // handleAvatarSuccess(res, file) {
+      //   this.imageUrl=res.data;
+      // },
       beforeAvatarUpload(file) {
 
       },
@@ -732,12 +800,14 @@
         this.dialogFormVisible = true;
         this.form = {};
         this.imageUrl='';
+        this.fulfilTaskImg='';
         this.taskTypeName = [];
         this.taskTypes='';
         this.queryTaskType();
       },
       addBtn(form) {
          this.form.taskImg = this.imageUrl;
+        this.form.fulfilTaskImg = this.fulfilTaskImg;
         this.$refs.form.validate(valid => {
           if (valid) {
             this.$post('/api/mTaskInfo/add', this.form).then(res => {
@@ -789,7 +859,8 @@
           if ((res.statusCode+"").startsWith("2")) {
           this.formtwo = res.data;
           this.queryTaskType();
-            this.imageUrl = res.data.taskImg
+            this.imageUrl = res.data.taskImg;
+            this.fulfilTaskImg = res.data.fulfilTaskImg;
           if (this.dialog){
             // this.formtwo.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
           }
@@ -798,6 +869,7 @@
       },
       update(formtwo) {
          this.formtwo.taskImg = this.imageUrl;
+         this.formtwo.fulfilTaskImg = this.fulfilTaskImg;
         this.$put('/api/mTaskInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
           this.$message({ type: 'success', message: '修改成功！' })
@@ -866,8 +938,5 @@
     height: 178px;
     display: block;
   }
-  .form {
-    overflow-y: scroll;
-    height: auto;
-  }
+
 </style>
