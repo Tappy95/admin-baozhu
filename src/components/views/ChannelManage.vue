@@ -633,14 +633,15 @@
         })
       },
       getInfo(id) {
+        this.imageUrl='';
         //修改前查询基本信息
-        this.dialogTableVisible = true
+        this.dialogTableVisible = true;
         this.$fetch('/api/mChannelInfo/queryOne', {
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.imageUrl = this.formtwo.content
             this.formtwo = res.data;
+            this.imageUrl = this.formtwo.content
           }
         })
       },
@@ -660,12 +661,14 @@
         })
       },
       getOne(id){
+        this.imageUrl='';
         this.dialogTableDetail = true;
         this.$fetch('/api/mChannelInfo/queryOne', {
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             res.data.createTime =  formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
+            this.imageUrl = res.data.content;
             this.formtwoInfo = res.data
           }
         })

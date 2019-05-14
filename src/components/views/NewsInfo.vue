@@ -19,11 +19,11 @@
           <el-table :data="tableData" height="580">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column width="200px" fixed="left" prop="informTitle" label="通知标题">
+            <el-table-column  min-width="200px" fixed="left" prop="informTitle" label="通知标题">
             </el-table-column>
-            <el-table-column  width="300px" prop="informContent" label="通知内容">
+            <el-table-column  min-width="300px" prop="informContent" label="通知内容">
             </el-table-column>
-            <el-table-column width="200px" prop="createrTime" :formatter="dateFormat" label="创建时间">
+            <el-table-column  min-width="200px" prop="createrTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
             <el-table-column prop="isRelease" label="发布状态">
             </el-table-column>
@@ -44,108 +44,160 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加通知" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加通知" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
-              <el-select v-model="form.pushObject" @change="toTypesTap(form.pushObject)" placeholder="">
-                <el-option label="个人" value="1"></el-option>
-                <el-option label="所有人" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item v-if="toTypes" label="接收人" :label-width="formLabelWidth" prop="mobile">
-              <el-input type="number" v-model="form.mobile" auto-complete="off" style="width: 187px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
-              <el-select v-model="form.pushMode" placeholder="">
-                <el-option label="短信" value="1"></el-option>
-                <el-option label="推送" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
-              <el-select v-model="form.informType" placeholder="" @change="changeType(form.informType)">
-                <el-option label="普通通知" value="1"></el-option>
-                <el-option label="自定义通知" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item v-if="myhttps" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
-              <el-input  v-model="form.informUrl" auto-complete="off" style="width: 320px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
-              <el-select v-model="form.isRelease" placeholder="">
-                <el-option label="是" value="1"></el-option>
-                <el-option label="否" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-              <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
-                <el-date-picker
-                  v-model="form.pushTime"
-                  type="datetime" style="width: 320px"
-                  placeholder="选择活动结束时间" >
-                </el-date-picker>
-              </el-form-item>
-            <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
-              <el-input v-model="form.informTitle" auto-complete="off" style="width: 320px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
-              <el-input style="width: 320px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.informContent" auto-complete="off" clearable></el-input>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.pushObject" @change="toTypesTap(form.pushObject)" placeholder="">
+                    <el-option label="个人" value="1"></el-option>
+                    <el-option label="所有人" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item v-if="toTypes" label="接收人"  :label-width="formLabelWidth" prop="mobile">
+                  <el-input :style="styleObject" type="number" placeholder="请输入接收人的手机号码" v-model="form.mobile" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.pushMode" placeholder="">
+                    <el-option label="短信" value="1"></el-option>
+                    <el-option label="推送" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.isRelease" placeholder="">
+                    <el-option label="是" value="1"></el-option>
+                    <el-option label="否" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
+                  <el-date-picker
+                    v-model="form.pushTime"
+                    type="datetime"  :style="styleObject"
+                    placeholder="选择活动结束时间" >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.informType" placeholder="" @change="changeType(form.informType)">
+                    <el-option label="普通通知" value="1"></el-option>
+                    <el-option label="自定义通知" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item v-if="myhttps" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
+                  <el-input  v-model="form.informUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
+                  <el-input v-model="form.informTitle" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.informContent" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改通知" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="修改通知" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo" :rules="rules" ref="formtwo">
-            <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
-              <el-select v-model="formtwo.pushObject" @change="toTypesTap(formtwo.pushObject)" placeholder="">
-                <el-option label="个人" :value="1"></el-option>
-                <el-option label="所有人" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item v-if="formtwo.pushObject==1" label="接收人" :label-width="formLabelWidth" prop="mobile">
-              <el-input type="number" v-model="formtwo.mobile" auto-complete="off" style="width: 187px"  clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
-              <el-select v-model="formtwo.pushMode" placeholder="">
-                <el-option label="短信" :value="1"></el-option>
-                <el-option label="推送" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
-              <el-select v-model="formtwo.informType" placeholder="" >
-                <el-option label="普通通知" :value="1"></el-option>
-                <el-option label="自定义通知" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item v-if="formtwo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
-              <el-input  v-model="formtwo.informUrl" auto-complete="off" style="width: 320px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
-              <el-select v-model="formtwo.isRelease" placeholder="">
-                <el-option label="是" :value="1"></el-option>
-                <el-option label="否" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
-              <el-date-picker
-                v-model="formtwo.pushTime"
-                type="datetime" style="width: 320px"
-                placeholder="选择活动结束时间" >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
-              <el-input v-model="formtwo.informTitle" auto-complete="off" style="width: 320px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
-              <el-input style="width: 320px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.informContent" auto-complete="off" clearable></el-input>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.pushObject" @change="toTypesTap(formtwo.pushObject)" placeholder="">
+                    <el-option label="个人" :value="1"></el-option>
+                    <el-option label="所有人" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item v-if="formtwo.pushObject==1" label="接收人" :label-width="formLabelWidth" prop="mobile">
+                  <el-input type="number" v-model="formtwo.mobile" auto-complete="off" :style="styleObject"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.pushMode" placeholder="">
+                    <el-option label="短信" :value="1"></el-option>
+                    <el-option label="推送" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.isRelease" placeholder="">
+                    <el-option label="是" :value="1"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
+                  <el-date-picker :style="styleObject"
+                                  v-model="formtwo.pushTime"
+                                  type="datetime"
+                                  placeholder="选择活动结束时间" >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.informType" placeholder="" >
+                    <el-option label="普通通知" :value="1"></el-option>
+                    <el-option label="自定义通知" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item v-if="formtwo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
+                  <el-input  v-model="formtwo.informUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+
+              <el-col :span="22">
+                <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
+                  <el-input v-model="formtwo.informTitle" auto-complete="off" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.informContent" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -153,60 +205,82 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="通知详情" :visible.sync="dialogTableVisibleInfo" width="600px">
+        <el-dialog title="通知详情" :visible.sync="dialogTableVisibleInfo" width="800px">
           <el-form :model="formtwoInfo">
-            <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
-              <el-select :disabled="true" v-model="formtwoInfo.pushObject" @change="toTypesTap(formtwoInfo.pushObject)" placeholder="">
-                <el-option label="个人" :value="1"></el-option>
-                <el-option label="所有人" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item v-if="formtwoInfo.pushObject==1" label="接收人" :label-width="formLabelWidth" prop="mobile">
-              <el-input :disabled="true" type="number" v-model="formtwoInfo.mobile" style="width: 187px" auto-complete="off"  clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
-              <el-select :disabled="true" v-model="formtwoInfo.pushMode" placeholder="">
-                <el-option label="短信" :value="1"></el-option>
-                <el-option label="推送" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
+                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.pushObject" @change="toTypesTap(formtwoInfo.pushObject)" placeholder="">
+                    <el-option label="个人" :value="1"></el-option>
+                    <el-option label="所有人" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
-              <el-select :disabled="true" v-model="formtwoInfo.informType" placeholder="" >
-                <el-option label="普通通知" :value="1"></el-option>
-                <el-option label="自定义通知" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item v-if="formtwoInfo.pushObject==1" label="接收人" :label-width="formLabelWidth" prop="mobile">
+                  <el-input :style="styleObject" :disabled="true" type="number" v-model="formtwoInfo.mobile"  auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item  v-if="formtwoInfo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
-              <el-input  :disabled="true" v-model="formtwoInfo.informUrl" auto-complete="off" style="width: 320px" clearable>
-              </el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.pushMode" placeholder="">
+                    <el-option label="短信" :value="1"></el-option>
+                    <el-option label="推送" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item  label="是否发布" prop="isRelease" :label-width="formLabelWidth">
-              <el-select :disabled="true" v-model="formtwoInfo.isRelease" placeholder="">
-                <el-option label="是" :value="1"></el-option>
-                <el-option label="否" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.informType" placeholder="" >
+                    <el-option label="普通通知" :value="1"></el-option>
+                    <el-option label="自定义通知" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
-              <el-date-picker :disabled="true"
-                v-model="formtwoInfo.pushTime"
-                type="datetime" style="width: 320px"
-                placeholder="选择活动结束时间" >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
-              <el-input :disabled="true" v-model="formtwoInfo.informTitle" auto-complete="off" style="width: 320px" clearable>
-              </el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item  v-if="formtwoInfo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
+                  <el-input :style="styleObject" :disabled="true" v-model="formtwoInfo.informUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
-              <el-input :disabled="true" style="width: 320px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.informContent" auto-complete="off" clearable></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item  label="是否发布" prop="isRelease" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.isRelease" placeholder="">
+                    <el-option label="是" :value="1"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
+              <el-col :span="12">
+                <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
+                  <el-date-picker :disabled="true"
+                                  v-model="formtwoInfo.pushTime"
+                                  type="datetime" :style="styleObject"
+                                  placeholder="选择活动结束时间" >
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
+                  <el-input :disabled="true" v-model="formtwoInfo.informTitle" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
+                  <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.informContent" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisibleInfo = false">确定</el-button>
@@ -227,6 +301,9 @@
     name: 'NewsInfo',
     data() {
       return {
+        styleObject: {
+          width: '200px',
+        },
         toTypes:false,
         myhttps:false,
         powerTrue:false,

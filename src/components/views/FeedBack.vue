@@ -150,9 +150,12 @@
               <el-form-item  label="图片:"
                             :label-width="formLabelWidth">
                 <div class="box_img">
-                  <img @click="clickImg(item)" style="max-width:178px;max-height:178px;float: left;margin-right: 10px" v-for="(item,index) in arrImg" :key="index" v-if="arrImg"
-                       :src="item"
-                       class="avatar">
+                  <div class="box_min"  v-for="(item,index) in arrImg" :key="index"  v-if="arrImg">
+                    <img v-if="item"  @click="clickImg(item)"
+                          :src="item"
+                          class="avatar">
+                  </div>
+
                 </div>
               </el-form-item>
               <el-col :span="20">
@@ -402,10 +405,18 @@
     border: 1px solid #dcdfe6;
     float: left;
     background-color: #f5f7fa;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: self-start;
   }
 
+  .box_img .box_min{
+    width:178px;height:178px;float: left;
+    margin-right: 10px;
+  }
   .box_img img{
-    float: left;
+    max-width:178px;max-height:178px;float: left;margin-right: 10px
   }
   .administratormanage-wrap {
     width: 100%;

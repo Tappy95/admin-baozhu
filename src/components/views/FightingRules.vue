@@ -42,36 +42,46 @@
           </el-table>
         </template>
 
-        <el-dialog title="添加答题规则" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加答题规则" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="类型名称" :label-width="formLabelWidth" prop="typeName">
+                  <el-input v-model="form.typeName" auto-complete="off" :style="styleObject" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="类型名称" :label-width="formLabelWidth" prop="typeName">
-              <el-input v-model="form.typeName" auto-complete="off" style="width: 187px" clearable>
-              </el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="奖励类型" :label-width="formLabelWidth" prop="rewardType">
+                  <el-select :style="styleObject" v-model="form.rewardType" placeholder="">
+                    <el-option label="人民币" value="0"></el-option>
+                    <el-option label="金币" value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="是否废弃" :label-width="formLabelWidth" prop="isDisable">
-              <el-select v-model="form.isDisable" placeholder="">
-                <el-option label="正常" value="1"></el-option>
-                <el-option label="废弃" value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="是否废弃" :label-width="formLabelWidth" prop="isDisable">
+                  <el-select :style="styleObject" v-model="form.isDisable" placeholder="">
+                    <el-option label="正常" value="1"></el-option>
+                    <el-option label="废弃" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="奖励类型" :label-width="formLabelWidth" prop="rewardType">
-              <el-select v-model="form.rewardType" placeholder="">
-                <el-option label="人民币" value="0"></el-option>
-                <el-option label="金币" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
-              <el-input v-model="form.questionNum" min="0" type="number" auto-complete="off" style="width:187px" clearable>
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="对战规则" prop="fightingRule" :label-width="formLabelWidth">
-              <el-input style="width: 300px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.fightingRule" auto-complete="off" clearable></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
+                  <el-input :style="styleObject" v-model="form.questionNum" min="0" type="number" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="对战规则" prop="fightingRule" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.fightingRule" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -79,35 +89,46 @@
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改规则" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="修改规则" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
-            <el-form-item label="类型名称" :label-width="formLabelWidth" prop="typeName">
-              <el-input v-model="formtwo.typeName" auto-complete="off" style="width: 187px" clearable>
-              </el-input>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="类型名称" :label-width="formLabelWidth" prop="typeName">
+                  <el-input v-model="formtwo.typeName" auto-complete="off" :style="styleObject" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="是否废弃" :label-width="formLabelWidth" prop="isDisable">
-              <el-select v-model="formtwo.isDisable" placeholder="">
-                <el-option label="正常" :value="1"></el-option>
-                <el-option label="废弃" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="奖励类型" :label-width="formLabelWidth" prop="rewardType">
+                  <el-select :style="styleObject" v-model="formtwo.rewardType" placeholder="">
+                    <el-option label="人民币" :value="0"></el-option>
+                    <el-option label="金币" :value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="奖励类型" :label-width="formLabelWidth" prop="rewardType">
-              <el-select v-model="formtwo.rewardType" placeholder="">
-                <el-option label="人民币" :value="-1"></el-option>
-                <el-option label="金币" :value="1"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="是否废弃" :label-width="formLabelWidth" prop="isDisable">
+                  <el-select :style="styleObject" v-model="formtwo.isDisable" placeholder="">
+                    <el-option label="正常" :value="1"></el-option>
+                    <el-option label="废弃" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
-              <el-input v-model="formtwo.questionNum" min="0" type="number" auto-complete="off" style="width:187px" clearable>
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="对战规则" prop="fightingRule" :label-width="formLabelWidth">
-              <el-input style="width: 300px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.fightingRule" auto-complete="off" clearable></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
+                  <el-input :style="styleObject" v-model="formtwo.questionNum" min="0" type="number" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="对战规则" prop="fightingRule" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.fightingRule" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -115,45 +136,61 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="规则详情" :visible.sync="dialogTableDetail" width="600px">
+        <el-dialog title="规则详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="类型名称" :label-width="formLabelWidth" >
+                  <el-input :disabled="true" v-model="formtwoInfo.typeName" auto-complete="off" :style="styleObject" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="类型名称" :label-width="formLabelWidth" prop="typeName">
-              <el-input :disabled="true" v-model="formtwoInfo.typeName" auto-complete="off" style="width: 187px" clearable>
-              </el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="奖励类型" :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.rewardType" placeholder="">
+                    <el-option label="人民币" :value="0"></el-option>
+                    <el-option label="金币" :value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="是否废弃" :label-width="formLabelWidth" prop="isDisable">
-              <el-select :disabled="true" v-model="formtwoInfo.isDisable" placeholder="">
-                <el-option label="正常" :value="1"></el-option>
-                <el-option label="废弃" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="是否废弃" :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.isDisable" placeholder="">
+                    <el-option label="正常" :value="1"></el-option>
+                    <el-option label="废弃" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="奖励类型" :label-width="formLabelWidth" prop="rewardType">
-              <el-select :disabled="true"  v-model="formtwoInfo.rewardType" placeholder="">
-                <el-option label="人民币" :value="0"></el-option>
-                <el-option label="金币" :value="1"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="需完成问题数" :label-width="formLabelWidth">
+                  <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.questionNum" min="0" type="number" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="创建时间" :label-width="formLabelWidth">
-            <el-input   v-model="formtwoInfo.createTime" :disabled="true" auto-complete="off" style="width:220px" clearable></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="创建时间" :label-width="formLabelWidth">
+                  <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.createTime"  auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="修改时间" :label-width="formLabelWidth">
-              <el-input  v-model="formtwoInfo.updateTime" :disabled="true" auto-complete="off" style="width:220px" clearable></el-input>
-            </el-form-item>
+              <el-col :span="12">
+                <el-form-item label="修改时间" :label-width="formLabelWidth">
+                  <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.updateTime"  auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
-              <el-input :disabled="true" v-model="formtwoInfo.questionNum" min="0" type="number" auto-complete="off" style="width:187px" clearable>
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="对战规则" prop="fightingRule" :label-width="formLabelWidth">
-              <el-input :disabled="true"  style="width: 300px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.fightingRule" auto-complete="off" clearable></el-input>
-            </el-form-item>
-
+              <el-col :span="20">
+                <el-form-item label="对战规则" :label-width="formLabelWidth">
+                  <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.fightingRule" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableDetail = false">取 消</el-button>
@@ -174,6 +211,9 @@
     name: 'FightingRules',
     data() {
       return {
+        styleObject: {
+          width: '200px',
+        },
         powerTrue:false,
         optionW:'75px',
         menuId:'',
@@ -410,11 +450,10 @@
         this.$fetch('/api/mFightingType/info', {
           typeId: id
         }).then(res => {
-          if(res.data != null ){
-          res.data.createTime =  formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
-          res.data.updateTime =  formatDate(new Date(res.data.updateTime), 'yyyy-MM-dd hh:mm:sss')
-
-          this.formtwoInfo = res.data
+          if ((res.statusCode+"").startsWith("2")) {
+          res.data.createTime =  formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss');
+          res.data.updateTime =  formatDate(new Date(res.data.updateTime), 'yyyy-MM-dd hh:mm:sss');
+          this.formtwoInfo = res.data;
         }
       })
       },
