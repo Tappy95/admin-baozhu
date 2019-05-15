@@ -28,6 +28,8 @@
             </el-table-column>
             <el-table-column min-width="120px" prop="needUpdate" label="是否需要更新">
             </el-table-column>
+            <el-table-column min-width="120px" prop="open28" label="是否开启28">
+            </el-table-column>
             <el-table-column min-width="250px" prop="updateUrl" label="更新地址">
             </el-table-column>
             <el-table-column min-width="120px" prop="status" label="状态">
@@ -400,7 +402,6 @@
               } else {
                 res.data.list[i].open28 = '已关闭'
               }
-
               if(res.data.list[i].status == '1') {
                 res.data.list[i].status = '已启用'
               } else {

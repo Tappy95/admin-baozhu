@@ -106,13 +106,12 @@
         <el-dialog title="反馈详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo" >
             <el-row>
-              <el-col :span="20">
+              <el-col :span="23">
                 <el-form-item label="用户ID:" :label-width="formLabelWidth" >
                   <el-input :disabled="true"   v-model="formtwoInfo.accountId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="vip等级:" :label-width="formLabelWidth" >
                   <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.vipName" auto-complete="off"  clearable>
@@ -146,7 +145,14 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="12">
+                <el-form-item label="创建时间:" :label-width="formLabelWidth" >
+                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createrTime" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
+              <el-col :span="20">
               <el-form-item  label="图片:"
                             :label-width="formLabelWidth">
                 <div class="box_img">
@@ -158,6 +164,8 @@
 
                 </div>
               </el-form-item>
+              </el-col>
+
               <el-col :span="20">
                 <el-form-item label="备注:"  :label-width="formLabelWidth">
                   <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remarks" auto-complete="off" clearable></el-input>
@@ -170,12 +178,7 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="创建时间:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createrTime" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
