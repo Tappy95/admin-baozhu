@@ -400,7 +400,7 @@
 <style type="text/css">
   .box_img{
     width: 560px;
-    height: auto;
+    height: 178px;
     padding: 10px;
     border: 1px solid #dcdfe6;
     float: left;
@@ -412,11 +412,14 @@
   }
 
   .box_img .box_min{
-    width:178px;height:178px;float: left;
+    max-width:178px;
+    max-height:178px;
+    float: left;
     margin-right: 10px;
   }
   .box_img img{
-    max-width:178px;max-height:178px;float: left;margin-right: 10px
+    max-width:178px;
+    max-height:178px;
   }
   .administratormanage-wrap {
     width: 100%;

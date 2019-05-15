@@ -56,7 +56,8 @@ export default {
 }
 .img-view .img img {
   max-width:100%;
+  max-height: 1080px;
   position: relative;
-  z-index: 2011;
+  z-index: 9011;
 }
 </style>

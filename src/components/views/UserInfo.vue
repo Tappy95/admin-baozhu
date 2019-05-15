@@ -9,16 +9,22 @@
         <el-form :inline="true"
                  :model="formInline"
                  class="demo-form-inline">
-          <el-form-item label="手机号">
+          <el-form-item label="手机号:">
             <el-input v-model="formInline.mobile"
                       placeholder="请输入用户手机"
                       clearable></el-input>
           </el-form-item>
-          <el-form-item label="证件号">
+          <el-form-item label="证件号:">
             <el-input v-model="formInline.socialDigitalNum"
                       placeholder="请输入证件号"
                       clearable></el-input>
           </el-form-item>
+
+          <el-form-item label="渠道标识:">
+            <el-input v-model="formInline.channelCode" auto-complete="off"  clearable>
+            </el-input>
+          </el-form-item>
+
           <el-form-item>
             <el-button @click="search()">查询</el-button>
           </el-form-item>
@@ -412,7 +418,7 @@
         let parameterData = {
           pageNum: this.onecurrentPage,
           pageSize: this.onepageSize,
-          referrerId: this.usetApprenticeId
+          referrerId: this.usetApprenticeId,
         }
         this.apprenticeeVisible = true
         this.$fetch('/api/mUserApprentice/getList', parameterData).then(res => {
@@ -452,7 +458,8 @@
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           socialDigitalNum:this.formInline.socialDigitalNum,
-          mobile:this.formInline.mobile
+          mobile:this.formInline.mobile,
+          channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/userInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
