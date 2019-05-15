@@ -364,7 +364,7 @@
             }
             if (this.rew && this.apprentice) {
               this.powerTrue =true;
-              this.optionW = '230px'
+              this.optionW = '220px'
             }
           }
         } else {

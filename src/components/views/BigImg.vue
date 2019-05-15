@@ -38,7 +38,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2010;
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -46,7 +46,7 @@ export default {
 }
 .img-view .img-layer {
   position: fixed;
-  z-index: 2010;
+  z-index: 10000;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.7);
@@ -58,6 +58,6 @@ export default {
   max-width:100%;
   max-height: 1080px;
   position: relative;
-  z-index: 9011;
+  z-index: 10000;
 }
 </style>
