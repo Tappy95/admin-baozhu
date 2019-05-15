@@ -22,6 +22,7 @@ var ua2 = window.navigator.userAgent.toLowerCase();
 // var https='https://admin.bzlyplay.com';
 // var https='http://103.44.31.228:8088';
 
+
 axios.interceptors.request.use(
   config => {
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
