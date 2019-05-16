@@ -469,7 +469,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-0
               <el-col :span="24">
                 <el-form-item label="任务未完成图标:"
                               :label-width="formLabelWidth">
@@ -773,8 +772,10 @@
               res.data.list[i].taskType ='伯爵任务'
             }else if(res.data.list[i].taskType==4) {
               res.data.list[i].taskType ='候爵任务'
-            }else {
+            }else if(res.data.list[i].taskType==5){
               res.data.list[i].taskType ='公爵任务'
+            }else if(res.data.list[i].taskType==6){
+              res.data.list[i].taskType ='新手任务'
             }
           }
           this.tableData = res.data.list
