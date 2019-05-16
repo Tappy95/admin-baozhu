@@ -7,11 +7,34 @@
 					<span>欢迎 {{realName}} 管理员</span>
 					<span class="cutline">|</span>
 					<div class="exit"
-					  @click="quit"> 退出</div>
+					  @click="editPw"> 修改密码</div>
+
+          <span class="cutline">|</span>
+          <div class="exit"
+               @click="quit"> 退出</div>
 				</div>
 			</div>
+
+
+      <el-dialog title="修改密码" :visible.sync="dialogFormVisible" width="600px">
+      <el-form :model="form" :rules="rules" ref="form">
+        <el-form-item label="旧密码:" :label-width="formLabelWidth" prop="oldPassword">
+          <el-input style="width: 240px" type="password" show-password v-model="form.oldPassword" auto-complete="off"  clearable>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="新密码:" prop="password" :label-width="formLabelWidth">
+          <el-input style="width: 240px" show-password type="password"  v-model="form.password" auto-complete="off" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="确认新密码:" prop="mitPassword" :label-width="formLabelWidth">
+          <el-input style="width: 240px" type="password"  show-password v-model="form.mitPassword" auto-complete="off" clearable></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+      </div>
+    </el-dialog>
 			<div class="index-side">
-        <!--<i class="fa fa-gamepad" aria-hidden="true"></i>-->
 				<el-menu class="el-menu-vertical"
 				  background-color="rgb(50, 65, 87)"
 				  text-color="#fff"
@@ -30,11 +53,14 @@
 </template>
 <script>
 import { delSession, getSession } from '../utils/cookie'
+import md5 from 'js-md5'
 export default {
   data() {
     return {
+      dialogFormVisible:false,
       powers: [],
       realName: '',
+      adminId:'',
       menus: [
         {
           rightName: '',
@@ -50,7 +76,28 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      form: {},
+      mitPassword:'',
+      role:[],
+      rules: {
+        password: [{
+          required: true,
+          message: '请输入新密码',
+          trigger: 'blur'
+        }],
+        oldPassword: [{
+          required: true,
+          message: '请输入旧密码',
+          trigger: 'blur'
+        }],
+        mitPassword: [{
+          required: true,
+          message: '请输入确认新密码',
+          trigger: 'blur'
+        }],
+      },
+      formLabelWidth: '120px',
     }
   },
   created() {
@@ -58,6 +105,47 @@ export default {
     this.getPower()
   },
   methods: {
+    //修改密码
+    editPw() {
+      this.dialogFormVisible = true;
+      this.form = {};
+    },
+
+    addBtn(form) {
+      if (this.form.password != this.form.mitPassword) {
+        this.$message({
+          type: 'error',
+          message: '请确认新密码和确认新密码一致'
+        })
+        return
+      }
+
+      this.form.adminId = getSession("adminId");
+      this.form.password = md5(this.form.password);
+      this.form.oldPassword = md5(this.form.oldPassword);
+      this.form.mitPassword = md5(this.form.mitPassword);
+
+      this.$refs[form].validate(valid => {
+        if(valid) {
+          this.$post('/api/pAdmin/updatePassword', this.form).then(res => {
+            if ((res.statusCode+"").startsWith("2")) {
+              this.dialogFormVisible = false;
+              this.$message({
+                type: 'success',
+                message: '修改成功！'
+              })
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.message
+              })
+            }
+          })
+        } else {}
+      })
+    },
+
+    //退出
     quit() {
       this.$confirm('您确定要退出吗?', '退出管理平台', {
         confirmButtonText: '确定',
@@ -113,14 +201,14 @@ export default {
   position: relative;
   top: -40px;
   display: flex;
-  width: 320px;
+  width: 370px;
 }
 .login-message .cutline {
-  padding-left: 20px;
+  padding-left: 10px;
 }
 .login-message .exit {
   cursor: pointer;
-  padding: 0 40px 0 20px;
+  padding: 0 10px 0 10px;
 }
 .index-header h2 {
   /*width: 500px;*/

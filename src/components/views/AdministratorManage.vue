@@ -38,21 +38,26 @@
 					</el-table>
 				</template>
 				<el-dialog title="修改管理员管理" :visible.sync="dialogTableVisible" width="600px">
-					<el-form :model="formtwo">
-						<el-form-item label="管理员名称" :label-width="formLabelWidth">
+					<el-form :model="formtwo" :rules="rules">
+						<el-form-item label="管理员名称:" :label-width="formLabelWidth" prop="realname">
 							<el-input v-model="formtwo.realname" auto-complete="off" style="" clearable></el-input>
 						</el-form-item>
-						<el-form-item label="手机号" :label-width="formLabelWidth">
-							<el-input v-model="formtwo.mobile" auto-complete="off" style="" clearable></el-input>
+						<el-form-item label="手机号:" :label-width="formLabelWidth" prop="mobile">
+							<el-input v-model="formtwo.mobile" auto-complete="off"  clearable></el-input>
 						</el-form-item>
 
-            <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleName">
+            <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+              <el-input style="width:187px;" v-model="formtwo.password" type="password" auto-complete="off"  clearable></el-input>
+            </el-form-item>
+
+            <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
               <el-select v-model="formtwo.roleId" placeholder="" >
                 <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
 
-						<el-form-item label="状态" :label-width="formLabelWidth">
+
+						<el-form-item label="状态:" :label-width="formLabelWidth">
 							<el-select v-model="formtwo.status" placeholder="">
 								<el-option label="正常" :value="1"></el-option>
 								<el-option label="冻结" :value="2"></el-option>
@@ -67,24 +72,24 @@
 
         <el-dialog title="添加管理员" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="管理员名称" :label-width="formLabelWidth" prop="realname">
+            <el-form-item label="管理员名称:" :label-width="formLabelWidth" prop="realname">
               <el-input v-model="form.realname" auto-complete="off" style="" clearable>
               </el-input>
             </el-form-item>
-            <el-form-item label="手机号" prop="mobile" :label-width="formLabelWidth">
+            <el-form-item label="手机号:" prop="mobile" :label-width="formLabelWidth">
               <el-input  v-model="form.mobile" auto-complete="off" clearable></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
+            <el-form-item label="密码:" prop="password" :label-width="formLabelWidth">
               <el-input style="width: 187px"  v-model="form.password" auto-complete="off" clearable></el-input>
             </el-form-item>
 
-            <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleName">
+            <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
               <el-select v-model="form.roleId" placeholder="" >
                 <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
 
-            <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
+            <el-form-item label="状态:" :label-width="formLabelWidth" prop="status">
               <el-select v-model="form.status" placeholder="" >
                 <el-option label="删除" value="0"></el-option>
                 <el-option label="正常" value="1"></el-option>
@@ -187,6 +192,7 @@
 				selectData: [],
 				staff: 1,
          company: 2,
+        tempPassword:'',
 			}
 		},
 		created() {
@@ -221,7 +227,7 @@
 
             if (this.upd && this.del) {
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '150px'
             }
           }
         } else {
@@ -278,7 +284,8 @@
         this.dialogFormVisible = true;
 			},
 			addBtn(form) {
-        let regs = /^((13[0-9])|(17[0-1,6-8])|(15[^4,\\D])|(18[0-9]))\d{8}$/;
+        // let regs = /^((13[0-9])|(17[0-1,6-8])|(15[^4,\\D])|(18[0-9]))\d{8}$/;
+        let regs = /0?(13|14|15|18|17|19|16)[0-9]{9}/;
         if(!regs.test(this.form.mobile)){
             this.$message({
               type: 'error',
@@ -345,12 +352,14 @@
 				})
 			},
 			getInfo(id) {
-				this.dialogTableVisible = true
+        this.tempPassword ='';
+				this.dialogTableVisible = true;
 				this.$fetch('/api/pAdmin/queryOne', {
 					adminId: id
 				}).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-								this.formtwo = res.data
+								this.tempPassword = res.data.password;
+                this.formtwo = res.data;
 							}
 				})
 			},
@@ -368,7 +377,8 @@
       })
       },
 			update(formtwo) {
-        let regs = /^((13[0-9])|(17[0-1,6-8])|(15[^4,\\D])|(18[0-9]))\d{8}$/;
+        // let regs = /^((13[0-9])|(17[0-1,6-8])|(15[^4,\\D])|(18[0-9]))\d{8}$/;
+        let regs = /0?(13|14|15|18|17|19|16)[0-9]{9}/;
         if(!regs.test(this.formtwo.mobile)){
           this.$message({
             type: 'error',
@@ -376,6 +386,11 @@
           })
           return
         }
+
+        if (this.tempPassword !== this.formtwo.password){
+          this.formtwo.password = md5(this.formtwo.password)
+        }
+
 				this.$put('/api/pAdmin/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
 						this.$message({

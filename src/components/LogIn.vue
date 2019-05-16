@@ -67,6 +67,7 @@ export default {
           this.$setSession('sign', md5Sign)
           this.$fetch("/api/pAdmin/login", fromData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
+              this.$setSession('adminId', res.data.adminId)
               this.$setSession('token', res.token)
               this.$setSession('mobileCookie', res.data.mobile)
               let parameterData = {
