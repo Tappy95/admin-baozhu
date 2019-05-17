@@ -6,13 +6,13 @@
         <hr />
       </div>
       <div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form v-if="searchTrue" :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="用户姓名:">
             <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
           </el-form-item>
 
           <el-form-item label="电话号码:">
-            <el-input v-model="formInline.mobile" placeholder="" clearable></el-input>
+            <el-input  v-model="formInline.mobile" placeholder="" clearable></el-input>
           </el-form-item>
 
           <el-form-item label="状态:" >
@@ -208,6 +208,7 @@
     name: 'CoinChange',
     data() {
       return {
+        searchTrue:false,
         isNotAuditing:false,
         optionW:'75px',
         messageForm:{},
@@ -245,6 +246,9 @@
             if(res.data[i].btnCode == 'exa') {
               this.powerTrue =true;
               this.exa=true
+            }
+            if(res.data[i].btnCode == 'search') {
+              this.searchTrue =true;
             }
           }
         } else {

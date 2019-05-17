@@ -6,7 +6,7 @@
         <hr />
       </div>
       <div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form v-if="searchTrue" :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="用户姓名">
             <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
           </el-form-item>
@@ -21,13 +21,13 @@
             </el-table-column>
             <el-table-column fixed="left" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column prop="amount" label="变更金额">
+            <el-table-column  prop="amount" label="变更金额">
             </el-table-column>
-            <el-table-column prop="flowType" label="收支">
+            <el-table-column  prop="flowType" label="收支">
             </el-table-column>
             <el-table-column prop="changedType" label="变更原因">
             </el-table-column>
-            <el-table-column prop="changedTime" label="变更时间">
+            <el-table-column width="200px" prop="changedTime" label="变更时间">
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="75px">
               <template slot-scope="scope">
@@ -97,13 +97,33 @@
         selectData: [],
         staff: 1,
         company: 2,
-        message:{}
+        message:{},
+        searchTrue:false,
+        menuId:''
       }
     },
     created() {
-      this.accountList()
+      this.menuId=this.$route.query.id
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
+
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'search') {
+                this.searchTrue =true;
+              }
+            }
+          } else {
+          }
+        })
+      },
       indexMethod(index) {
         return index * 1 + 1
       },
