@@ -14,26 +14,40 @@
                       placeholder="请输入用户id"
                       clearable></el-input>
           </el-form-item>
-          <span class="time_zhuce">注册时间：</span>
-          <el-date-picker
-            @change="timeChang"
-            v-model="selectTime"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions">
-          </el-date-picker>
+
+          <el-form-item label="累计赚取金币数:">
+            <el-input v-model="formInline.minCoin"
+                      placeholder="请输入最小值"
+                      clearable></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-input v-model="formInline.maxCoin"
+                    placeholder="请输入最大值"
+                    clearable></el-input>
+          </el-form-item>
+
+          <el-form-item label="注册时间:">
+              <el-date-picker
+                @change="timeChang"
+                v-model="selectTime"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="pickerOptions">
+              </el-date-picker>
+          </el-form-item>
 
           <el-form-item>
             <el-button class="le-bottom" @click="search()">查询</el-button>
           </el-form-item>
-          <!--<el-form-item>-->
-            <!--<el-button @click="exle()">导出表格</el-button>-->
-          <!--</el-form-item>-->
 
+          <el-form-item>
+            <el-button @click="queryExport()">导出表格</el-button>
+          </el-form-item>
         </el-form>
       </div>
       <div class="userloanInformation-table">
@@ -97,6 +111,7 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
+  import { getSession } from '../../utils/cookie'
   export default {
     name: 'ChannelUser',
     data() {
@@ -106,7 +121,13 @@
         pageSize: 10,
         totalCount: 0,
         tableData:[],
-        formInline:{},
+        formInline:{
+          accountId:'',
+          startTime:'',
+            endTime:'',
+            minCoin:'',
+            maxCoin:''
+        },
         pickerOptions: {
           shortcuts: [{
             text: '最近一周',
@@ -142,42 +163,70 @@
       this.accountList()
     },
     methods: {
-
       //导出表格
-      exle(){
+      queryExport() {
+        // if (this.tableData.length<1){
+        //   this.$message({
+        //     type: 'error',
+        //     message: '请选择要导出的数据',
+        //     duration: 3000
+        //   })
+        //   return false;
+        // }
 
+        if (this.selectTime && this.selectTime[0]) {
+          this.formInline.startTime = this.selectTime[0].getTime();
+        }
+        if (this.selectTime && this.selectTime[1]) {
+          this.formInline.endTime = this.selectTime[1].getTime();
+        }
+
+        let accountId=this.formInline.accountId;
+        let startTime=this.formInline.startTime;
+        let endTime=this.formInline.endTime;
+        let minCoin=this.formInline.minCoin;
+        let maxCoin=this.formInline.maxCoin;
+        let token= getSession("token");
+        let channel= getSession("channelCode");
+
+        let url = '/api/excl/channelExclUser';
+        let data = {url,accountId,startTime,endTime,minCoin,maxCoin,token,channel};
+        this.doDownload(data);
       },
+      doDownload(obj) {
+        let url = obj.url,
+          accountId=obj.accountId,
+          startTime=obj.startTime,
+          endTime=obj.endTime,
+          minCoin=obj.minCoin,
+          maxCoin=obj.maxCoin,
+          token= obj.token,
+          channel=obj.channel
+
+        let a1 = document.createElement('a');
+        console.log(url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin)
+
+        a1.setAttribute('href',url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin+'&token='+token+'&channel='+channel);
+        // a1.setAttribute('href',url + '?ids=' + ids);
+
+        let body = document.querySelector('body');
+        body.appendChild(a1);
+        a1.click();
+        a1.remove();
+      },
+
       timeChang(){
-
-
-
-        // this.formInline.endTime = this.selectTime[1].getTime();
-
-        // console.log(new Date())
-        //
-        // console.log(this.selectTime[0])
-        // console.log(this.selectTime[1])
-        //
-        // console.log(this.selectTime[0].getTime());
-        // console.log(this.selectTime[1].getTime());
-
-        // let timestamp4 = new Date(this.value2[0].getTime());//直接用 new Date(时间戳) 格式转化获得当前时间
-        // console.log(timestamp4);
-        // console.log(timestamp4.toLocaleDateString().replace(/\//g, "-") + " " + timestamp4.toTimeString().substr(0, 8)); //再利用拼接正则等手段转化为yyyy-MM-dd hh:mm:ss 格式
 
       },
       search() {
         this.currentPage = 1;
         this.pageSize = 10;
-
         if (this.selectTime && this.selectTime[0]) {
           this.formInline.startTime = this.selectTime[0].getTime();
         }
-
         if (this.selectTime && this.selectTime[1]) {
           this.formInline.endTime = this.selectTime[1].getTime();
         }
-
         this.accountList();
       },
       indexMethod(index) {
@@ -196,7 +245,9 @@
           pageSize: this.pageSize,
           accountId:this.formInline.accountId,
           startTime:this.formInline.startTime,
-          endTime:this.formInline.endTime
+          endTime:this.formInline.endTime,
+          minCoin:this.formInline.minCoin,
+          maxCoin:this.formInline.maxCoin
         }
         this.$fetch('/api/userInfo/channelList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

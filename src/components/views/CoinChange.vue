@@ -42,7 +42,13 @@
                    <el-option label="全部" value=""></el-option>
                  </el-select>
                </el-form-item>
-          <el-button @click="search()">查询</el-button>
+          <el-form-item>
+            <el-button @click="search()">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="queryExport()">导出表格</el-button>
+          </el-form-item>
+        </el-form>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -208,6 +214,7 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
+  import { getSession } from '../../utils/cookie'
 
   export default {
     name: 'CoinChange',
@@ -224,7 +231,13 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
-        formInline: {},
+        formInline: {
+          userName:"",
+          changedType:'',
+          mobile:'',
+          accountId:'',
+          flowType:''
+        },
         tableData: [],
         isShow: false,
         selectDept: [],
@@ -241,6 +254,47 @@
       this.accountList()
     },
     methods: {
+      //导出表格
+      queryExport() {
+        // if (this.tableData.length<1){
+        //   this.$message({
+        //     type: 'error',
+        //     message: '请选择要导出的数据',
+        //     duration: 3000
+        //   })
+        //   return false;
+        // }
+          let userName=this.formInline.userName;
+          let  changedType=this.formInline.changedType;
+          let mobile=this.formInline.mobile;
+          let  accountId=this.formInline.accountId;
+          let  flowType=this.formInline.flowType;
+          let token= getSession("token");
+         let channel= getSession("channelCode");
+
+        let url = '/api/excl/exclCoinChange';
+        let data = {url,userName,changedType,mobile,accountId,flowType,token,channel};
+        this.doDownload(data);
+      },
+      doDownload(obj) {
+        let url = obj.url,
+          userName=obj.userName,
+          changedType=obj.changedType,
+          mobile=obj.mobile,
+          accountId=obj.accountId,
+          flowType=obj.flowType,
+          token= obj.token,
+          channel=obj.channel
+
+        let a1 = document.createElement('a');
+        a1.setAttribute('href',url + '?userName=' + userName +'&changedType='+changedType +'&mobile='+mobile +'&accountId='+accountId +'&flowType='+flowType+'&token='+token +'&channel='+channel);
+
+        let body = document.querySelector('body');
+        body.appendChild(a1);
+        a1.click();
+        a1.remove();
+      },
+
       queryBtns(){
         let parameterData = {
           menuId: this.menuId
