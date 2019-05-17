@@ -51,7 +51,7 @@
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button @click="getOne(scope.row.number)" size="mini">详情</el-button>
-                <el-button @click="getInfo(scope.row.number)" v-if="upd" size="mini">修改</el-button>
+                <el-button @click="getInfo(scope.row.number)"  v-if="upd && scope.row.status=='未开奖'" size="mini">修改</el-button>
                 <el-button @click="Delete(scope.row.number)" v-if="del" size="mini">删除</el-button>
                 <!--this.dialogTableVisible = true-->
                 <el-button @click="getPrize(scope.row.number)" v-if="rePrize && scope.row.status=='未开奖' && scope.row.isRetreat==2" size="mini">退奖</el-button>
@@ -135,7 +135,7 @@
 
               <el-col :span="12">
                 <el-form-item label="状态:" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.status" placeholder="">
+                  <el-select  :style="styleObject" :disabled="true" v-model="formtwoInfo.status" placeholder="">
                     <el-option label="未开奖" :value="false"></el-option>
                     <el-option label="已开奖" :value="true"></el-option>
                   </el-select>
@@ -168,36 +168,13 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="开奖期号:" :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwo.number" auto-complete="off"  clearable>
+                  <el-input :style="styleObject" :disabled="true" v-model="formtwo.number" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="开奖号码:" :label-width="formLabelWidth">
-                  <el-input  v-model="formtwo.data" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="code:" :label-width="formLabelWidth">
-                  <el-input  v-model="formtwo.code" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="退奖:" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.isRetreat" placeholder="">
-                    <el-option label="已退奖" :value="1"></el-option>
-                    <el-option label="未退奖" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
               <el-col :span="12">
                 <el-form-item label="状态:" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.status" placeholder="">
+                  <el-select :style="styleObject"  v-model="formtwo.status" placeholder="">
                     <el-option label="未开奖" :value="false"></el-option>
                     <el-option label="已开奖" :value="true"></el-option>
                   </el-select>
@@ -205,8 +182,32 @@
               </el-col>
 
               <el-col :span="12">
+                <el-form-item label="开奖号码:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.data" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="code:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.code" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="退奖:" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.isRetreat" placeholder="">
+                    <el-option label="已退奖" :value="1"></el-option>
+                    <el-option label="未退奖" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+
+              <el-col :span="12">
                 <el-form-item label="是否异常:" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.isException" placeholder="">
+                  <el-select :style="styleObject" v-model="formtwo.isException" placeholder="">
                     <el-option label="否" :value="0"></el-option>
                     <el-option label="是" :value="1"></el-option>
                   </el-select>
@@ -214,7 +215,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="检查异常:" :label-width="formLabelWidth">
-                  <el-select  v-model="formtwo.notCheckException" placeholder="">
+                  <el-select :style="styleObject"  v-model="formtwo.notCheckException" placeholder="">
                     <el-option label="否" :value="0"></el-option>
                     <el-option label="是" :value="1"></el-option>
                   </el-select>
