@@ -16,8 +16,7 @@
             </el-table-column>
             <el-table-column  min-width="150px" prop="gameId" label="游戏id">
             </el-table-column>
-            <el-table-column  min-width="120px" prop="gameId" label="游戏id">
-            </el-table-column>
+
             <el-table-column  min-width="200px" prop="orderNum" label="流水号">
             </el-table-column>
             <el-table-column  min-width="150px" prop="gameReward" label="游戏方奖励金币数">
@@ -28,8 +27,7 @@
             </el-table-column>
             <el-table-column  min-width="120px" prop="mobile" label="用户手机号">
             </el-table-column>
-            <el-table-column  min-width="150px" prop="gameReward" label="游戏方奖励金币数">
-            </el-table-column>
+
             <el-table-column  min-width="150px" prop="channelCode" label="渠道标识">
             </el-table-column>
             <el-table-column  min-width="150px" prop="channelName" label="渠道名称">
