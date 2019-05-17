@@ -6,61 +6,65 @@
         <hr />
       </div>
       <div>
-        <el-form v-if="searchTrue" :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="用户姓名:">
-            <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
-          </el-form-item>
-
-          <el-form-item label="电话号码:">
-            <el-input  v-model="formInline.mobile" placeholder="" clearable></el-input>
-          </el-form-item>
-
-          <el-form-item label="状态:" >
-            <el-select v-model="formInline.changedType"  placeholder="">
-              <el-option label="答题" value="1"></el-option>
-              <el-option label="签到" value="2"></el-option>
-              <el-option label="提现" value="3"></el-option>
-              <el-option label="推荐用户" value="4"></el-option>
-              <el-option label="徒弟贡献" value="5"></el-option>
-              <el-option label="VIP" value="6"></el-option>
-              <el-option label="游戏试玩" value="7"></el-option>
-              <el-option label="徒弟到达四级" value="8"></el-option>
-              <el-option label="新人注册" value="9"></el-option>
-              <el-option label="任务" value="10"></el-option>
-              <el-option label="出题" value="11"></el-option>
-              <el-option label="兑换金猪" value="12"></el-option>
-              <el-option label="阅读资讯" value="13"></el-option>
-              <el-option label="提现退回" value="14"></el-option>
-              <el-option label="全部" value=""></el-option>
-            </el-select>
-          </el-form-item>
+        <el-form  :inline="true" :model="formInline" class="demo-form-inline">
+              <el-form-item  label="用户姓名:">
+                <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
+              </el-form-item>
+              <el-form-item  label="电话号码:">
+                <el-input  v-model="formInline.mobile" placeholder="" clearable></el-input>
+              </el-form-item>
+              <el-form-item  label="状态:" >
+                <el-select v-model="formInline.changedType"  placeholder="">
+                  <el-option label="答题" value="1"></el-option>
+                  <el-option label="签到" value="2"></el-option>
+                  <el-option label="提现" value="3"></el-option>
+                  <el-option label="推荐用户" value="4"></el-option>
+                  <el-option label="徒弟贡献" value="5"></el-option>
+                  <el-option label="VIP" value="6"></el-option>
+                  <el-option label="游戏试玩" value="7"></el-option>
+                  <el-option label="徒弟到达四级" value="8"></el-option>
+                  <el-option label="新人注册" value="9"></el-option>
+                  <el-option label="任务" value="10"></el-option>
+                  <el-option label="出题" value="11"></el-option>
+                  <el-option label="兑换金猪" value="12"></el-option>
+                  <el-option label="阅读资讯" value="13"></el-option>
+                  <el-option label="提现退回" value="14"></el-option>
+                  <el-option label="全部" value=""></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="用户id:">
+                <el-input v-model="formInline.accountId" placeholder="" clearable></el-input>
+              </el-form-item>
+               <el-form-item label="收支:" >
+                 <el-select v-model="formInline.flowType"  placeholder="">
+                   <el-option label="收入" value="1"></el-option>
+                   <el-option label="支出" value="2"></el-option>
+                 </el-select>
+               </el-form-item>
           <el-button @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-
-            <el-table-column fixed="left" prop="userName" label="姓名">
+            <el-table-column fixed="left" prop="accountId" label="用户id">
             </el-table-column>
-
+            <el-table-column prop="userName" label="姓名">
+            </el-table-column>
             <el-table-column prop="amount" label="变更金额(￥)">
             </el-table-column>
-
             <el-table-column prop="flowType" label="收支">
             </el-table-column>
-
             <el-table-column prop="changedType" label="变更原因">
             </el-table-column>
             <el-table-column prop="changedTime" width="170px" label="变更时间">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" :width="optionW">
+            <el-table-column fixed="right" v-if="exa" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
-                <el-button @click="getInfo(scope.row.id)" size="mini">查看</el-button>
+                <el-button @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -271,7 +275,9 @@
           pageSize: this.pageSize,
           userName:this.formInline.userName,
           changedType:this.formInline.changedType,
-          mobile:this.formInline.mobile
+          mobile:this.formInline.mobile,
+          accountId:this.formInline.accountId,
+          flowType:this.formInline.flowType
         }
 
         this.$fetch('/api/lCoinChange/page', parameterData).then(res => {
