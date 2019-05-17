@@ -24,16 +24,17 @@
               <el-option label="vip救济金猪" value="7"></el-option>
               <el-option label="金猪抽奖" value="8"></el-option>
               <el-option label="抽奖退回" value="9"></el-option>
+              <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="用户id:">
             <el-input v-model="formInline.accountId" placeholder="" clearable></el-input>
           </el-form-item>
-
           <el-form-item label="收支:" >
             <el-select v-model="formInline.flowType"  placeholder="">
               <el-option label="收入" value="1"></el-option>
               <el-option label="支出" value="2"></el-option>
+              <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
           <el-button @click="search()">查询</el-button>

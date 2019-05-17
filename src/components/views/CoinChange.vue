@@ -39,6 +39,7 @@
                  <el-select v-model="formInline.flowType"  placeholder="">
                    <el-option label="收入" value="1"></el-option>
                    <el-option label="支出" value="2"></el-option>
+                   <el-option label="全部" value=""></el-option>
                  </el-select>
                </el-form-item>
           <el-button @click="search()">查询</el-button>
