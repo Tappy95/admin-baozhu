@@ -25,7 +25,9 @@
 						</el-table-column>
             <el-table-column min-width="170px" prop="roleName"  label="角色名称">
             </el-table-column>
-						<el-table-column min-width="170px" prop="createTime" :formatter="dateFormat" label="创建时间">
+            <el-table-column min-width="170px" prop="channelCode"  label="渠道标识">
+            </el-table-column>
+						<el-table-column min-width="150px" prop="createTime" :formatter="dateFormat" label="创建时间">
 						</el-table-column>
 						<el-table-column prop="status" label="状态">
 						</el-table-column>
@@ -39,30 +41,51 @@
 				</template>
 				<el-dialog title="修改管理员管理" :visible.sync="dialogTableVisible" width="600px">
 					<el-form :model="formtwo" :rules="rules">
-						<el-form-item label="管理员名称:" :label-width="formLabelWidth" prop="realname">
-							<el-input v-model="formtwo.realname" auto-complete="off" style="" clearable></el-input>
-						</el-form-item>
-						<el-form-item label="手机号:" :label-width="formLabelWidth" prop="mobile">
-							<el-input v-model="formtwo.mobile" auto-complete="off"  clearable></el-input>
-						</el-form-item>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="管理员名称:" :label-width="formLabelWidth" prop="realname">
+                  <el-input v-model="formtwo.realname" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
-              <el-input style="width:187px;" v-model="formtwo.password" type="password" auto-complete="off"  clearable></el-input>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="手机号:" :label-width="formLabelWidth" prop="mobile">
+                  <el-input v-model="formtwo.mobile" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
-              <el-select v-model="formtwo.roleId" placeholder="" >
-                <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                  <el-input  v-model="formtwo.password" type="password" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
 
+              <el-col :span="12">
+                <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
+                  <el-select v-model="formtwo.roleId" placeholder="" >
+                    <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
-						<el-form-item label="状态:" :label-width="formLabelWidth">
-							<el-select v-model="formtwo.status" placeholder="">
-								<el-option label="正常" :value="1"></el-option>
-								<el-option label="冻结" :value="2"></el-option>
-							</el-select>
-						</el-form-item>
+              <el-col :span="12">
+                <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
+                  <el-select v-model="formtwo.channelCode" placeholder="" >
+                    <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelName" :value="item.channelCode"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="状态:" :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.status" placeholder="">
+                    <el-option label="正常" :value="1"></el-option>
+                    <el-option label="冻结" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+            </el-row>
 					</el-form>
 					<div slot="footer" class="dialog-footer">
 						<el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -72,30 +95,53 @@
 
         <el-dialog title="添加管理员" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="管理员名称:" :label-width="formLabelWidth" prop="realname">
-              <el-input v-model="form.realname" auto-complete="off" style="" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="手机号:" prop="mobile" :label-width="formLabelWidth">
-              <el-input  v-model="form.mobile" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="密码:" prop="password" :label-width="formLabelWidth">
-              <el-input style="width: 187px"  v-model="form.password" auto-complete="off" clearable></el-input>
-            </el-form-item>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="管理员名称:" :label-width="formLabelWidth" prop="realname">
+                  <el-input v-model="form.realname" auto-complete="off" style="" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
-              <el-select v-model="form.roleId" placeholder="" >
-                <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="手机号:" prop="mobile" :label-width="formLabelWidth">
+                  <el-input  v-model="form.mobile" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="状态:" :label-width="formLabelWidth" prop="status">
-              <el-select v-model="form.status" placeholder="" >
-                <el-option label="删除" value="0"></el-option>
-                <el-option label="正常" value="1"></el-option>
-                <el-option label="冻结" value="2"></el-option>
-              </el-select>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="密码:" prop="password" :label-width="formLabelWidth">
+                  <el-input  v-model="form.password" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
+                  <el-select v-model="form.roleId" placeholder="" >
+                    <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
+                  <el-select v-model="form.channelCode" placeholder="" >
+                    <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelName" :value="item.channelCode"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="状态:" :label-width="formLabelWidth" prop="status">
+                  <el-select v-model="form.status" placeholder="" >
+                    <el-option label="删除" value="0"></el-option>
+                    <el-option label="正常" value="1"></el-option>
+                    <el-option label="冻结" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -178,7 +224,12 @@
             required: true,
             message: '请选择角色名称',
             trigger: 'change'
-          }]
+          }],
+          channelCode: [{
+            required: true,
+            message: '请选择渠道标识',
+            trigger: 'change'
+          }],
 				},
 				formLabelWidth: '120px',
 				/* 分页*/
@@ -193,13 +244,15 @@
 				staff: 1,
          company: 2,
         tempPassword:'',
+        channelCodeList:[],//渠道列表
 			}
 		},
 		created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-			this.accountList()
-      this.roleList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+			this.accountList();
+      this.roleList();
+      this.ChannelList();
 		},
 		methods: {
 
@@ -363,6 +416,7 @@
 							}
 				})
 			},
+      //角色
       roleList() {
         this.$fetch('/api/pRole/queryOption').then(res => {
         if ((res.statusCode+"").startsWith("2")) {
@@ -376,6 +430,22 @@
         }
       })
       },
+
+      //渠道
+      ChannelList() {
+        this.$fetch('/api/mChannelInfo/downList').then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.channelCodeList = res.data;
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message,
+              duration: 3000
+            })
+          }
+        })
+      },
+
 			update(formtwo) {
         // let regs = /^((13[0-9])|(17[0-1,6-8])|(15[^4,\\D])|(18[0-9]))\d{8}$/;
         let regs = /0?(13|14|15|18|17|19|16)[0-9]{9}/;
@@ -386,11 +456,9 @@
           })
           return
         }
-
         if (this.tempPassword !== this.formtwo.password){
           this.formtwo.password = md5(this.formtwo.password)
         }
-
 				this.$put('/api/pAdmin/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
 						this.$message({

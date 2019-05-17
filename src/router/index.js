@@ -73,6 +73,13 @@ import VersionManage from '@/components/views/VersionManage' //版本管理
 import ResourceList from '@/components/views/ResourceList' //资源列表
 import LotteryResult from '@/components/views/LotteryResult' //开奖结果
 
+import ChannelUser from '@/components/views/ChannelUser' //渠道用户
+import GameSide from '@/components/views/GameSide' //渠道用户
+
+
+
+
+
 
 //
 Vue.use(Router)
@@ -334,6 +341,16 @@ const routes = [
         path: 'lottery-result',
         name: 'LotteryResult',
         component: LotteryResult
+      },
+      {
+        path: 'channel-user',
+        name: 'ChannelUser',
+        component: ChannelUser
+      },
+      {
+        path: 'game-side',
+        name: 'GameSide',
+        component: GameSide
       },
     ]
   }

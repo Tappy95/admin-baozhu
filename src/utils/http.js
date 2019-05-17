@@ -13,42 +13,47 @@ var ua = navigator.userAgent.toLowerCase();
 var ua2 = window.navigator.userAgent.toLowerCase();
 
 //本地
-// var https='';
+var https='';
 
 ////测试环境
-  var https='http://192.168.1.193:8088';
+//   var https='http://192.168.1.193:8088';
 
 //正式环境
 // var https='https://admin.bzlyplay.com';
+
 // var https='http://103.44.31.228:8088';
 
 
 axios.interceptors.request.use(
   config => {
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    // config.data.append("channelCode",getSession("channelCode"));
     if(config.method=='post' || config.method=='put'){
       if(config.url == '/api/upload'){
-        config.data.append("app_key",appkey);
-        config.data.append("sign",getSession("sign"));
-        config.data.append("user_agent",ua);
+        config.data.append("channel",getSession("channelCode"));
+        // config.data.append("app_key",appkey);
+        // config.data.append("sign",getSession("sign"));
+        // config.data.append("user_agent",ua);
         config.headers['Content-Type'] = 'multipart\n' +
           '        config.data.append("token",getSession("token"));/form-data';
       }else{
         config.data = {
           ...config.data,
-          app_key: appkey,
+          // app_key: appkey,
           token: getSession("token"),
-          sign: getSession("sign"),
-          user_agent: ua
+          channel:getSession("channelCode"),
+          // sign: getSession("sign"),
+          // user_agent: ua
         }
         config.data = qs.stringify(config.data)
       }
     }else if(config.method=='get'){
       config.params = {
-        app_key: appkey,
+        // app_key: appkey,
         token: getSession("token"),
-        sign: getSession("sign"),
-        user_agent: ua,
+        channel:getSession("channelCode"),
+        // sign: getSession("sign"),
+        // user_agent: ua,
         ...config.params
       }
       config.paramsSerializer=function(params) {
@@ -57,10 +62,11 @@ axios.interceptors.request.use(
 
     }else if(config.method =='delete'){
       config.params = {
-        app_key: appkey,
+        // app_key: appkey,
         token: getSession("token"),
-        sign: getSession("sign"),
-        user_agent: ua,
+        channel:getSession("channelCode"),
+        // sign: getSession("sign"),
+        // user_agent: ua,
         ...config.params
       }
       config.paramsSerializer=function(params) {
