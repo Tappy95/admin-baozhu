@@ -208,7 +208,7 @@ export default {
 }
 .login-message .exit {
   cursor: pointer;
-  padding: 0 10px 0 10px;
+  padding: 0 0 10px 10px;
 }
 .index-header h2 {
   /*width: 500px;*/

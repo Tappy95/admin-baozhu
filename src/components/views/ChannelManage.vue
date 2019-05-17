@@ -617,7 +617,7 @@
         let parameterData = {
           id: id
         }
-        this.$fetch('/api/mChannelInfo/delete', parameterData).then(res => {
+        this.$fetch('/api/mChannelInfo/remove', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
               type: 'success',
