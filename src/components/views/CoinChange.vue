@@ -256,25 +256,17 @@
     methods: {
       //导出表格
       queryExport() {
-        // if (this.tableData.length<1){
-        //   this.$message({
-        //     type: 'error',
-        //     message: '请选择要导出的数据',
-        //     duration: 3000
-        //   })
-        //   return false;
-        // }
           let userName=this.formInline.userName;
           let  changedType=this.formInline.changedType;
           let mobile=this.formInline.mobile;
           let  accountId=this.formInline.accountId;
           let  flowType=this.formInline.flowType;
           let token= getSession("token");
-         let channel= getSession("channelCode");
+          let channel= getSession("channelCode");
 
-        let url = '/api/excl/exclCoinChange';
-        let data = {url,userName,changedType,mobile,accountId,flowType,token,channel};
-        this.doDownload(data);
+          let url = '/api/excl/exclCoinChange';
+          let data = {url,userName,changedType,mobile,accountId,flowType,token,channel};
+          this.doDownload(data);
       },
       doDownload(obj) {
         let url = obj.url,
@@ -287,7 +279,57 @@
           channel=obj.channel
 
         let a1 = document.createElement('a');
-        a1.setAttribute('href',url + '?userName=' + userName +'&changedType='+changedType +'&mobile='+mobile +'&accountId='+accountId +'&flowType='+flowType+'&token='+token +'&channel='+channel);
+
+        let http=url;
+        if(http==url){
+          if(userName!=null && userName!=''){
+            http=http+'?userName=' + userName
+          }
+        }
+        if(http==url){
+          if(changedType!=null && changedType!=''){
+            http=http+'?changedType=' + changedType
+          }
+        }else{
+          if(changedType!=null && changedType!=''){
+            http=http+'&changedType=' + changedType
+          }
+        }
+        if(http==url){
+          if(mobile!=null && mobile!=''){
+            http=http+'?mobile=' + mobile
+          }
+        }else{
+          if(mobile!=null && mobile!=''){
+            http=http+'&mobile=' + mobile
+          }
+        }
+        if(http==url){
+          if(accountId!=null && accountId!=''){
+            http=http+'?accountId=' + accountId
+          }
+        }else{
+          if(accountId!=null && accountId!=''){
+            http=http+'&accountId=' + accountId
+          }
+        }
+        if(http==url){
+          if(flowType!=null && flowType!=''){
+            http=http+'?flowType=' + flowType
+          }
+        }else{
+          if(flowType!=null && flowType!=''){
+            http=http+'&flowType=' + flowType
+          }
+        }
+        if(http==url){
+          http=http+'?token='+token+'&channel='+channel
+        }else{
+          http=http+'&token='+token+'&channel='+channel
+        }
+
+        //a1.setAttribute('href',url + '?userName=' + userName +'&changedType='+changedType +'&mobile='+mobile +'&accountId='+accountId +'&flowType='+flowType+'&token='+token +'&channel='+channel);
+        a1.setAttribute('href',http);
 
         let body = document.querySelector('body');
         body.appendChild(a1);

@@ -204,9 +204,57 @@
           channel=obj.channel
 
         let a1 = document.createElement('a');
-        console.log(url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin)
+        let http=url;
+        if(http==url){
+           if(accountId!=null && accountId!=''){
+             http=http+'?accountId=' + accountId
+           }
+        }
+        if(http==url){
+          if(startTime!=null && startTime!=''){
+            http=http+'?startTime=' + startTime
+          }
+        }else{
+          if(startTime!=null && startTime!=''){
+            http=http+'&startTime=' + startTime
+          }
+        }
+        if(http==url){
+          if(endTime!=null && endTime!=''){
+            http=http+'?endTime=' + endTime
+          }
+        }else{
+          if(endTime!=null && endTime!=''){
+            http=http+'&endTime=' + endTime
+          }
+        }
+        if(http==url){
+          if(minCoin!=null && minCoin!=''){
+            http=http+'?minCoin=' + minCoin
+          }
+        }else{
+          if(minCoin!=null && minCoin!=''){
+            http=http+'&minCoin=' + minCoin
+          }
+        }
+        if(http==url){
+          if(maxCoin!=null && maxCoin!=''){
+            http=http+'?maxCoin=' + maxCoin
+          }
+        }else{
+          if(maxCoin!=null && maxCoin!=''){
+            http=http+'&maxCoin=' + maxCoin
+          }
+        }
+        if(http==url){
+          http=http+'?token='+token+'&channel='+channel
+        }else{
+          http=http+'&token='+token+'&channel='+channel
+        }
+        //console.log(url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin)
 
-        a1.setAttribute('href',url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin+'&token='+token+'&channel='+channel);
+        //a1.setAttribute('href',url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin+'&token='+token+'&channel='+channel);
+        a1.setAttribute('href',http);
         // a1.setAttribute('href',url + '?ids=' + ids);
 
         let body = document.querySelector('body');

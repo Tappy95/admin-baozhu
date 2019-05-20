@@ -162,7 +162,6 @@
             <el-button @click="dialogTableDetail = false">取 消</el-button>
           </div>
         </el-dialog>
-
         <el-dialog title="修改开奖" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
             <el-row>
@@ -229,7 +228,6 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-
       </div>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
