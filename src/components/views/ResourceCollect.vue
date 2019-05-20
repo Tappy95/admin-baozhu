@@ -75,7 +75,7 @@
 
               <el-col :span="12">
                 <el-form-item label="名称:" :label-width="formLabelWidth" prop="name">
-                  <el-input :style="styleObject"  v-model="form.name" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="form.grabName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -148,7 +148,7 @@
 
               <el-col :span="12">
                 <el-form-item label="名称:" :label-width="formLabelWidth" prop="name">
-                  <el-input :style="styleObject"  v-model="formtwo.name" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="formtwo.grabName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -523,6 +523,7 @@
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.formtwo = res.data;
+            this.formtwo.grabName =  this.formtwo.name
           }
         })
       },

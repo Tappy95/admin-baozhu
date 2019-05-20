@@ -303,13 +303,10 @@
           opinionType:this.formInline.opinionType,
           accountId:this.formInline.accountId
         }
-        this.$fetch('/api//mUserOpinion/list', parameterData).then(res => {
+        this.$fetch('/api/mUserOpinion/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             for(let i = res.data.list.length - 1; i >= 0; i--) {
-
               // 意见类型1会员相关2积分提现3信息错误4 友好意见5其他
-
-
               if(res.data.list[i].opinionType == '1') {
                 res.data.list[i].opinionType = '会员相关'
               } else if(res.data.list[i].opinionType == '2') {

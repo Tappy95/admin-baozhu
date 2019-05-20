@@ -76,6 +76,11 @@ import LotteryResult from '@/components/views/LotteryResult' //开奖结果
 import ChannelUser from '@/components/views/ChannelUser' //渠道用户
 import GameSide from '@/components/views/GameSide' //渠道用户
 
+import GameOrder from '@/components/views/GameOrder' //竞猜记录
+
+
+
+
 
 
 
@@ -351,6 +356,11 @@ const routes = [
         path: 'game-side',
         name: 'GameSide',
         component: GameSide
+      },
+      {
+        path: 'game-order',
+        name: 'GameOrder',
+        component: GameOrder
       },
     ]
   }
