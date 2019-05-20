@@ -35,7 +35,7 @@
             <el-table-column min-width="150px" prop="actionData" label="投注号码">
             </el-table-column>
 
-            <el-table-column min-width="150px" prop="amount" label="购买金额(￥)">
+            <el-table-column min-width="150px" prop="amount" label="购买金额">
             </el-table-column>
 
             <el-table-column min-width="150px" prop="odds" label="奖金比例">
@@ -44,7 +44,7 @@
             <el-table-column min-width="150px" prop="lotteryNo" label="开奖号码">
             </el-table-column>
 
-            <el-table-column min-width="150px" :formatter="dateFormat" prop="kjTime" label="官方开奖时间">
+            <el-table-column min-width="150px" :formatter="dateFormat"  prop="kjTime" label="官方开奖时间">
             </el-table-column>
 
             <el-table-column min-width="150px" prop="status" label="状态">
@@ -139,7 +139,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="购买金额(￥):" :label-width="formLabelWidth" >
+                <el-form-item label="购买金额:" :label-width="formLabelWidth" >
                   <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.amount" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
@@ -153,8 +153,8 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="奖金比例*1000:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.odds" auto-complete="off"  clearable>
+                <el-form-item label="奖金比例:" :label-width="formLabelWidth" >
+                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.odds/1000" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -198,13 +198,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="创建时间:" :label-width="formLabelWidth" >-->
-                  <!--<el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createrTime" auto-complete="off"  clearable>-->
-                  <!--</el-input>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
 
             </el-row>
           </el-form>
@@ -320,7 +313,8 @@
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            res.data.createrTime =  formatDate(new Date(res.data.createrTime), 'yyyy-MM-dd hh:mm:sss');
+            res.data.kjTime =  formatDate(new Date(res.data.kjTime), 'yyyy-MM-dd hh:mm:sss');
+            res.data.actionTime =  formatDate(new Date(res.data.actionTime), 'yyyy-MM-dd hh:mm:sss');
             this.formtwoInfo = res.data;
           }
         })

@@ -465,10 +465,11 @@
           if ((res.statusCode+"").startsWith("2")) {
           for(let i = res.data.list.length - 1; i >= 0; i--) {
             if(res.data.list[i].digitalNumType == 1) {
-                res.data.list[i].digitalNumType = "身份证号"
-              } else {
-                res.data.list[i].digitalNumType = "驾驶证"
+                res.data.list[i].digitalNumType = "身份证"
               }
+              // else {
+              //   res.data.list[i].digitalNumType = "驾驶证"
+              // }
           }
           this.tableData = res.data.list
           this.totalCount = res.data.total
