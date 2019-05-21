@@ -30,25 +30,25 @@
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
 
-            <el-table-column fixed="left" prop="questionTypeName" width="200px" label="问题类型">
+            <el-table-column fixed="left" prop="questionTypeName" min-width="200px" label="问题类型">
             </el-table-column>
 
-            <el-table-column prop="question" width="300px" label="题目">
+            <el-table-column prop="question" min-width="300px" label="题目">
             </el-table-column>
 
-            <el-table-column prop="createTime" width="170px" :formatter="dateFormat" label="创建时间">
+            <el-table-column prop="createTime" min-width="170px" :formatter="dateFormat" label="创建时间">
             </el-table-column>
 
-            <el-table-column prop="score" width="150px" label="题目总分">
+            <el-table-column prop="score" min-width="150px" label="题目总分">
             </el-table-column>
 
-            <el-table-column prop="questionState" width="100px" label="问题状态">
+            <el-table-column prop="questionState" min-width="100px" label="问题状态">
             </el-table-column>
 
-            <el-table-column prop="countTime" width="180px" label="答题时间(秒)">
+            <el-table-column prop="countTime" min-width="180px" label="答题时间(秒)">
             </el-table-column>
 
-            <el-table-column prop="coin" width="150px" label="出题者的金币数">
+            <el-table-column prop="coin" min-width="150px" label="出题者的金币数">
             </el-table-column>
             <el-table-column fixed="right" label="操作"  :width="optionW">
               <template slot-scope="scope">

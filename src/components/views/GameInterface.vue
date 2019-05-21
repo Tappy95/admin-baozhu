@@ -134,7 +134,7 @@
 
             <el-table-column fixed="right"
                              label="操作"
-                             v-if="powerTrue" :width="optionW">
+                             :width="optionW">
               <template slot-scope="scope">
                 <el-button size="mini" @click="getInfo(scope.row.id,1)">详情</el-button>
                 <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>

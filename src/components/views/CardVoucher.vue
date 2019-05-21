@@ -198,7 +198,7 @@
 
             <el-table-column fixed="right"
                              label="操作"
-                             v-if="powerTrue" :width="optionW">
+                              :width="optionW">
               <template slot-scope="scope">
                 <el-button size="mini" @click="getInfo(scope.row.id,1)"
                           >详情</el-button>
@@ -437,7 +437,7 @@
         checkedCities1: [],
         cities: [],
         powerTrue:false,
-        optionW:'150px',
+        optionW:'75px',
         menuId:'',
         add:false,
         del:false,
@@ -567,32 +567,33 @@
             }
             if(res.data[i].btnCode == 'upd') {
               this.upd=true;
-              this.powerTrue =true;
+              // this.powerTrue =true;
               this.optionW = '160px'
             }
             if(res.data[i].btnCode == 'del') {
               this.del=true;
-              this.powerTrue =true;
+              // this.powerTrue =true;
               this.optionW = '160px'
             }
 
             if(res.data[i].btnCode == 'send') {
               this.send=true;
-              this.powerTrue =true;
+              // this.powerTrue =true;
               this.optionW = '160px'
             }
 
             if (this.upd && this.del || this.upd && this.send || this.del && this.send) {
-              this.powerTrue =true;
+              // this.powerTrue =true;
               this.optionW = '250px'
             }
 
             if (this.upd && this.del && this.send) {
-              this.powerTrue =true;
+              // this.powerTrue =true;
               this.optionW = '305px'
             }
           }
         } else {
+            // this.powerTrue =false;
         }
       })
       },

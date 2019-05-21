@@ -38,10 +38,10 @@
             <el-table-column prop="packageName" label="游戏包名">
             </el-table-column>
 
-            <el-table-column prop="status" label="状态">
+            <el-table-column prop="status" width="150px" label="状态">
             </el-table-column>
 
-            <el-table-column prop="status"  label="操作" :width="optionW">
+            <el-table-column prop="status"  label="操作" v-if="showW" :width="optionW">
             <template slot-scope="scope">
               <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
               <el-button size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status=='正常' && UpperShelf">下架</el-button>
@@ -76,6 +76,7 @@
         del:false,
         UpperShelf:false,
         optionW:'0px',
+        showW:false
       }
     },
     created() {
@@ -91,6 +92,7 @@
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             for(let i = res.data.length - 1; i >= 0; i--) {
+              this.showW = true;
               if(res.data[i].btnCode == 'del') {
                 this.optionW = '75px';
                 this.del=true;
@@ -105,9 +107,10 @@
 
               }
 
-
             }
           } else {
+            this.showW = false;
+            this.optionW = '1px';
           }
         })
       },

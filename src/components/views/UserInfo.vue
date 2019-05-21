@@ -40,37 +40,37 @@
                              :index="indexMethod"
                              width='80'>
             </el-table-column>
-            <el-table-column width="140px" prop="mobile" fixed="left"
+            <el-table-column min-width="140px" prop="mobile" fixed="left"
                              label="手机号">
             </el-table-column>
-            <el-table-column width="150px" prop="aliasName"
+            <el-table-column min-width="150px" prop="aliasName"
                              label="昵称">
             </el-table-column>
-            <el-table-column  width="200px" prop="socialDigitalNum"
+            <el-table-column  min-width="200px" prop="socialDigitalNum"
                              label="证件号">
             </el-table-column>
             <el-table-column prop="digitalNumType"
                              label="证件类型"
-                             width="200px">
+                             min-width="200px">
             </el-table-column>
             <el-table-column prop="reward"
                              label="奖励金额(￥)"
-                             width="110px">
+                             min-width="110px">
             </el-table-column>
             <el-table-column prop="apprentice"
                              label="学徒数量(个)"
-                             width="110px">
+                             min-width="110px">
             </el-table-column>
 
             <el-table-column prop="level"
                              label="等级"
-                             width="100px">
+                             min-width="100px">
             </el-table-column>
             <el-table-column prop="levelValue"
                              label="经验值"
                              width="100px">
             </el-table-column>
-            <el-table-column  width="300px" :formatter="dateFormat" prop="createTime"
+            <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
                              label="注册时间"
                             >
             </el-table-column>

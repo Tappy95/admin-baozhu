@@ -64,10 +64,10 @@
 
             <el-table-column min-width="300px" prop="remarks" label="备注">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" :width="optionW">
+            <el-table-column fixed="right" v-if="powerTrue" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button size="mini" @click="getOne(scope.row.id)">查看</el-button>
-                <el-button size="mini" v-if="scope.row.status!='拒绝'" @click="getInfo(scope.row.id)">审核</el-button>
+                <el-button size="mini"  v-if="scope.row.status!='拒绝' && exa" @click="getInfo(scope.row.id)">审核</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -292,11 +292,12 @@
     data() {
       return {
         powerTrue:false,
-        optionW:'75px',
+        optionW:'150px',
         menuId:'',
         add:false,
         del:false,
         upd:false,
+        exa:false,
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
