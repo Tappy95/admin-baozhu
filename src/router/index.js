@@ -78,8 +78,8 @@ import GameSide from '@/components/views/GameSide' //渠道用户
 
 import GameOrder from '@/components/views/GameOrder' //竞猜记录
 
-
-
+import FissionCase from '@/components/views/FissionCase' //裂变方案
+import ChannelSet from '@/components/views/ChannelSet' //渠道配置
 
 
 
@@ -362,6 +362,17 @@ const routes = [
         name: 'GameOrder',
         component: GameOrder
       },
+      {
+        path: 'fission-case',
+        name: 'FissionCase',
+        component: FissionCase
+      },
+      {
+        path: 'channel-set',
+        name: 'ChannelSet',
+        component: ChannelSet
+      },
+
     ]
   }
 ]
