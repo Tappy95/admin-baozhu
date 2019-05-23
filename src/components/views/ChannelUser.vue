@@ -343,7 +343,6 @@
           http=http+'&token='+token+'&channel='+channel
         }
         //console.log(url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin)
-
         //a1.setAttribute('href',url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin+'&token='+token+'&channel='+channel);
         a1.setAttribute('href',http);
         // a1.setAttribute('href',url + '?ids=' + ids);
@@ -404,17 +403,13 @@
       },
 
       setSuper(userId,roleType,remark){
-        console.log(userId,roleType,remark)
         this.dialogFormVisible = true;
           this.form.userId = userId;
           this.form.isSuper = roleType;
           this.form.remark = remark;
-        console.log(this.form)
-
       },
 
       setBtn(form){
-        console.log(this.form)
         this.$refs.form.validate(valid => {
           if (valid) {
             this.$post('/api/userInfo/setSuperPartner', this.form).then(res => {
@@ -431,7 +426,6 @@
           }
         })
       },
-
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()
