@@ -71,6 +71,17 @@
                              label="渠道标识">
             </el-table-column>
 
+            <el-table-column min-width="120" prop="channelRelation" label="渠道关系">
+            </el-table-column>
+
+            <el-table-column min-width="120"  label="身份标识">
+              <template slot-scope="scope">
+                <span v-if="scope.row.roleType==1">小猪猪</span>
+                <span v-if="scope.row.roleType==2">团队长</span>
+                <span v-if="scope.row.roleType==3">超级合伙人</span>
+              </template>
+            </el-table-column>
+
             <el-table-column min-width="150px" prop="sumRecharge"
                              label="累计充值(￥)">
             </el-table-column>
@@ -93,7 +104,52 @@
                               label="注册时间"
             >
             </el-table-column>
+
+            <el-table-column fixed="right" label="操作" v-if="setSuperMan" :width="qxW">
+              <template slot-scope="scope">
+                <el-button @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
+              </template>
+            </el-table-column>
           </el-table>
+          <el-dialog title="设置超级合伙人" width="800px"
+                     :visible.sync="dialogFormVisible">
+            <el-form :model="form"
+                     :rules="rules"
+                     ref="form">
+              <div class="form">
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="设置为超级合伙人:"
+                                  prop="isSuper"
+                                  :label-width="formLabelWidth">
+                      <el-select :style="styleObject"  v-model="form.isSuper" placeholder="">
+                        <el-option label="是" :value="3"></el-option>
+                        <el-option label="否" :value="2"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="22">
+                    <el-form-item label="描述:"
+                                  prop="remark"
+                                  :label-width="formLabelWidth">
+                      <el-input  type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="form.remark"
+                                 auto-complete="off"
+                                 clearable
+                      ></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </div>
+
+            </el-form>
+            <div slot="footer"
+                 class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary"
+                         @click="setBtn('form')">确 定</el-button>
+            </div>
+          </el-dialog>
+
         </template>
       </div>
       <div class="block">
@@ -116,6 +172,24 @@
     name: 'ChannelUser',
     data() {
       return {
+        qxW:'0px',
+        styleObject:{
+          width:'200px'
+        },
+        form:{
+          isSuper:'',
+          userId:'',
+          remark:''
+        },
+        rules: {
+          remark: [
+            {required: true, message: '请输入备注', trigger: 'blur'}
+          ],
+          isSuper: [{required: true, message: '请选择是否设置超级合伙人', trigger: 'change'}],
+
+        },
+        formLabelWidth: '150px',
+        dialogFormVisible:false,
         menuId:'',
         currentPage: 1,
         pageSize: 10,
@@ -159,10 +233,27 @@
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'setSuperMan') {
+                this.setSuperMan =true;
+                this.qxW = '140px';
+              }
+            }
+          } else {
+          }
+        })
+      },
       //导出表格
       queryExport() {
         // if (this.tableData.length<1){
@@ -299,18 +390,48 @@
         }
         this.$fetch('/api/userInfo/channelList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            for(let i = res.data.list.length - 1; i >= 0; i--) {
-              if(res.data.list[i].digitalNumType == 1) {
-                res.data.list[i].digitalNumType = "身份证号"
-              } else {
-                res.data.list[i].digitalNumType = "驾驶证"
-              }
-            }
+            // for(let i = res.data.list.length - 1; i >= 0; i--) {
+              // if(res.data.list[i].digitalNumType == 1) {
+              //   res.data.list[i].digitalNumType = "身份证号"
+              // } else {
+              //   res.data.list[i].digitalNumType = "驾驶证"
+              // }
+            // }
             this.tableData = res.data.list
             this.totalCount = res.data.total
           }
         })
       },
+
+      setSuper(userId,roleType,remark){
+        console.log(userId,roleType,remark)
+        this.dialogFormVisible = true;
+          this.form.userId = userId;
+          this.form.isSuper = roleType;
+          this.form.remark = remark;
+        console.log(this.form)
+
+      },
+
+      setBtn(form){
+        console.log(this.form)
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            this.$post('/api/userInfo/setSuperPartner', this.form).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogFormVisible = false
+                this.$message({ type: 'success', message: '设置成功！' })
+                this.accountList()
+              }else {
+                this.$message({ type: 'error', message: res.message })
+              }
+            })
+          } else {
+
+          }
+        })
+      },
+
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()

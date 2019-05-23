@@ -70,7 +70,7 @@
             </el-table-column>
             <el-table-column min-width="120" prop="channelRelation" label="渠道关系">
             </el-table-column>
-            <el-table-column min-width="120" prop="roleType" label="角色类型">
+            <el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>
             <el-table-column prop="changedTime" min-width="170px" label="变更时间">
             </el-table-column>

@@ -156,7 +156,7 @@
               <el-form-item  label="图片:"
                             :label-width="formLabelWidth">
                 <div class="box_img">
-                  <div class="box_min"  v-for="(item,index) in arrImg" :key="index"  v-if="arrImg">
+                  <div class="box_min"  v-for="(item,index) in arrImg" :key="index"  v-if="arrImg && item">
                     <img v-if="item"  @click="clickImg(item)"
                           :src="item"
                           class="avatar">

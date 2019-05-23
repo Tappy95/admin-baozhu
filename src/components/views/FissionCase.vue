@@ -1183,7 +1183,6 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    max-width: 100%;
     width: auto;
     height: auto;
     max-width: 148px;

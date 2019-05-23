@@ -66,7 +66,7 @@
             </el-table-column>
             <el-table-column prop="channelRelation" min-width="120" label="渠道关系">
             </el-table-column>
-            <el-table-column prop="roleType" min-width="120" label="角色类型">
+            <el-table-column prop="roleType" min-width="120" label="身份标识">
             </el-table-column>
             <el-table-column prop="remarks" min-width="150" label="备注">
             </el-table-column>
