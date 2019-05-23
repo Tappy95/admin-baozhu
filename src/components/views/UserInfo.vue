@@ -9,21 +9,32 @@
         <el-form :inline="true"
                  :model="formInline"
                  class="demo-form-inline">
+          <el-form-item label="用户ID:">
+            <el-input v-model="formInline.accountId"
+                      placeholder="请输入用户ID"
+                      clearable></el-input>
+          </el-form-item>
+
           <el-form-item label="手机号:">
             <el-input v-model="formInline.mobile"
                       placeholder="请输入用户手机"
                       clearable></el-input>
           </el-form-item>
-          <el-form-item label="证件号:">
-            <el-input v-model="formInline.socialDigitalNum"
-                      placeholder="请输入证件号"
-                      clearable></el-input>
+
+          <el-form-item label="选择成长等级:"
+                        :label-width="formLabelWidth">
+            <el-select   v-model="formInline.level" placeholder="">
+              <el-option  v-for="(item,index) in levelList" :key="index" :label="item.level" :value="item.level"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
           </el-form-item>
 
-          <el-form-item label="渠道标识:">
-            <el-input v-model="formInline.channelCode" auto-complete="off"  clearable>
-            </el-input>
-          </el-form-item>
+            <el-form-item label="渠道标识:" :label-width="formLabelWidth" >
+              <el-select   v-model="formInline.channelCode" placeholder="">
+                <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
+                <el-option label="全部" value=""></el-option>
+              </el-select>
+            </el-form-item>
 
           <el-form-item>
             <el-button @click="search()">查询</el-button>
@@ -40,36 +51,93 @@
                              :index="indexMethod"
                              width='80'>
             </el-table-column>
-            <el-table-column min-width="140px" prop="mobile" fixed="left"
-                             label="手机号">
+            <el-table-column min-width="140px" prop="accountId" fixed="left"
+                             label="用户ID">
             </el-table-column>
-            <el-table-column min-width="150px" prop="aliasName"
+
+            <el-table-column min-width="140px" prop="referrer" fixed="left"
+                             label="上级代理">
+            </el-table-column>
+
+            <el-table-column min-width="150px" prop="userName"
                              label="昵称">
             </el-table-column>
-            <el-table-column  min-width="200px" prop="socialDigitalNum"
-                             label="证件号">
+            <el-table-column  min-width="120px" prop="mobile"
+                             label="手机号">
             </el-table-column>
-            <el-table-column prop="digitalNumType"
-                             label="证件类型"
+
+            <el-table-column prop="vipName"
+                             label="会员等级"
                              min-width="200px">
-            </el-table-column>
-            <el-table-column prop="reward"
-                             label="奖励金额(￥)"
-                             min-width="110px">
-            </el-table-column>
-            <el-table-column prop="apprentice"
-                             label="学徒数量(个)"
-                             min-width="110px">
             </el-table-column>
 
             <el-table-column prop="level"
-                             label="等级"
+                             label="成长等级"
+                             min-width="110px">
+            </el-table-column>
+            <el-table-column prop="apprentice"
+                             label="直属下级人数"
+                             min-width="110px">
+            </el-table-column>
+
+            <el-table-column prop="channelCode"
+                             label="渠道"
                              min-width="100px">
             </el-table-column>
-            <el-table-column prop="levelValue"
-                             label="经验值"
-                             width="100px">
+            <el-table-column prop="channelRelation"
+                             label="渠道关系"
+                             min-width="100px">
             </el-table-column>
+
+            <el-table-column label="身份标识"
+                             min-width="100px">
+              <template slot-scope="scope">
+                <span v-if="scope.row.roleType==1">小猪猪</span>
+                <span v-if="scope.row.roleType==2">团队长</span>
+                <span v-if="scope.row.roleType==3">超级合伙人</span>
+              </template>
+            </el-table-column>
+
+            <el-table-column prop="coin"
+                             label="金币余额"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="pigCoin"
+                             label="金猪余额"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="balance"
+                             label="人民币余额"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="vipAmount"
+                             label="vip充值总额"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="vipCount"
+                             label="VIP充值次数"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="txAmount"
+                             label="提现金额"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="txCount"
+                             label="提现次数"
+                             min-width="100px">
+            </el-table-column>
+
+            <el-table-column prop="djCount"
+                             label="兑换奖品次数"
+                             min-width="100px">
+            </el-table-column>
+
             <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
                              label="注册时间"
                             >
@@ -78,15 +146,26 @@
                              label="操作"
                              :width="optionW">
               <template slot-scope="scope">
-                <el-button type=""
+                <el-button type="" style="margin-bottom: 8px"
                            size="mini"
                            @click="getInfo(scope.row.userId)">详情</el-button>
-                <el-button type=""
+                <el-button type="" style="margin-bottom: 8px"
                            size="mini" v-if="apprentice"
                            @click="apprenticee(scope.row.userId)">徒弟</el-button>
-                <el-button type=""
+                <el-button type="" style="margin-bottom: 8px"
                            size="mini" v-if="rew"
                            @click="reward(scope.row.userId)">奖励</el-button>
+
+                <el-button type="" v-if="setNo"
+                           size="mini" style="margin-bottom: 8px"
+                           @click="setSuper(scope.row.userId,scope.row.status,scope.row.remark,1)">冻结账户</el-button>
+
+                <el-button @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1" size="mini"></span>设置超级合伙人</el-button>
+
+
+                <!--<el-button type="" v-if="setSuperMan"-->
+                           <!--size="mini" style="margin-bottom: 8px"-->
+                           <!--@click="reward(scope.row.userId)">设置超级合伙人</el-button>-->
               </template>
             </el-table-column>
           </el-table>
@@ -94,114 +173,118 @@
         <el-dialog title="用户信息详情" :visible.sync="dialogTableVisible" width="800px">
           <el-form>
             <el-row>
-              <el-col :span="20" style="margin-bottom: 10px">
+              <el-col :span="22" style="margin-bottom: 10px">
                 <el-form-item label="用户id:" :label-width="formLabelWidth">
-                  <el-input :value="message.userId" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :value="message.accountId" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="10" style="margin-bottom: 10px">
-              <el-form-item label="姓名:" :label-width="formLabelWidth">
-                <el-input :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+              <el-col :span="12" style="margin-bottom: 10px">
+              <el-form-item label="上级代理v:" :label-width="formLabelWidth">
+                <el-input :style="styleObject" :value="message.referrer" :disabled="true" auto-complete="off" style="" clearable></el-input>
               </el-form-item>
             </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="昵称:" :label-width="formLabelWidth">
-                  <el-input :value="message.aliasName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="性别:" :label-width="formLabelWidth">
-                 <el-input :value="message.sex" :disabled="true" auto-complete="off" style="" clearable></el-input>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="手机号:" :label-width="formLabelWidth">
+                 <el-input :style="styleObject" :value="message.mobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
                  </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="生日:"  :label-width="formLabelWidth">
-                  <el-input :value="message.birthday" :disabled="true" auto-complete="off" style="" clearable></el-input>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="会员等级:"  :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.vipName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="手机号码:" :label-width="formLabelWidth">
-                  <el-input :value="message.mobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="成长等级:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.level" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
-                  <el-input :value="message.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="直属下级人数:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.apprentice" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="登录账号:" :label-width="formLabelWidth">
-                  <el-input :value="message.identity" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="渠道:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.channelCode" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="证件号:" :label-width="formLabelWidth">
-                  <el-input :value="message.socialDigitalNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="渠道关系:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.channelRelation" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="证件类型:" :label-width="formLabelWidth">
-                  <el-input :value="message.digitalNumType" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="身份标识:" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" :disabled="true" v-model="message.roleType" placeholder="">
+                    <el-option label="小猪猪" :value="1"></el-option>
+                    <el-option label="团队长" :value="2"></el-option>
+                    <el-option label="超级合伙人" :value="3"></el-option>
+                  </el-select>
+
+                  <!--<el-input :value="message.roleType" :disabled="true" auto-complete="off" style="" clearable></el-input>-->
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="余额:" :label-width="formLabelWidth">
-                  <el-input :value="'￥'+message.balance" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="金币余额:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.coin" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="代币:" :label-width="formLabelWidth">
-                  <el-input :value="message.jadeCabbage" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="金猪余额:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.pigCoin" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="金币:" :label-width="formLabelWidth">
-                  <el-input :value="message.coin" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="人民币余额:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="'￥'+message.balance" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="总奖励金额:" :label-width="formLabelWidth">
-                  <el-input :value="message.reward" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="vip充值总额:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.vipAmount" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="徒弟数量:" :label-width="formLabelWidth">
-                  <el-input :value="message.apprentice" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="提现金额:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.txAmount" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="等级:" :label-width="formLabelWidth">
-                  <el-input :value="message.level" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="提现次数:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.txCount" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="等级值:" :label-width="formLabelWidth">
-                  <el-input :value="message.levelValue" :disabled="true" auto-complete="off" style="" clearable></el-input>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="兑换奖品次数:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.djCount" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
+
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="注册时间:" :label-width="formLabelWidth">
-                  <el-input :value="message.createTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="10" style="margin-bottom: 10px">
-                <el-form-item label="邀请人:" :label-width="formLabelWidth">
-                  <el-input :value="message.referrerName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.createTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item label="邀请人手机号:" :label-width="formLabelWidth">
-              <el-row>
-                <el-col :span="8" style="margin-bottom: 10px">
-                  <el-input :value="message.referrerMobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-col>
-              </el-row>
-            </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -289,6 +372,56 @@
           </div>
           </div>
       </el-dialog>
+
+      <el-dialog :title="types==2?'设置超级合伙人':'设置冻结'" width="800px"
+                 :visible.sync="dialogSuper">
+        <el-form :model="formSet"
+                 :rules="rules"
+                 ref="formSet">
+          <div class="form">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item v-if="types==2" label="设置为超级合伙人:"
+                              prop="isSuper"
+                              :label-width="formWidth">
+                  <el-select :style="styleObject"  v-model="formSet.isSuper" placeholder="">
+                    <el-option label="是" :value="3"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item v-if="types==1" label="是否冻结账户:"
+                              prop="isSuper"
+                              :label-width="formWidth">
+                  <el-select :style="styleObject"  v-model="formSet.isSuper" placeholder="">
+                    <el-option label="是" :value="3"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+
+              </el-col>
+              <el-col :span="22">
+                <el-form-item label="描述:"
+                              prop="remark"
+                              :label-width="formWidth">
+                  <el-input  type="textarea"  :autosize="{ minRows: 4, maxRows: 8}" v-model="formSet.remark"
+                             auto-complete="off"
+                             clearable
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+
+        </el-form>
+        <div slot="footer"
+             class="dialog-footer">
+          <el-button @click="dialogSuper = false">取 消</el-button>
+          <el-button type="primary"
+                     @click="setBtn('formSet')">确 定</el-button>
+        </div>
+      </el-dialog>
+
     </div>
   </div>
 </template>
@@ -307,7 +440,20 @@
         del:false,
         upd:false,
         exa:false,
+        types:'',
         rules: {
+          remark: [
+            {required: true, message: '请输入备注', trigger: 'blur'}
+          ],
+          isSuper: [{required: true, message: '请选择是否设置超级合伙人', trigger: 'change'}],
+        },
+        formSet:{
+          isSuper:'',
+          userId:'',
+          remark:''
+        },
+        styleObject:{
+          width:'200px'
         },
         form: {
           isAuditing: '',
@@ -315,16 +461,17 @@
         isShow: false,
         radio: '',
         list: [],
-        imgElements:[
-        ],
+        imgElements:[],
         message: {},
         requestText: '',
+        dialogSuper:false,
         dialogTableVisible: false,
         usetApprenticeId:'',
         apprenticeeVisible:false,
         rewardId:'',
         rewardVisible:false,
         formLabelWidth: '100px',
+        formWidth:'150px',
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
@@ -339,12 +486,17 @@
         rewardcurrentPage: 1,
         rewardpageSize: 10,
         rewardtotalCount: 0,
+        channelNameList:[],
+        levelList:[],
+        interface:'',
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.channelList();//调取渠道标识列表
+      this.levelListD();//调取用户等级
+      this.queryBtns();//权限
+      this.accountList();//列表
     },
     methods: {
       queryBtns(){
@@ -365,6 +517,20 @@
             if (this.rew && this.apprentice) {
               this.powerTrue =true;
               this.optionW = '220px'
+            }
+
+            if (res.data[i].btnCode == 'setSuperMan') {
+              this.setSuperMan =true;
+              this.optionW = '220px'
+            }
+
+            if (res.data[i].btnCode == 'setNo') {
+              this.setNo = true;
+              this.optionW = '250px'
+            }
+
+            if (this.setSuperMan && this.setNo) {
+              this.optionW = '310px'
             }
           }
         } else {
@@ -389,6 +555,61 @@
       toggle: function() {
         this.isShow = !this.isShow
       },
+
+
+      //调取渠道标识列表
+      channelList(){
+        this.$fetch('/api/mChannelInfo/downList',{
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.channelNameList = res.data;
+          }
+        })
+      },
+
+      //调取用户等级
+      levelListD(){
+        this.$fetch('/api/pLevel/downLevelList',{
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.levelList = res.data;
+          }
+        })
+      },
+
+
+      setSuper(userId,roleType,remark,type){
+        this.dialogSuper = true;
+        this.formSet.userId = userId;
+        this.formSet.isSuper = roleType;
+        this.formSet.remark = remark;
+        this.types = type;
+      },
+
+      setBtn(formSet){
+        if (this.types==2) {
+          this.interface = '/api/userInfo/setSuperPartner'
+        }else if (this.types==1) {
+          // this.formSet.status =  this.formSet.isSuper;
+          this.interface = '/api/userInfo/freezeUser'
+        }
+        this.$refs.formSet.validate(valid => {
+          if (valid) {
+            this.$post(this.interface,this.formSet).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogSuper = false;
+                this.$message({ type: 'success', message: '设置成功！' })
+                this.accountList()
+              }else {
+                this.$message({ type: 'error', message: res.message })
+              }
+            })
+          } else {
+
+          }
+        })
+      },
+
       getInfo(id) {
         this.isInfo = true
         this.dialogTableVisible = true
@@ -457,20 +678,19 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          socialDigitalNum:this.formInline.socialDigitalNum,
+          accountId:this.formInline.accountId,
           mobile:this.formInline.mobile,
+          level:this.formInline.level,
           channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/userInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].digitalNumType == 1) {
-                res.data.list[i].digitalNumType = "身份证"
-              }
-              // else {
-              //   res.data.list[i].digitalNumType = "驾驶证"
-              // }
-          }
+          // for(let i = res.data.list.length - 1; i >= 0; i--) {
+          //   if(res.data.list[i].digitalNumType == 1) {
+          //       res.data.list[i].digitalNumType = "身份证"
+          //     }
+          //
+          // }
           this.tableData = res.data.list
           this.totalCount = res.data.total
         }
