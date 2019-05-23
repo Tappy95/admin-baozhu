@@ -20,7 +20,7 @@
             </el-table-column>
             <el-table-column fixed="left" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column prop="outTradeNo" label="订单号(￥)">
+            <el-table-column prop="outTradeNo" label="订单号">
             </el-table-column>
             <el-table-column prop="balance" label="余额抵扣">
             </el-table-column>
@@ -36,7 +36,7 @@
             </el-table-column>
             <el-table-column prop="creatorTime" width="170px" label="创建时间">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column fixed="right" label="操作" width="75">
               <template slot-scope="scope">
                 <el-button @click="getInfo(scope.row.id)" size="mini">查看</el-button>
               </template>
@@ -184,7 +184,7 @@
           if ((res.statusCode+"").startsWith("2")) {
           for(let i = res.data.list.length - 1; i >= 0; i--) {
             res.data.list[i].creatorTime=formatDate(new Date(res.data.list[i].creatorTime), 'yyyy-MM-dd hh:mm:sss')
-            res.data.list[i].discount=res.data.list[i].price-res.data.list[i].actualPrice
+            // res.data.list[i].discount=res.data.list[i].price-res.data.list[i].actualPrice
             if(res.data.list[i].payMode == '1') {
               res.data.list[i].payMode = '支付宝'
             } else {
@@ -219,7 +219,7 @@
         this.$fetch('/api/pay/info', {
           id: id
         }).then(res => {
-          if(res.data != null ){
+          if ((res.statusCode+"").startsWith("2")) {
           res.data.creatorTime=formatDate(new Date(res.data.creatorTime), 'yyyy-MM-dd hh:mm:sss')
           if(res.data.payTime) {
             res.data.payTime=formatDate(new Date(res.data.payTime), 'yyyy-MM-dd hh:mm:sss')

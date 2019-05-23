@@ -35,7 +35,7 @@
                 <el-button size="mini" @click="Delete(scope.row.id,1)" v-if="del">删除</el-button>
                 <el-button @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
                 <el-button @click="getOne(scope.row.id)" size="mini">详情</el-button>
-                <el-button @click="rewarTap(scope.row.id)" v-if="award" size="mini">用户奖</el-button>
+                <el-button @click="rewarTap(scope.row.id)" v-if="award" size="mini">用户奖励</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -65,7 +65,7 @@
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select  :style="styleObject" v-model="form.channelCode" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.id"></el-option>
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -108,7 +108,7 @@
                 <el-form-item label="第三方游戏:"  :label-width="formLabelWidth">
                   <el-checkbox-group
                     v-model="taskTypeName">
-                    <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="index">{{item.channelName}}</el-checkbox>
+                    <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="index">{{item.tpName}}</el-checkbox>
                   </el-checkbox-group>
                 </el-form-item>
               </el-col>
@@ -126,7 +126,7 @@
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select  :style="styleObject" v-model="formtwo.channelCode" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.id"></el-option>
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -170,7 +170,7 @@
                   <el-form-item label="第三方游戏:"  :label-width="formLabelWidth">
                     <el-checkbox-group
                       v-model="taskTypes">
-                      <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="item.id">{{item.channelName}}</el-checkbox>
+                      <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="item.id">{{item.tpName}}</el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
                 </el-col>
@@ -188,7 +188,7 @@
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select :disabled="true"  :style="styleObject" v-model="formtwoInfo.channelCode" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.id"></el-option>
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -232,7 +232,7 @@
                   <el-form-item label="第三方游戏:"  :label-width="formLabelWidth">
                     <el-checkbox-group
                       v-model="taskTypes">
-                      <el-checkbox :disabled="true" v-for="(item,index) in cities" :label="item.id" :key="item.id">{{item.channelName}}</el-checkbox>
+                      <el-checkbox :disabled="true" v-for="(item,index) in cities" :label="item.id" :key="item.id">{{item.tpName}}</el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
                 </el-col>
@@ -245,8 +245,8 @@
         </el-dialog>
 
 
-        <el-dialog title="用户奖" :visible.sync="dialogChannel" width="800px">
-          <el-button style="margin-bottom: 30px" @click="loadUser()" v-if="addUAward">添加用户奖</el-button>
+        <el-dialog title="用户奖励" :visible.sync="dialogChannel" width="800px">
+          <el-button style="margin-bottom: 30px" @click="loadUser()" v-if="addUAward">添加用户奖励</el-button>
           <el-table :data="tablereward" height="580">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
@@ -271,7 +271,7 @@
             </el-pagination>
           </div>
         </el-dialog>
-        <el-dialog title="添加用户奖" :visible.sync="dialogloadUser" width="800px">
+        <el-dialog title="添加用户奖励" :visible.sync="dialogloadUser" width="800px">
           <el-form :model="formUser" :rules="rules" ref="formUser">
             <el-row>
               <el-col :span="12">
@@ -294,6 +294,12 @@
               <el-col :span="12">
                 <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
                   <el-input :style="styleObject"  type="number"   v-model="formUser.referrerAddition" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
+                  <el-input :style="styleObject"  type="number"   v-model="formUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -325,7 +331,7 @@
                   <div class="item">3188</div>
                 </div>
                 <div class="list">
-                  <div class="item">奖励比值</div>
+                  <div class="item">奖励比值(%)</div>
                   <div class="item"><el-input   v-model="formUser.vip18" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input   v-model="formUser.vip48" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input   v-model="formUser.vip228" auto-complete="off"  clearable></el-input></div>
@@ -365,7 +371,7 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="修改用户奖" :visible.sync="dialogEditUser" width="800px">
+        <el-dialog title="修改用户奖励" :visible.sync="dialogEditUser" width="800px">
           <el-form :model="fromEditUser">
             <el-row>
               <el-col :span="12">
@@ -388,6 +394,12 @@
               <el-col :span="12">
                 <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
                   <el-input :style="styleObject"  type="number"   v-model="fromEditUser.referrerAddition" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
+                  <el-input :style="styleObject"  type="number"   v-model="fromEditUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -419,7 +431,7 @@
                   <div class="item">3188</div>
                 </div>
                 <div class="list">
-                  <div class="item">奖励比值</div>
+                  <div class="item">奖励比值(%)</div>
                   <div class="item"><el-input   v-model="fromEditUser.vip18" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input   v-model="fromEditUser.vip48" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input   v-model="fromEditUser.vip228" auto-complete="off"  clearable></el-input></div>
@@ -458,7 +470,7 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="用户奖详情" :visible.sync="dialogInfoUser" width="800px">
+        <el-dialog title="用户奖励详情" :visible.sync="dialogInfoUser" width="800px">
           <el-form :model="fromInfoUser">
             <el-row>
               <el-col :span="12">
@@ -481,6 +493,12 @@
               <el-col :span="12">
                 <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
                   <el-input :style="styleObject" :disabled="true" type="number"   v-model="fromInfoUser.referrerAddition" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="20">
+                <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
+                  <el-input :disabled="true" :style="styleObject"  type="number"   v-model="fromInfoUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -512,7 +530,7 @@
                   <div class="item">3188</div>
                 </div>
                 <div class="list">
-                  <div class="item">奖励比值</div>
+                  <div class="item">奖励比值(%)</div>
                   <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip18" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip48" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip228" auto-complete="off"  clearable></el-input></div>
@@ -667,6 +685,11 @@
           referrerAddition: [{
             required: true,
             message: '请输入徒弟游戏试玩加成',
+            trigger: 'blur'
+          }],
+          recommendCoin:[{
+            required: true,
+            message: '请输入推荐有效好友奖励金币数',
             trigger: 'blur'
           }],
     },
@@ -870,7 +893,7 @@
       },
       //调取名称列表
       channelList(){
-        this.$fetch('/api/mChannel/list',{
+        this.$fetch('/api/mChannelInfo/downList',{
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.channelNameList = res.data;
