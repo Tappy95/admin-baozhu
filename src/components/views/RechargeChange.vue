@@ -34,6 +34,7 @@
             </el-table-column>
             <el-table-column prop="state" label="状态">
             </el-table-column>
+
             <el-table-column prop="creatorTime" width="170px" label="创建时间">
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="75">
@@ -202,6 +203,7 @@
             }else{
               res.data.list[i].state = '已取消'
             }
+
           }
           this.tableData = res.data.list
           this.totalCount = res.data.total

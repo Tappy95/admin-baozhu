@@ -50,19 +50,27 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column fixed="left" prop="accountId" label="用户id">
+            <el-table-column fixed="left" min-width="120" prop="accountId" label="用户id">
             </el-table-column>
-            <el-table-column prop="userName" label="姓名">
+            <el-table-column prop="userName" min-width="120" label="姓名">
             </el-table-column>
-            <el-table-column  prop="amount" label="变更金额">
+            <el-table-column  prop="amount" min-width="150" label="变更金额">
             </el-table-column>
-            <el-table-column  prop="flowType" label="收支">
+            <el-table-column  prop="flowType" min-width="120" label="收支">
             </el-table-column>
-            <el-table-column prop="changedType" label="变更原因">
+            <el-table-column prop="changedType" min-width="150" label="变更原因">
             </el-table-column>
-            <el-table-column width="200px" prop="changedTime" label="变更时间">
+            <el-table-column prop="channelCode" min-width="120" label="渠道标识">
+            </el-table-column>
+            <el-table-column prop="channelRelation" min-width="120" label="渠道关系">
+            </el-table-column>
+            <el-table-column prop="roleType" min-width="120" label="角色类型">
+            </el-table-column>
+            <el-table-column prop="remarks" min-width="150" label="备注">
+            </el-table-column>
+            <el-table-column width="170px" prop="changedTime" label="变更时间">
             </el-table-column>
             <!--<el-table-column fixed="right" label="操作" width="75px">-->
               <!--<template slot-scope="scope">-->
@@ -150,7 +158,6 @@
       this.accountList();
     },
     methods: {
-
       //导出表格
       queryExport() {
         // if (this.tableData.length<1){
@@ -238,8 +245,6 @@
         a1.click();
         a1.remove();
       },
-
-
       queryBtns(){
         let parameterData = {
           menuId: this.menuId
@@ -285,6 +290,7 @@
             } else {
               res.data.list[i].flowType = '支出'
             }
+
             if(res.data.list[i].changedType == '1'){
               res.data.list[i].changedType = 'vip'
             }else if(res.data.list[i].changedType == '2'){
@@ -304,6 +310,15 @@
             }else if(res.data.list[i].changedType == '9'){
               res.data.list[i].changedType = '抽奖退回'
             }
+
+            if(res.data.list[i].roleType == '1'){
+              res.data.list[i].roleType = '小猪猪'
+            }else if(res.data.list[i].roleType == '2'){
+              res.data.list[i].roleType = '团队长'
+            }else if(res.data.list[i].roleType == '3'){
+              res.data.list[i].roleType = '超级合伙人'
+            }
+
           }
           this.tableData = res.data.list
           this.totalCount = res.data.total

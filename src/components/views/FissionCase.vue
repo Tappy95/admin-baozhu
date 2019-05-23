@@ -615,7 +615,7 @@
                                :label-width="formLabelWidth">
                   <div class="box_img" style="min-height: 178px">
                     <div class="box_min" v-for="(item,index) in fileList1" :key="index" >
-                      <img v-if="item.url"
+                      <img @click="clickImg(item.url)" v-if="item.url"
                            :src="item.url"
                            class="avatar">
                     </div>
@@ -628,7 +628,7 @@
                                :label-width="formLabelWidth">
                   <div class="box_img" style="min-height: 178px">
                     <div class="box_min"  v-for="(item,index) in fileList2" :key="index" >
-                      <img v-if="item.url"
+                      <img @click="clickImg(item.url)" v-if="item.url"
                         :src="item.url"
                         class="avatar">
                     </div>
@@ -641,7 +641,7 @@
                                :label-width="formLabelWidth">
                   <div class="box_img" style="min-height: 178px">
                     <div class="box_min"  v-for="(item,index) in fileList3" :key="index" >
-                      <img v-if="item.url"
+                      <img @click="clickImg(item.url)" v-if="item.url"
                         :src="item.url"
                         class="avatar">
                     </div>
@@ -873,13 +873,15 @@
           }
         })
       },
-      clickImg(e) {
-        this.showImg = true
-        this.imgSrc = e.currentTarget.src
-      },
       viewImg() {
         this.showImg = false
       },
+
+      clickImg(img) {
+        this.showImg = true;
+        this.imgSrc = img;
+      },
+
       handleAvatarSuccess(res, file) {
         this.imageUrl=res.data
       },
@@ -1132,8 +1134,8 @@
     text-align: center;
   }
   .avatar {
-    width: 148px;
-    height: 148px;
+    max-width: 148px;
+    max-height: 148px;
     display: block;
   }
   .form {
@@ -1146,4 +1148,46 @@
   .bannerAvatar-uploader-icon{
     line-height: 178px !important;
   }
+
+  .box_img{
+    height: auto;
+     width: 560px;
+     min-height: 178px;
+    border: 1px solid #dcdfe6;
+    float: left;
+    background-color: #f5f7fa;
+    display: block;
+    position: relative;
+  }
+
+  .box_img .box_min{
+    width: 148px;
+    height: 148px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+    border: 1px dashed #ccc;
+    /*position: relative;*/
+  }
+
+  .box_img img{
+    max-width: 148px;
+    max-height: 148px;
+  }
+  .box_img .box_min img.avatar{
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-width: 148px;
+    max-height: 148px;
+  }
+
 </style>
