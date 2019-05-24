@@ -22,9 +22,9 @@
           <el-table :data="tableData" height="580">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
-            <el-table-column  prop="channelCode" label="渠道ID">
+            <el-table-column  prop="channelCode" label="渠道标识">
             </el-table-column>
-            <el-table-column  prop="fissionId" label="裂变方案">
+            <el-table-column  prop="fissionName" label="裂变方案">
             </el-table-column>
             <el-table-column prop="chargeMode" label="裂变收费">
             </el-table-column>
