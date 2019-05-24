@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "build": "node build/build.js",
+    "build": "node --max_old_space_size=4096 build/build.js", // 指定最大内存限制 4096 就是4G的意思 防止修改文件保存后自动崩溃
     "build:dll": "webpack --config build/webpack.dll.conf.js"
   },
   "dependencies": {

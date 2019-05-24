@@ -380,6 +380,8 @@
                  ref="formSet">
           <div class="form">
             <el-row>
+
+
               <el-col :span="12">
                 <el-form-item v-if="types==2" label="设置为超级合伙人:"
                               prop="isSuper"
@@ -431,6 +433,7 @@
     name: 'UserInfo',
     data() {
       return {
+        testNum:'14523698',
         powerTrue:false,
         optionW:'75px',
         menuId:'',
