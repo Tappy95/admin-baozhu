@@ -26,7 +26,11 @@
             </el-table-column>
             <el-table-column  prop="fissionName" label="裂变方案">
             </el-table-column>
-            <el-table-column prop="chargeMode" label="裂变收费">
+            <el-table-column  label="裂变收费">
+              <template slot-scope="scope">
+                 <span v-if="scope.row.chargeMode==1">平台支付</span>
+                <span v-if="scope.row.chargeMode==2">渠道方支付</span>
+              </template>
             </el-table-column>
             <el-table-column  prop="effectiveObject" label="生效对象">
             </el-table-column>
@@ -80,8 +84,8 @@
               <el-col :span="12">
                 <el-form-item label="收费方式:" prop="chargeMode" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.chargeMode" placeholder="">
-                    <el-option label="线上" value="1"></el-option>
-                    <el-option label="线下" value="2"></el-option>
+                    <el-option label="平台支付" value="1"></el-option>
+                    <el-option label="渠道方支付" value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -141,8 +145,8 @@
               <el-col :span="12">
                 <el-form-item label="收费方式:" prop="chargeMode" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.chargeMode" placeholder="">
-                    <el-option label="线上" :value="1"></el-option>
-                    <el-option label="线下" :value="2"></el-option>
+                    <el-option label="平台支付" :value="1"></el-option>
+                    <el-option label="渠道方支付" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -203,8 +207,8 @@
               <el-col :span="12">
                 <el-form-item label="收费方式:" prop="chargeMode" :label-width="formLabelWidth">
                   <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.chargeMode" placeholder="">
-                    <el-option label="线上" :value="1"></el-option>
-                    <el-option label="线下" :value="2"></el-option>
+                    <el-option label="平台支付" :value="1"></el-option>
+                    <el-option label="渠道方支付" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
