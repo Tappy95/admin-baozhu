@@ -1056,10 +1056,12 @@
             }else {
               this.formtwo.jnd28 = false
             }
-           let arr=this.formtwo.openGame.split(',');
-           for(let i=0;i<arr.length;i++){
-             this.taskTypes.push(parseInt(arr[i]))
-           }
+            if(this.formtwo.openGame!=null && this.formtwo.openGame!='') {
+              let arr=this.formtwo.openGame.split(',');
+              for(let i=0;i<arr.length;i++){
+                this.taskTypes.push(parseInt(arr[i]))
+              }
+            }
           }
         })
       },
