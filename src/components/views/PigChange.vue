@@ -56,9 +56,12 @@
             </el-table-column>
             <el-table-column prop="userName" min-width="120" label="姓名">
             </el-table-column>
-            <el-table-column  prop="amount" min-width="150" label="变更金额">
-            </el-table-column>
-            <el-table-column  prop="flowType" min-width="120" label="收支">
+            <el-table-column min-width="150" label="变更金额">
+              <template slot-scope="scope">
+                <p :class="scope.row.flowType==1?'amountred':'amountgreen'">
+                  <span>{{scope.row.flowType==1?'+':'-'}}</span>{{scope.row.amount}}
+                </p>
+              </template>
             </el-table-column>
             <el-table-column prop="changedType" min-width="150" label="变更原因">
             </el-table-column>
@@ -285,12 +288,6 @@
           if ((res.statusCode+"").startsWith("2")) {
           for(let i = res.data.list.length - 1; i >= 0; i--) {
             res.data.list[i].changedTime=formatDate(new Date(res.data.list[i].changedTime), 'yyyy-MM-dd hh:mm:sss')
-            if(res.data.list[i].flowType == '1') {
-              res.data.list[i].flowType = '收入'
-            } else {
-              res.data.list[i].flowType = '支出'
-            }
-
             if(res.data.list[i].changedType == '1'){
               res.data.list[i].changedType = 'vip'
             }else if(res.data.list[i].changedType == '2'){
@@ -387,6 +384,12 @@
   }
 </script>
 <style type="text/css">
+  .amountred{
+    color: #ff4d51;
+  }
+  .amountgreen{
+    color: #13ce66;
+  }
   .administratormanage-wrap {
     width: 100%;
   }
