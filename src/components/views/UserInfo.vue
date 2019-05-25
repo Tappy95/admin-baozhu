@@ -393,7 +393,7 @@
                 </el-form-item>
 
                 <el-form-item v-if="types==1" label="是否冻结账户:"
-                              prop="isSuper"
+                              prop="isFro"
                               :label-width="formWidth">
                   <el-select :style="styleObject"  v-model="formSet.isSuper" placeholder="">
                     <el-option label="是" :value="3"></el-option>
@@ -449,6 +449,8 @@
             {required: true, message: '请输入备注', trigger: 'blur'}
           ],
           isSuper: [{required: true, message: '请选择是否设置超级合伙人', trigger: 'change'}],
+          isFro: [{required: true, message: '请选择是否冻结账户', trigger: 'change'}],
+
         },
         formSet:{
           isSuper:'',

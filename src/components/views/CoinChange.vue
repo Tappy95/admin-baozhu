@@ -68,11 +68,7 @@
               </template>
             </el-table-column>
             </el-table-column>
-            <el-table-column min-width="150" prop="changedType" label="变更原因">
-            </el-table-column>
-            <el-table-column min-width="100" prop="channelCode" label="渠道标识">
-            </el-table-column>
-            <el-table-column min-width="120" prop="channelRelation" label="渠道关系">
+            "渠道关系">
             </el-table-column>
             <el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>
@@ -86,6 +82,7 @@
                 <el-button @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
                 <el-button @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
               </template>
+
             </el-table-column>
           </el-table>
         </template>

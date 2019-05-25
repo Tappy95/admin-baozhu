@@ -47,6 +47,7 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
+
         <el-dialog title="添加渠道名称" :visible.sync="dialogChannel" width="600px">
           <el-form :model="formChannel" :rules="rules" ref="formChannel">
             <el-row>
@@ -248,7 +249,6 @@
           </div>
         </el-dialog>
 
-
         <el-dialog title="用户奖励" :visible.sync="dialogChannel" width="800px">
           <el-button style="margin-bottom: 30px" @click="loadUser()" v-if="addUAward">添加用户奖励</el-button>
           <el-table :data="tablereward" height="580">
@@ -374,7 +374,6 @@
           <el-button type="primary" @click="addUserAward('formUser')">确 定</el-button>
           </div>
         </el-dialog>
-
         <el-dialog title="修改用户奖励" :visible.sync="dialogEditUser" width="800px">
           <el-form :model="fromEditUser">
             <el-row>
@@ -473,7 +472,6 @@
             <el-button type="primary" @click="EditUserAward('fromEditUser')">确 定</el-button>
           </div>
         </el-dialog>
-
         <el-dialog title="用户奖励详情" :visible.sync="dialogInfoUser" width="800px">
           <el-form :model="fromInfoUser">
             <el-row>
@@ -738,6 +736,13 @@
       this.fission();
       this.accountList();
       this.queryTaskType();
+    },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currency: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
     },
     methods: {
       //游戏商户
