@@ -18,7 +18,7 @@
             </el-input>
           </el-form-item>
 
-          <el-button @click="search()">查询</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -50,11 +50,11 @@
 
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button @click="getOne(scope.row.number)" size="mini">详情</el-button>
-                <el-button @click="getInfo(scope.row.number)"  v-if="upd && scope.row.status=='未开奖'" size="mini">修改</el-button>
-                <el-button @click="Delete(scope.row.number)" v-if="del" size="mini">删除</el-button>
+                <el-button type="info" plain @click="getOne(scope.row.number)" size="mini">详情</el-button>
+                <el-button type="warning" plain @click="Delete(scope.row.number)" v-if="del" size="mini">删除</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.number)"  v-if="upd && scope.row.status=='未开奖'" size="mini">修改</el-button>
                 <!--this.dialogTableVisible = true-->
-                <el-button @click="getPrize(scope.row.number)" v-if="rePrize && scope.row.status=='未开奖' && scope.row.isRetreat==2" size="mini">退奖</el-button>
+                <el-button type="primary" plain @click="getPrize(scope.row.number)" v-if="rePrize && scope.row.status=='未开奖' && scope.row.isRetreat==2" size="mini">退奖</el-button>
               </template>
             </el-table-column>
           </el-table>

@@ -12,9 +12,9 @@
               </el-input>
             </el-form-item>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
-          <el-button @click="load()" v-if="add">添加</el-button>
-          <el-button @click="loadChannel()" v-if="addChannelName">添加渠道名称</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
+          <el-button type="primary" @click="loadChannel()" v-if="addChannelName">添加渠道名称</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -48,9 +48,9 @@
 
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-                <el-button @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
-                <el-button @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -104,6 +104,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="20" v-if="form.channelPushType==1">
                   <el-form-item label="banner:"
                                 :label-width="formLabelWidth">
@@ -122,15 +123,22 @@
                   </el-form-item>
               </el-col>
 
-              <el-col :span="20" v-if="form.channelPushType==2">
+              <el-col :span="23" v-if="form.channelPushType==2">
                 <el-form-item label="投放文字:"  :label-width="formLabelWidth" >
-                  <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.content" auto-complete="off"  clearable>
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.content" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
 
-              <el-col :span="12">
+              <el-col :span="23">
+                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
+                  <el-input  spellcheck="false" v-model="form.downloadUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="20">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.status" placeholder="">
                     <el-option label="启用" value="1"></el-option>
@@ -139,9 +147,23 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="20">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
-                  <el-input  v-model="form.downloadUrl" auto-complete="off"  clearable>
+              <el-col :span="12">
+                <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject"  v-model="form.appId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="form.mchId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23">
+                <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.apiKey" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -204,12 +226,19 @@
 
               <el-col :span="20" v-if="formtwo.channelPushType==2">
                 <el-form-item label="投放文字:"  :label-width="formLabelWidth" >
-                  <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.content" auto-complete="off"  clearable>
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.content" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
+              <el-col :span="20">
+                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
+                  <el-input  v-model="formtwo.downloadUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="20">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
@@ -219,12 +248,27 @@
               </el-col>
 
 
-              <el-col :span="20">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
-                  <el-input  v-model="formtwo.downloadUrl" auto-complete="off"  clearable>
+              <el-col :span="12">
+                <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject"  v-model="formtwo.appId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.mchId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23">
+                <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.apiKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
 
 
             </el-row>
@@ -282,19 +326,20 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="20" v-if="formtwoInfo.channelPushType==2">
+              <el-col :span="23" v-if="formtwoInfo.channelPushType==2">
                 <el-form-item label="投放文字:"  :label-width="formLabelWidth" >
                   <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.content" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="20">
+              <el-col :span="23">
                 <el-form-item label="下载链接:" :label-width="formLabelWidth" >
                   <el-input :disabled="true"  v-model="formtwoInfo.downloadUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.status" placeholder="">
@@ -302,6 +347,7 @@
                     <el-option label="停用" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
+              </el-col>
 
                 <el-col :span="12">
                   <el-form-item label="创建时间:" :label-width="formLabelWidth">
@@ -309,7 +355,30 @@
                     </el-input>
                   </el-form-item>
                 </el-col>
-              </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
+                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.appId" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
+                    <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.mchId" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="23">
+                  <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
+                    <el-input :disabled="true"  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.apiKey" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -360,8 +429,8 @@
         rules: {
           channelPosition: [{
             required: true,
-            message: '请选择渠道推广位置',
-            trigger: 'change'
+            message: '请输入渠道推广位置',
+            trigger: 'blur'
           }],
           channelCode: [{
             required: true,

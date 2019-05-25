@@ -15,8 +15,8 @@
                       v-model="formInline.level"
                       clearable></el-input>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
-          <el-button @click="load()" v-if="add">添加用户等级</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-button type="success" plain @click="load()" v-if="add">添加用户等级</el-button>
         </el-form>
       </div>
       <div>
@@ -94,9 +94,9 @@
                              label="操作"
                              v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini"
+                <el-button size="mini" type="warning" plain
                            @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-                <el-button @click="getInfo(scope.row.id)"
+                <el-button type="success" plain @click="getInfo(scope.row.id)"
                            size="mini" v-if="upd">修改</el-button>
               </template>
             </el-table-column>

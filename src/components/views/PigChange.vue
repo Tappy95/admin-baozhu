@@ -39,12 +39,11 @@
           </el-form-item>
 
           <el-form-item>
-             <el-button @click="search()">查询</el-button>
+             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button @click="queryExport()">导出表格</el-button>
+            <el-button type="success" plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
-
         </el-form>
       </div>
       <div class="administratormanage-table">

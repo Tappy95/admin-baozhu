@@ -10,8 +10,8 @@
             <el-form-item label="菜单名称:">
               <el-input v-model="formInline.menuName" placeholder="" clearable></el-input>
             </el-form-item>
-            <el-button @click="search()">查询</el-button>
-            <el-button @click="load()">添加</el-button>
+            <el-button type="primary" plain @click="search()">查询</el-button>
+            <el-button type="success" plain @click="load()">添加</el-button>
 
         </el-form>
       </div>
@@ -44,9 +44,9 @@
 
             <el-table-column fixed="right" label="操作" width="245">
               <template slot-scope="scope">
-                <el-button  size="mini" @click="Delete(scope.row.id)">删除</el-button>
-                <el-button @click="getInfo(scope.row.id)" size="mini">修改</el-button>
-                <el-button v-if="scope.row.parentId!=0" @click="butList(scope.row.id)" size="mini">按钮列表</el-button>
+                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)">删除</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini">修改</el-button>
+                <el-button type="primary" plain v-if="scope.row.parentId!=0" @click="butList(scope.row.id)" size="mini">按钮列表</el-button>
               </template>
             </el-table-column>
           </el-table>

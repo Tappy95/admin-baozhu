@@ -15,8 +15,8 @@
               clearable=""></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="search()">查询</el-button>
-            <el-button @click="loadAdd()" v-if="add">添加</el-button>
+            <el-button type="primary" plain @click="search()">查询</el-button>
+            <el-button type="success" plain @click="loadAdd()" v-if="add">添加</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -47,8 +47,8 @@
               label="操作" v-if="powerTrue" :width="optionW">
               <template slot-scope="scope" >
                 <el-button size="mini"
-                  @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-                <el-button @click="getInfo(scope.row.id)" v-if="upd"
+                  @click="Delete(scope.row.id)" type="warning" plain v-if="del">删除</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" v-if="upd"
                   size="mini">修改</el-button>
               </template>
             </el-table-column>

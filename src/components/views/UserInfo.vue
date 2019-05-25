@@ -37,7 +37,7 @@
             </el-form-item>
 
           <el-form-item>
-            <el-button @click="search()">查询</el-button>
+            <el-button @click="search()" type="primary">查询</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -146,7 +146,7 @@
                              label="操作"
                              :width="optionW">
               <template slot-scope="scope">
-                <el-button type="" style="margin-bottom: 8px"
+                <el-button type="info" plain  style="margin-bottom: 8px"
                            size="mini"
                            @click="getInfo(scope.row.userId)">详情</el-button>
                 <el-button type="" style="margin-bottom: 8px"
@@ -157,10 +157,11 @@
                            @click="reward(scope.row.userId)">奖励</el-button>
 
                 <el-button type="" v-if="setNo"
+                           type="danger" plain
                            size="mini" style="margin-bottom: 8px"
                            @click="setSuper(scope.row.userId,scope.row.status,scope.row.remark,1)">冻结账户</el-button>
 
-                <el-button @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1" size="mini"></span>设置超级合伙人</el-button>
+                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1" size="mini"></span>设置超级合伙人</el-button>
 
 
                 <!--<el-button type="" v-if="setSuperMan"-->

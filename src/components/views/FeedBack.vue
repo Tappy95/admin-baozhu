@@ -31,7 +31,7 @@
                 <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-          <el-button style="margin-bottom: 30px" @click="search()">查询</el-button>
+          <el-button style="margin-bottom: 30px" @click="search()" type="primary" plain>查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -65,8 +65,8 @@
 
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button @click="getInfo(scope.row.id)" size="mini" v-if="exa">审核</el-button>
-                <el-button @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="exa">审核</el-button>
               </template>
             </el-table-column>
           </el-table>

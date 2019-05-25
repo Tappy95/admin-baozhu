@@ -28,8 +28,7 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-
-          <el-button style="margin-bottom: 30px" @click="search()">查询</el-button>
+          <el-button type="primary" plain style="margin-bottom: 30px" @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -66,8 +65,8 @@
             </el-table-column>
             <el-table-column fixed="right" v-if="powerTrue" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" @click="getOne(scope.row.id)">查看</el-button>
-                <el-button size="mini"  v-if="scope.row.status!='拒绝' && exa" @click="getInfo(scope.row.id)">审核</el-button>
+                <el-button type="info" plain size="mini" @click="getOne(scope.row.id)">详情</el-button>
+                <el-button size="mini" type="success" plain v-if="scope.row.status!='拒绝' && exa" @click="getInfo(scope.row.id)"><span v-if="optionW='150px'"></span>审核</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -292,7 +291,7 @@
     data() {
       return {
         powerTrue:false,
-        optionW:'150px',
+        optionW:'75px',
         menuId:'',
         add:false,
         del:false,
@@ -341,7 +340,7 @@
             for(let i = res.data.length - 1; i >= 0; i--) {
               if(res.data[i].btnCode == 'exa') {
                 this.powerTrue =true;
-                this.optionW = '150px'
+                // this.optionW = '150px'
               }
             }
           } else {

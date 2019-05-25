@@ -43,10 +43,10 @@
                  </el-select>
                </el-form-item>
           <el-form-item>
-            <el-button @click="search()">查询</el-button>
+            <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button @click="queryExport()">导出表格</el-button>
+            <el-button type="success" plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
         </el-form>
         </el-form>
@@ -79,8 +79,8 @@
             <el-table-column fixed="right" v-if="exa" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <!--<el-button @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>审核</el-button>-->
-                <el-button @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
-                <el-button @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
+                <el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
+                <el-button type="info" plain @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
               </template>
 
             </el-table-column>

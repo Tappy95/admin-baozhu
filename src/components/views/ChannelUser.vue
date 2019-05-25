@@ -42,11 +42,11 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button class="le-bottom" @click="search()">查询</el-button>
+            <el-button type="primary" plain class="le-bottom" @click="search()">查询</el-button>
           </el-form-item>
 
           <el-form-item>
-            <el-button @click="queryExport()">导出表格</el-button>
+            <el-button type="success" plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -107,7 +107,7 @@
 
             <el-table-column fixed="right" label="操作" v-if="setSuperMan" :width="qxW">
               <template slot-scope="scope">
-                <el-button @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
+                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -230,6 +230,7 @@
           }]
         },
         selectTime: '',
+        setSuperMan:false
       }
     },
     created() {

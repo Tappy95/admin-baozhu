@@ -16,7 +16,7 @@
                       <!--clearable></el-input>-->
           <!--</el-form-item>-->
           <!--<el-button @click="search()">查询</el-button>-->
-          <el-button @click="load()" v-if="add">添加方案</el-button>
+          <el-button  type="success" plain @click="load()" v-if="add">添加方案</el-button>
         </el-form>
       </div>
       <div>
@@ -274,13 +274,12 @@
             <el-table-column fixed="right"
                              label="操作"  :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini"
+                <el-button  type="info" plain size="mini"
+                            @click="getInfo(scope.row.id,1)">详情</el-button>
+                <el-button  type="warning" plain size="mini"
                            @click="Delete(scope.row.id)" v-if="del" >删除</el-button>
-                <el-button size="mini"
-                           @click="getInfo(scope.row.id,1)">详情</el-button>
-                <el-button @click="getInfo(scope.row.id,2)" v-if="upd" size="mini">修改</el-button>
+                <el-button  type="success" plain @click="getInfo(scope.row.id,2)" v-if="upd" size="mini">修改</el-button>
               </template>
-
             </el-table-column>
           </el-table>
         </template>

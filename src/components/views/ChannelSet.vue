@@ -13,7 +13,7 @@
           <!--</el-form-item>-->
           <!--</el-form-item>-->
           <!--<el-button @click="search()">查询</el-button>-->
-          <el-button style="margin-bottom: 30px" @click="load()" v-if="add">添加渠道配置</el-button>
+          <el-button type="success" plain style="margin-bottom: 30px" @click="load()" v-if="add">添加渠道配置</el-button>
           <!--<el-button @click="loadChannel()" v-if="addChannelName">添加渠道名称</el-button>-->
         </el-form>
       </div>
@@ -36,10 +36,10 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" @click="Delete(scope.row.id,1)" v-if="del">删除</el-button>
-                <el-button @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
-                <el-button @click="getOne(scope.row.id)" size="mini">详情</el-button>
-                <el-button @click="rewarTap(scope.row.id)" v-if="award" size="mini">用户奖励</el-button>
+                <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id,1)" v-if="del">删除</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
+                <el-button type="primary" plain @click="rewarTap(scope.row.id)" v-if="award" size="mini">用户奖励</el-button>
               </template>
             </el-table-column>
           </el-table>

@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="对战状态" :label-width="formLabelWidth">
+          <el-form-item label="对战状态">
             <el-select v-model="formInline.state" placeholder="">
               <el-option label="全部" value=""></el-option>
               <el-option label="发起" value="1"></el-option>
@@ -16,7 +16,7 @@
               <el-option label="结束" value="4"></el-option>
             </el-select>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -46,7 +46,6 @@
             </el-table-column>
           </el-table>
         </template>
-
       </div>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">

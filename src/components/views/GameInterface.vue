@@ -9,7 +9,7 @@
         <el-form :inline="true"
                  :model="formInline"
                  class="demo-form-inline">
-          <el-button @click="addMethod()" >添加接口</el-button>
+          <el-button type="success" plain @click="addMethod()" >添加接口</el-button>
         </el-form>
       </div>
       <div>
@@ -136,12 +136,12 @@
                              label="操作"
                              :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" @click="getInfo(scope.row.id,1)">详情</el-button>
-                <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-                <el-button @click="getInfo(scope.row.id,2)" size="mini" v-if="upd">修改</el-button>
-                <el-button v-if="seePar" @click="paramsTap(scope.row.id,scope.row.interfaceName)" size="mini" >请求参数</el-button>
-                <el-button @click="responseParamsTap(scope.row.id)" v-if="resparse" size="mini" >响应参数</el-button>
-                <el-button @click="getCame(scope.row.id)" v-if="game" size="mini" >获取游戏</el-button>
+                <el-button type="info" plain size="mini" @click="getInfo(scope.row.id,1)">详情</el-button>
+                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id,2)" size="mini" v-if="upd">修改</el-button>
+                <el-button type="primary" plain v-if="seePar" @click="paramsTap(scope.row.id,scope.row.interfaceName)" size="mini" >请求参数</el-button>
+                <el-button type="success" plain  @click="responseParamsTap(scope.row.id)" v-if="resparse" size="mini" >响应参数</el-button>
+                <el-button type="danger" plain @click="getCame(scope.row.id)" v-if="game" size="mini" >获取游戏</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -1552,7 +1552,7 @@
 
             if (this.upd && this.del &&  this.seePar && this.game) {
               this.powerTrue =true;
-              this.optionW = '530px'
+              this.optionW = '510px'
             }
           }
         } else {

@@ -10,7 +10,7 @@
           <el-form-item label="用户姓名">
             <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -39,7 +39,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="75">
               <template slot-scope="scope">
-                <el-button @click="getInfo(scope.row.id)" size="mini">查看</el-button>
+                <el-button type="info" plain @click="getInfo(scope.row.id)" size="mini">查看</el-button>
               </template>
             </el-table-column>
           </el-table>

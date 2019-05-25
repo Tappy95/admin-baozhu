@@ -20,8 +20,8 @@
             </el-select>
           </el-form-item>
 
-          <el-button @click="search()">查询</el-button>
-          <el-button @click="load()" v-if="add">添加</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -52,10 +52,10 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作"  :width="optionW">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.questionState=='提交' && exa" @click="getInfo(scope.row.qId)" size="mini"><span v-if="optionW='300px'"></span>审核</el-button>
-                <el-button @click="getOne(scope.row.qId)" size="mini">详情</el-button>
-                <el-button size="mini" @click="updateInfo(scope.row.qId)" v-if="upd">修改</el-button>
-                <el-button size="mini" @click="Delete(scope.row.qId)" v-if="del">删除</el-button>
+                <el-button type="info" plain @click="getOne(scope.row.qId)" size="mini">详情</el-button>
+                <el-button type="warning" plain size="mini" @click="Delete(scope.row.qId)" v-if="del">删除</el-button>
+                <el-button type="success" plain size="mini" @click="updateInfo(scope.row.qId)" v-if="upd">修改</el-button>
+                <el-button  type="primary" plain v-if="scope.row.questionState=='提交' && exa" @click="getInfo(scope.row.qId)" size="mini"><span v-if="optionW='300px'"></span>审核</el-button>
               </template>
             </el-table-column>
           </el-table>

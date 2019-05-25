@@ -24,8 +24,8 @@
               <el-option label="全部类型" :value="0"></el-option>
             </el-select>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
-          <el-button @click="load()" v-if="add">添加任务</el-button>
+          <el-button  type="primary" plain @click="search()">查询</el-button>
+          <el-button  type="success" plain @click="load()" v-if="add">添加任务</el-button>
         </el-form>
       </div>
       <div>
@@ -215,12 +215,13 @@
                              label="操作"
                              v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" @click="getInfo(scope.row.id,1)"
+                <el-button  type="info" plain size="mini" @click="getInfo(scope.row.id,1)"
                 >详情</el-button>
-                <el-button @click="getInfo(scope.row.id,2)"
-                           size="mini" v-if="upd">修改</el-button>
-                <el-button size="mini"
+                <el-button  type="warning" plain size="mini"
                            @click="Delete(scope.row.id)" v-if="del">删除</el-button>
+                <el-button  type="success" plain @click="getInfo(scope.row.id,2)"
+                           size="mini" v-if="upd">修改</el-button>
+
               </template>
             </el-table-column>
           </el-table>

@@ -10,8 +10,8 @@
           <el-form-item label="vip名称">
             <el-input v-model="formInline.name" placeholder="" clearable></el-input>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
-          <el-button v-if="add" @click="load()">添加</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-button type="success" plain v-if="add" @click="load()">添加</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -44,9 +44,9 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button size="mini" v-if="del" @click="Delete(scope.row.id)">删除</el-button>
-                <el-button v-if="upd" @click="getInfo(scope.row.id)" size="mini">修改</el-button>
-                <el-button @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <el-button type="warning" plain size="mini" v-if="del" @click="Delete(scope.row.id)">删除</el-button>
+                <el-button type="success" plain v-if="upd" @click="getInfo(scope.row.id)" size="mini">修改</el-button>
               </template>
             </el-table-column>
           </el-table>

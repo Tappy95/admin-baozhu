@@ -17,7 +17,7 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-          <el-button @click="search()">查询</el-button>
+          <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -38,14 +38,17 @@
             <el-table-column prop="packageName" label="游戏包名">
             </el-table-column>
 
-            <el-table-column prop="status" width="150px" label="状态">
+            <el-table-column  width="150px" label="状态">
+              <template slot-scope="scope">
+                <span class="onCZ" v-if="scope.row.status==1">正常</span>
+                <span class="onCX" v-if="scope.row.status==2">下架</span>
+              </template>
             </el-table-column>
-
             <el-table-column prop="status"  label="操作" v-if="showW" :width="optionW">
             <template slot-scope="scope">
-              <el-button size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-              <el-button size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status=='正常' && UpperShelf">下架</el-button>
-              <el-button size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status=='下架' && UpperShelf">上架</el-button>
+              <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
+              <el-button type="primary" plain size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status==1 && UpperShelf">下架</el-button>
+              <el-button type="success" plain size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status==2 && UpperShelf">上架</el-button>
             </template>
           </el-table-column>
           </el-table>
@@ -135,13 +138,13 @@
 
           this.$fetch('/api/tpGame/queryBList', parameterData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-            for(let i = res.data.list.length - 1; i >= 0; i--) {
-              if (res.data.list[i].status==1) {
-                res.data.list[i].status='正常'
-              }else {
-                res.data.list[i].status='下架'
-              }
-            }
+            // for(let i = res.data.list.length - 1; i >= 0; i--) {
+            //   if (res.data.list[i].status==1) {
+            //     res.data.list[i].status='正常'
+            //   }else {
+            //     res.data.list[i].status='下架'
+            //   }
+            // }
 
           this.tableData = res.data.list
           this.totalCount = res.data.total
@@ -219,6 +222,14 @@
   }
 </script>
 <style type="text/css">
+  .onCZ{
+    color: #67c23a;
+  }
+
+  .onCX{
+    color: #f56c6c;
+  }
+
   .administratormanage-wrap {
     width: 100%;
   }
