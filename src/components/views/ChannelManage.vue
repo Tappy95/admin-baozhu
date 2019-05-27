@@ -149,7 +149,7 @@
 
               <el-col :span="12">
                 <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model="form.appId" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="form.wxAppId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -250,7 +250,7 @@
 
               <el-col :span="12">
                 <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model="formtwo.appId" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="formtwo.wxAppId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -358,7 +358,7 @@
 
                 <el-col :span="12">
                   <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.appId" auto-complete="off"  clearable>
+                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.wxAppId" auto-complete="off"  clearable>
                     </el-input>
                   </el-form-item>
                 </el-col>
@@ -718,6 +718,7 @@
         if (this.formtwo.channelPushType==1) {
           this.formtwo.content = this.imageUrl
         }
+
         this.$put('/api/mChannelInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
