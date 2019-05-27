@@ -81,9 +81,7 @@ import GameOrder from '@/components/views/GameOrder' //竞猜记录
 import FissionCase from '@/components/views/FissionCase' //裂变方案
 import ChannelSet from '@/components/views/ChannelSet' //渠道配置
 
-
-
-
+import DataStatistics from '@/components/views/DataStatistics' //数据统计
 
 
 //
@@ -372,7 +370,11 @@ const routes = [
         name: 'ChannelSet',
         component: ChannelSet
       },
-
+      {
+        path: 'data-statistics',
+        name: 'DataStatistics',
+        component: DataStatistics
+      },
     ]
   }
 ]
