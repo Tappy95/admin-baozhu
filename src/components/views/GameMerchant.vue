@@ -116,7 +116,6 @@
 
                 <el-col :span="24">
                 <el-form-item label="logo"
-                              prop="imageUrl"
                               :label-width="formLabelWidth">
                   <el-upload class="bannerAvatar-uploader"
                              action="/api/upload"
@@ -255,7 +254,6 @@
 
               <el-col :span="18" style="margin-bottom: 10px">
                 <el-form-item label="logo"
-                              prop="imageUrl"
                               :label-width="formLabelWidth">
                   <el-upload  class="bannerAvatar-uploader"
                               action="/api/upload"
@@ -340,7 +338,6 @@
 
               <el-col :span="18" style="margin-bottom: 10px">
                 <el-form-item label="logo"
-                              prop="imageUrl"
                               :label-width="formLabelWidth">
                   <el-upload :disabled="true"  class="bannerAvatar-uploader"
                               action="/api/upload"
