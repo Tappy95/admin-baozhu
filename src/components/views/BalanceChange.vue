@@ -33,7 +33,7 @@
             </el-table-column>
             <el-table-column fixed="right"  label="操作" :width="optionW">
               <template slot-scope="scope">
-                <!--<el-button type="success" plain @click="getInfo(scope.row.logId,1)" size="mini" v-if="exa">审核</el-button>-->
+                <el-button type="success" plain @click="getInfo(scope.row.logId,1)" size="mini" v-if="exa">审核</el-button>
                 <el-button type="info" plain @click="getInfo(scope.row.logId,2)" size="mini">详情</el-button>
               </template>
             </el-table-column>
