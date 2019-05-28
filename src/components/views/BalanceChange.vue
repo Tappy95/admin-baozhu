@@ -16,28 +16,24 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-
             <el-table-column fixed="left" prop="mobile"  label="电话">
             </el-table-column>
-
             <el-table-column prop="userName"   label="真实姓名">
             </el-table-column>
-
-            <el-table-column prop="amount"  label="变更金额(￥)">
+            <el-table-column label="变更金额(￥)">
+              <template slot-scope="scope">
+                <span>{{scope.row.amount | currencyFixed}}</span>
+              </template>
             </el-table-column>
-
             <el-table-column prop="account"  label="账户号">
             </el-table-column>
-
             <el-table-column prop="accountType"  label="账号类型">
             </el-table-column>
-
             <el-table-column fixed="right"  label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button type="success" plain @click="getInfo(scope.row.logId,1)" size="mini" v-if="exa">审核</el-button>
+                <!--<el-button type="success" plain @click="getInfo(scope.row.logId,1)" size="mini" v-if="exa">审核</el-button>-->
                 <el-button type="info" plain @click="getInfo(scope.row.logId,2)" size="mini">详情</el-button>
               </template>
             </el-table-column>
@@ -111,7 +107,7 @@
         <el-dialog title="提现详情" :visible.sync="dialogTable" width="800px">
           <el-form>
             <el-row>
-              <el-col :span="18" style="margin-bottom: 10px">
+              <el-col :span="20" style="margin-bottom: 10px">
                 <el-form-item label="用户id:" :label-width="formLabelWidth">
                   <el-input :value="message.userId" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -182,7 +178,6 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
-
   export default {
     name: 'BalanceChange',
     data() {
@@ -246,6 +241,13 @@
       this.queryBtns()
       this.accountList()
     },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currencyFixed: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
+    },
     methods: {
       //权限按钮
       queryBtns(){
@@ -254,17 +256,17 @@
         }
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.length - 1; i >= 0; i--) {
-            //审核
-            if(res.data[i].btnCode == 'exa') {
-              this.exa=true
-            }
-
-            if (this.exa) {
-              this.powerTrue =true;
-              this.optionW = '150px'
-            }
-          }
+          // for(let i = res.data.length - 1; i >= 0; i--) {
+          //   //审核
+          //   if(res.data[i].btnCode == 'exa') {
+          //     this.exa=true
+          //   }
+          //
+          //   if (this.exa) {
+          //     this.powerTrue =true;
+          //     this.optionW = '150px'
+          //   }
+          // }
         } else {
         }
       })
@@ -283,8 +285,8 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          changedType:2,
-          mobile:this.formInline.mobile,
+          // changedType:2,
+          mobile:this.formInline.mobile
       }
 
         this.$fetch('/api/lBalanceChange/userWithdrawalslist', parameterData).then(res => {

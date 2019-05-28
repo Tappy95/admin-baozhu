@@ -60,16 +60,16 @@
             </el-table-column>
             <el-table-column min-width="120" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column min-width="150" label="变更金额">
+            <el-table-column min-width="150" label="金币变动">
               <template slot-scope="scope">
                 <p :class="scope.row.flowType==1?'amountred':'amountgreen'">
-                  <span>{{scope.row.flowType==1?'+':'-'}}</span>{{scope.row.amount}}
+                  <span>{{scope.row.flowType==1?'+':'-'}}</span>{{scope.row.amount | currency}}
                 </p>
               </template>
             </el-table-column>
-            </el-table-column>
-            "渠道关系">
-            </el-table-column>
+            <!--</el-table-column>-->
+            <!--"渠道关系">-->
+            <!--</el-table-column>-->
             <el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>
             <el-table-column prop="changedTime" min-width="170px" label="变更时间">
@@ -82,7 +82,6 @@
                 <el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
                 <el-button type="info" plain @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
               </template>
-
             </el-table-column>
           </el-table>
         </template>
@@ -100,8 +99,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="变更金额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.amount" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                <el-form-item label="金币变动:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.amount | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
@@ -186,8 +185,8 @@
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="变更金额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="messageForm.amount" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                <el-form-item label="金币变动:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="messageForm.amount | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
@@ -306,6 +305,14 @@
       this.menuId=this.$route.query.id
       this.queryBtns()
       this.accountList()
+    },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currency: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
     },
     methods: {
       //导出表格

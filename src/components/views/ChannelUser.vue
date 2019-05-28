@@ -71,7 +71,11 @@
                              label="渠道标识">
             </el-table-column>
 
-            <el-table-column min-width="120" prop="channelRelation" label="渠道关系">
+            <el-table-column min-width="120"  label="渠道关系">
+              <template slot-scope="scope">
+                <span>{{scope.row.channelRelation}}</span>
+                <!--<span :class="scope.row.channelRelation=='直属用户'?'amountyellow':'amountred'">{{scope.row.channelRelation}}</span>-->
+              </template>
             </el-table-column>
 
             <el-table-column min-width="120"  label="身份标识">
@@ -82,22 +86,41 @@
               </template>
             </el-table-column>
 
-            <el-table-column min-width="150px" prop="sumRecharge"
+            <el-table-column min-width="150px"
                              label="累计充值(￥)">
+              <template slot-scope="scope">
+                <span class="amountblue">{{scope.row.sumRecharge | currencyFixed}}</span>
+              </template>
             </el-table-column>
-            <el-table-column min-width="150px" prop="sumCash"
+
+            <el-table-column min-width="150px"
                              label="累计提现(￥)">
+              <template slot-scope="scope">
+                <span class="amountyellow">{{scope.row.sumCash | currencyFixed}}</span>
+              </template>
             </el-table-column>
-            <el-table-column  width="200px" prop="sumCoin"
+
+            <el-table-column  width="200px"
                               label="累计赚取金币数">
+              <template slot-scope="scope">
+                <span class="amountgreen">{{scope.row.sumCoin | currency}}</span>
+              </template>
             </el-table-column>
-            <el-table-column min-width="200px" prop="coin"
+
+            <el-table-column min-width="200px"
                              label="剩余金币"
                              >
+              <template slot-scope="scope">
+                <span class="amountred">{{scope.row.coin | currency}}</span>
+              </template>
             </el-table-column>
-            <el-table-column min-width="300px" prop="pigCoin"
+
+            <el-table-column min-width="300px"
                              label="剩余金猪"
                              >
+              <template slot-scope="scope">
+                <span class="amountrzi">{{scope.row.pigCoin | currency}}</span>
+              </template>
             </el-table-column>
 
             <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
@@ -237,6 +260,17 @@
       this.menuId=this.$route.query.id;
       this.queryBtns();
       this.accountList();
+    },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currency: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
+      currencyFixed: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
     },
     methods: {
       queryBtns(){
@@ -439,6 +473,23 @@
   }
 </script>
 <style type="text/css">
+  .amountblue{
+    color: #409eff;
+  }
+  .amountgreen{
+    color: #13ce66;
+  }
+  .amountyellow{
+    color: #e6a23c;
+  }
+
+  .amountred{
+    color: #ff4d51;
+  }
+
+  .amountrzi{
+    color: #d8b1ee;
+  }
 
   .le-bottom{
     margin-left: 20px;

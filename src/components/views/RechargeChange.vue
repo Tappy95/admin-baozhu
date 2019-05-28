@@ -24,12 +24,25 @@
             </el-table-column>
             <el-table-column prop="balance" label="余额抵扣">
             </el-table-column>
-            <el-table-column prop="price" label="支付金额(￥)">
+
+            <el-table-column  label="支付金额(￥)">
+              <template slot-scope="scope">
+                <span class="amountyellow">{{scope.row.price | currencyFixed}}</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="actualPrice" label="实际支付金额(￥)">
+
+            <el-table-column  label="实际支付金额(￥)">
+              <template slot-scope="scope">
+                <span class="amountgreen">{{scope.row.actualPrice | currencyFixed}}</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="discount" label="折扣金额(￥)">
+
+            <el-table-column label="折扣金额(￥)">
+              <template slot-scope="scope">
+                <span class="amountblue">{{scope.row.discount | currencyFixed}}</span>
+              </template>
             </el-table-column>
+
             <el-table-column prop="descripte" label="支付描述">
             </el-table-column>
             <el-table-column prop="state" label="状态">
@@ -164,6 +177,14 @@
     created() {
       this.accountList()
     },
+
+    filters: {
+      currencyFixed: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
+    },
+
     methods: {
       indexMethod(index) {
         return index * 1 + 1
@@ -259,6 +280,21 @@
   }
 </script>
 <style type="text/css">
+
+  .amountblue{
+    color: #409eff;
+  }
+  .amountgreen{
+    color: #13ce66;
+  }
+  .amountyellow{
+    color: #e6a23c;
+  }
+
+  amountred{
+    color: #fbc4c4;
+  }
+
   .administratormanage-wrap {
     width: 100%;
   }

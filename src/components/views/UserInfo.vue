@@ -37,7 +37,7 @@
             </el-form-item>
 
           <el-form-item>
-            <el-button @click="search()" type="primary">查询</el-button>
+            <el-button @click="search()" type="primary" plain>查询</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -98,24 +98,37 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="coin"
+            <el-table-column
                              label="金币余额"
-                             min-width="100px">
+                             min-width="150px">
+              <template slot-scope="scope">
+                <span class="amountgreen">{{scope.row.coin | currency}}</span>
+              </template>
+
             </el-table-column>
 
-            <el-table-column prop="pigCoin"
+            <el-table-column
                              label="金猪余额"
-                             min-width="100px">
+                             min-width="150px">
+              <template slot-scope="scope">
+                <span class="amountblue">{{scope.row.pigCoin | currency}}</span>
+              </template>
             </el-table-column>
 
-            <el-table-column prop="balance"
+            <el-table-column
                              label="人民币余额"
-                             min-width="100px">
+                             min-width="150px">
+              <template slot-scope="scope">
+                <span class="amountyellow">{{scope.row.balance | currencyFixed}}</span>
+              </template>
             </el-table-column>
 
-            <el-table-column prop="vipAmount"
+            <el-table-column
                              label="vip充值总额"
                              min-width="100px">
+              <template slot-scope="scope">
+                <span>{{scope.row.vipAmount | currencyFixed}}</span>
+              </template>
             </el-table-column>
 
             <el-table-column prop="vipCount"
@@ -123,9 +136,13 @@
                              min-width="100px">
             </el-table-column>
 
-            <el-table-column prop="txAmount"
+            <el-table-column
                              label="提现金额"
-                             min-width="100px">
+                             min-width="150px">
+              <template slot-scope="scope">
+                <span class="amountred">{{scope.row.txAmount | currencyFixed}}</span>
+              </template>
+
             </el-table-column>
 
             <el-table-column prop="txCount"
@@ -155,7 +172,6 @@
                 <el-button type="" style="margin-bottom: 8px"
                            size="mini" v-if="rew"
                            @click="reward(scope.row.userId)">奖励</el-button>
-
                 <el-button type="" v-if="setNo"
                            type="danger" plain
                            size="mini" style="margin-bottom: 8px"
@@ -182,10 +198,22 @@
             </el-row>
             <el-row>
               <el-col :span="12" style="margin-bottom: 10px">
-              <el-form-item label="上级代理v:" :label-width="formLabelWidth">
-                <el-input :style="styleObject" :value="message.referrer" :disabled="true" auto-complete="off" style="" clearable></el-input>
-              </el-form-item>
-            </el-col>
+                <el-form-item label="支付宝账户:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="真实姓名:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="上级代理:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.referrerMobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="昵称:" :label-width="formLabelWidth">
@@ -240,31 +268,31 @@
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金币余额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.coin" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.coin | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金猪余额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.pigCoin" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.pigCoin | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="人民币余额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="'￥'+message.balance" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                <el-form-item label="人民币余额￥:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="message.balance | currencyFixed" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="vip充值总额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.vipAmount" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.vipAmount | currencyFixed" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="提现金额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.txAmount" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.txAmount | currencyFixed" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
@@ -504,6 +532,17 @@
       this.queryBtns();//权限
       this.accountList();//列表
     },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currency: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
+      currencyFixed: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
+    },
     methods: {
       queryBtns(){
         let parameterData = {
@@ -726,6 +765,21 @@
   }
 </script>
 <style type="text/css">
+
+  .amountblue{
+    color: #409eff;
+  }
+  .amountgreen{
+    color: #13ce66;
+  }
+  .amountyellow{
+    color: #e6a23c;
+  }
+
+  amountred{
+    color: #fbc4c4;
+  }
+
   .userloanInformation-wrap {
     width: 100%;
   }
