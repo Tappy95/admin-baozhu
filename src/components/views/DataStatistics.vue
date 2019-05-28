@@ -24,14 +24,12 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-
           <el-form-item >
              <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>
           </el-form-item>
           <el-form-item >
              <el-button type="success" plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
-
         </el-form>
       </div>
       <div class="administratormanage-table">

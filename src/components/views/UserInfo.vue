@@ -161,7 +161,7 @@
                            size="mini" style="margin-bottom: 8px"
                            @click="setSuper(scope.row.userId,scope.row.status,scope.row.remark,1)">冻结账户</el-button>
 
-                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1" size="mini"></span>设置超级合伙人</el-button>
+                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1 && setSuperMan" size="mini"><span v-if="optionW='305px'"></span>设置超级合伙人</el-button>
 
 
                 <!--<el-button type="" v-if="setSuperMan"-->
@@ -527,16 +527,12 @@
 
             if (res.data[i].btnCode == 'setSuperMan') {
               this.setSuperMan =true;
-              this.optionW = '220px'
+              this.optionW = '175px'
             }
 
             if (res.data[i].btnCode == 'setNo') {
               this.setNo = true;
-              this.optionW = '250px'
-            }
-
-            if (this.setSuperMan && this.setNo) {
-              this.optionW = '310px'
+              this.optionW = '175px'
             }
           }
         } else {

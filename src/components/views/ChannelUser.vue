@@ -107,7 +107,7 @@
 
             <el-table-column fixed="right" label="操作" v-if="setSuperMan" :width="qxW">
               <template slot-scope="scope">
-                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
+                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1 && setSuperMan" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -172,7 +172,7 @@
     name: 'ChannelUser',
     data() {
       return {
-        qxW:'0px',
+        qxW:'1px',
         styleObject:{
           width:'200px'
         },
@@ -248,7 +248,7 @@
             for(let i = res.data.length - 1; i >= 0; i--) {
               if(res.data[i].btnCode == 'setSuperMan') {
                 this.setSuperMan =true;
-                this.qxW = '140px';
+                // this.qxW = '140px';
               }
             }
           } else {
