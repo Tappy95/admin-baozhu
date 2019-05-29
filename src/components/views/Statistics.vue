@@ -21,20 +21,20 @@
         </el-col>
         <el-col :span="6">
           <div class="grid_item bg3 grid-content">
-            <img src="../../assets/statistics/zhuce_add.png"/>
+            <img src="../../assets/statistics/tixian.png"/>
             <div class="dec">
               <p>{{tipData.txCount}}<span>人</span></p>
-              <p>出款申请</p>
+              <p>提现申请</p>
             </div>
           </div>
         </el-col>
 
         <el-col :span="6">
           <div class="grid_item bg4 grid-content">
-            <img src="../../assets/statistics/zhuce_add.png"/>
+            <img src="../../assets/statistics/duihuan.png"/>
             <div class="dec">
               <p>{{tipData.dhCount}}<span>人</span></p>
-              <p>礼品兑换申请</p>
+              <p>兑换申请数</p>
             </div>
           </div>
         </el-col>
@@ -373,7 +373,6 @@
           this.$fetch('/api/pDataStatistics/homeTopData',{
           }).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-              console.log(res.data);
               this.tipData = res.data;
             }
           })
@@ -697,7 +696,7 @@
      background:rgba(127,207,130,1);
    }
    .bg4{
-     background-color: #a73ef0;
+     background-color: #31caab;
    }
 
    .list{
