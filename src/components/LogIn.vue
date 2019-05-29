@@ -73,7 +73,10 @@ export default {
               this.$setSession('adminId', res.data.adminId);
               this.$setSession('token', res.token);
               this.$setSession('mobileCookie', res.data.mobile);
-              this.$setSession('roleName', res.data.roleName)
+              this.$setSession('roleName', res.data.roleName);
+
+              this.$setSession('userRelation', res.data.userRelation)
+
               let parameterData = {
                 token: res.token
               }
@@ -81,11 +84,12 @@ export default {
                 if ((res.statusCode+"").startsWith("2")) {
                     let login = JSON.stringify(res.data);
                     this.$setSession("authSize", login);
+                    //宝猪跳转数据统计页
                     if (this.roleType=='baozhu'){
                       this.$router.push({
                         name: 'Statistics'
                       })
-                    }else {
+                    }else {//渠道商跳转默认页
                       this.$router.push({
                         name: 'Index'
                       })

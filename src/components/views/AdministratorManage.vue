@@ -61,7 +61,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
+                <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleId">
                   <el-select v-model="formtwo.roleId" placeholder="" >
                     <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
                   </el-select>
@@ -69,9 +69,20 @@
               </el-col>
 
               <el-col :span="12">
+                <el-form-item label="用户关系:" :label-width="formLabelWidth" >
+                  <el-select v-model="formtwo.userRelation" placeholder="" >
+                    <el-option label="全部" :value="1"></el-option>
+                    <el-option label="直属用户" :value="2"></el-option>
+                    <el-option label="非直属用户" :value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+
+              <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select v-model="formtwo.channelCode" placeholder="" >
-                    <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelName" :value="item.channelCode"></el-option>
+                    <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelCode" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -116,7 +127,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleName">
+                <el-form-item label="角色名称:" :label-width="formLabelWidth" prop="roleId">
                   <el-select v-model="form.roleId" placeholder="" >
                     <el-option :key="index" v-for="(item,index) in role" :label="item.roleName" :value="item.id"></el-option>
                   </el-select>
@@ -124,9 +135,19 @@
               </el-col>
 
               <el-col :span="12">
+                <el-form-item label="用户关系:" :label-width="formLabelWidth" >
+                  <el-select v-model="form.userRelation" placeholder="" >
+                    <el-option label="全部" value="1"></el-option>
+                    <el-option label="直属用户" value="2"></el-option>
+                    <el-option label="非直属用户" value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select v-model="form.channelCode" placeholder="" >
-                    <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelName" :value="item.channelCode"></el-option>
+                    <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelCode" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>

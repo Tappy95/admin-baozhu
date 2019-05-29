@@ -18,10 +18,12 @@ var ua2 = window.navigator.userAgent.toLowerCase();
 ////测试环境
   var https='http://192.168.1.193:8088';
 
-//正式环境
+//正式环境 2019-5-20-online
 // var https='https://admin.bzlyplay.com';
 
+
 // var https='http://103.44.31.228:8088';
+
 
 
 axios.interceptors.request.use(
@@ -31,6 +33,7 @@ axios.interceptors.request.use(
     if(config.method=='post' || config.method=='put'){
       if(config.url == '/api/upload'){
         config.data.append("channel",getSession("channelCode"));
+        config.data.append("relation",getSession("userRelation"));
         // config.data.append("app_key",appkey);
         // config.data.append("sign",getSession("sign"));
         // config.data.append("user_agent",ua);
@@ -42,6 +45,7 @@ axios.interceptors.request.use(
           // app_key: appkey,
           token: getSession("token"),
           channel:getSession("channelCode"),
+          relation:getSession("userRelation"),
           // sign: getSession("sign"),
           // user_agent: ua
         }
@@ -52,6 +56,7 @@ axios.interceptors.request.use(
         // app_key: appkey,
         token: getSession("token"),
         channel:getSession("channelCode"),
+        relation:getSession("userRelation"),
         // sign: getSession("sign"),
         // user_agent: ua,
         ...config.params
@@ -65,6 +70,7 @@ axios.interceptors.request.use(
         // app_key: appkey,
         token: getSession("token"),
         channel:getSession("channelCode"),
+        relation:getSession("userRelation"),
         // sign: getSession("sign"),
         // user_agent: ua,
         ...config.params
