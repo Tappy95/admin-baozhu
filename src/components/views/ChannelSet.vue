@@ -70,7 +70,7 @@
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select  :style="styleObject" v-model="form.channelCode" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.channelCode"></el-option>
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -131,7 +131,7 @@
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select  :style="styleObject" v-model="formtwo.channelCode" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.channelCode"></el-option>
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -193,7 +193,7 @@
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select :disabled="true"  :style="styleObject" v-model="formtwoInfo.channelCode" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.channelCode"></el-option>
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>

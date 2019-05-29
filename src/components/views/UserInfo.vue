@@ -590,7 +590,7 @@
         var date = row[column.property]
         if (date == undefined) {
           return ''
-        }
+      }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
       toggle: function() {

@@ -28,6 +28,38 @@
             <div class="form">
               <el-row>
 
+
+                <el-col :span="12">
+                  <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                    <el-select v-model="form.typeId" placeholder="">
+                      <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
+                    <el-input type="number" min="0" v-model="form.price" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                    <el-input type="number" min="0" v-model="form.rate" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12">
+                  <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                    <el-select v-model="form.status" placeholder="">
+                      <el-option label="启用" value="1"></el-option>
+                      <el-option label="停用" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+
                 <el-col :span="24">
                   <el-form-item label="奖品名称:"
                                 prop="goodsName"
@@ -63,30 +95,6 @@
                     </el-upload>
                   </el-form-item>
                 </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                    <el-select v-model="form.typeId" placeholder="">
-                      <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                    <el-input type="number" min="0" v-model="form.rate" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
-                    <el-select v-model="form.status" placeholder="">
-                      <el-option label="启用" value="1"></el-option>
-                      <el-option label="停用" value="2"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-
 
 
 
@@ -150,6 +158,38 @@
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <el-row>
+
+              <el-col :span="12">
+                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                  <el-select v-model="formtwo.typeId" placeholder="">
+                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
+                  <el-input type="number" min="0" v-model="formtwo.price" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                  <el-input type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.status" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="停用" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="24">
                 <el-form-item label="奖品名称:"
                               prop="goodsName"
@@ -183,28 +223,7 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-select v-model="formtwo.typeId" placeholder="">
-                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                  <el-input type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
             </el-row>
 
           </el-form>
@@ -219,6 +238,44 @@
                    :visible.sync="dialogTableDetail">
           <el-form :model="formtwo">
             <el-row>
+
+              <el-col :span="12">
+                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                  <el-select :disabled="true" v-model="formtwo.typeId" placeholder="">
+                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
+                  <el-input type="number" min="0" :disabled="true" v-model="formtwo.price" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                  <el-input :disabled="true" type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                  <el-select :disabled="true" v-model="formtwo.status" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="停用" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="创建时间:" :label-width="formLabelWidth" prop="rate">
+                  <el-input :disabled="true"  min="0" v-model="formtwo.createTime" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="24">
                 <el-form-item label="奖品名称:"
                               prop="goodsName"
@@ -248,35 +305,6 @@
                     <i v-else
                        class="el-icon-plus bannerAvatar-uploader-icon"></i>
                   </el-upload>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-select :disabled="true" v-model="formtwo.typeId" placeholder="">
-                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                  <el-input :disabled="true" type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="创建时间:" :label-width="formLabelWidth" prop="rate">
-                  <el-input :disabled="true"  min="0" v-model="formtwo.createTime" auto-complete="off"  clearable>
-                  </el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -332,6 +360,9 @@
           goodsName: [
              { required: true, message: '请输入奖品名称', trigger: 'blur' }
             ],
+          price: [
+            { required: true, message: '请输入奖品价格', trigger: 'blur' }
+          ],
             rate: [
             { required: true, message: '请输入中奖概率', trigger: 'blur' }
             ],
@@ -594,10 +625,7 @@
     height: 178px;
     display: block;
   }
-  .form {
-    /*overflow-y: scroll;*/
-    height: auto;
-  }
+
   .el-icon-plus{
     line-height:0;
   }

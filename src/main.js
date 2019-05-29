@@ -9,6 +9,8 @@ Vue.use(ElementUI)
 import router from './router'
 import store from './store'
 
+
+
 import path from './utils/path'
 import {delCookie,setCookie,getCookie,getSession,setSession,delSession} from './utils/cookie'
 import {post,fetch,put,del,uploadFile,quit,delNew} from './utils/http'

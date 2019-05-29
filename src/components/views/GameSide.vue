@@ -5,6 +5,17 @@
         <h3>运营管理/游戏任务</h3>
         <hr />
       </div>
+
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="用户ID:">
+            <el-input v-model="formInline.accountId" auto-complete="off"  clearable>
+            </el-input>
+        </el-form-item>
+        <el-form-item style="margin-left: 20px">
+          <el-button type="primary" plain @click="search" >查询</el-button>
+        </el-form-item>
+      </el-form>
+
       <div>
       </div>
       <div class="administratormanage-table">
@@ -113,7 +124,8 @@
       accountList() {
         let parameterData = {
           pageNum: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          accountId:this.formInline.accountId
         }
         this.$fetch('/api/tpCallback/queryList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

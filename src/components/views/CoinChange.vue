@@ -93,7 +93,7 @@
                   <el-input :style="styleObject" :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col v-if="message.changedType=='提现'" :span="12" style="margin-bottom: 10px">
+              <el-col v-if="message.changedType==3" :span="12" style="margin-bottom: 10px">
                 <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="message.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
@@ -178,9 +178,9 @@
                 </el-form-item>
               </el-col>
 
-              <el-col v-if="messageForm.changedType=='提现'" :span="10" style="margin-bottom: 10px">
+              <el-col v-if="messageForm.changedType==3" :span="10" style="margin-bottom: 10px">
                 <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="messageForm.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="messageForm.account" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
