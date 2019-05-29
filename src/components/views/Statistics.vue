@@ -1,0 +1,774 @@
+<template>
+    <div class="wrap" style="height: 100vh; background:rgba(244,244,245,1)">
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <div class="grid_item bg1 grid-content">
+            <img src="../../assets/statistics/zhuce_add.png"/>
+            <div class="dec">
+              <p>{{tipData.userCount}}<span>人</span></p>
+              <p>新增注册量</p>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid_item bg2 grid-content">
+            <img src="../../assets/statistics/youxian_vip.png"/>
+            <div class="dec">
+              <p>{{tipData.vipCount}}<span>人</span></p>
+              <p>有效会员</p>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid_item bg3 grid-content">
+            <img src="../../assets/statistics/zhuce_add.png"/>
+            <div class="dec">
+              <p>{{tipData.txCount}}<span>人</span></p>
+              <p>出款申请</p>
+            </div>
+          </div>
+        </el-col>
+
+        <el-col :span="6">
+          <div class="grid_item bg4 grid-content">
+            <img src="../../assets/statistics/zhuce_add.png"/>
+            <div class="dec">
+              <p>{{tipData.dhCount}}<span>人</span></p>
+              <p>礼品兑换申请</p>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row style="margin-top: 30px">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="">
+              <el-date-picker
+                v-model="selectTime"
+                type="datetimerange"
+                :picker-options="pickerOptions"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                align="left">
+              </el-date-picker>
+          </el-form-item>
+            <el-form-item label="渠道标识:" :label-width="formLabelWidth">
+              <el-select  v-model="formInline.channelCode" placeholder="">
+                <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
+                <el-option label="全部" value=" "></el-option>
+              </el-select>
+            </el-form-item>
+
+          <el-form-item style="margin-left: 20px">
+             <el-button type="primary" plain @click="search">查询</el-button>
+          </el-form-item>
+
+          <el-form-item style="margin-left: 20px">
+            <el-button type="danger" plain @click="typeTap">昨天</el-button>
+          </el-form-item>
+
+          <!--<el-form-item >-->
+            <!--<el-button type="warning" plain >本周</el-button>-->
+          <!--</el-form-item>-->
+
+          <!--<el-form-item >-->
+            <!--<el-button type="success" plain >本月</el-button>-->
+          <!--</el-form-item>-->
+        </el-form>
+      </el-row>
+     <div class="box_wrap">
+          <el-row :gutter="20">
+            <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}"  >
+              <div class="list grid-content">
+                 <img src="../../assets/statistics/zuce_add.png"/>
+                <div class="dec">
+                  <p>{{listData.regUser}}<span>人</span></p>
+                  <p>新增注册量</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/sign_num.png"/>
+                <div class="dec">
+                  <p>{{listData.signCount}}<span>人</span></p>
+                  <p>签到人数</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/login_num.png"/>
+                <div class="dec">
+                  <p>{{listData.loginCount}}<span>人</span></p>
+                  <p>登录人数</p>
+                </div>
+              </div>
+            </el-col>
+
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/first_vip.png"/>
+                <div class="dec">
+                  <p>{{listData.firstVip}}<span>人</span></p>
+                  <p>首次购买VIP人数</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/pay_num.png"/>
+                <div class="dec">
+                  <p>{{listData.bindZFB}}<span>人</span></p>
+                  <p>绑定支付通道人数</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/vip_num.png"/>
+                <div class="dec">
+                  <p>{{listData.vipCounts}}<span>人</span></p>
+                  <p>购买VIP人数</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/vip_acconut.png"/>
+                <div class="dec">
+                  <p>{{listData.vipAmount}}<span>元</span></p>
+                  <p>购买VIP总金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/game.png"/>
+                <div class="dec">
+                  <p>{{listData.swAmount}}<span>元</span></p>
+                  <p>游戏试玩累计金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/wallet.png"/>
+                <div class="dec">
+                  <p>{{listData.txzAmount}}<span>元</span></p>
+                  <p>总提现金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/gift.png"/>
+                <div class="dec">
+                  <p>{{listData.lpdjAmount}}<span>元</span></p>
+                  <p>礼品等价总金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/upgrade.png"/>
+                <div class="dec">
+                  <p>{{listData.tdzAmount}}<span>元</span></p>
+                  <p>升级运营总监总金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/flag.png"/>
+                <div class="dec">
+                  <p>{{listData.hdjlAmount}}<span>元</span></p>
+                  <p>活动奖励</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/person.png"/>
+                <div class="dec">
+                  <p>{{listData.hygxAmount}}<span>元</span></p>
+                  <p>好友贡献</p>
+                </div>
+              </div>
+            </el-col>
+
+          </el-row>
+          <el-row style="padding-bottom: 30px">
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/exchange.png"/>
+                <div class="dec">
+                  <p>{{listData.jzdhAmount}}<span>元</span></p>
+                  <p>兑换金猪总金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/coin.png"/>
+                <div class="dec">
+                  <p>{{listData.jczAmount}}<span>元</span></p>
+                  <p>总竞猜金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/trophy.png"/>
+                <div class="dec">
+                  <p>{{listData.zjzAmount}}<span>元</span></p>
+                  <p>中奖总金额</p>
+                </div>
+              </div>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <div class="list grid-content">
+                <img src="../../assets/statistics/turntable.png"/>
+                <div class="dec">
+                  <p>{{listData.cjzAmount}}<span>元</span></p>
+                  <p>抽奖总金额</p>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+    </div>
+    </div>
+</template>
+<script>
+  import { formatDate } from '../../utils/date.js'
+    export default {
+        name: "statistics",
+      data() {
+        return {
+          pickerOptions: {
+            shortcuts: [{
+              text: '最近一周',
+              onClick(picker) {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                picker.$emit('pick', [start, end]);
+              }
+            }, {
+              text: '最近一个月',
+              onClick(picker) {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                picker.$emit('pick', [start, end]);
+              }
+            }, {
+              text: '最近三个月',
+              onClick(picker) {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                picker.$emit('pick', [start, end]);
+              }
+            }]
+          },
+          value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+          selectTime: '',
+          channelNameList:[],
+          channelCode:'',
+          formInline:{},
+          formLabelWidth: '100px',
+          tipData:{},
+          listData:{},
+          type:'',
+        };
+      },
+      created(){
+          this.channelList();
+          this.tipList();
+          this.list();
+
+      },
+      filters: {
+        //每隔三位数字以逗号隔开，保留小数点后两位
+        currency: function (num){
+          var dataval = parseInt(num);
+          return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        },
+      },
+      methods: {
+
+          //查询
+          search(){
+            //起始时间
+            if (this.selectTime && this.selectTime[0]) {
+              this.formInline.startTime = formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss');
+              console.log(formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss'))
+            }
+            //结束时间
+            if (this.selectTime && this.selectTime[1]) {
+              this.formInline.endTime = formatDate(new Date(this.selectTime[1]), 'yyyy-MM-dd hh:mm:sss');
+              console.log(this.formInline.endTime)
+            }
+
+            this.type = '';
+            this.list();
+          },
+
+          typeTap(){
+            console.log(this.selectTime)
+            this.type = 'yesterday';
+            this.selectTime = [];
+            // this.formInline = {};
+            this.list();
+          },
+
+        list() {
+          let parameterData = {
+            channelCode: this.formInline.channelCode,
+            type: this.type,
+            startDate: this.formInline.startTime,
+            endDate: this.formInline.endTime
+          }
+          this.$fetch('/api/pDataStatistics/homeTable', parameterData).then(res => {
+            if ((res.statusCode+"").startsWith("2")) {
+              console.log(res.data)
+              this.listData = res.data
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.message,
+                duration: 3000
+              })
+            }
+          })
+        },
+        //调取名称列表
+        channelList(){
+          this.$fetch('/api/mChannelInfo/downList',{
+          }).then(res => {
+            if ((res.statusCode+"").startsWith("2")) {
+              this.channelNameList = res.data;
+            }
+          })
+        },
+
+        tipList(){
+          this.$fetch('/api/pDataStatistics/homeTopData',{
+          }).then(res => {
+            if ((res.statusCode+"").startsWith("2")) {
+              console.log(res.data);
+              this.tipData = res.data;
+            }
+          })
+        },
+      }
+    }
+</script>
+
+<style>
+  @media screen and (min-width:960px) and (max-width:1200px){
+    .wrap{
+      padding: 10px 15px 10px 10px;
+    }
+
+    .grid_item{
+      border-radius:2px;
+      padding:10px 0 12px 0;
+    }
+
+    .grid_item img{
+      width: 32px;
+      height: 32px;
+    }
+
+    .grid_item  .dec p:nth-child(1){
+      font-weight:600;
+      font-size: 16px;
+    }
+
+    .grid_item  .dec p:nth-child(2){
+      font-weight:600;
+      line-height:28px;
+      font-size: 12px;
+    }
+
+    .list{
+      padding: 15px 20px;
+      margin-bottom: 5px;
+    }
+
+    .list .dec p:nth-child(1){
+      font-size: 14px;
+
+    }
+
+    .list .dec p:nth-child(1) span{
+      font-size: 10px;
+
+    }
+
+    .list .dec p:nth-child(2){
+      font-size:12px;
+    }
+
+    .list img{
+      width: 40px;
+      height: 40px;
+    }
+
+  }
+
+  @media screen and (min-width:1201px) and (max-width:1366px){
+    .wrap {
+      padding: 15px 25px 15px 15px;
+    }
+    .grid_item{
+      border-radius:3px;
+      padding:15px 0 18px 0;
+    }
+
+    .grid_item img{
+      width: 35px;
+      height: 35px;
+    }
+
+    .grid_item  .dec p:nth-child(1){
+      font-size: 17px;
+    }
+    .grid_item  .dec p:nth-child(2){
+      font-size: 14px;
+    }
+
+    .list{
+      padding: 20px 35px;
+      margin-bottom: 15px;
+    }
+
+    .list .dec p:nth-child(1){
+      font-size: 18px;
+    }
+
+    .list .dec p:nth-child(1) span{
+      font-size: 12px;
+    }
+
+    .list .dec p:nth-child(2){
+      font-size:14px;
+    }
+
+    .list img{
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  @media screen and (min-width:1361px) and (max-width:1445px){
+    .wrap{
+      padding: 20px 40px 20px 20px;
+    }
+
+    .grid_item{
+      border-radius:3px;
+      padding:10px 0 10px 0;
+    }
+
+    .grid_item img{
+      width: 40px;
+      height: 40px;
+    }
+
+    .grid_item  .dec p:nth-child(1){
+      font-size: px;
+    }
+    .grid_item  .dec p:nth-child(2){
+      font-size: 16px;
+    }
+
+
+    .list{
+      padding: 25px 35px;
+      margin-bottom: 15px;
+    }
+
+    .list .dec p:nth-child(1){
+      font-size: 20px;
+    }
+
+    .list .dec p:nth-child(1) span{
+      font-size: 12px;
+    }
+
+    .list .dec p:nth-child(2){
+      font-size:14px;
+    }
+
+    .list img{
+      width: 66px;
+      height: 66px;
+    }
+
+  }
+
+  @media screen and (min-width:1445px) and (max-width:1920px){
+    .wrap{
+      padding: 30px 50px 30px 30px;
+    }
+    .grid_item{
+      border-radius:4px;
+      padding:30px 0 35px 0;
+    }
+
+    .grid_item img{
+      width: 45px;
+      height: 45px;
+    }
+
+    .grid_item  .dec p:nth-child(1){
+      font-size: 24px;
+    }
+    .grid_item  .dec p:nth-child(2){
+      font-size: 18px;
+    }
+
+
+    .list{
+      padding: 20px 18px;
+      margin-bottom: 10px;
+    }
+
+    .list .dec {
+      margin-left: 16px;
+    }
+    .list .dec p{
+      padding: 0;
+      margin: 0;
+    }
+
+    .list .dec p:nth-child(1){
+      font-size: 20px;
+    }
+
+    .list .dec p:nth-child(1) span{
+      font-size: 12px;
+    }
+
+    .list .dec p:nth-child(2){
+      font-size:14px;
+    }
+    .list img{
+      width: 66px;
+      height: 66px;
+    }
+
+
+
+  }
+
+  @media screen  (min-width:1920px) {
+    .wrap{
+      padding: 30px 50px 30px 30px;
+    }
+
+    .grid_item{
+      border-radius:4px;
+      padding:30px 0 35px 0;
+    }
+
+    .grid_item img{
+      width: 45px;
+      height: 45px;
+    }
+
+    .grid_item  .dec p:nth-child(1){
+      font-size: 24px;
+    }
+    .grid_item  .dec p:nth-child(2){
+      font-size: 18px;
+    }
+
+
+
+    .list{
+      padding: 20px 18px;
+    }
+
+    .list .dec {
+      margin-left: 16px;
+    }
+    .list .dec p{
+      padding: 0;
+      margin: 0;
+    }
+
+    .list .dec p:nth-child(1){
+      font-size: 20px;
+    }
+
+    .list .dec p:nth-child(1) span{
+      font-size: 12px;
+    }
+
+    .list .dec p:nth-child(2){
+      font-size:14px;
+    }
+    .list img{
+      width: 66px;
+      height: 66px;
+    }
+
+  }
+   .wrap{
+     height: auto;
+   }
+
+  .box_wrap{
+    border-radius:4px;
+    background: rgba(255,255,255,1);
+  }
+
+   .grid_item{
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     align-items: center;
+     border-radius:4px;
+     /*padding:30px 0 35px 0;*/
+   }
+
+   .grid_item img{
+      /*width: 44px;*/
+      /*height: 44px;*/
+    }
+
+   .grid_item  .dec{
+      margin-left: 16px;
+   }
+
+   .grid_item  .dec p{
+     margin: 0;
+     padding: 0;
+     color:rgba(255,255,255,1);
+   }
+
+   .grid_item  .dec p:nth-child(1){
+     /*font-weight:600;*/
+     /*line-height:28px;*/
+     /*font-size: 20px;*/
+   }
+
+   .grid_item  .dec p:nth-child(1) span{
+     font-size:12px;
+     font-weight:400;
+     color:rgba(255,255,255,1);
+     margin-left: 4px;
+   }
+   .grid_item  .dec p:nth-child(2){
+     /*font-weight:600;*/
+     /*line-height:28px;*/
+     /*font-size: 14px;*/
+   }
+
+   .bg1{
+     background:rgba(81,134,240,1);
+   }
+
+   .bg2{
+     background:rgba(240,123,32,1);
+   }
+
+   .bg3{
+     background:rgba(127,207,130,1);
+   }
+   .bg4{
+     background-color: #a73ef0;
+   }
+
+   .list{
+     width: 100%;
+     height: auto;
+     display: flex;
+     justify-content: flex-start;
+     /*align-content: center;*/
+     align-items: center;
+     /*padding: 20px 16px;*/
+   }
+
+   .list .dec {
+     margin-left: 16px;
+   }
+   .list .dec p{
+     padding: 0;
+     margin: 0;
+   }
+
+   .list .dec p:nth-child(1){
+     /*font-size: 20px;*/
+     font-weight:600;
+     color:rgba(59,62,91,1);
+     margin-bottom: 5px;
+   }
+
+   .list .dec p:nth-child(1) span{
+     /*font-size: 12px;*/
+     color:rgba(158,169,188,1);
+     margin-left: 4px;
+   }
+
+   .list .dec p:nth-child(2){
+     /*font-size:14px;*/
+     font-weight:400;
+     color:rgba(158,169,188,1);
+   }
+
+
+
+   .list img{
+     /*width: 66px;*/
+     /*height: 66px;*/
+   }
+
+   .el-row {
+     margin-bottom: 20px;
+   &:last-child {
+      margin-bottom: 0;
+    }
+   }
+   .el-col {
+     border-radius: 4px;
+   }
+   .bg-purple-dark {
+     background: #99a9bf;
+   }
+   .bg-purple {
+     background: #d3dce6;
+   }
+   .bg-purple-light {
+     background: #e5e9f2;
+   }
+   .grid-content {
+     border-radius: 4px;
+     min-height: 36px;
+   }
+   .row-bg {
+     padding: 10px 0;
+     background-color: #f9fafc;
+   }
+
+</style>

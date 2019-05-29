@@ -40,6 +40,7 @@ export default {
       buttonName: '获取验证码',
       isDisbled: false,
       name: 'LogIn',
+      roleType:'',
       ruleForm: {
         mobile: '',
         password: ''
@@ -67,20 +68,28 @@ export default {
           this.$setSession('sign', md5Sign)
           this.$fetch("/api/pAdmin/login", fromData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
+              this.roleType = res.data.channelCode;
               this.$setSession('channelCode', res.data.channelCode);
               this.$setSession('adminId', res.data.adminId);
               this.$setSession('token', res.token);
-              this.$setSession('mobileCookie', res.data.mobile)
+              this.$setSession('mobileCookie', res.data.mobile);
+              this.$setSession('roleName', res.data.roleName)
               let parameterData = {
                 token: res.token
               }
               this.$fetch("/api/pMenu/queryMenu", parameterData).then(res => {
                 if ((res.statusCode+"").startsWith("2")) {
-                    let login = JSON.stringify(res.data)
+                    let login = JSON.stringify(res.data);
                     this.$setSession("authSize", login);
-                    this.$router.push({
+                    if (this.roleType=='baozhu'){
+                      this.$router.push({
+                        name: 'Statistics'
+                      })
+                    }else {
+                      this.$router.push({
                         name: 'Index'
                       })
+                    }
                 }
               })
             } else {

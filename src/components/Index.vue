@@ -4,7 +4,7 @@
 			<div class="index-header">
 				<h2>宝猪乐园后台管理系统</h2>
 				<div class="login-message">
-					<span>欢迎 {{realName}} 管理员</span>
+					<span>{{role}}  {{realName}}</span>
 					<span class="cutline">|</span>
 					<div class="exit"
 					  @click="editPw"> 修改密码</div>
@@ -60,6 +60,7 @@ export default {
       dialogFormVisible:false,
       powers: [],
       realName: '',
+      role:'',
       adminId:'',
       menus: [
         {
@@ -101,8 +102,9 @@ export default {
     }
   },
   created() {
-    this.realName = getSession('mobileCookie')
-    this.getPower()
+    this.realName = getSession('mobileCookie');
+    this.role = getSession('roleName');
+    this.getPower();
   },
   methods: {
     //修改密码
@@ -201,7 +203,9 @@ export default {
   position: relative;
   top: -40px;
   display: flex;
-  width: 370px;
+  padding-right: 30px;
+  /*width: 370px;*/
+  font-size: 16px;
 }
 .login-message .cutline {
   padding-left: 10px;

@@ -83,6 +83,11 @@ import ChannelSet from '@/components/views/ChannelSet' //渠道配置
 
 import DataStatistics from '@/components/views/DataStatistics' //数据统计
 
+import Statistics from '@/components/views/Statistics' //首页统计
+
+
+
+
 
 //
 Vue.use(Router)
@@ -374,6 +379,11 @@ const routes = [
         path: 'data-statistics',
         name: 'DataStatistics',
         component: DataStatistics
+      },
+      {
+        path: 'statistics',
+        name: 'Statistics',
+        component: Statistics
       },
     ]
   }
