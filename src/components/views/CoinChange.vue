@@ -185,6 +185,19 @@
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="提现金额（元）:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="messageForm.amountM | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="金币余额:" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" :value="messageForm.coin | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金币变动:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="messageForm.amount | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
