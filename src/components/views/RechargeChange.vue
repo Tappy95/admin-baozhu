@@ -18,26 +18,26 @@
           <el-table :data="tableData" height="580">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column fixed="left" prop="userName" label="姓名">
+            <el-table-column min-width="120" fixed="left" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column prop="outTradeNo" label="订单号">
+            <el-table-column min-width="180" prop="outTradeNo" label="订单号">
             </el-table-column>
-            <el-table-column prop="balance" label="余额抵扣">
+            <el-table-column min-width="150" prop="balance" label="余额抵扣">
             </el-table-column>
 
-            <el-table-column  label="支付金额(￥)">
+            <el-table-column min-width="150" label="支付金额(￥)">
               <template slot-scope="scope">
                 <span class="amountyellow">{{scope.row.price | currencyFixed}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column  label="实际支付金额(￥)">
+            <el-table-column min-width="150" label="实际支付金额(￥)">
               <template slot-scope="scope">
                 <span class="amountgreen">{{scope.row.actualPrice | currencyFixed}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="折扣金额(￥)">
+            <el-table-column min-width="150" label="折扣金额(￥)">
               <template slot-scope="scope">
                 <span class="amountblue">{{scope.row.discount | currencyFixed}}</span>
               </template>
@@ -45,7 +45,7 @@
 
             <el-table-column prop="descripte" label="支付描述">
             </el-table-column>
-            <el-table-column prop="state" label="状态">
+            <el-table-column min-width="120" prop="state" label="状态">
             </el-table-column>
 
             <el-table-column prop="creatorTime" width="170px" label="创建时间">

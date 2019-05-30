@@ -468,12 +468,12 @@
             //起始时间
             if (this.selectTime && this.selectTime[0]) {
               this.formInline.startTime = formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss');
-              console.log(formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss'))
+              // console.log(formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss'))
             }
             //结束时间
             if (this.selectTime && this.selectTime[1]) {
               this.formInline.endTime = formatDate(new Date(this.selectTime[1]), 'yyyy-MM-dd hh:mm:sss');
-              console.log(this.formInline.endTime)
+              // console.log(this.formInline.endTime)
             }
 
             this.type = '';
@@ -481,7 +481,7 @@
           },
 
           typeTap(){
-            console.log(this.selectTime)
+            // console.log(this.selectTime)
             this.type = 'yesterday';
             this.selectTime = [];
             // this.formInline = {};
@@ -497,7 +497,7 @@
           }
           this.$fetch('/api/pDataStatistics/homeTable', parameterData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-              console.log(res.data)
+              // console.log(res.data)
               this.listData = res.data
             } else {
               this.$message({

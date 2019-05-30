@@ -53,7 +53,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="578">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="100" fixed="left" prop="accountId" label="用户id">
@@ -62,9 +62,9 @@
             </el-table-column>
             <el-table-column min-width="150" label="金币变动">
               <template slot-scope="scope">
-                <p :class="scope.row.flowType==1?'amountred':'amountgreen'">
+                <span :class="scope.row.flowType==1?'amountred':'amountgreen'">
                   <span>{{scope.row.flowType==1?'+':'-'}}</span>{{scope.row.amount | currency}}
-                </p>
+                </span>
               </template>
             </el-table-column>
             <!--</el-table-column>-->
