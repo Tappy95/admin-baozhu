@@ -323,10 +323,11 @@
           let  accountId=this.formInline.accountId;
           let  flowType=this.formInline.flowType;
           let token= getSession("token");
-          let channel= getSession("channelCode");
+          let channel= getSession("channelCode")
+          let relation= getSession("userRelation");
 
           let url = '/api/excl/exclCoinChange';
-          let data = {url,userName,changedType,mobile,accountId,flowType,token,channel};
+          let data = {url,userName,changedType,mobile,accountId,flowType,token,channel,relation};
           this.doDownload(data);
       },
       doDownload(obj) {
@@ -337,7 +338,8 @@
           accountId=obj.accountId,
           flowType=obj.flowType,
           token= obj.token,
-          channel=obj.channel
+          channel=obj.channel,
+          relation=obj.relation
 
         let a1 = document.createElement('a');
 
@@ -383,12 +385,12 @@
             http=http+'&flowType=' + flowType
           }
         }
-        if(http==url){
-          http=http+'?token='+token+'&channel='+channel
-        }else{
-          http=http+'&token='+token+'&channel='+channel
-        }
 
+        if(http==url){
+          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
+        }else{
+          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
+        }
         //a1.setAttribute('href',url + '?userName=' + userName +'&changedType='+changedType +'&mobile='+mobile +'&accountId='+accountId +'&flowType='+flowType+'&token='+token +'&channel='+channel);
         a1.setAttribute('href',http);
 

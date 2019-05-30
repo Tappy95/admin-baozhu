@@ -314,9 +314,10 @@
         let maxCoin=this.formInline.maxCoin;
         let token= getSession("token");
         let channel= getSession("channelCode");
+        let relation= getSession("userRelation");
 
         let url = '/api/excl/channelExclUser';
-        let data = {url,accountId,startTime,endTime,minCoin,maxCoin,token,channel};
+        let data = {url,accountId,startTime,endTime,minCoin,maxCoin,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -327,7 +328,8 @@
           minCoin=obj.minCoin,
           maxCoin=obj.maxCoin,
           token= obj.token,
-          channel=obj.channel
+          channel=obj.channel,
+          relation=obj.relation
 
         let a1 = document.createElement('a');
         let http=url;
@@ -373,9 +375,9 @@
           }
         }
         if(http==url){
-          http=http+'?token='+token+'&channel='+channel
+          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
         }else{
-          http=http+'&token='+token+'&channel='+channel
+          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
         }
         //console.log(url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin)
         //a1.setAttribute('href',url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin+'&token='+token+'&channel='+channel);
