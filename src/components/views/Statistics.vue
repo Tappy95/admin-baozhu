@@ -34,7 +34,7 @@
             <img src="../../assets/statistics/duihuan.png"/>
             <div class="dec">
               <p>{{tipData.dhCount}}<span>人</span></p>
-              <p>兑换申请数</p>
+              <p>礼品兑换申请</p>
             </div>
           </div>
         </el-col>
