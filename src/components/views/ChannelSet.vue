@@ -902,7 +902,7 @@
       },
       //调取名称列表
       channelList(){
-        this.$fetch('/api/mChannelInfo/downList',{
+        this.$fetch('/api/mChannelInfo/channelDownList',{
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.channelNameList = res.data;
