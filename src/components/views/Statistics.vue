@@ -6,7 +6,7 @@
             <img src="../../assets/statistics/zhuce_add.png"/>
             <div class="dec">
               <p>{{tipData.userCount}}<span>人</span></p>
-              <p>新增注册量</p>
+              <p>总人数</p>
             </div>
           </div>
         </el-col>
@@ -15,7 +15,7 @@
             <img src="../../assets/statistics/youxian_vip.png"/>
             <div class="dec">
               <p>{{tipData.vipCount}}<span>人</span></p>
-              <p>有效会员</p>
+              <p>总会员</p>
             </div>
           </div>
         </el-col>
