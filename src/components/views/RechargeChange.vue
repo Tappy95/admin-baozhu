@@ -27,19 +27,19 @@
 
             <el-table-column min-width="150" label="支付金额(￥)">
               <template slot-scope="scope">
-                <span class="amountyellow">{{scope.row.price | currencyFixed}}</span>
+                <span class="amountyellow">{{scope.row.price}}</span>
               </template>
             </el-table-column>
 
             <el-table-column min-width="150" label="实际支付金额(￥)">
               <template slot-scope="scope">
-                <span class="amountgreen">{{scope.row.actualPrice | currencyFixed}}</span>
+                <span class="amountgreen">{{scope.row.actualPrice}}</span>
               </template>
             </el-table-column>
 
             <el-table-column min-width="150" label="折扣金额(￥)">
               <template slot-scope="scope">
-                <span class="amountblue">{{scope.row.discount | currencyFixed}}</span>
+                <span class="amountblue">{{scope.row.discount}}</span>
               </template>
             </el-table-column>
 

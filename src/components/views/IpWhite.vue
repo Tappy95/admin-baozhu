@@ -16,7 +16,7 @@
           </el-form-item>
 
           <el-form-item label="白名单内容">
-            <el-input style="width: 240px;"  type="textarea"  v-model="formInline.content" placeholder="" clearable></el-input>
+            <el-input spellcheck="false" style="width: 240px;"  type="textarea"  v-model="formInline.content" placeholder="" clearable></el-input>
           </el-form-item>
 
           <el-button type="primary" plain @click="search()">查询</el-button>

@@ -34,6 +34,7 @@
                   <el-option label="间接用户返利" value="17"></el-option>
                   <el-option label="居间返利" value="18"></el-option>
                   <el-option label="阅读广告奖励" value="19"></el-option>
+                  <el-option label="分享资讯" value="20"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -140,6 +141,7 @@
                     <el-option label="间接用户返利" :value="17"></el-option>
                     <el-option label="居间返利" :value="18"></el-option>
                     <el-option label="阅读广告奖励" :value="19"></el-option>
+                    <el-option label="分享资讯" :value="20"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -150,12 +152,12 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12"  style="margin-bottom: 10px">
+              <el-col :span="12" v-if="message.changedType==3" style="margin-bottom: 10px">
                 <el-form-item label="审核时间:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="message.auditTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12"  style="margin-bottom: 10px">
+              <el-col :span="12"  v-if="message.changedType==3" style="margin-bottom: 10px">
                 <el-form-item  label="审核结果:" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="message.status" :disabled="true" @change="isAuditingChange(messageForm.status)"  placeholder="">
                     <el-option label="正常" :value="1"></el-option>
@@ -242,6 +244,7 @@
                     <el-option label="间接用户返利" :value="17"></el-option>
                     <el-option label="居间返利" :value="18"></el-option>
                     <el-option label="阅读广告奖励" :value="19"></el-option>
+                    <el-option label="分享资讯" :value="20"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -529,6 +532,9 @@
                 res.data.list[i].changedType = '居间返利';
               case 19:
                 res.data.list[i].changedType = '阅读广告奖励';
+                break;
+              case 20:
+                res.data.list[i].changedType = '分享资讯';
                 break;
               // default:
             }

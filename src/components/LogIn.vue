@@ -83,9 +83,17 @@ export default {
               this.$fetch("/api/pMenu/queryMenu", parameterData).then(res => {
                 if ((res.statusCode+"").startsWith("2")) {
                     let login = JSON.stringify(res.data);
+                    // console.log(res.data)
+                    let n=0;
+                    for (var i=0;i<res.data.length;i++) {
+                      if(res.data[i].fileName=="首页"){
+                         n++;
+                         break;
+                      }
+                    }
                     this.$setSession("authSize", login);
                     //宝猪跳转数据统计页
-                    if (this.roleType=='baozhu'){
+                    if (this.roleType=='baozhu' && n>0){
                       this.$router.push({
                         name: 'Statistics'
                       })
