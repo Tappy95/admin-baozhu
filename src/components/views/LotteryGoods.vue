@@ -122,11 +122,17 @@
             <el-table-column prop="goodsName"
                              label="奖品名称" fixed="left" >
             </el-table-column>
-            <el-table-column prop="rate" width="120px"
+
+            <el-table-column min-width="120px" prop="price"
+                             label="奖品价格(￥)"  >
+            </el-table-column>
+
+
+            <el-table-column prop="rate" min-width="120px"
                              label="中奖概率(%)">
             </el-table-column>
 
-            <el-table-column width="200px" label="奖品图片">
+            <el-table-column min-width="200px" label="奖品图片">
               <template slot-scope="scope">
                 <img :src='scope.row.imageUrl'
                      style="max-width: 100px;max-height: 50px"

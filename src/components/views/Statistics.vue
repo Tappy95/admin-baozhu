@@ -557,26 +557,26 @@
       font-size: 12px;
     }
 
-    .list{
+    .box_wrap .list{
       padding: 15px 20px;
       margin-bottom: 5px;
     }
 
-    .list .dec p:nth-child(1){
+    .box_wrap  .list .dec p:nth-child(1){
       font-size: 14px;
 
     }
 
-    .list .dec p:nth-child(1) span{
+    .box_wrap  .list .dec p:nth-child(1) span{
       font-size: 10px;
 
     }
 
-    .list .dec p:nth-child(2){
+    .box_wrap .list .dec p:nth-child(2){
       font-size:12px;
     }
 
-    .list img{
+    .box_wrap .list img{
       width: 40px;
       height: 40px;
     }
@@ -604,24 +604,24 @@
       font-size: 14px;
     }
 
-    .list{
+    .box_wrap .list{
       padding: 20px 35px;
       margin-bottom: 15px;
     }
 
-    .list .dec p:nth-child(1){
+    .box_wrap .list .dec p:nth-child(1){
       font-size: 18px;
     }
 
-    .list .dec p:nth-child(1) span{
+    .box_wrap .list .dec p:nth-child(1) span{
       font-size: 12px;
     }
 
-    .list .dec p:nth-child(2){
+    .box_wrap .list .dec p:nth-child(2){
       font-size:14px;
     }
 
-    .list img{
+    .box_wrap .list img{
       width: 50px;
       height: 50px;
     }
@@ -650,24 +650,24 @@
     }
 
 
-    .list{
+    .box_wrap .list{
       padding: 25px 35px;
       margin-bottom: 15px;
     }
 
-    .list .dec p:nth-child(1){
+    .box_wrap .list .dec p:nth-child(1){
       font-size: 20px;
     }
 
-    .list .dec p:nth-child(1) span{
+    .box_wrap .list .dec p:nth-child(1) span{
       font-size: 12px;
     }
 
-    .list .dec p:nth-child(2){
+    .box_wrap .list .dec p:nth-child(2){
       font-size:14px;
     }
 
-    .list img{
+    .box_wrap .list img{
       width: 66px;
       height: 66px;
     }
@@ -696,31 +696,31 @@
     }
 
 
-    .list{
+    .box_wrap .list{
       padding: 20px 18px;
       margin-bottom: 10px;
     }
 
-    .list .dec {
+    .box_wrap .list .dec {
       margin-left: 16px;
     }
-    .list .dec p{
+    .box_wrap  .list .dec p{
       padding: 0;
       margin: 0;
     }
 
-    .list .dec p:nth-child(1){
+    .box_wrap .list .dec p:nth-child(1){
       font-size: 20px;
     }
 
-    .list .dec p:nth-child(1) span{
+    .box_wrap .list .dec p:nth-child(1) span{
       font-size: 12px;
     }
 
-    .list .dec p:nth-child(2){
+    .box_wrap .list .dec p:nth-child(2){
       font-size:14px;
     }
-    .list img{
+    .box_wrap .list img{
       width: 66px;
       height: 66px;
     }
@@ -753,30 +753,30 @@
 
 
 
-    .list{
+    .box_wrap .list{
       padding: 20px 18px;
     }
 
-    .list .dec {
+    .box_wrap .list .dec {
       margin-left: 16px;
     }
-    .list .dec p{
+    .box_wrap .list .dec p{
       padding: 0;
       margin: 0;
     }
 
-    .list .dec p:nth-child(1){
+    .box_wrap .list .dec p:nth-child(1){
       font-size: 20px;
     }
 
-    .list .dec p:nth-child(1) span{
+    .box_wrap .list .dec p:nth-child(1) span{
       font-size: 12px;
     }
 
-    .list .dec p:nth-child(2){
+    .box_wrap .list .dec p:nth-child(2){
       font-size:14px;
     }
-    .list img{
+    .box_wrap.list img{
       width: 66px;
       height: 66px;
     }
@@ -849,7 +849,7 @@
      background-color: #31caab;
    }
 
-   .list{
+   .box_wrap .list{
      width: 100%;
      height: auto;
      display: flex;
@@ -862,15 +862,15 @@
      z-index: 120;
    }
 
-  .list:hover{
+  .box_wrap .list:hover{
     transition: all .5s;
     box-shadow: 0 2px 10px 0px rgba(0,0,0,.1)
   }
 
-   .list .dec {
+  .box_wrap .list .dec {
      margin-left: 16px;
    }
-   .list .dec p{
+  .box_wrap .list .dec p{
      padding: 0;
      margin: 0;
    }
@@ -885,7 +885,7 @@
 
 
 
-  .list:hover  .dec p:nth-child(2){
+  .box_wrap .list:hover  .dec p:nth-child(2){
     color: #409EFF;
     /*color: cyan;*/
     /*-webkit-animation: neon6 1.5s ease-in-out infinite alternate;*/
@@ -917,13 +917,13 @@
     }
   }
 
-   .list .dec p:nth-child(1) span{
+  .box_wrap .list .dec p:nth-child(1) span{
      /*font-size: 12px;*/
      color:rgba(158,169,188,1);
      margin-left: 4px;
    }
 
-   .list .dec p:nth-child(2){
+  .box_wrap .list .dec p:nth-child(2){
      /*font-size:14px;*/
      font-weight:400;
      color:rgba(158,169,188,1);
@@ -931,7 +931,7 @@
 
 
 
-   .list img{
+  .box_wrap .list img{
      padding-left: 16px;
      /*width: 66px;*/
      /*height: 66px;*/
