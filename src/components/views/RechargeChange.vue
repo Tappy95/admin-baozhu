@@ -43,7 +43,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column prop="descripte" label="支付描述">
+            <el-table-column min-width="150" prop="descripte" label="支付描述">
             </el-table-column>
             <el-table-column min-width="120" prop="state" label="状态">
             </el-table-column>

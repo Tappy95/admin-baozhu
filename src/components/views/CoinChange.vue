@@ -29,6 +29,11 @@
                   <el-option label="兑换金猪" value="12"></el-option>
                   <el-option label="阅读资讯" value="13"></el-option>
                   <el-option label="提现退回" value="14"></el-option>
+                  <el-option label="直属用户返利" value="15"></el-option>
+                  <el-option label="赠送运营总监" value="16"></el-option>
+                  <el-option label="间接用户返利" value="17"></el-option>
+                  <el-option label="居间返利" value="18"></el-option>
+                  <el-option label="阅读广告奖励" value="19"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -132,6 +137,9 @@
                     <el-option label="提现退回" :value="14"></el-option>
                     <el-option label="直属用户返利" :value="15"></el-option>
                     <el-option label="赠送运营总监" :value="16"></el-option>
+                    <el-option label="间接用户返利" :value="17"></el-option>
+                    <el-option label="居间返利" :value="18"></el-option>
+                    <el-option label="阅读广告奖励" :value="19"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -142,14 +150,14 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12" v-if="isNotAuditing" style="margin-bottom: 10px">
+              <el-col :span="12"  style="margin-bottom: 10px">
                 <el-form-item label="审核时间:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="message.auditTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" v-if="isNotAuditing" style="margin-bottom: 10px">
-                <el-form-item :style="styleObject" label="审核结果:" :label-width="formLabelWidth">
-                  <el-select v-model="message.status" :disabled="true" @change="isAuditingChange(messageForm.status)"  placeholder="">
+              <el-col :span="12"  style="margin-bottom: 10px">
+                <el-form-item  label="审核结果:" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="message.status" :disabled="true" @change="isAuditingChange(messageForm.status)"  placeholder="">
                     <el-option label="正常" :value="1"></el-option>
                     <el-option label="冻结" :value="2"></el-option>
                     <el-option label="拒绝" :value="3"></el-option>
@@ -159,7 +167,7 @@
 
               <el-col v-if="reasonMess" :span="20" style="margin-bottom: 10px">
                 <el-form-item label="拒绝原因:" :label-width="formLabelWidth">
-                  <el-input  :rows="4" :disabled="true"  type="textarea" v-model="message.reason"  auto-complete="off" style="" clearable></el-input>
+                  <el-input  :rows="4" spellcheck="false" :disabled="true"  type="textarea" v-model="message.reason"  auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -231,6 +239,9 @@
                     <el-option label="提现退回" :value="14"></el-option>
                     <el-option label="直属用户返利" :value="15"></el-option>
                     <el-option label="赠送运营总监" :value="16"></el-option>
+                    <el-option label="间接用户返利" :value="17"></el-option>
+                    <el-option label="居间返利" :value="18"></el-option>
+                    <el-option label="阅读广告奖励" :value="19"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -240,11 +251,11 @@
                   <el-input :style="styleObject" :value="messageForm.changedTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="审核时间:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="messageForm.auditTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
+              <!--<el-col :span="12" style="margin-bottom: 10px">-->
+                <!--<el-form-item label="审核时间:" :label-width="formLabelWidth">-->
+                  <!--<el-input :style="styleObject" :value="messageForm.auditTime" :disabled="true" auto-complete="off" style="" clearable></el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="审核结果:" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="messageForm.status" @change="isAuditingChange(messageForm.status)"  placeholder="">
@@ -257,7 +268,7 @@
 
               <el-col v-if="reasonMess" :span="20" style="margin-bottom: 10px">
                 <el-form-item label="拒绝原因:" :label-width="formLabelWidth">
-                  <el-input :rows="4"  type="textarea" v-model="messageForm.reason"  auto-complete="off" style="" clearable></el-input>
+                  <el-input :rows="4"  spellcheck="false" type="textarea" v-model="messageForm.reason"  auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -512,42 +523,15 @@
                 break;
               case 16:
                 res.data.list[i].changedType = '赠送运营总监';
+              case 17:
+                res.data.list[i].changedType = '间接用户返利';
+              case 18:
+                res.data.list[i].changedType = '居间返利';
+              case 19:
+                res.data.list[i].changedType = '阅读广告奖励';
                 break;
               // default:
             }
-            // if(res.data.list[i].changedType == '1'){
-            //   res.data.list[i].changedType = '答题'
-            // }else if(res.data.list[i].changedType == '2'){
-            //   res.data.list[i].changedType = '签到'
-            // }else if(res.data.list[i].changedType == '3'){
-            //   res.data.list[i].changedType = '提现'
-            // } else if(res.data.list[i].changedType == '4'){
-            //   res.data.list[i].changedType = '推荐用户'
-            // } else if(res.data.list[i].changedType == '5'){
-            //   res.data.list[i].changedType = '徒弟贡献'
-            // }else if(res.data.list[i].changedType == '6'){
-            //   res.data.list[i].changedType = 'VIP'
-            // }else if(res.data.list[i].changedType == '7'){
-            //   res.data.list[i].changedType = '游戏试玩'
-            // }else if(res.data.list[i].changedType == '8'){
-            //   res.data.list[i].changedType = '徒弟到达四级'
-            // }else if(res.data.list[i].changedType == '9'){
-            //   res.data.list[i].changedType = '新人注册'
-            // }else if(res.data.list[i].changedType == '10'){
-            //   res.data.list[i].changedType = '任务'
-            // }else if(res.data.list[i].changedType == '11'){
-            //   res.data.list[i].changedType = '出题'
-            // }else if(res.data.list[i].changedType == '12'){
-            //   res.data.list[i].changedType = '兑换金猪'
-            // }else if(res.data.list[i].changedType == '13'){
-            //   res.data.list[i].changedType = '阅读资讯'
-            // }else if(res.data.list[i].changedType == '14'){
-            //   res.data.list[i].changedType = '提现退回'
-            // }else if(res.data.list[i].changedType == '15'){
-            //   res.data.list[i].changedType = '直属用户返利'
-            // }else if(res.data.list[i].changedType == '16'){
-            //   res.data.list[i].changedType = '赠送运营总监'
-            // }
 
             if(res.data.list[i].roleType == '1'){
               res.data.list[i].roleType = '小猪猪'
