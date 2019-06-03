@@ -20,7 +20,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="570">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column fixed="left" min-width="200px" prop="tpName" label="游戏方名称">
@@ -29,15 +29,18 @@
             </el-table-column>
             <el-table-column  min-width="150px" prop="gameName" label="游戏名称">
             </el-table-column>
-            <el-table-column  min-width="200px" prop="orderNum" label="流水号">
+            <el-table-column  min-width="210px" prop="orderNum" label="流水号">
             </el-table-column>
             <el-table-column  min-width="150px" prop="gameReward" label="游戏方奖励金币数">
             </el-table-column>
             <el-table-column  min-width="150px" prop="reward" label="总奖励金币数">
             </el-table-column>
-            <el-table-column  min-width="150px" prop="tpGameId" label="用户在游戏方的id">
+            <el-table-column  min-width="150px" prop="tpGameId" label="用户在游戏方的ID">
             </el-table-column>
             <el-table-column  min-width="120px" prop="mobile" label="用户手机号">
+            </el-table-column>
+
+            <el-table-column  min-width="120px" prop="accountId" label="用户ID">
             </el-table-column>
 
             <el-table-column  min-width="150px" prop="channelCode" label="渠道标识">
