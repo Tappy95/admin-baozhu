@@ -78,6 +78,10 @@
             <!--</el-table-column>-->
             <el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>
+
+            <el-table-column prop="changedType" min-width="170px" label="变更原因">
+            </el-table-column>
+
             <el-table-column prop="changedTime" min-width="170px" label="变更时间">
             </el-table-column>
             <el-table-column min-width="150" prop="remarks" label="备注">
@@ -85,8 +89,8 @@
             <el-table-column fixed="right" v-if="exa" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <!--<el-button @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>审核</el-button>-->
-                <el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
                 <el-button type="info" plain @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
+                <el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
               </template>
             </el-table-column>
           </el-table>

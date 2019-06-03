@@ -24,6 +24,8 @@
               <el-option label="vip救济金猪" value="7"></el-option>
               <el-option label="金猪抽奖" value="8"></el-option>
               <el-option label="抽奖退回" value="9"></el-option>
+              <el-option label="竞猜退回" value="10"></el-option>
+              <el-option label="团队长赠送" value="11"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -101,7 +103,21 @@
               </el-col>
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="变更原因:" :label-width="formLabelWidth">
-                  <el-input :value="message.changedType" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <!--<el-input :value="message.changedType" :disabled="true" auto-complete="off" style="" clearable></el-input>-->
+                  <el-select v-model="message.changedType" :disabled="true"  placeholder="">
+                    <el-option label="vip" value="1"></el-option>
+                    <el-option label="提现" value="2"></el-option>
+                    <el-option label="任务" value="3"></el-option>
+                    <el-option label="试玩" value="4"></el-option>
+                    <el-option label="金币兑换获得" value="5"></el-option>
+                    <el-option label="竞猜" value="6"></el-option>
+                    <el-option label="vip救济金猪" value="7"></el-option>
+                    <el-option label="金猪抽奖" value="8"></el-option>
+                    <el-option label="抽奖退回" value="9"></el-option>
+                    <el-option label="竞猜退回" value="10"></el-option>
+                    <el-option label="团队长赠送" value="11"></el-option>
+                  </el-select>
+
                 </el-form-item>
               </el-col>
               <el-col :span="10" style="margin-bottom: 10px">
@@ -316,7 +332,12 @@
               res.data.list[i].changedType = '金猪抽奖'
             }else if(res.data.list[i].changedType == '9'){
               res.data.list[i].changedType = '抽奖退回'
+            }else if(res.data.list[i].changedType == '10'){
+              res.data.list[i].changedType = '竞猜退回'
+            }else if(res.data.list[i].changedType == '11'){
+              res.data.list[i].changedType = '团队长赠送'
             }
+
 
             if(res.data.list[i].roleType == '1'){
               res.data.list[i].roleType = '小猪猪'
@@ -343,31 +364,31 @@
         this.$fetch('/api/lPigChange/info', {
           id: id
         }).then(res => {
-          if(res.data != null ){
+          if ((res.statusCode+"").startsWith("2")) {
           if(res.data.flowType == '1') {
             res.data.flowType = '收入'
           } else {
             res.data.flowType = '支出'
           }
-          if(res.data.changedType == '1'){
-            res.data.changedType = 'vip'
-          }else if(res.data.changedType == '2'){
-            res.data.changedType = '提现'
-          }else if(res.data.changedType == '3'){
-            res.data.changedType = '任务'
-          }else if(res.data.changedType == '4'){
-            res.data.changedType = '游戏试玩'
-          }else if(res.data.changedType == '5'){
-            res.data.changedType = '金币兑换'
-          }else if(res.data.changedType == '6'){
-            res.data.changedType = '竞猜'
-          }else if(res.data.changedType == '7'){
-            res.data.changedType = 'vip救济金'
-          }else if(res.data.changedType == '8'){
-            res.data.changedType = '金猪抽奖'
-          }else if(res.data.changedType == '9'){
-            res.data.changedType = '抽奖退回'
-          }
+          // if(res.data.changedType == '1'){
+          //   res.data.changedType = 'vip'
+          // }else if(res.data.changedType == '2'){
+          //   res.data.changedType = '提现'
+          // }else if(res.data.changedType == '3'){
+          //   res.data.changedType = '任务'
+          // }else if(res.data.changedType == '4'){
+          //   res.data.changedType = '游戏试玩'
+          // }else if(res.data.changedType == '5'){
+          //   res.data.changedType = '金币兑换'
+          // }else if(res.data.changedType == '6'){
+          //   res.data.changedType = '竞猜'
+          // }else if(res.data.changedType == '7'){
+          //   res.data.changedType = 'vip救济金'
+          // }else if(res.data.changedType == '8'){
+          //   res.data.changedType = '金猪抽奖'
+          // }else if(res.data.changedType == '9'){
+          //   res.data.changedType = '抽奖退回'
+          // }
           res.data.changedTime=formatDate(new Date(res.data.changedTime), 'yyyy-MM-dd hh:mm:sss')
           this.message=res.data
          }
