@@ -642,7 +642,7 @@
         this.imageUrl =''
       },
       addBtn(form) {
-        console.log(this.imageUrl)
+        // console.log(this.imageUrl)
         this.form.imageUrl=this.imageUrl
         this.$refs.form.validate(valid => {
           if (valid) {

@@ -892,6 +892,7 @@
       load() {
         this.taskTypeName =[];
         this.dialogFormVisible = true;
+        this.channelList();
       },
       //渠道名称
       rewarTap(id) {
