@@ -89,22 +89,22 @@
 
               <el-col :span="12">
                 <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="form.needUpdate" placeholder="">
-                    <el-option label="需要" value="1"></el-option>
-                    <el-option label="不需要" value="2"></el-option>
+                  <el-select :disabled="true" :style="styleObject" v-model="form.needUpdate" placeholder="">
+                    <el-option label="需要" :value="1"></el-option>
+                    <el-option label="不需要" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
               <el-col :span="22">
-                <el-form-item v-if="form.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
-                  <el-input   min="0" v-model="form.updateUrl" auto-complete="off"  clearable>
+                <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false"  min="0" v-model="form.updateUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="22">
-                <el-form-item v-if="form.needUpdate==1" label="更新描述:"  :label-width="formLabelWidth" >
+                <el-form-item label="更新描述:"  :label-width="formLabelWidth" >
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="form.updateRemark" auto-complete="off" clearable></el-input>
                   </el-input>
                 </el-form-item>
@@ -160,7 +160,7 @@
 
               <el-col :span="12">
                 <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.needUpdate" placeholder="">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwo.needUpdate" placeholder="">
                     <el-option label="需要" :value="1"></el-option>
                     <el-option label="不需要" :value="2"></el-option>
                   </el-select>
@@ -168,15 +168,15 @@
               </el-col>
 
               <el-col :span="22">
-                <el-form-item v-if="formtwo.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
-                  <el-input   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
+                <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false"   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
 
               <el-col :span="22">
-                <el-form-item v-if="formtwo.needUpdate==1" label="更新描述:"  :label-width="formLabelWidth" >
+                <el-form-item label="更新描述:"  :label-width="formLabelWidth" >
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwo.updateRemark" auto-complete="off" clearable></el-input>
                   </el-input>
                 </el-form-item>
@@ -245,14 +245,14 @@
                 </el-form-item>
               </el-col>
               <el-col :span="22">
-                <el-form-item v-if="formtwoInfo.needUpdate==1" label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
                   <el-input :disabled="true" min="0" v-model="formtwoInfo.updateUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="22">
-                <el-form-item v-if="formtwoInfo.needUpdate==1" label="更新描述:"  :label-width="formLabelWidth" >
+                <el-form-item  label="更新描述:"  :label-width="formLabelWidth" >
                   <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwoInfo.updateRemark" auto-complete="off" clearable></el-input>
                   </el-input>
                 </el-form-item>
@@ -296,7 +296,7 @@
         form: {
           needUpdate:2, // 是否需要更新（1-需要 2-不需要）
           updateUrl:'', // 更新地址
-    },
+        },
         rules: {
           openNoviceTask: [{
             required: true,
@@ -431,6 +431,7 @@
       },
       load() {
         this.form={};
+        this.form.needUpdate = 2;
         this.formInline = {};
         this.dialogFormVisible = true;
       },
