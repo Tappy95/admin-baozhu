@@ -13,10 +13,10 @@
               <el-form-item  label="电话号码:">
                 <el-input  v-model="formInline.mobile" placeholder="" clearable></el-input>
               </el-form-item>
-              <el-form-item  label="状态:" >
+              <el-form-item  label="变更类型:" >
                 <el-select v-model="formInline.changedType"  placeholder="">
                   <el-option label="答题" value="1"></el-option>
-                  <el-option label="签到" value="2"></el-option>
+                  <el-option label="每日签到" value="2"></el-option>
                   <el-option label="提现" value="3"></el-option>
                   <el-option label="推荐用户" value="4"></el-option>
                   <el-option label="徒弟贡献" value="5"></el-option>
@@ -73,22 +73,16 @@
                 </span>
               </template>
             </el-table-column>
-            <!--</el-table-column>-->
-            <!--"渠道关系">-->
-            <!--</el-table-column>-->
             <el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>
-
-            <el-table-column prop="changedType" min-width="170px" label="变更原因">
+            <el-table-column prop="changedType" min-width="170px" label="变更类型">
             </el-table-column>
-
             <el-table-column prop="changedTime" min-width="170px" label="变更时间">
             </el-table-column>
             <el-table-column min-width="150" prop="remarks" label="备注">
             </el-table-column>
-            <el-table-column fixed="right" v-if="exa" label="操作" :width="optionW">
+            <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <!--<el-button @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>审核</el-button>-->
                 <el-button type="info" plain @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
                 <el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
               </template>
@@ -124,10 +118,10 @@
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="变更原因:" :label-width="formLabelWidth">
+                <el-form-item label="变更类型:" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="message.changedType" :disabled="true"   placeholder="">
                     <el-option label="答题" :value="1"></el-option>
-                    <el-option label="签到" :value="2"></el-option>
+                    <el-option label="每日签到" :value="2"></el-option>
                     <el-option label="提现" :value="3"></el-option>
                     <el-option label="推荐用户" :value="4"></el-option>
                     <el-option label="徒弟贡献" :value="5"></el-option>
@@ -226,11 +220,11 @@
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="变更原因:" :label-width="formLabelWidth">
+                <el-form-item label="变更类型:" :label-width="formLabelWidth">
                   <!--<el-input :value="messageForm.changedType" :disabled="true" auto-complete="off" style="" clearable></el-input>-->
                   <el-select :style="styleObject" v-model="messageForm.changedType" :disabled="true"   placeholder="">
                     <el-option label="答题" :value="1"></el-option>
-                    <el-option label="签到" :value="2"></el-option>
+                    <el-option label="每日签到" :value="2"></el-option>
                     <el-option label="提现" :value="3"></el-option>
                     <el-option label="推荐用户" :value="4"></el-option>
                     <el-option label="徒弟贡献" :value="5"></el-option>
@@ -323,13 +317,9 @@
           flowType:''
         },
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
         message:{},
-        exa:false
+        exa:false,
+        fullscreenLoading:false//导出弹层
       }
     },
     created() {
@@ -348,6 +338,13 @@
     methods: {
       //导出表格
       queryExport() {
+        //开启正在导出弹层
+        this.fullscreenLoading = this.$loading({
+          lock: true,
+          text: '正在导出...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
           let userName=this.formInline.userName;
           let  changedType=this.formInline.changedType;
           let mobile=this.formInline.mobile;
@@ -429,6 +426,10 @@
         body.appendChild(a1);
         a1.click();
         a1.remove();
+        //关闭正在导出弹层
+        setTimeout(() => {
+          this.fullscreenLoading.close();
+        }, 5000);
       },
 
       queryBtns(){
@@ -475,13 +476,6 @@
           if ((res.statusCode+"").startsWith("2")) {
           for(let i = res.data.list.length - 1; i >= 0; i--) {
             res.data.list[i].changedTime=formatDate(new Date(res.data.list[i].changedTime), 'yyyy-MM-dd hh:mm:sss')
-            // if(res.data.list[i].flowType == '1') {
-            //   res.data.list[i].flowType = '收入'
-            // } else {
-            //   res.data.list[i].flowType = '支出'
-            // }
-
-
             switch (res.data.list[i].changedType) {
               case 1:
                 res.data.list[i].changedType = '答题';

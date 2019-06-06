@@ -10,38 +10,47 @@
           <el-form-item label="vip名称">
             <el-input v-model="formInline.name" placeholder="" clearable></el-input>
           </el-form-item>
+          <el-form-item label="状态">
+            <el-select v-model="formInline.status" placeholder="">
+              <el-option label="启用" value="1"></el-option>
+              <el-option label="停用" value="2"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain v-if="add" @click="load()">添加</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" style="width: 100%" max-height="600"  >
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column fixed="left" width="150px" prop="name" label="vip名称">
+            <el-table-column fixed="left" min-width="150" prop="name" label="vip名称">
             </el-table-column>
-            <el-table-column width="150px" label="logo">
+            <el-table-column min-width="150" label="logo">
               <template slot-scope="scope">
                 <img :src='scope.row.logo'
-                     style="max-width: 120px;max-height: 90px;"
+                     style="max-width: 45px;max-height: 45px;"
                      @click="clickImg($event)">
               </template>
             </el-table-column>
-            <el-table-column width="170px" prop="gameAddition" label="游戏加成(%)">
+            <el-table-column min-width="170px" prop="gameAddition" label="游戏加成(%)">
             </el-table-column>
-            <el-table-column prop="useDay" width="170px" label="有效期(单位:天)">
+            <el-table-column prop="useDay" min-width="170" label="有效期(单位:天)">
             </el-table-column>
-            <el-table-column width="170px" prop="price" label="售价(￥)">
+            <el-table-column min-width="170" prop="price" label="售价(￥)">
             </el-table-column>
-            <el-table-column width="150px" prop="status" label="是否可用">
+            <el-table-column min-width="150" prop="status" label="是否可用">
             </el-table-column>
-            <el-table-column width="170px" prop="coinToPigAddition" label="金币兑换金猪加成(%)">
+
+            <el-table-column min-width="170" prop="coinToPigAddition" label="金币兑换金猪加成(%)">
             </el-table-column>
-            <el-table-column width="80px" prop="orderId" label="等级">
+            <el-table-column min-width="80" prop="orderId" label="等级">
             </el-table-column>
-            <el-table-column width="170px" prop="createTime" :formatter="dateFormat" label="修改时间">
+            <el-table-column min-width="170" prop="createTime" :formatter="dateFormat" label="修改时间">
             </el-table-column>
+
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
@@ -724,7 +733,8 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          name: this.formInline.name
+          name: this.formInline.name,
+          status: this.formInline.status
         }
         this.$fetch('/api/mVipInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

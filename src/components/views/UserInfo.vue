@@ -45,6 +45,7 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
+                    v-loading="loading"
                     height="640">
             <el-table-column fixed="left" label="序号"
                              type="index"
@@ -472,6 +473,7 @@
         del:false,
         upd:false,
         exa:false,
+        setNo:false,
         types:'',
         rules: {
           remark: [
@@ -523,6 +525,7 @@
         channelNameList:[],
         levelList:[],
         interface:'',
+        loading:true,
       }
     },
     created() {
@@ -596,8 +599,6 @@
       toggle: function() {
         this.isShow = !this.isShow
       },
-
-
       //调取渠道标识列表
       channelList(){
         this.$fetch('/api/mChannelInfo/downList',{
@@ -607,7 +608,6 @@
           }
         })
       },
-
       //调取用户等级
       levelListD(){
         this.$fetch('/api/pLevel/downLevelList',{
@@ -617,8 +617,6 @@
           }
         })
       },
-
-
       setSuper(userId,roleType,remark,type){
         this.dialogSuper = true;
         this.formSet.userId = userId;
@@ -626,7 +624,6 @@
         this.formSet.remark = remark;
         this.types = type;
       },
-
       setBtn(formSet){
         if (this.types==2) {
           this.interface = '/api/userInfo/setSuperPartner'
@@ -650,7 +647,6 @@
           }
         })
       },
-
       getInfo(id) {
         this.isInfo = true
         this.dialogTableVisible = true
@@ -726,14 +722,9 @@
         }
         this.$fetch('/api/userInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          // for(let i = res.data.list.length - 1; i >= 0; i--) {
-          //   if(res.data.list[i].digitalNumType == 1) {
-          //       res.data.list[i].digitalNumType = "身份证"
-          //     }
-          //
-          // }
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
+          this.loading =false;
         }
       })
       },

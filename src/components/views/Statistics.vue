@@ -469,11 +469,15 @@
             if (this.selectTime && this.selectTime[0]) {
               this.formInline.startTime = formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss');
               // console.log(formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss'))
+            }else {
+              this.formInline.startTime = ''
             }
             //结束时间
             if (this.selectTime && this.selectTime[1]) {
               this.formInline.endTime = formatDate(new Date(this.selectTime[1]), 'yyyy-MM-dd hh:mm:sss');
               // console.log(this.formInline.endTime)
+            }else {
+              this.formInline.endTime = ''
             }
 
             this.type = '';
@@ -498,7 +502,7 @@
           this.$fetch('/api/pDataStatistics/homeTable', parameterData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
               // console.log(res.data)
-              this.listData = res.data
+              this.listData = res.data;
             } else {
               this.$message({
                 type: 'error',

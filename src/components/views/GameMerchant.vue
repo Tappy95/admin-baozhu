@@ -181,7 +181,7 @@
             <el-table-column width="200px" label="logo">
               <template slot-scope="scope">
                 <img :src='scope.row.imageUrl'
-                     style="max-width: 100px;max-height: 80px"
+                     style="max-width: 45px;max-height: 45px"
                      @click="clickImg($event)">
               </template>
             </el-table-column>

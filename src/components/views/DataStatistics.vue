@@ -156,6 +156,8 @@
         if (this.formInline.creatorTime){
           let times = this.formInline.creatorTime;
           this.formInline.creatorTime = formatDate(new Date(times), 'yyyy-MM-dd');
+        }else {
+          this.formInline.creatorTime = ''
         }
       },
 

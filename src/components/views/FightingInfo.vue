@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column prop="defenseName" label="参与人">
             </el-table-column>
-            <el-table-column prop="initiatorCoin" width="180px" label="发起人支付金币数(￥)">
+            <el-table-column prop="initiatorCoin" width="180px" label="发起人支付金币数">
             </el-table-column>
             <el-table-column prop="defenseCoin" width="180px" label="参与人支付金币">
             </el-table-column>

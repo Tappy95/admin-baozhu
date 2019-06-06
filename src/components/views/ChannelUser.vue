@@ -46,7 +46,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="success" plain @click="queryExport()">导出表格</el-button>
+            <el-button type="success" plain @click="queryExport()" >导出表格</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -54,13 +54,13 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
+                    v-loading="loading"
                     height="640">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"
                              width='80'>
             </el-table-column>
-
             <el-table-column min-width="140px"  fixed="left"  prop="accountId"
                              label="用户ID">
             </el-table-column>
@@ -70,7 +70,6 @@
             <el-table-column min-width="150px" prop="channelCode"
                              label="渠道标识">
             </el-table-column>
-
             <el-table-column min-width="120"  label="渠道关系">
               <template slot-scope="scope">
                 <span>{{scope.row.channelRelation}}</span>
@@ -85,28 +84,24 @@
                 <span v-if="scope.row.roleType==3">超级合伙人</span>
               </template>
             </el-table-column>
-
             <el-table-column min-width="150px"
                              label="累计充值(￥)">
               <template slot-scope="scope">
                 <span class="amountblue">{{scope.row.sumRecharge | currencyFixed}}</span>
               </template>
             </el-table-column>
-
             <el-table-column min-width="150px"
                              label="累计提现(￥)">
               <template slot-scope="scope">
                 <span class="amountyellow">{{scope.row.sumCash | currencyFixed}}</span>
               </template>
             </el-table-column>
-
             <el-table-column  width="200px"
                               label="累计赚取金币数">
               <template slot-scope="scope">
                 <span class="amountgreen">{{scope.row.sumCoin | currency}}</span>
               </template>
             </el-table-column>
-
             <el-table-column min-width="200px"
                              label="剩余金币"
                              >
@@ -114,7 +109,6 @@
                 <span class="amountred">{{scope.row.coin | currency}}</span>
               </template>
             </el-table-column>
-
             <el-table-column min-width="300px"
                              label="剩余金猪"
                              >
@@ -122,12 +116,10 @@
                 <span class="amountrzi">{{scope.row.pigCoin | currency}}</span>
               </template>
             </el-table-column>
-
             <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
                               label="注册时间"
             >
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" v-if="setSuperMan" :width="qxW">
               <template slot-scope="scope">
                 <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1 && setSuperMan" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
@@ -172,7 +164,6 @@
                          @click="setBtn('form')">确 定</el-button>
             </div>
           </el-dialog>
-
         </template>
       </div>
       <div class="block">
@@ -195,6 +186,7 @@
     name: 'ChannelUser',
     data() {
       return {
+        fullscreenLoading: false,
         qxW:'1px',
         styleObject:{
           width:'200px'
@@ -253,7 +245,8 @@
           }]
         },
         selectTime: '',
-        setSuperMan:false
+        setSuperMan:false,
+        loading:true
       }
     },
     created() {
@@ -291,22 +284,23 @@
       },
       //导出表格
       queryExport() {
-        // if (this.tableData.length<1){
-        //   this.$message({
-        //     type: 'error',
-        //     message: '请选择要导出的数据',
-        //     duration: 3000
-        //   })
-        //   return false;
-        // }
+        this.fullscreenLoading = this.$loading({
+          lock: true,
+          text: '正在导出....',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
 
         if (this.selectTime && this.selectTime[0]) {
           this.formInline.startTime = this.selectTime[0].getTime();
+        }else {
+          this.formInline.startTime = ''
         }
         if (this.selectTime && this.selectTime[1]) {
           this.formInline.endTime = this.selectTime[1].getTime();
+        }else {
+          this.formInline.endTime = ''
         }
-
         let accountId=this.formInline.accountId;
         let startTime=this.formInline.startTime;
         let endTime=this.formInline.endTime;
@@ -379,29 +373,34 @@
         }else{
           http=http+'&token='+token+'&channel='+channel+'&relation='+relation
         }
-        //console.log(url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin)
-        //a1.setAttribute('href',url + '?accountId=' + accountId +'&startTime='+startTime +'&endTime='+endTime +'&minCoin='+minCoin +'&maxCoin='+maxCoin+'&token='+token+'&channel='+channel);
         a1.setAttribute('href',http);
-        // a1.setAttribute('href',url + '?ids=' + ids);
-
         let body = document.querySelector('body');
         body.appendChild(a1);
         a1.click();
         a1.remove();
+        //关闭正在导出弹层
+        setTimeout(() => {
+          this.fullscreenLoading.close();
+        }, 5000);
       },
-
       timeChang(){
 
       },
       search() {
         this.currentPage = 1;
         this.pageSize = 10;
+
         if (this.selectTime && this.selectTime[0]) {
           this.formInline.startTime = this.selectTime[0].getTime();
+        }else {
+          this.formInline.startTime = ''
         }
         if (this.selectTime && this.selectTime[1]) {
           this.formInline.endTime = this.selectTime[1].getTime();
+        }else {
+          this.formInline.endTime = ''
         }
+
         this.accountList();
       },
       indexMethod(index) {
@@ -426,15 +425,9 @@
         }
         this.$fetch('/api/userInfo/channelList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            // for(let i = res.data.list.length - 1; i >= 0; i--) {
-              // if(res.data.list[i].digitalNumType == 1) {
-              //   res.data.list[i].digitalNumType = "身份证号"
-              // } else {
-              //   res.data.list[i].digitalNumType = "驾驶证"
-              // }
-            // }
-            this.tableData = res.data.list
-            this.totalCount = res.data.total
+            this.tableData = res.data.list;
+            this.totalCount = res.data.total;
+            this.loading = false
           }
         })
       },

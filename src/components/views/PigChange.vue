@@ -168,6 +168,7 @@
           accountId:'',
           flowType:''
         },
+        fullscreenLoading:false//导出弹层
       }
     },
     created() {
@@ -186,14 +187,13 @@
     methods: {
       //导出表格
       queryExport() {
-        // if (this.tableData.length<1){
-        //   this.$message({
-        //     type: 'error',
-        //     message: '请选择要导出的数据',
-        //     duration: 3000
-        //   })
-        //   return false;
-        // }
+        //开启正在导出弹层
+        this.fullscreenLoading = this.$loading({
+          lock: true,
+          text: '正在导出...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
         let userName=this.formInline.userName;
         let  changedType=this.formInline.changedType;
         let mobile=this.formInline.mobile;
@@ -273,6 +273,10 @@
         body.appendChild(a1);
         a1.click();
         a1.remove();
+        //关闭导出弹层
+        setTimeout(() => {
+          this.fullscreenLoading.close();
+        }, 5000);
       },
       queryBtns(){
         let parameterData = {
