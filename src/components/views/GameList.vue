@@ -8,10 +8,10 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="游戏id">
-            <el-input v-model="formInline.gameId" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.gameId" placeholder="请输入游戏id" clearable></el-input>
           </el-form-item>
           <el-form-item label="状态:" >
-            <el-select v-model="formInline.status"   placeholder="">
+            <el-select v-model="formInline.status"   placeholder="请选择状态">
               <el-option label="正常" value="1"></el-option>
               <el-option label="下架" value="2"></el-option>
               <el-option label="全部" value=""></el-option>

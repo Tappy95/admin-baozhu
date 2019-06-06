@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="类型名称">
-            <el-input v-model="formInline.typeName" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.typeName" placeholder="请输入类型名称" clearable></el-input>
           </el-form-item>
           <el-button  type="primary" plain @click="search()">查询</el-button>
           <el-button  type="success" plain @click="load()" v-if="add">添加</el-button>
@@ -16,22 +16,22 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
-            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
+          <el-table :data="tableData" height="528">
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column fixed="left" prop="typeName" label="类型名称">
+            <el-table-column fixed="left" min-width="150" prop="typeName" label="类型名称">
             </el-table-column>
-            <el-table-column prop="isDisable" width="100px" label="是否废弃">
+            <el-table-column prop="isDisable" min-width="100" label="是否废弃">
             </el-table-column>
-            <el-table-column width="170px" prop="createTime" :formatter="dateFormat" label="创建时间">
+            <el-table-column min-width="170" prop="createTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
-            <el-table-column width="170px" prop="updateTime" :formatter="dateFormat" label="修改时间">
+            <el-table-column min-width="170" prop="updateTime" :formatter="dateFormat" label="修改时间">
             </el-table-column>
-            <el-table-column width="400px" prop="fightingRule" label="对战规则">
+            <el-table-column min-width="400" prop="fightingRule" label="对战规则">
             </el-table-column>
-            <el-table-column width="120px" prop="questionNum" label="需完成问题数">
+            <el-table-column min-width="120" prop="questionNum" label="需完成问题数">
             </el-table-column>
-            <el-table-column width="100px" prop="rewardType" label="奖励类型">
+            <el-table-column min-width="100" prop="rewardType" label="奖励类型">
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">

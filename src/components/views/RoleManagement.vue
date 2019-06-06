@@ -11,7 +11,7 @@
           class="demo-form-inline">
           <el-form-item label="角色名称">
             <el-input v-model="formInline.name"
-              placeholder=""
+              placeholder="请输入角色名称"
               clearable=""></el-input>
           </el-form-item>
           <el-form-item>
@@ -24,7 +24,7 @@
         <template>
           <el-table :data="tableData"
             style="width: 100%"
-            height="580">
+            height="528">
             <el-table-column prop="id"
               label="序号"
               type="index"

@@ -8,16 +8,16 @@
 
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="用户ID:">
-            <el-input v-model="formInline.accountId" auto-complete="off"  clearable>
+            <el-input v-model="formInline.accountId" auto-complete="off" placeholder="请输入用户ID"  clearable>
             </el-input>
         </el-form-item>
 
         <el-form-item label="游戏名称:">
-          <el-input v-model="formInline.gameName" auto-complete="off"  clearable>
+          <el-input v-model="formInline.gameName" placeholder="请输入游戏名称" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
 
-        <el-form-item label="时间:">
+        <el-form-item label="创建时间:">
           <el-date-picker
             v-model="formInline.createTime "
             align="right"
@@ -38,11 +38,11 @@
           <el-table :data="tableData" height="570">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column fixed="left" min-width="200px" prop="tpName" label="游戏方名称">
+            <el-table-column fixed="left" min-width="100px" prop="tpName" label="游戏方名称">
             </el-table-column>
-            <el-table-column  min-width="150px" prop="gameId" label="游戏id">
+            <el-table-column  min-width="100px" prop="gameId" label="游戏id">
             </el-table-column>
-            <el-table-column  min-width="150px" prop="gameName" label="游戏名称">
+            <el-table-column  min-width="100px" prop="gameName" label="游戏名称">
             </el-table-column>
             <el-table-column  min-width="210px" prop="orderNum" label="流水号">
             </el-table-column>
@@ -60,14 +60,16 @@
 
             <el-table-column  min-width="150px" prop="channelCode" label="渠道标识">
             </el-table-column>
-            <el-table-column  min-width="150px" prop="channelName" label="渠道名称">
-            </el-table-column>
+            <!--<el-table-column  min-width="150px" prop="channelName" label="渠道名称">-->
+            <!--</el-table-column>-->
             <el-table-column  min-width="150px" prop="gameReward" label="游戏方奖励金币数">
             </el-table-column>
-            <el-table-column min-width="120px" prop="status" label="状态">
-            </el-table-column>
+            <!--<el-table-column min-width="120px" prop="status" label="状态">-->
+            <!--</el-table-column>-->
+
             <el-table-column width="170px" prop="createTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
+
           </el-table>
         </template>
       </div>

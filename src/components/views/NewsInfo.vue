@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="公告标题">
-            <el-input v-model="formInline.informTitle" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.informTitle" placeholder="请输入公告标题" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
@@ -16,25 +16,29 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="528">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column  min-width="200px" fixed="left" prop="informTitle" label="通知标题">
             </el-table-column>
             <el-table-column  min-width="300px" prop="informContent" label="通知内容">
             </el-table-column>
-            <el-table-column  min-width="200px" prop="createrTime" :formatter="dateFormat" label="创建时间">
+            <el-table-column prop="isRelease" min-width="120px" label="发布状态">
             </el-table-column>
-            <el-table-column prop="isRelease" label="发布状态">
+            <el-table-column prop="informType" min-width="120px" label="通知类型">
             </el-table-column>
-            <el-table-column prop="informType" label="通知类型">
+            <el-table-column prop="pushMode" min-width="120px" label="通知方式">
             </el-table-column>
-            <el-table-column prop="pushMode" label="通知方式">
+            <el-table-column prop="pushObject" min-width="120px" label="推送对象">
             </el-table-column>
-            <el-table-column prop="pushObject" label="推送对象">
+            <el-table-column width="200px" prop="createrTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
             <el-table-column width="200px" :formatter="dateFormat" prop="pushTime" label="推送时间">
             </el-table-column>
+
+            <el-table-column width="200px" :formatter="dateFormat" prop="pushTime" label="推送时间">
+            </el-table-column>
+
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
@@ -243,13 +247,6 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item  v-if="formtwoInfo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
-                  <el-input :style="styleObject" :disabled="true" v-model="formtwoInfo.informUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
                 <el-form-item  label="是否发布" prop="isRelease" :label-width="formLabelWidth">
                   <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.isRelease" placeholder="">
                     <el-option label="是" :value="1"></el-option>
@@ -274,7 +271,12 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
+              <el-col :span="22">
+                <el-form-item  v-if="formtwoInfo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
+                  <el-input  :disabled="true" v-model="formtwoInfo.informUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
               <el-col :span="22">
                 <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
                   <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.informContent" auto-complete="off" clearable></el-input>
@@ -440,7 +442,7 @@
 
             if (this.upd && this.del) {
               this.powerTrue =true;
-              this.optionW = '230px'
+              this.optionW = '220px'
             }
           }
         } else {

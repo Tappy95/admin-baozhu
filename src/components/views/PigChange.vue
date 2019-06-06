@@ -8,13 +8,13 @@
       <div>
         <el-form  :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item  label="用户姓名:">
-            <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.userName" placeholder="请输入用户姓名" clearable></el-input>
           </el-form-item>
           <el-form-item  label="电话号码:">
-            <el-input  v-model="formInline.mobile" placeholder="" clearable></el-input>
+            <el-input  v-model="formInline.mobile" placeholder="请输入电话号码" clearable></el-input>
           </el-form-item>
           <el-form-item  label="状态:" >
-            <el-select v-model="formInline.changedType"  placeholder="">
+            <el-select v-model="formInline.changedType"  placeholder="请选择状态">
               <el-option label="vip" value="1"></el-option>
               <el-option label="提现" value="2"></el-option>
               <el-option label="任务" value="3"></el-option>
@@ -30,10 +30,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用户id:">
-            <el-input v-model="formInline.accountId" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
           </el-form-item>
           <el-form-item label="收支:" >
-            <el-select v-model="formInline.flowType"  placeholder="">
+            <el-select v-model="formInline.flowType"  placeholder="请选择收支">
               <el-option label="收入" value="1"></el-option>
               <el-option label="支出" value="2"></el-option>
               <el-option label="全部" value=""></el-option>

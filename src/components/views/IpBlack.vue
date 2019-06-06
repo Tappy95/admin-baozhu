@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="ip">
-            <el-input v-model="formInline.ip" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.ip" placeholder="请输入ip" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>

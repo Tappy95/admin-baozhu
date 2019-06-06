@@ -72,7 +72,7 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="580">
+                    height="578">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"

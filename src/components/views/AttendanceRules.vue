@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="规则名称">
-            <el-input v-model="formInline.ruleName" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.ruleName" placeholder="请输入规则名称" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
@@ -16,7 +16,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="528">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column prop="ruleName" label="规则名称">

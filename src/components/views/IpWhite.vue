@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="白名单内容类型" prop="contentType" :label-width="formLabelWidth">
-            <el-select v-model="formInline.contentType" placeholder="">
+            <el-select v-model="formInline.contentType" placeholder="请选择类型">
               <el-option label="电话" value="1"></el-option>
               <el-option label="IP" value="2"></el-option>
               <el-option label="全部" value=""></el-option>
@@ -16,7 +16,7 @@
           </el-form-item>
 
           <el-form-item label="白名单内容">
-            <el-input spellcheck="false" style="width: 240px;"  type="textarea"  v-model="formInline.content" placeholder="" clearable></el-input>
+            <el-input spellcheck="false" style="width: 240px;"  type="textarea"  v-model="formInline.content" placeholder="请输入白名单内容" clearable></el-input>
           </el-form-item>
 
           <el-button type="primary" plain @click="search()">查询</el-button>
@@ -53,7 +53,7 @@
             </el-form-item>
 
             <el-form-item label="白名单内容" prop="content" :label-width="formLabelWidth">
-              <el-input style="width: 300px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.content" auto-complete="off" clearable></el-input>
+              <el-input spellcheck="false" style="width: 300px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.content" auto-complete="off" clearable></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">

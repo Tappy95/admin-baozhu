@@ -122,19 +122,19 @@
         <template>
           <el-table :data="tableData"
             style="width: 100%"
-            height="580">
+            height="528">
             <el-table-column label="序号"
               type="index"
               :index="indexMethod"
               width='80' fixed="left">
             </el-table-column>
             <el-table-column prop="title"
-              label="Banner标题" fixed="left" width="160px">
+              label="Banner标题" fixed="left" min-width="160px">
             </el-table-column>
-            <el-table-column prop="position" width="120px"
+            <el-table-column prop="position" min-width="120px"
               label="显示位置">
             </el-table-column>
-            <el-table-column prop="status" width="120px"
+            <el-table-column prop="status" min-width="120px"
                              label="状态">
             </el-table-column>
             <el-table-column prop="startTime" :formatter="dateFormat"

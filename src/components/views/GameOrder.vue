@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="投注人账号:">
-            <el-input :style="styleObject"  v-model="formInline.username" auto-complete="off"  clearable>
+            <el-input :style="styleObject" placeholder="请输入投注人账号"  v-model="formInline.username" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
           <el-button type="primary" plain style="margin-bottom: 30px" @click="search()">查询</el-button>

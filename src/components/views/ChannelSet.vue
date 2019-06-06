@@ -7,19 +7,19 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <!--<el-form-item label="渠道标识:">-->
-            <!--<el-input v-model="formInline.channelCode" auto-complete="off"  clearable>-->
-            <!--</el-input>-->
-          <!--</el-form-item>-->
-          <!--</el-form-item>-->
-          <!--<el-button @click="search()">查询</el-button>-->
+          <el-form-item label="渠道标识:">
+            <el-input v-model="formInline.channelCode" placeholder="请输入渠道标识" auto-complete="off"  clearable>
+            </el-input>
+          </el-form-item>
+          </el-form-item>
+          <el-button @click="search()">查询</el-button>
           <el-button type="success" plain style="margin-bottom: 30px" @click="load()" v-if="add">添加渠道配置</el-button>
           <!--<el-button @click="loadChannel()" v-if="addChannelName">添加渠道名称</el-button>-->
         </el-form>
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="528">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
             <el-table-column  prop="channelCode" label="渠道标识">
@@ -250,7 +250,7 @@
         </el-dialog>
 
         <el-dialog title="用户奖励" :visible.sync="dialogChannel" width="800px">
-          <el-button style="margin-bottom: 30px" @click="loadUser()" v-if="addUAward">添加用户奖励</el-button>
+          <el-button style="margin-bottom: 30px" type="primary" plain @click="loadUser()" v-if="addUAward">添加用户奖励</el-button>
           <el-table :data="tablereward" height="580">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
@@ -862,6 +862,7 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
+          channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/mChannelConfig/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

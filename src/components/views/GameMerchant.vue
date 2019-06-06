@@ -765,8 +765,5 @@
     height: 178px;
     display: block;
   }
-  .form {
-    overflow-y: scroll;
-    height: auto;
-  }
+
 </style>

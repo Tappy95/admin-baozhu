@@ -8,13 +8,13 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="彩种:">
-            <el-select :style="styleObject" v-model="formInline.lotteryGroupId" placeholder="">
+            <el-select :style="styleObject" v-model="formInline.lotteryGroupId" placeholder="请选择彩种">
               <el-option v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryGroupId"></el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label="开奖期号:" >
-            <el-input :style="styleObject" v-model="formInline.number" auto-complete="off"  clearable>
+            <el-input :style="styleObject" v-model="formInline.number" placeholder="请输入开奖期号" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
 

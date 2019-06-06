@@ -19,7 +19,7 @@
           <el-form-item label="任务类型:"
                         prop="taskType"
                         :label-width="formLabelWidth">
-            <el-select style="width: 224px;"  v-model="formInline.taskType" placeholder="">
+            <el-select style="width: 224px;"  v-model="formInline.taskType" placeholder="请选择任务类型">
               <el-option  v-for="(item,index) in tasks" :label="item.typeName" :value="item.id" :key="index"></el-option>
               <el-option label="全部类型" :value="0"></el-option>
             </el-select>

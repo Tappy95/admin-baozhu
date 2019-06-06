@@ -8,27 +8,27 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="用户姓名">
-            <el-input v-model="formInline.userName" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.userName" placeholder="请输入用户姓名" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="528">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-            <el-table-column width="170px" fixed="left" prop="userName" label="姓名">
+            <el-table-column min-width="170px" fixed="left" prop="userName" label="姓名">
+            </el-table-column>
+            <el-table-column prop="score" min-width="100px" label="获得金币">
+            </el-table-column>
+            <el-table-column prop="stickTimes"min-width="100px"  label="连续签到次数">
+            </el-table-column>
+            <el-table-column min-width="200px" prop="signIp" label="签到IP">
             </el-table-column>
             <el-table-column prop="signTime" width="200px" :formatter="dateFormat" label="签到时间">
             </el-table-column>
-            <el-table-column prop="score" label="获得金币">
-            </el-table-column>
             <el-table-column prop="lastDay" width="200px" :formatter="dateFormat" label="上次签到日期">
-            </el-table-column>
-            <el-table-column prop="stickTimes"  label="连续签到次数">
-            </el-table-column>
-            <el-table-column width="200px" prop="signIp" label="签到IP">
             </el-table-column>
           </el-table>
         </template>

@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="对战状态">
-            <el-select v-model="formInline.state" placeholder="">
+            <el-select v-model="formInline.state" placeholder="请选择对战状态">
               <el-option label="全部" value=""></el-option>
               <el-option label="发起" value="1"></el-option>
               <el-option label="开始" value="2"></el-option>
@@ -21,24 +21,24 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
-            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
+          <el-table :data="tableData" height="528">
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column fixed="left" prop="initiatorName" label="发起人">
+            <el-table-column fixed="left" min-width="150px" prop="initiatorName" label="发起人">
             </el-table-column>
-            <el-table-column prop="defenseName" label="参与人">
+            <el-table-column prop="defenseName" min-width="150px" label="参与人">
             </el-table-column>
-            <el-table-column prop="initiatorCoin" width="180px" label="发起人支付金币数">
+            <el-table-column prop="initiatorCoin" min-width="180px" label="发起人支付金币数">
             </el-table-column>
-            <el-table-column prop="defenseCoin" width="180px" label="参与人支付金币">
+            <el-table-column prop="defenseCoin" min-width="180px" label="参与人支付金币">
             </el-table-column>
             <el-table-column prop="fightingTime" :formatter="dateFormat" width="200px" label="对战时间">
             </el-table-column>
-            <el-table-column prop="winnerName" label="胜利者">
+            <el-table-column prop="winnerName" min-width="150px" label="胜利者">
             </el-table-column>
-            <el-table-column prop="victoryScore" label="胜利分数">
+            <el-table-column prop="victoryScore"  min-width="150px" label="胜利分数">
             </el-table-column>
-            <el-table-column prop="failureScore" label="失败分数">
+            <el-table-column prop="failureScore" min-width="150px" label="失败分数">
             </el-table-column>
             <el-table-column prop="useTime" width="100px" label="对战总时间">
             </el-table-column>

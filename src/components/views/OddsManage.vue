@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="彩种:">
-              <el-select :style="styleObject" v-model="formInline.lotteryPlayedTplId" placeholder="">
+              <el-select :style="styleObject" v-model="formInline.lotteryPlayedTplId" placeholder="请选择彩种">
                 <el-option v-for="(item,index) in lotteryPlayed" :key="index" :label="item.name" :value="item.lotteryPlayedTplId"></el-option>
               </el-select>
             </el-form-item>

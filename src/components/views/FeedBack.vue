@@ -8,12 +8,12 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="用户ID:">
-            <el-input :style="styleObject"  v-model="formInline.accountId" auto-complete="off"  clearable>
+            <el-input :style="styleObject"  v-model="formInline.accountId" placeholder="请输入用户ID" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
 
           <el-form-item label="意见类型:">
-            <el-select  v-model="formInline.opinionType" placeholder="">
+            <el-select  v-model="formInline.opinionType" placeholder="请选择意见类型">
               <el-option label="会员相关" value="1"></el-option>
               <el-option label="积分提现" value="2"></el-option>
               <el-option label="信息错误" value="3"></el-option>
@@ -23,7 +23,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="状态:">
-            <el-select  v-model="formInline.state" placeholder="">
+            <el-select  v-model="formInline.state" placeholder="请选择状态">
                 <el-option label="待处理" value="1"></el-option>
                 <el-option label="已处理" value="2"></el-option>
                 <el-option label="已反馈" value="3"></el-option>

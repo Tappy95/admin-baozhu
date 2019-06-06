@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item  label="状态" >
-            <el-select v-model="formInline.status" placeholder="">
+            <el-select v-model="formInline.status" placeholder="请选择状态">
               <el-option label="启动" value="1"></el-option>
               <el-option label="停止" value="2"></el-option>
               <el<el-option label="全部" value=""></el-option>

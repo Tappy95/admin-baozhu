@@ -160,39 +160,39 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="580">
+                    height="528">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
-                             width='80' fixed="left">
+                             min-width='80' fixed="left">
             </el-table-column>
             <el-table-column fixed="left" prop="passbookName"
-                             label="卡券名称" width="200px" >
+                             label="卡券名称" min-width="200px" >
             </el-table-column>
             <el-table-column prop="passbookType"
-                             label="卡券类型" width="150px">
+                             label="卡券类型" min-width="150px">
             </el-table-column>
-            <el-table-column width="170px" prop="useDay"
+            <el-table-column min-width="170px" prop="useDay"
                              label="有效期（天）">
             </el-table-column>
 
             <el-table-column prop="passbookValue"
-                             label="折扣值" width="100px">
+                             label="折扣值" min-width="100px">
             </el-table-column>
 
-            <el-table-column prop="regSend" width="200px"
+            <el-table-column prop="regSend" min-width="200px"
                              label="是否注册发放">
             </el-table-column>
 
             <el-table-column prop="taskTypeName"
-                             label="适用任务类型" width="200px">
+                             label="适用任务类型" min-width="200px">
             </el-table-column>
 
             <el-table-column prop="remark"
-                             label="描述" width="300px">
+                             label="描述" min-width="300px">
             </el-table-column>
 
-            <el-table-column prop="createTime" width="200px"
+            <el-table-column prop="createTime" min-width="200px"
                              label="创建时间" :formatter="dateFormat">
             </el-table-column>
 
@@ -589,7 +589,7 @@
 
             if (this.upd && this.del && this.send) {
               // this.powerTrue =true;
-              this.optionW = '305px'
+              this.optionW = '290px'
             }
           }
         } else {

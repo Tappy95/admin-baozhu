@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="渠道标识:">
-            <el-input  v-model="formInline.channelCode" auto-complete="off"  clearable>
+            <el-input  v-model="formInline.channelCode" placeholder="请输入渠道标识" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
           <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>

@@ -8,19 +8,19 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="抽奖编号：">
-            <el-input v-model="formInline.id" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.id" placeholder="请输入抽奖编号" clearable></el-input>
           </el-form-item>
 
           <el-form-item label="账户id：">
-            <el-input v-model="formInline.accountId" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.accountId" placeholder="请输入账户id" clearable></el-input>
           </el-form-item>
 
           <el-form-item label="电话：">
-            <el-input v-model="formInline.mobile" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.mobile" placeholder="请输入电话" clearable></el-input>
           </el-form-item>
 
           <el-form-item label="状态:">
-            <el-select  v-model="formInline.status" placeholder="">
+            <el-select  v-model="formInline.status" placeholder="请选择状态">
               <el-option label="审核中" value="1"></el-option>
               <el-option label="拒绝" value="2"></el-option>
               <el-option label="待发货" value="3"></el-option>
@@ -40,25 +40,25 @@
             <el-table-column prop="id" label="抽奖编号">
             </el-table-column>
 
-            <el-table-column width="200px" prop="accountId" label="账户id">
+            <el-table-column min-width="200px" prop="accountId" label="账户id">
             </el-table-column>
 
-            <el-table-column width="200px" prop="goodsName" label="商品名称">
+            <el-table-column min-width="200px" prop="goodsName" label="商品名称">
             </el-table-column>
 
             <el-table-column width="150px" prop="expendPigCoin" label="抽奖消耗金猪">
             </el-table-column>
 
-            <el-table-column width="120px" prop="mobile" label="电话">
+            <el-table-column min-width="120px" prop="mobile" label="电话">
             </el-table-column>
 
-            <el-table-column width="300px" prop="detailAddress" label="寄送地址">
+            <el-table-column min-width="300px" prop="detailAddress" label="寄送地址">
             </el-table-column>
 
-            <el-table-column width="200px" prop="createTime" :formatter="dateFormat" label="中奖时间">
+            <el-table-column min-width="200px" prop="createTime" :formatter="dateFormat" label="中奖时间">
             </el-table-column>
 
-            <el-table-column width="120px" prop="status" label="状态">
+            <el-table-column min-width="120px" prop="status" label="状态">
             </el-table-column>
 
             <el-table-column min-width="300px" prop="remarks" label="备注">

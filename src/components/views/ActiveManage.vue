@@ -24,7 +24,7 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="640">
+                    height="528">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"

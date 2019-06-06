@@ -54,9 +54,9 @@
               </el-date-picker>
           </el-form-item>
             <el-form-item label="渠道标识:" :label-width="formLabelWidth">
-              <el-select  v-model="formInline.channelCode" placeholder="">
+              <el-select  v-model="formInline.channelCode" placeholder="请选择渠道标识">
                 <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
-                <el-option label="全部" value=" "></el-option>
+                <el-option label="全部" value=""></el-option>
               </el-select>
             </el-form-item>
 

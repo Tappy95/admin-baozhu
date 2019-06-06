@@ -8,46 +8,38 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="题目名称">
-            <el-input v-model="formInline.question" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.question" placeholder="请输入题目名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="formInline.questionState" placeholder="">
-              <el-option label="全部" value=""></el-option>
+            <el-select v-model="formInline.questionState" placeholder="请选择状态">
               <el-option label="正常" value="-1"></el-option>
               <el-option label="提交" value="1"></el-option>
               <el-option label="通过" value="2"></el-option>
               <el-option label="拒绝" value="3"></el-option>
+              <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
-            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
+          <el-table :data="tableData" height="596">
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-
             <el-table-column fixed="left" prop="questionTypeName" min-width="200px" label="问题类型">
             </el-table-column>
-
-            <el-table-column prop="question" min-width="300px" label="题目">
+            <el-table-column prop="question" min-width="250px" label="题目">
             </el-table-column>
-
             <el-table-column prop="createTime" min-width="170px" :formatter="dateFormat" label="创建时间">
             </el-table-column>
-
             <el-table-column prop="score" min-width="150px" label="题目总分">
             </el-table-column>
-
             <el-table-column prop="questionState" min-width="100px" label="问题状态">
             </el-table-column>
-
             <el-table-column prop="countTime" min-width="180px" label="答题时间(秒)">
             </el-table-column>
-
             <el-table-column prop="coin" min-width="150px" label="出题者的金币数">
             </el-table-column>
             <el-table-column fixed="right" label="操作"  :width="optionW">
@@ -60,84 +52,109 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加题目" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加题目" :visible.sync="dialogFormVisible" width="700px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="问题类型" :label-width="formLabelWidth" prop="questionType">
-              <el-select v-model="form.questionType" placeholder="">
-                <el-option v-for="(item,index) in answerType" :key="index" :label="item.dicValue" :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="问题类型" :label-width="formLabelWidth" prop="questionType">
+                  <el-select :style="styleObject" v-model="form.questionType" placeholder="">
+                    <el-option v-for="(item,index) in answerType" :key="index" :label="item.dicValue" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="题目总分" prop="score" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" min="0" type="number"   v-model="form.score" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="答题时间(秒)" prop="countTime" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" min="0" type="number"   v-model="form.countTime" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="题目" :label-width="formLabelWidth" prop="question">
+                  <el-input  v-model="form.question" auto-complete="off" style="" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="题目" :label-width="formLabelWidth" prop="question">
-              <el-input  v-model="form.question" auto-complete="off" style="" clearable>
-              </el-input>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="正确答案" prop="answer1" :label-width="formLabelWidth">
+                   <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer1" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="题目总分" prop="score" :label-width="formLabelWidth">
-              <el-input style="width: 217px;" min="0" type="number"   v-model="form.score" auto-complete="off" clearable></el-input>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="错误答案" prop="answer2" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer2" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-            <el-form-item label="答题时间(秒)" prop="countTime" :label-width="formLabelWidth">
-              <el-input style="width: 217px;" min="0" type="number"   v-model="form.countTime" auto-complete="off" clearable></el-input>
-            </el-form-item>
+              <el-col :span="24">
+                <el-form-item label="错误答案" prop="answer3" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer3" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
+              <el-col :span="24">
+                <el-form-item label="错误答案" prop="answer4" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer4" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-            <el-form-item label="正确答案" prop="answer1" :label-width="formLabelWidth">
-            <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer1" auto-complete="off" clearable></el-input>
-          </el-form-item>
-
-            <el-form-item label="错误答案" prop="answer2" :label-width="formLabelWidth">
-              <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer2" auto-complete="off" clearable></el-input>
-            </el-form-item>
-
-            <el-form-item label="错误答案" prop="answer3" :label-width="formLabelWidth">
-              <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 6}" v-model="form.answer3" auto-complete="off" clearable></el-input>
-            </el-form-item>
-
-            <el-form-item label="错误答案" prop="answer4" :label-width="formLabelWidth">
-              <el-input  type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="form.answer4" auto-complete="off" clearable></el-input>
-            </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="题目审核" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="题目审核" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo">
-            <el-form-item label="出题人:" :label-width="formLabelWidth" prop="question">
-              <el-input :disabled="true" v-model="formtwo.question.creatorName"  auto-complete="off" style="" clearable></el-input>
-            </el-form-item>
-
-            <el-form-item label="题目:" :label-width="formLabelWidth" prop="question">
-              <el-input :disabled="true" v-model="formtwo.question.question"  auto-complete="off" style="" clearable></el-input>
-            </el-form-item>
-
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="出题人:" :label-width="formLabelWidth" prop="question">
+                  <el-input :style="styleObject" :disabled="true" v-model="formtwo.question.creatorName"  auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="题目:" :label-width="formLabelWidth" prop="question">
+                  <el-input  :disabled="true" v-model="formtwo.question.question"  auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
             <div v-for="(item,index) in formtwo.answer" :key="index">
               <el-form-item v-if="item.isCorrect==1" label="正确答案:" prop="answers" :label-width="formLabelWidth">
-                <el-input type="textarea" v-model="item.answer" :disabled="true" :autosize="{ minRows: 4, maxRows: 6}"  auto-complete="off" clearable></el-input>
+                <el-input type="textarea" v-model="item.answer" :disabled="true" :autosize="{ minRows: 2, maxRows: 4}"  auto-complete="off" clearable></el-input>
               </el-form-item>
 
               <el-form-item v-if="item.isCorrect!=1" label="错误答案:" prop="answer" :label-width="formLabelWidth">
-                <el-input type="textarea" v-model="item.answer" :disabled="true" :autosize="{ minRows: 4, maxRows: 6}"  auto-complete="off" clearable></el-input>
+                <el-input type="textarea" v-model="item.answer" :disabled="true" :autosize="{ minRows: 2, maxRows: 4}"  auto-complete="off" clearable></el-input>
               </el-form-item>
             </div>
+
+            <el-col :span="12">
               <el-form-item label="审核:" :label-width="formLabelWidth" prop="questionState">
-                <el-select v-model="formtwo.question.questionState" @change="isAuditingChange(formtwo.question.questionState)"  placeholder="">
+                <el-select :style="styleObject" v-model="formtwo.question.questionState" @change="isAuditingChange(formtwo.question.questionState)"  placeholder="">
                   <el-option label="提交" :value="1"></el-option>
                   <el-option label="拒绝" :value="3"></el-option>
                   <el-option label="通过" :value="2"></el-option>
                 </el-select>
               </el-form-item>
+            </el-col>
 
-            <el-form-item v-if="getCoin"  label="获得金币数" :label-width="formLabelWidth" prop="coin">
-              <el-input v-model="formtwo.coin" min="0" type="number"  auto-complete="off" style="width: 187px" clearable></el-input>
-            </el-form-item>
+              <el-col :span="12" v-if="getCoin" >
+                <el-form-item  label="获得金币数" :label-width="formLabelWidth" prop="coin">
+                  <el-input :style="styleObject" v-model="formtwo.coin" min="0" type="number"  auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-              <el-form-item v-if="reasonMess" label="拒绝原因:" prop="rejectReason" :label-width="formLabelWidth">
-                <el-input :rows="4"  type="textarea" v-model="formtwo.rejectReason"  auto-complete="off" style="" clearable></el-input>
-              </el-form-item>
-
+              <el-col :span="12" v-if="reasonMess" >
+                <el-form-item  label="拒绝原因:" prop="rejectReason" :label-width="formLabelWidth">
+                  <el-input :rows="4"  type="textarea" v-model="formtwo.rejectReason"  auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -145,35 +162,40 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="题目详情" :visible.sync="dialogTableVisibleInfo" width="800px">
+        <el-dialog title="题目详情" :visible.sync="dialogTableVisibleInfo" width="700px">
           <el-form>
             <el-row>
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="问题类型:" :label-width="formLabelWidth">
-                  <el-input :value="formtwoInfo.questionTypeName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="formtwoInfo.questionTypeName" :disabled="true" auto-complete="off"  clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="9" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="创建时间:" :label-width="formLabelWidth">
-                  <el-input :value="formtwoInfo.createTime" :disabled="true" auto-complete="off" style="width: 170px" clearable></el-input>
+                  <el-input :value="formtwoInfo.createTime" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="10" style="margin-bottom: 10px;">
+              <el-col :span="12" style="margin-bottom: 10px;">
                 <el-form-item label="题目总分:" :label-width="formLabelWidth">
-                  <el-input :value="formtwoInfo.score" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :value="formtwoInfo.score" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="出题者:"  :label-width="formLabelWidth">
+                  <el-input :value="formtwoInfo.creatorName" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="出题者获得金币数:" :label-width="formLabelWidth">
-                  <el-input :value="formtwoInfo.coin" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :value="formtwoInfo.coin" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
               </el-col>
-
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="状态:" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwoInfo.questionState" placeholder="">
+                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.questionState" placeholder="">
                     <el-option label="正常" :value="0"></el-option>
                     <el-option label="提交" :value="1"></el-option>
                     <el-option label="通过" :value="2"></el-option>
@@ -183,26 +205,21 @@
               </el-col>
 
 
-              <el-col :span="18" style="margin-bottom: 10px">
+              <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item v-if="isRejectReason" label="拒绝原因:" :label-width="formLabelWidth">
-                  <el-input :autosize="{ minRows: 2, maxRows: 4}" :value="formtwoInfo.rejectReason" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :autosize="{ minRows: 2, maxRows: 4}" :value="formtwoInfo.rejectReason" :disabled="true" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="18" style="margin-bottom: 10px">
-                <el-form-item label="出题者:"  :label-width="formLabelWidth">
-                  <el-input :value="formtwoInfo.creatorName" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
 
-              <el-col :span="18" style="margin-bottom: 10px">
+              <el-col :span="24" style="margin-bottom: 10px">
                 <el-form-item label="题目:" :label-width="formLabelWidth">
-                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :value="formtwoInfo.question" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :value="formtwoInfo.question" :disabled="true" auto-complete="off"  clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <div v-for="(item,index) in formtwoanswer" :key="index">
-                  <el-col :span="18"  style="margin-bottom: 10px">
+                  <el-col :span="24"  style="margin-bottom: 10px">
                     <el-form-item v-if="item.isCorrect==1"  label="正确答案:" :label-width="formLabelWidth">
                       <el-input type="textarea"  :autosize="{ minRows: 2, maxRows: 4}" :value="item.answer" :disabled="true" auto-complete="off" clearable></el-input>
                     </el-form-item>
@@ -219,39 +236,50 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="修改题目" :visible.sync="dialogTableVisibleUpdate" width="600px">
+        <el-dialog title="修改题目" :visible.sync="dialogTableVisibleUpdate" width="700px">
           <el-form :model="formtwoUpdateInfo" :rules="rules" ref="form">
             <el-row>
+              <el-col :span="12">
                 <el-form-item label="问题类型:" :label-width="formLabelWidth" prop="questionType">
-                  <el-select v-model="formtwoUpdateInfo.questionType" placeholder="">
+                  <el-select :style="styleObject" v-model="formtwoUpdateInfo.questionType" placeholder="">
                     <el-option v-for="(item,index) in answerType" :key="index" :label="item.dicValue" :value="item.id"></el-option>
                   </el-select>
                 </el-form-item>
+              </el-col>
 
-                <el-form-item label="题目总分:" :label-width="formLabelWidth" prop="score">
-                  <el-input v-model="formtwoUpdateInfo.score" auto-complete="off" style="width: 187px" clearable></el-input>
+              <el-col :span="12">
+                <el-form-item  label="题目总分:" :label-width="formLabelWidth" prop="score">
+                  <el-input v-model="formtwoUpdateInfo.score" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
-                <el-form-item label="答题时间(秒):" prop="countTime" :label-width="formLabelWidth">
-                  <el-input v-model="formtwoUpdateInfo.countTime" auto-complete="off" style="width: 187px" clearable></el-input>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item :style="styleObject" label="答题时间(秒):" prop="countTime" :label-width="formLabelWidth">
+                  <el-input v-model="formtwoUpdateInfo.countTime" auto-complete="off" :style="styleObject" clearable></el-input>
                 </el-form-item>
+              </el-col>
 
+              <el-col :span="24">
+                <el-form-item label="题目:" :label-width="formLabelWidth" prop="question">
+                  <el-input v-model="formtwoUpdateInfo.question" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
 
-              <el-form-item label="题目:" :label-width="formLabelWidth" prop="question">
-                <el-input v-model="formtwoUpdateInfo.question" auto-complete="off" style="" clearable></el-input>
-              </el-form-item>
-
-              <div v-for="(item,index) in formtwoUpdateanswer" :key="index">
+              <el-col :span="24">
+                <div v-for="(item,index) in formtwoUpdateanswer" :key="index">
                   <el-form-item v-if="item.isCorrect==1"  label="正确答案:" :label-width="formLabelWidth">
                     <el-input type="textarea" v-model="item.answer"  :autosize="{ minRows: 2, maxRows: 4}" auto-complete="off" clearable></el-input>
                   </el-form-item>
                   <el-form-item v-if="item.isCorrect!=1" label="错误答案:"  :label-width="formLabelWidth">
                     <el-input type="textarea" v-model="item.answer" :autosize="{ minRows: 2, maxRows: 4}"  auto-complete="off" clearable></el-input>
                   </el-form-item>
-              </div>
-
-              <el-form-item v-if="isUpdateRejectReason" label="拒绝原因:" :label-width="formLabelWidth" prop="rejectReason">
-                <el-input :autosize="{ minRows: 2, maxRows: 4}" :value="formtwoUpdateInfo.rejectReason" auto-complete="off" style="" clearable></el-input>
-              </el-form-item>
+                </div>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item v-if="isUpdateRejectReason" label="拒绝原因:" :label-width="formLabelWidth" prop="rejectReason">
+                  <el-input :autosize="{ minRows: 2, maxRows: 4}" :value="formtwoUpdateInfo.rejectReason" auto-complete="off" style="" clearable></el-input>
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -274,6 +302,9 @@
     name: 'FightingQuestion',
     data() {
       return {
+        styleObject: {
+          width: '200px',
+        },
         powerTrue:false,
         optionW:'75px',
         menuId:'',
@@ -298,8 +329,7 @@
         dialogFormVisible: false,
         reasonMess:false,
         getCoin:false,
-        form: {
-        },
+        form: {},
         rules: {
           questionType: [{
             required: true,
@@ -397,7 +427,7 @@
             }
           ],
         },
-        formLabelWidth: '150px',
+        formLabelWidth: '140px',
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,

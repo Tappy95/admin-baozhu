@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="彩种名称:">
-            <el-input  v-model="formInline.lotteryGroupName" auto-complete="off"  clearable>
+            <el-input  v-model="formInline.lotteryGroupName" placeholder="请输入彩种名称" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>

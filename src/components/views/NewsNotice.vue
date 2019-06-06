@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="公告标题">
-            <el-input v-model="formInline.noticeTitle" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.noticeTitle" placeholder="请输入公告标题" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
@@ -16,7 +16,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" height="528">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column prop="noticeTitle" label="公告标题">
@@ -194,7 +194,7 @@
 
             if (this.upd && this.del) {
               this.powerTrue =true;
-              this.optionW = '230px'
+              this.optionW = '220px'
             }
           }
         } else {

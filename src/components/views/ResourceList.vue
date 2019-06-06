@@ -8,7 +8,7 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="名称:">
-              <el-input  v-model="formInline.name" auto-complete="off"  clearable>
+              <el-input  v-model="formInline.name" placeholder="请输入名称" auto-complete="off"  clearable>
               </el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>

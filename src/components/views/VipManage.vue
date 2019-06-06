@@ -8,10 +8,10 @@
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="vip名称">
-            <el-input v-model="formInline.name" placeholder="" clearable></el-input>
+            <el-input v-model="formInline.name" placeholder="请输入vip名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-select v-model="formInline.status" placeholder="">
+            <el-select v-model="formInline.status" placeholder="请选择状态">
               <el-option label="启用" value="1"></el-option>
               <el-option label="停用" value="2"></el-option>
               <el-option label="全部" value=""></el-option>
@@ -23,7 +23,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" style="width: 100%" max-height="600"  >
+          <el-table :data="tableData" style="width: 100%" height="600"  >
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column fixed="left" min-width="150" prop="name" label="vip名称">
