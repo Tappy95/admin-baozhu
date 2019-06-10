@@ -22,7 +22,7 @@
                   <el-option label="徒弟贡献" value="5"></el-option>
                   <el-option label="VIP" value="6"></el-option>
                   <el-option label="游戏试玩" value="7"></el-option>
-                  <el-option label="徒弟到达四级" value="8"></el-option>
+                  <el-option label="徒弟升级奖励" value="8"></el-option>
                   <el-option label="新人注册" value="9"></el-option>
                   <el-option label="任务" value="10"></el-option>
                   <el-option label="出题" value="11"></el-option>
@@ -127,7 +127,7 @@
                     <el-option label="徒弟贡献" :value="5"></el-option>
                     <el-option label="VIP" :value="6"></el-option>
                     <el-option label="游戏试玩" :value="7"></el-option>
-                    <el-option label="徒弟到达四级" :value="8"></el-option>
+                    <el-option label="好友升级奖励" :value="8"></el-option>
                     <el-option label="新人注册" :value="9"></el-option>
                     <el-option label="任务" :value="10"></el-option>
                     <el-option label="出题" :value="11"></el-option>
@@ -230,7 +230,7 @@
                     <el-option label="徒弟贡献" :value="5"></el-option>
                     <el-option label="VIP" :value="6"></el-option>
                     <el-option label="游戏试玩" :value="7"></el-option>
-                    <el-option label="徒弟到达四级" :value="8"></el-option>
+                    <el-option label="好友升级奖励" :value="8"></el-option>
                     <el-option label="新人注册" :value="9"></el-option>
                     <el-option label="任务" :value="10"></el-option>
                     <el-option label="出题" :value="11"></el-option>
@@ -499,7 +499,7 @@
                 res.data.list[i].changedType = '游戏试玩';
                 break;
               case 8:
-                res.data.list[i].changedType = '徒弟到达四级';
+                res.data.list[i].changedType = '好友升级奖励';
                 break;
               case 9:
                 res.data.list[i].changedType = '新人注册';

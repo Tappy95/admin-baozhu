@@ -172,13 +172,13 @@
                 <el-form-item label="变更原因:" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="message.changedType" :disabled="true"   placeholder="">
                     <el-option label="答题" :value="1"></el-option>
-                    <el-option label="签到" :value="2"></el-option>
+                    <el-option label="每日签到" :value="2"></el-option>
                     <el-option label="提现" :value="3"></el-option>
                     <el-option label="推荐用户" :value="4"></el-option>
                     <el-option label="徒弟贡献" :value="5"></el-option>
                     <el-option label="VIP" :value="6"></el-option>
                     <el-option label="游戏试玩" :value="7"></el-option>
-                    <el-option label="徒弟到达四级" :value="8"></el-option>
+                    <el-option label="好友升级奖励" :value="8"></el-option>
                     <el-option label="新人注册" :value="9"></el-option>
                     <el-option label="任务" :value="10"></el-option>
                     <el-option label="出题" :value="11"></el-option>
