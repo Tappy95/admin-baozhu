@@ -404,7 +404,8 @@
 </template>
 <script>
   import { formatDate } from '../../utils/date.js'
-    export default {
+
+  export default {
         name: "statistics",
       data() {
         return {
@@ -450,6 +451,7 @@
         };
       },
       created(){
+
           this.channelList();
           this.tipList();
           this.list();

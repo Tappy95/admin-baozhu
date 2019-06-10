@@ -85,6 +85,8 @@ import DataStatistics from '@/components/views/DataStatistics' //数据统计
 
 import Statistics from '@/components/views/Statistics' //首页统计
 
+import CashManage from '@/components/views/CashManage' //提现管理
+
 
 
 
@@ -385,6 +387,12 @@ const routes = [
         name: 'Statistics',
         component: Statistics
       },
+      {
+        path: 'cash-manage',
+        name: 'CashManage',
+        component: CashManage
+      },
+
     ]
   }
 ]
