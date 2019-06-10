@@ -8,7 +8,7 @@
       <div>
         <el-form  :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item  label="提现订单:" :label-width="labelWidth">
-            <el-input v-model="formInline.userName" placeholder="请输入提现订单" clearable></el-input>
+            <el-input v-model="formInline.outTradeNo" placeholder="请输入提现订单" clearable></el-input>
           </el-form-item>
           <el-form-item  label="用户ID:" :label-width="labelWidth">
             <el-input  v-model="formInline.accountId" placeholder="请输入用户ID" clearable></el-input>
@@ -17,7 +17,7 @@
             <el-select v-model="formInline.state"  placeholder="请选择提现状态">
               <el-option label="审核中" value="1"></el-option>
               <el-option label="提现成功" value="2"></el-option>
-              <el-option label="提现失败" value="5"></el-option>
+              <el-option label="提现失败" value="3"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -543,6 +543,7 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
+          outTradeNo:this.formInline.outTradeNo,
           accountId:this.formInline.accountId,
           state:this.formInline.state,
           bankNum:this.formInline.bankNum,
