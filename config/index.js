@@ -1,10 +1,10 @@
 'use strict'
 const path = require('path')
 
-const versiony = require('versiony')
+// const versiony = require('versiony')
 
 // 获取版本
-var v = versiony.from('version.json').get();
+// var v = versiony.from('version.json').get();
 // console.log(`当前版本号：${v}`);
 
 
@@ -46,9 +46,9 @@ module.exports = {
   },
 
   build: {
-    index: path.resolve(__dirname, '../dist/'+v+'/index.html'),
+    index: path.resolve(__dirname, '../dist/index.html'),
 
-    assetsRoot: path.resolve(__dirname, '../dist/'+v+''),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: true,
