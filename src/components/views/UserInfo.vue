@@ -39,6 +39,11 @@
           <el-form-item>
             <el-button @click="search()" type="primary" plain>查询</el-button>
           </el-form-item>
+
+          <el-form-item>
+            <el-button type="success" plain @click="queryExport()" >导出表格</el-button>
+          </el-form-item>
+
         </el-form>
       </div>
       <div class="userloanInformation-table">
@@ -60,7 +65,7 @@
                              label="上级代理">
             </el-table-column>
 
-            <el-table-column min-width="150px" prop="userName"
+            <el-table-column min-width="150px" prop="aliasName"
                              label="昵称">
             </el-table-column>
             <el-table-column  min-width="120px" prop="mobile"
@@ -153,7 +158,7 @@
 
             <el-table-column prop="djCount"
                              label="兑换奖品次数"
-                             min-width="100px">
+                             min-width="110px">
             </el-table-column>
 
             <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
@@ -218,7 +223,7 @@
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="昵称:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.aliasName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
@@ -459,6 +464,7 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
+  import { getSession } from '../../utils/cookie'
   export default {
     name: 'UserInfo',
     data() {
@@ -526,6 +532,7 @@
         levelList:[],
         interface:'',
         loading:true,
+        fullscreenLoading:false
       }
     },
     created() {
@@ -751,7 +758,89 @@
       rewardhandleCurrentChange(val) {
         this.rewardcurrentPage = val
         this.reward(0)
-      }
+      },
+      //导出表格
+      queryExport() {
+        this.fullscreenLoading = this.$loading({
+          lock: true,
+          text: '正在导出....',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+
+        let accountId=this.formInline.accountId;
+        let mobile=this.formInline.mobile;
+        let level=this.formInline.level;
+        let channelCode=this.formInline.channelCode;
+
+        let token= getSession("token");
+        let channel= getSession("channelCode");
+        let relation= getSession("userRelation");
+
+        let url = '/api/excl/userExcl';
+        let data = {url,accountId,mobile,level,channelCode,token,channel,relation};
+        this.doDownload(data);
+      },
+      doDownload(obj) {
+        let url = obj.url,
+          accountId=obj.accountId,
+          mobile=obj.mobile,
+          level=obj.level,
+          channelCode=obj.channelCode,
+          token= obj.token,
+          channel=obj.channel,
+          relation=obj.relation
+
+        let a1 = document.createElement('a');
+        let http=url;
+        if(http==url){
+          if(accountId){
+            http=http+'?accountId=' + accountId
+          }
+        }
+        if(http==url){
+          if(mobile){
+            http=http+'?mobile=' + mobile
+          }
+        }else{
+          if(mobile){
+            http=http+'&mobile=' + mobile
+          }
+        }
+        if(http==url){
+          if(level){
+            http=http+'?level=' + level
+          }
+        }else{
+          if(level){
+            http=http+'&level=' + level
+          }
+        }
+        if(http==url){
+          if(channelCode){
+            http=http+'?channelCode=' + channelCode
+          }
+        }else{
+          if(channelCode){
+            http=http+'&channelCode=' + channelCode
+          }
+        }
+
+        if(http==url){
+          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
+        }else{
+          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
+        }
+        a1.setAttribute('href',http);
+        let body = document.querySelector('body');
+        body.appendChild(a1);
+        a1.click();
+        a1.remove();
+        //关闭正在导出弹层
+        setTimeout(() => {
+          this.fullscreenLoading.close();
+        }, 7000);
+      },
     }
   }
 </script>

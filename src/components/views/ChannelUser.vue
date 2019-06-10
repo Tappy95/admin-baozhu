@@ -55,7 +55,7 @@
           <el-table :data="tableData"
                     style="width: 100%"
                     v-loading="loading"
-                    height="640">
+                    height="528">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"
