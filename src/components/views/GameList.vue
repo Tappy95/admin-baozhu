@@ -17,6 +17,14 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
+
+          <el-form-item label="游戏方名称:" >
+            <el-select v-model="formInline.interfaceId"   placeholder="请选择游戏方名称">
+              <el-option :key="item.id" v-for="item in gameList" :label="item.name" :value="item.id"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
+
           <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
@@ -74,12 +82,14 @@
         del:false,
         UpperShelf:false,
         optionW:'0px',
-        showW:false
+        showW:false,
+        gameList:[],
       }
     },
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
+      this.gameData();
       this.accountList();
     },
     methods: {
@@ -123,26 +133,29 @@
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
+
+      gameData(){
+        this.$fetch('/api/tpInterface/listDown').then(res => {
+          if ((res.statusCode + "").startsWith("2")) {
+               this.gameList = res.data;
+          }
+        })
+      },
+
       accountList() {
         let parameterData = {
             pageNum: this.currentPage,
             pageSize: this.pageSize,
             gameId:this.formInline.gameId,
-            status:this.formInline.status
+            status:this.formInline.status,
+          interfaceId:this.formInline.interfaceId,
+
           }
 
           this.$fetch('/api/tpGame/queryBList', parameterData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-            // for(let i = res.data.list.length - 1; i >= 0; i--) {
-            //   if (res.data.list[i].status==1) {
-            //     res.data.list[i].status='正常'
-            //   }else {
-            //     res.data.list[i].status='下架'
-            //   }
-            // }
-
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+              this.tableData = res.data.list;
+              this.totalCount = res.data.total;
         } else {
           this.$message({
             type: 'error',
@@ -210,9 +223,7 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
+
     },
   }
 </script>
