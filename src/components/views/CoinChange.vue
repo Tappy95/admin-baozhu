@@ -7,12 +7,29 @@
       </div>
       <div>
         <el-form  :inline="true" :model="formInline" class="demo-form-inline">
-              <el-form-item  label="用户姓名:">
+              <!--<el-form-item  label="用户姓名:">
                 <el-input v-model="formInline.userName" placeholder="请输入用户姓名" clearable></el-input>
+              </el-form-item>-->
+              <el-form-item label="用户id:">
+                <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
               </el-form-item>
               <el-form-item  label="电话号码:">
                 <el-input  v-model="formInline.mobile" placeholder="请输入电话号码" clearable></el-input>
               </el-form-item>
+
+              <el-form-item :label-width="labelWidth" label="兑换时间:">
+                <el-date-picker
+                  v-model="selectTime"
+                  type="datetimerange"
+                  align="right"
+                  unlink-panels
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  :picker-options="pickerOptions">
+                </el-date-picker>
+              </el-form-item>
+
               <el-form-item  label="变更类型:" >
                 <el-select v-model="formInline.changedType"  placeholder="请选择变更类型">
                   <el-option label="答题" value="1"></el-option>
@@ -38,16 +55,6 @@
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="用户id:">
-                <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
-              </el-form-item>
-               <el-form-item label="收支:" >
-                 <el-select v-model="formInline.flowType"  placeholder="请选择收支">
-                   <el-option label="收入" value="1"></el-option>
-                   <el-option label="支出" value="2"></el-option>
-                   <el-option label="全部" value=""></el-option>
-                 </el-select>
-               </el-form-item>
           <el-form-item>
             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
@@ -59,34 +66,41 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="578">
+          <el-table :data="tableData" height="528">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="100" fixed="left" prop="accountId" label="用户id">
             </el-table-column>
             <el-table-column min-width="120" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column min-width="150" label="金币变动">
+            <el-table-column min-width="120" prop="level" label="成长等级">
+            </el-table-column>
+            <el-table-column prop="changedType" min-width="170px" label="类型">
+            </el-table-column>
+            <el-table-column min-width="150" label="收入">
               <template slot-scope="scope">
-                <span :class="scope.row.flowType==1?'amountred':'amountgreen'">
-                  <span>{{scope.row.flowType==1?'+':'-'}}</span>{{scope.row.amount | currency}}
+                <span class="amountred">
+                  +{{scope.row.revenue | currency}}
                 </span>
               </template>
             </el-table-column>
-            <el-table-column min-width="120" prop="roleType" label="身份标识">
-            </el-table-column>
-            <el-table-column prop="changedType" min-width="170px" label="变更类型">
+            <el-table-column min-width="150" label="支出">
+              <template slot-scope="scope">
+                <span  class="amountgreen">
+                  <span v-if="scope.row.expend>0">-</span>{{scope.row.expend | currency}}
+                </span>
+              </template>
             </el-table-column>
             <el-table-column prop="changedTime" min-width="170px" label="变更时间">
             </el-table-column>
             <el-table-column min-width="150" prop="remarks" label="备注">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" :width="optionW">
-              <template slot-scope="scope">
-                <el-button type="info" plain @click="getInfo(scope.row.id)" size="mini" >查看</el-button>
-                <el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>
-              </template>
-            </el-table-column>
+            <!--<el-table-column fixed="right" label="操作" :width="optionW">-->
+            <!--<template slot-scope="scope">-->
+            <!--<el-button type="info" plain @click="getInfo(scope.row.id)" size="mini" >查看</el-button>-->
+            <!--<el-button type="success" plain @click="getAuditingInfo(scope.row.id)" size="mini" v-if="exa && scope.row.changedType=='提现' && scope.row.status=='冻结'"><span v-if="optionW='150px'"></span>审核</el-button>-->
+            <!--</template>-->
+            <!--</el-table-column>-->
           </el-table>
         </template>
         <el-dialog title="详情" :visible.sync="dialogTable" width="800px">
@@ -280,6 +294,19 @@
           </div>
         </el-dialog>
       </div>
+      <div class="sun_sty" v-if="tableData.length>0">
+        <div class="list">
+          <div class="item"><p>小计<span>({{tableData.length}})：</span></p></div>
+          <div class="item"><p> [ 总收入： {{subRevenuePrice | currency}} ]</p></div>
+          <div class="item"><p>[ 总支出：{{subExpendPrice | currency}} ]</p></div>
+        </div>
+        <div class="list">
+          <div class="item"><p>合计<span>({{totalCount}})：</span></p></div>
+          <div class="item"><p> [ 总收入： {{totalRevenuePrice | currency}} ]</p></div>
+          <div class="item"><p>[ 总支出：{{totalRevenuePrice | currency}} ]</p></div>
+        </div>
+      </div>
+
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
@@ -300,7 +327,8 @@
         },
         searchTrue:false,
         isNotAuditing:false,
-        optionW:'75px',
+        labelWidth:'80px',
+        optionW:'1px',
         messageForm:{},
         reasonMess:false,
         dialogTableVisible:false,
@@ -309,6 +337,11 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
+        subRevenuePrice:'',
+        subExpendPrice:'',
+        pageCount:'',
+        totalRevenuePrice:'',
+        totalExpendPrice:'',
         formInline: {
           userName:"",
           changedType:'',
@@ -319,7 +352,35 @@
         tableData: [],
         message:{},
         exa:false,
-        fullscreenLoading:false//导出弹层
+        fullscreenLoading:false,//导出弹层
+        selectTime:'',
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
       }
     },
     created() {
@@ -345,26 +406,38 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-          let userName=this.formInline.userName;
+        if (this.selectTime && this.selectTime[0]) {
+          this.formInline.startTime = this.selectTime[0].getTime();
+        }else {
+          this.formInline.startTime ='';
+        }
+        if (this.selectTime && this.selectTime[1]) {
+          this.formInline.endTime = this.selectTime[1].getTime();
+        }else {
+          this.formInline.endTime ='';
+        }
+
           let  changedType=this.formInline.changedType;
           let mobile=this.formInline.mobile;
           let  accountId=this.formInline.accountId;
-          let  flowType=this.formInline.flowType;
+          let  startTime=this.formInline.startTime;
+          let  endTime=this.formInline.endTime;
           let token= getSession("token");
           let channel= getSession("channelCode")
           let relation= getSession("userRelation");
 
           let url = '/api/excl/exclCoinChange';
-          let data = {url,userName,changedType,mobile,accountId,flowType,token,channel,relation};
+          let data = {url,changedType,mobile,accountId,startTime,endTime,token,channel,relation};
           this.doDownload(data);
       },
       doDownload(obj) {
         let url = obj.url,
-          userName=obj.userName,
-          changedType=obj.changedType,
+
           mobile=obj.mobile,
           accountId=obj.accountId,
-          flowType=obj.flowType,
+          changedType=obj.changedType,
+          startTime=obj.startTime,
+          endTime=obj.endTime,
           token= obj.token,
           channel=obj.channel,
           relation=obj.relation
@@ -373,19 +446,21 @@
 
         let http=url;
         if(http==url){
-          if(userName!=null && userName!=''){
-            http=http+'?userName=' + userName
+          if(accountId){
+            http=http+'?accountId=' + accountId
           }
         }
+
         if(http==url){
-          if(changedType!=null && changedType!=''){
+          if(changedType){
             http=http+'?changedType=' + changedType
           }
         }else{
-          if(changedType!=null && changedType!=''){
+          if(changedType){
             http=http+'&changedType=' + changedType
           }
         }
+
         if(http==url){
           if(mobile!=null && mobile!=''){
             http=http+'?mobile=' + mobile
@@ -395,22 +470,23 @@
             http=http+'&mobile=' + mobile
           }
         }
+
         if(http==url){
-          if(accountId!=null && accountId!=''){
-            http=http+'?accountId=' + accountId
+          if(startTime!=null && startTime!=''){
+            http=http+'?startTime=' + startTime
           }
         }else{
-          if(accountId!=null && accountId!=''){
-            http=http+'&accountId=' + accountId
+          if(startTime!=null && startTime!=''){
+            http=http+'&startTime=' + startTime
           }
         }
         if(http==url){
-          if(flowType!=null && flowType!=''){
-            http=http+'?flowType=' + flowType
+          if(endTime!=null && endTime!=''){
+            http=http+'?endTime=' + endTime
           }
         }else{
-          if(flowType!=null && flowType!=''){
-            http=http+'&flowType=' + flowType
+          if(endTime!=null && endTime!=''){
+            http=http+'&endTime=' + endTime
           }
         }
 
@@ -465,11 +541,13 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          userName:this.formInline.userName,
+          /*userName:this.formInline.userName,*/
           changedType:this.formInline.changedType,
           mobile:this.formInline.mobile,
           accountId:this.formInline.accountId,
-          flowType:this.formInline.flowType
+          /*flowType:this.formInline.flowType*/
+          startTime:this.formInline.startTime,
+          endTime:this.formInline.endTime
         }
 
         this.$fetch('/api/lCoinChange/page', parameterData).then(res => {
@@ -524,10 +602,13 @@
                 break;
               case 16:
                 res.data.list[i].changedType = '赠送运营总监';
+                break;
               case 17:
                 res.data.list[i].changedType = '间接用户返利';
+                break;
               case 18:
                 res.data.list[i].changedType = '居间返利';
+                break;
               case 19:
                 res.data.list[i].changedType = '阅读广告奖励';
                 break;
@@ -554,7 +635,12 @@
             }
           }
           this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.totalCount = parseInt(res.data.total)
+          this.subRevenuePrice = res.data.subRevenuePrice
+          this.subExpendPrice = res.data.subExpendPrice
+          this.pageCount = res.data.pageCount
+          this.totalRevenuePrice = res.data.totalRevenuePrice
+          this.totalExpendPrice = res.data.totalExpendPrice
         } else {
           this.$message({
             type: 'error',
@@ -622,6 +708,16 @@
         }
       },
       search(){
+        if (this.selectTime && this.selectTime[0]) {
+          this.formInline.startTime = this.selectTime[0].getTime();
+        }else {
+          this.formInline.startTime ='';
+        }
+        if (this.selectTime && this.selectTime[1]) {
+          this.formInline.endTime = this.selectTime[1].getTime();
+        }else {
+          this.formInline.endTime ='';
+        }
         this.currentPage = 1
         this.pageSize = 10
         this.accountList()
@@ -642,6 +738,36 @@
   }
 </script>
 <style type="text/css">
+  .sun_sty{
+    font-size: 14px;
+    color: #13ce66;
+    margin-bottom: 20px;
+  }
+  .sun_sty .list{
+    width: 100%;
+    height: 30px;
+  }
+  .sun_sty .list .item:nth-child(1){
+    width: 80px;
+    max-width: 100px;
+  }
+  .sun_sty .list .item{
+    float: left;
+    width: 150px;
+    height: 30px;
+    max-width: 200px;
+  }
+
+  .sun_sty p{
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+  }
+
+  .sun_sty p span{
+    font-size: 12px;
+  }
+
 
   .amountred{
     color: #ff4d51;

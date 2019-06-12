@@ -21,13 +21,32 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item :label-width="labelWidth"  label="锁定状态:" >
+            <el-select v-model="formInline.isLocking"  placeholder="请选择锁定状态">
+              <el-option label="锁定" value="1"></el-option>
+              <el-option label="未锁定" value="2"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item  :label-width="labelWidth" label="银行卡号:">
             <el-input style="width: 250px"  v-model="formInline.bankNum" placeholder="请输入银行卡号" clearable></el-input>
           </el-form-item>
-          <el-form-item :label-width="labelWidth" label="审核时间:">
+          <el-form-item :label-width="labelWidth" label="提现时间:">
             <el-date-picker
               v-model="selectTime"
-              type="daterange"
+              type="datetimerange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item :label-width="labelWidth" label="审核时间:">
+            <el-date-picker
+              v-model="examineSelectTime"
+              type="datetimerange"
               align="right"
               unlink-panels
               range-separator="至"
@@ -48,15 +67,15 @@
           <el-form-item v-if="exportExle" :label-width="labelWidth">
             <el-button type="success"  plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
-          <el-button style="float:right;" v-if="lockAll" type="warning" plain @click="lockAllTap()">全部锁定</el-button>
+          <el-button  v-if="lockAll" type="warning" plain @click="lockAllTap()">全部锁定</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="558" :row-class-name="tableRowClassName">
+          <el-table :data="tableData" height="578" :row-class-name="tableRowClassName">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column min-width="200" fixed="left" prop="outTradeNo" label="订单号">
+            <el-table-column min-width="220" fixed="left" prop="outTradeNo" label="订单号">
             </el-table-column>
             <el-table-column min-width="120" prop="accountId" label="用户id">
             </el-table-column>
@@ -116,8 +135,8 @@
             <el-table-column  min-width="120px" label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.state==1">审核中</span>
-                <span v-if="scope.row.state==2">提现成功</span>
-                <span v-if="scope.row.state==3">提现失败</span>
+                <span class="" v-if="scope.row.state==2">提现成功</span>
+                <span class="amountred" v-if="scope.row.state==3">提现失败</span>
               </template>
             </el-table-column>
             <el-table-column  min-width="120px" label="是否锁定">
@@ -132,8 +151,8 @@
                 <!--{{scope.row.state}}-->
                 <!--{{scope.row.isLocking}}-->
                 <!--{{scope.row.locking}}-->
-                <el-button type="warning" plain v-if="lock && scope.row.state==1 && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" >锁定</el-button>
-                <el-button type="primary"  plain v-if="lock && scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" >解锁</el-button>
+                <el-button type="warning" plain v-if="lock && scope.row.state==1 && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>锁定</el-button>
+                <el-button type="primary"  plain v-if="lock && scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>解锁</el-button>
                 <el-button type="success" plain v-if="exa && scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking==2"  @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>处理</el-button>
                 <span style="text-align: center" class="pla-span amountred" v-if="scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking!=2">已被{{scope.row.admin}}锁定<span v-if="optionW='150px'"></span></span>
               </template>
@@ -275,6 +294,10 @@
           </div>
         </el-dialog>
       </div>
+      <div class="sun_sty" v-if="tableData">
+        <p>小计<span>({{pageCount}})：</span>[ 实际提现金额：{{subTotalPrice}} ]</p>
+        <p>合计<span>({{totalCount}})：</span>[ 实际提现金额：{{totalPrice }} ]</p>
+      </div>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
@@ -299,7 +322,7 @@
         },
         searchTrue:false,
         isNotAuditing:false,
-        optionW:'75px',
+        optionW:'1px',
         messageForm:{},
         reasonMess:false,
         dialogTableVisible:false,
@@ -308,6 +331,9 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
+        pageCount:0,
+        subTotalPrice:'',
+        totalPrice:'',
         formInline: {},
         tableData: [],
         message:{},
@@ -339,6 +365,7 @@
           }]
         },
         selectTime: '',
+        examineSelectTime:'',
         fullscreenLoading:false,
         powerTrue:false,
         exportExle:false,
@@ -349,9 +376,9 @@
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
@@ -395,27 +422,46 @@
           this.formInline.endTime =''
         }
 
+        if (this.examineSelectTime && this.examineSelectTime[0]) {
+          this.formInline.examineStartTime = this.examineSelectTime[0].getTime();
+        }else {
+          this.formInline.examineStartTime ='';
+        }
+        if (this.examineSelectTime && this.examineSelectTime[1]) {
+          this.formInline.examineEndTime = this.examineSelectTime[1].getTime();
+        }else {
+          this.formInline.examineEndTime ='';
+        }
+
+        let outTradeNo=this.formInline.outTradeNo
         let accountId=this.formInline.accountId;
         let  state=this.formInline.state;
+        let  isLocking=this.formInline.isLocking;
         let bankNum=this.formInline.bankNum;
         let  startTime=this.formInline.startTime;
         let  endTime=this.formInline.endTime;
+        let  examineStartTime=this.formInline.examineStartTime;
+        let  examineEndTime=this.formInline.examineEndTime;
         let  coinMin=this.formInline.coinMin;
         let  coinMax=this.formInline.coinMax;
         let token= getSession("token");
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
         let url = '/api/excl/exclCash';
-        let data = {url,accountId,state,bankNum,startTime,endTime,coinMin,coinMax,token,channel,relation};
+        let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
         let url = obj.url,
+          outTradeNo=obj.outTradeNo,
           accountId=obj.accountId,
           state=obj.state,
+          isLocking=obj.isLocking,
           bankNum=obj.bankNum,
           startTime=obj.startTime,
           endTime=obj.endTime,
+          examineStartTime=obj.examineStartTime,
+          examineEndTime=obj.examineEndTime,
           coinMin=obj.coinMin,
           coinMax=obj.coinMax,
           token= obj.token,
@@ -431,12 +477,30 @@
           }
         }
         if(http==url){
+          if(outTradeNo){
+            http=http+'?outTradeNo=' + outTradeNo
+          }
+        }else{
+          if(outTradeNo){
+            http=http+'&outTradeNo=' + outTradeNo
+          }
+        }
+        if(http==url){
           if(state){
             http=http+'?state=' + state
           }
         }else{
           if(state){
             http=http+'&state=' + state
+          }
+        }
+        if(http==url){
+          if(isLocking){
+            http=http+'?isLocking=' + isLocking
+          }
+        }else{
+          if(isLocking){
+            http=http+'&isLocking=' + isLocking
           }
         }
         if(http==url){
@@ -464,6 +528,25 @@
         }else{
           if(endTime){
             http=http+'&endTime=' + endTime
+          }
+        }
+
+        if(http==url){
+          if(examineStartTime){
+            http=http+'?examineStartTime=' + examineStartTime
+          }
+        }else{
+          if(examineStartTime){
+            http=http+'&examineStartTime=' + examineStartTime
+          }
+        }
+        if(http==url){
+          if(examineEndTime){
+            http=http+'?examineEndTime=' + examineEndTime
+          }
+        }else{
+          if(examineEndTime){
+            http=http+'&examineEndTime=' + examineEndTime
           }
         }
         if(http==url){
@@ -546,9 +629,12 @@
           outTradeNo:this.formInline.outTradeNo,
           accountId:this.formInline.accountId,
           state:this.formInline.state,
+          isLocking:this.formInline.isLocking,
           bankNum:this.formInline.bankNum,
           startTime:this.formInline.startTime,
           endTime:this.formInline.endTime,
+          examineStartTime:this.formInline.examineStartTime,
+          examineEndTime:this.formInline.examineEndTime,
           coinMin:this.formInline.coinMin,
           coinMax:this.formInline.coinMax
         }
@@ -556,6 +642,9 @@
           if ((res.statusCode+"").startsWith("2")) {
             this.tableData = res.data.list;
             this.totalCount = res.data.total;
+            this.subTotalPrice =  res.data.subTotalPrice;
+            this.totalPrice =  res.data.totalPrice;
+            this.pageCount=res.data.pageCount;
           } else {
             this.$message({
               type: 'error',
@@ -684,6 +773,17 @@
           this.formInline.endTime ='';
         }
 
+        if (this.examineSelectTime && this.examineSelectTime[0]) {
+          this.formInline.examineStartTime = this.examineSelectTime[0].getTime();
+        }else {
+          this.formInline.examineStartTime ='';
+        }
+        if (this.examineSelectTime && this.examineSelectTime[1]) {
+          this.formInline.examineEndTime = this.examineSelectTime[1].getTime();
+        }else {
+          this.formInline.examineEndTime ='';
+        }
+
         this.currentPage = 1
         this.pageSize = 10
         this.accountList()
@@ -704,6 +804,20 @@
   }
 </script>
 <style type="text/css">
+  .sun_sty{
+    font-size: 14px;
+    color: #13ce66;
+    margin-bottom: 20px;
+  }
+  .sun_sty p{
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+  }
+  .sun_sty p span{
+    transform: scale(0.5);
+    font-size: 12px;
+  }
   .el-table .mine-row {
     background: #ebfbf7;
   }

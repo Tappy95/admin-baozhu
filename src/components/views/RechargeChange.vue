@@ -16,7 +16,7 @@
           <el-form-item :label-width="labelWidth" label="订单时间:">
             <el-date-picker
               v-model="selectTime"
-              type="daterange"
+              type="datetimerange"
               align="right"
               unlink-panels
               range-separator="至"
@@ -26,7 +26,7 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item  label="状态:" >
-            <el-select v-model="formInline.state" placeholder="请选择订单号">
+            <el-select v-model="formInline.state" placeholder="请选择状态">
               <el-option label="待支付" value="1"></el-option>
               <el-option label="已支付" value="2"></el-option>
               <el-option label="已取消" value="3"></el-option>
@@ -47,9 +47,11 @@
             </el-table-column>
             <el-table-column min-width="200" fixed="left" prop="outTradeNo" label="订单号">
             </el-table-column>
+            <el-table-column min-width="120" fixed="left" prop="userName" label="姓名">
+            </el-table-column>
             <el-table-column min-width="120" fixed="left" prop="accountId" label="用户id">
             </el-table-column>
-            <el-table-column min-width="150" sortable prop="balance" label="余额抵扣">
+            <el-table-column min-width="150" prop="purposeName" label="购买类型">
             </el-table-column>
             <el-table-column min-width="150" prop="typeName" label="支付类型">
             </el-table-column>
@@ -58,21 +60,21 @@
                 <span class="amountyellow">{{scope.row.price}}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="150"  label="折扣金额(￥)">
-              <template slot-scope="scope">
-                <span class="amountblue">{{scope.row.discount}}</span>
-              </template>
-            </el-table-column>
             <el-table-column min-width="150"  label="实际支付金额(￥)">
               <template slot-scope="scope">
                 <span class="amountgreen">{{scope.row.actualPrice}}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="150" prop="descripte" label="支付描述">
+            <el-table-column min-width="150"  label="折扣金额(￥)">
+              <template slot-scope="scope">
+                <span class="amountblue">{{scope.row.discount}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column min-width="150" sortable prop="balance" label="余额抵扣">
+            </el-table-column>
+            <el-table-column prop="creatorTime" :formatter="dateFormat" width="170px" label="创建时间">
             </el-table-column>
             <el-table-column min-width="120" prop="state" label="状态">
-            </el-table-column>
-            <el-table-column prop="creatorTime" :formatter="dateFormat" width="170px" label="用户提交订单时间">
             </el-table-column>
             <!--<el-table-column fixed="right" label="操作" width="75">-->
               <!--<template slot-scope="scope">-->
@@ -167,9 +169,9 @@
           </div>
         </el-dialog>
       </div>
-      <div class="sun_sty" v-if="tableData">
-        <p>小计：{{subTotalPrice}}</p>
-        <p>合计：{{totalPrice }}</p>
+      <div class="sun_sty" v-if="formInline.state!=1 && formInline.state!=3">
+        <p>小计<span>({{pageTotal}})：</span>[ 总入款金额：{{subTotalPrice}} ]</p>
+        <p>合计<span>({{count}})：</span>[ 总入款金额：{{totalPrice }} ]</p>
       </div>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
@@ -185,6 +187,8 @@
     name: 'RechargeChange',
     data() {
       return {
+        pageTotal:'',
+        count:'',
         pTime:false,
         cTime:false,
         dialogTable:false,
@@ -274,6 +278,9 @@
           this.totalCount = res.data.total;
           this.subTotalPrice =  res.data.subTotalPrice;
           this.totalPrice =  res.data.totalPrice;
+            this.pageTotal =  res.data.pageTotal;
+          this.count =  res.data.count;
+
           } else {
           this.$message({
             type: 'error',
@@ -447,6 +454,10 @@
   margin: 0;
   padding: 0;
   line-height: 30px;
+}
+.sun_sty p span{
+  font-size: 12px;
+  margin-right: 10px;
 }
   .amountblue{
     color: #409eff;
