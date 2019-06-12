@@ -250,26 +250,24 @@
 
               <el-col :span="12">
                 <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model="formtwo.wxAppId" auto-complete="off"  clearable>
+                  <el-input :style="styleObject" :disabled="true"  v-model="formtwo.wxAppId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
                 <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" v-model="formtwo.mchId" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  :disabled="true" v-model="formtwo.mchId" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="23">
                 <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
-                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.apiKey" auto-complete="off"  clearable>
+                  <el-input spellcheck="false"  :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.apiKey" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
-
 
             </el-row>
           </el-form>

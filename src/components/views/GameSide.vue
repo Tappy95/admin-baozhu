@@ -50,7 +50,7 @@
             </el-table-column>
             <el-table-column fixed="left" min-width="100px" prop="tpName" label="游戏方名称">
             </el-table-column>
-            <el-table-column  min-width="100px" prop="gameId" label="游戏ID">
+            <el-table-column  m in-width="100px" prop="gameId" label="游戏ID">
             </el-table-column>
             <el-table-column  min-width="100px" prop="gameName" label="游戏名称">
             </el-table-column>

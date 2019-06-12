@@ -166,7 +166,7 @@
         <div class="list">
           <div class="item"><p>小计<span>({{tableData.length}}):</span></p></div>
           <div class="item"><p> [ 总收入： {{subRevenuePrice | currency}} ]</p></div>
-          <div class="item"><p>[ 总支出：{{subExpendPrice | currency}} ]</p></div>
+          <div class="item"><p> [ 总支出：{{subExpendPrice | currency}} ]</p></div>
         </div>
         <div class="list">
           <div class="item"><p>合计<span>({{totalCount}}):</span></p></div>
@@ -552,14 +552,17 @@
   .sun_sty .list{
     width: 100%;
     height: 30px;
+    /*text-align: right;*/
   }
   .sun_sty .list .item:nth-child(1){
     width: 80px;
+    min-width: 80px;
     max-width: 100px;
   }
   .sun_sty .list .item{
     float: left;
-    width: 150px;
+    min-width: 150px;
+    max-width: 200px;
     height: 30px;
     max-width: 200px;
   }
