@@ -2,21 +2,17 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>财务流水/金币记录</h3>
+        <h3>财务流水/金币账变明细</h3>
         <hr />
       </div>
       <div>
         <el-form  :inline="true" :model="formInline" class="demo-form-inline">
-              <!--<el-form-item  label="用户姓名:">
-                <el-input v-model="formInline.userName" placeholder="请输入用户姓名" clearable></el-input>
-              </el-form-item>-->
               <el-form-item label="用户id:">
                 <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
               </el-form-item>
               <el-form-item  label="电话号码:">
                 <el-input  v-model="formInline.mobile" placeholder="请输入电话号码" clearable></el-input>
               </el-form-item>
-
               <el-form-item :label-width="labelWidth" label="兑换时间:">
                 <el-date-picker
                   v-model="selectTime"
@@ -29,11 +25,10 @@
                   :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
-
               <el-form-item  label="变更类型:" >
                 <el-select v-model="formInline.changedType"  placeholder="请选择变更类型">
                   <el-option label="答题" value="1"></el-option>
-                  <el-option label="每日签到" value="2"></el-option>
+                  <el-option label="来访礼" value="2"></el-option>
                   <el-option label="提现" value="3"></el-option>
                   <el-option label="推荐用户" value="4"></el-option>
                   <el-option label="徒弟贡献" value="5"></el-option>
@@ -52,6 +47,8 @@
                   <el-option label="居间返利" value="18"></el-option>
                   <el-option label="阅读广告奖励" value="19"></el-option>
                   <el-option label="分享资讯" value="20"></el-option>
+                  <el-option label="签到赚" value="21"></el-option>
+                  <el-option label="大众团队长分佣" value="22"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -190,7 +187,6 @@
             <el-button type="primary" @click="dialogTable=false">确 定</el-button>
           </div>
         </el-dialog>
-
         <el-dialog title="审核" :visible.sync="dialogTableVisible" width="800px">
           <el-form>
             <el-row>
@@ -199,26 +195,21 @@
                   <el-input :style="styleObject" :value="messageForm.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col v-if="messageForm.changedType==3" :span="10" style="margin-bottom: 10px">
                 <el-form-item label="支付宝账号:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="messageForm.account" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="提现金额（元）:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="messageForm.amountM | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="messageForm.amountM" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
-
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金币余额:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="messageForm.coin | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金币变动:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="messageForm.amount | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
@@ -232,7 +223,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="变更类型:" :label-width="formLabelWidth">
                   <!--<el-input :value="messageForm.changedType" :disabled="true" auto-complete="off" style="" clearable></el-input>-->
@@ -260,7 +250,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="变更时间:" :label-width="formLabelWidth">
                   <el-input :style="styleObject" :value="messageForm.changedTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
@@ -280,7 +269,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col v-if="reasonMess" :span="20" style="margin-bottom: 10px">
                 <el-form-item label="拒绝原因:" :label-width="formLabelWidth">
                   <el-input :rows="4"  spellcheck="false" type="textarea" v-model="messageForm.reason"  auto-complete="off" style="" clearable></el-input>
@@ -306,7 +294,6 @@
           <div class="item"><p>[ 总支出：{{totalExpendPrice | currency}} ]</p></div>
         </div>
       </div>
-
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
@@ -384,9 +371,9 @@
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
@@ -559,7 +546,7 @@
                 res.data.list[i].changedType = '答题';
                 break;
               case 2:
-                res.data.list[i].changedType = '签到';
+                res.data.list[i].changedType = '来访礼';
                 break;
               case 3:
                 res.data.list[i].changedType = '提现';
@@ -614,6 +601,12 @@
                 break;
               case 20:
                 res.data.list[i].changedType = '分享资讯';
+                break;
+              case 21:
+                res.data.list[i].changedType = '签到赚';
+                break;
+              case 22:
+                res.data.list[i].changedType = '大众团队长分佣';
                 break;
               // default:
             }

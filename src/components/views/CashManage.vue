@@ -35,7 +35,7 @@
             <el-date-picker
               v-model="selectTime"
               type="datetimerange"
-              align="right"
+              align="left"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -67,7 +67,9 @@
           <el-form-item v-if="exportExle" :label-width="labelWidth">
             <el-button type="success"  plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
-          <el-button  v-if="lockAll" type="warning" plain @click="lockAllTap()">全部锁定</el-button>
+          <el-form-item :label-width="labelWidth">
+            <el-button  v-if="lockAll" type="warning" plain @click="lockAllTap()">全部锁定</el-button>
+          </el-form-item>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -134,8 +136,8 @@
             </el-table-column>
             <el-table-column  min-width="120px" label="状态">
               <template slot-scope="scope">
-                <span v-if="scope.row.state==1">审核中</span>
-                <span class="" v-if="scope.row.state==2">提现成功</span>
+                <span class="blue" v-if="scope.row.state==1">审核中</span>
+                <span class="amountgreen" v-if="scope.row.state==2">提现成功</span>
                 <span class="amountred" v-if="scope.row.state==3">提现失败</span>
               </template>
             </el-table-column>
@@ -868,6 +870,9 @@
   }
   .amountgreen{
     color: #13ce66;
+  }
+  .blue{
+    color: #409EFF;
   }
   .administratormanage-wrap {
     width: 100%;

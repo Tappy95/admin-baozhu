@@ -106,12 +106,9 @@
                 this.optionW = '75px';
                 this.UpperShelf=true;
               }
-
               if( this.del && this.UpperShelf) {
                 this.optionW = '150px';
-
               }
-
             }
           } else {
             this.showW = false;

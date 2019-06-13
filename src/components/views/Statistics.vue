@@ -191,6 +191,26 @@
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
                 :placement=place
+                title="提现人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                :tabindex=tabindex
+                content="时间段内通过支付通道提现成功的人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/person.png"/>
+                  <div class="dec">
+                    <p>{{listData.cashUserNum}}<span>人</span></p>
+                    <p>提现人数</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
+
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
                 title="购买VIP总金额"
                 width="200"
                 :offset=off
@@ -318,25 +338,6 @@
                     <p>好友贡献</p>
                   </div>
               </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="提现人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内通过支付通道提现成功的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/person.png"/>
-                  <div class="dec">
-                    <p>{{listData.cashUserNum}}<span>人</span></p>
-                    <p>提现人数</p>
-                  </div>
-                </div>
               </el-popover>
             </el-col>
 

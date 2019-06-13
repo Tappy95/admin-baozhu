@@ -55,7 +55,7 @@
           <el-table :data="tableData"
                     style="width: 100%"
                     v-loading="loading"
-                    height="528">
+                    height="560">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"
@@ -444,7 +444,7 @@
           if (valid) {
             this.$post('/api/userInfo/setSuperPartner', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-                this.dialogFormVisible = false
+                this.dialogFormVisible = false;
                 this.$message({ type: 'success', message: '设置成功！' })
                 this.accountList()
               }else {

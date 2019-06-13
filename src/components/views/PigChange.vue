@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>财务流水/金猪记录</h3>
+        <h3>财务流水/金猪账变明细</h3>
         <hr />
       </div>
       <div>
@@ -157,11 +157,6 @@
           </div>
         </el-dialog>
       </div>
-
-      <!--<div class="sun_sty" v-if="tableData">-->
-        <!--<p>小计：{{pageCount}} 总收入：{{subRevenuePrice}}   总支出：{{subExpendPrice}}</p>-->
-        <!--<p>合计：{{totalCount}} 总收入：{{totalRevenuePrice}}   总支出：{{totalExpendPrice}}</p>-->
-      <!--</div>-->
       <div class="sun_sty" v-if="tableData.length>0">
         <div class="list">
           <div class="item"><p>小计<span>({{tableData.length}}):</span></p></div>
@@ -561,8 +556,8 @@
   }
   .sun_sty .list .item{
     float: left;
-    min-width: 150px;
-    max-width: 200px;
+    min-width: 200px;
+    max-width: 300px;
     height: 30px;
     max-width: 200px;
   }

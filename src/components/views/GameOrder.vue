@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>游戏竞猜/竞猜记录</h3>
+        <h3>财务流水/乐园竞猜明细</h3>
         <hr />
       </div>
       <div>

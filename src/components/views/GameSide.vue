@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>运营管理/游戏任务</h3>
+        <h3>财务流水/游戏任务明细</h3>
         <hr />
       </div>
 

@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>财务流水/订单记录</h3>
+        <h3>财务流水/入款记录</h3>
         <hr />
       </div>
       <div>
@@ -42,7 +42,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="540" max-height="545">
+          <el-table :data="tableData" height="555" max-height="555">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="200" fixed="left" prop="outTradeNo" label="订单号">
@@ -74,7 +74,12 @@
             </el-table-column>
             <el-table-column prop="creatorTime" :formatter="dateFormat" width="170px" label="创建时间">
             </el-table-column>
-            <el-table-column min-width="120" prop="state" label="状态">
+            <el-table-column min-width="100" prop="state" label="状态">
+              <template slot-scope="scope">
+                <span class="amountblue" v-if="scope.row.state==1">待支付</span>
+                <span class="amountgreen" v-if="scope.row.state==2">已支付</span>
+                <span class="amountyellow" v-if="scope.row.state==3">已取消</span>
+              </template>
             </el-table-column>
             <!--<el-table-column fixed="right" label="操作" width="75">-->
               <!--<template slot-scope="scope">-->
@@ -265,15 +270,6 @@
         }
         this.$fetch('/api/pay/page', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].state == 1){
-              res.data.list[i].state = '待支付'
-            }else if(res.data.list[i].state == 2){
-              res.data.list[i].state = '已支付'
-            }else if(res.data.list[i].state == 3){
-              res.data.list[i].state = '已取消'
-            }
-          }
           this.tableData = res.data.list;
           this.totalCount = res.data.total;
           this.subTotalPrice =  res.data.subTotalPrice;
