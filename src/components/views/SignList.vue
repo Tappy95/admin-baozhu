@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>签到/签到记录</h3>
+        <h3>来访礼/来访礼记录</h3>
         <hr />
       </div>
       <div>
