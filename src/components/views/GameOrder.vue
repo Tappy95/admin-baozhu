@@ -85,6 +85,14 @@
             </el-table-column>
             <el-table-column min-width="120px" prop="status" label="状态">
             </el-table-column>
+
+            <el-table-column fixed="right" label="操作" :width="optionW">
+              <template slot-scope="scope">
+                <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <!--<el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="exa">审核</el-button>-->
+              </template>
+            </el-table-column>
+
           </el-table>
         </template>
 
@@ -238,35 +246,6 @@
         </el-dialog>
       </div>
 
-      <!--<div class="sun_sty" v-if="tableData.length>0">-->
-        <!--<el-row>-->
-          <!--<div class="count_list">-->
-            <!--<el-col :md="{span: 12}" :lg="{span: 9}" :xl="{span: 6}">-->
-              <!--<div class="left" >-->
-                <!--<p>小计<span>({{tableData.length}})</span>:</p>-->
-              <!--</div>-->
-              <!--<div  class="right" >-->
-                <!--<p> [ 总游戏竞猜： {{subAmountSum | currency}} ]</p>-->
-              <!--</div>-->
-            <!--</el-col>-->
-            <!--<el-col :md="{span: 12}" :lg="{span: 9}" :xl="{span: 6}">-->
-              <!--<p>[ 总游戏中奖：{{subBonusSum | currency}} ]</p>-->
-            <!--</el-col>-->
-          <!--</div>-->
-
-          <!--<div class="count_list">-->
-            <!--<el-col :md="{span: 12}" :lg="{span: 9}" :xl="{span: 6}">-->
-              <!--<div class="left" >-->
-                <!--<p>合计<span>({{totalCount}})</span>:</p>-->
-              <!--</div>-->
-              <!--<div  class="right" ><p> [ 总游戏竞猜： {{amountSum | currency}} ]</p></div>-->
-            <!--</el-col>-->
-            <!--<el-col :md="{span: 12}" :lg="{span: 9}" :xl="{span: 6}">-->
-              <!--<p>[ 总游戏中奖：{{bonusSum | currency}} ]</p>-->
-            <!--</el-col>-->
-          <!--</div>-->
-        <!--</el-row>-->
-      <!--</div>-->
 
 
       <div class="sun_sty" v-if="tableData.length>0">

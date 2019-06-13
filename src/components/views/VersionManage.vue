@@ -503,10 +503,10 @@
         })
       },
       update(formtwo) {
-        if (this.formtwo.needUpdate==2){
-          this.formtwo.updateUrl='';
-          this.formtwo.updateRemark='';
-        }
+        // if (this.formtwo.needUpdate==2){
+        //   this.formtwo.updateUrl='';
+        //   this.formtwo.updateRemark='';
+        // }
         this.$put('/api/pVersion/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
