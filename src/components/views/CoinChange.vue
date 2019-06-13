@@ -303,7 +303,7 @@
         <div class="list">
           <div class="item"><p>合计<span>({{totalCount}})：</span></p></div>
           <div class="item"><p> [ 总收入： {{totalRevenuePrice | currency}} ]</p></div>
-          <div class="item"><p>[ 总支出：{{totalRevenuePrice | currency}} ]</p></div>
+          <div class="item"><p>[ 总支出：{{totalExpendPrice | currency}} ]</p></div>
         </div>
       </div>
 

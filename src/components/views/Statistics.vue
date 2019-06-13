@@ -19,22 +19,22 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
-          <div class="grid_item bg3 grid-content">
+        <el-col :span="6" >
+          <div @click="turnTap('cw','CashManage')" class="grid_item bg3 grid-content">
             <img src="../../assets/statistics/tixian.png"/>
             <div class="dec">
               <p>{{tipData.txCount}}<span>人</span></p>
-              <p>提现申请</p>
+              <p>发起提现申请</p>
             </div>
           </div>
         </el-col>
 
         <el-col :span="6">
-          <div class="grid_item bg4 grid-content">
+          <div @click="turnTap('cw','LotteryOrder')" class="grid_item bg4 grid-content">
             <img src="../../assets/statistics/duihuan.png"/>
             <div class="dec">
               <p>{{tipData.dhCount}}<span>人</span></p>
-              <p>礼品兑换申请</p>
+              <p>发起礼品兑换申请</p>
             </div>
           </div>
         </el-col>
@@ -234,7 +234,7 @@
                 :offset=off
                 trigger="hover"
                 :tabindex=tabindex
-                content="时间段内通过支付通道兑换成功的金">
+                content="时间段内通过支付通道兑换成功的金额">
               <div slot="reference" class="list grid-content">
                 <img src="../../assets/statistics/wallet.png"/>
                 <div class="dec">
@@ -321,6 +321,25 @@
               </el-popover>
             </el-col>
 
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
+                title="提现人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                :tabindex=tabindex
+                content="时间段内通过支付通道提现成功的人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/person.png"/>
+                  <div class="dec">
+                    <p>{{listData.cashUserNum}}<span>人</span></p>
+                    <p>提现人数</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
+
           </el-row>
           <el-row style="padding-bottom: 30px">
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
@@ -404,7 +423,7 @@
 </template>
 <script>
   import { formatDate } from '../../utils/date.js'
-
+  import { delSession, getSession } from '../../utils/cookie'
   export default {
         name: "statistics",
       data() {
@@ -447,7 +466,8 @@
           type:'',
           place:'top',//提示信息的位置
           off:0,
-          tabindex:0
+          tabindex:0,
+          powers:''
         };
       },
       created(){
@@ -464,7 +484,6 @@
         },
       },
       methods: {
-
           //查询
           search(){
             //起始时间
@@ -532,6 +551,34 @@
             }
           })
         },
+
+        //提现申请 礼品兑换跳转
+        turnTap(type,names){
+          let myauth = getSession("authSize");
+          this.powers = JSON.parse(myauth);
+          let n=0;
+          for (var i=0;i< this.powers.length;i++) {
+              if( this.powers[i].fileName==type){
+                for (var j=0; j<this.powers[i].rightCollections.length;j++){
+                  if( this.powers[i].rightCollections[j].fileName==names){
+                    n++;
+                    break;
+                  }
+                }
+                break;
+              }
+            }
+          if (n>0){
+            this.$router.push({
+              name: names
+            })
+          }else {
+            this.$message({
+              message: '您暂无权限',
+              type: 'warning'
+            });
+          }
+        },
       }
     }
 </script>
@@ -595,7 +642,7 @@
     }
     .grid_item{
       border-radius:3px;
-      padding:15px 0 18px 0;
+      padding:15px 0px 18px 0;
     }
 
     .grid_item img{
@@ -640,7 +687,7 @@
 
     .grid_item{
       border-radius:3px;
-      padding:10px 0 10px 0;
+      padding:20px 0px 20px 0;
     }
 
     .grid_item img{
@@ -790,6 +837,7 @@
   }
    .wrap{
      height: auto;
+     z-index: 9;
    }
 
   .box_wrap{
@@ -865,7 +913,7 @@
      padding: 20px 0;
      cursor: pointer;
      position: relative;
-     z-index: 120;
+     z-index: 9;
    }
 
   .box_wrap .list:hover{

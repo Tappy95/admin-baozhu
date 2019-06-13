@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>运营管理/礼品兑换管理</h3>
+        <h3>财务流水/礼品兑换管理</h3>
         <hr />
       </div>
       <div>
@@ -48,10 +48,14 @@
             </el-select>
           </el-form-item>
           <el-button type="primary" plain style="margin-bottom: 30px" @click="search()">查询</el-button>
-          <el-form-item v-if="exportExle" :label-width="labelWidth">
+
+          <el-form-item v-if="exportExle" >
             <el-button type="success"  plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
-          <el-button  v-if="lockAll" type="warning" plain @click="lockAllTap()">全部锁定</el-button>
+
+          <el-form-item v-if="lockAll">
+            <el-button type="warning" plain @click="lockAllTap()">全部锁定</el-button>
+          </el-form-item>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -437,11 +441,11 @@
       //锁定样式
       tableRowClassName({row, rowIndex}) {
         //自己锁定的
-        if (row.state==1 && row.isLocking==1 && row.locking==2) {
+        if (row.status!=2 && row.isLocking==1 && row.locking==2) {
           return 'mine-row';
         }
         //别人锁定的
-        if(row.state==1 && row.isLocking==1 && row.locking!=2){
+        if(row.status!=2 && row.isLocking==1 && row.locking!=2){
           return 'else-row';
         }
       },

@@ -72,7 +72,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="578" :row-class-name="tableRowClassName">
+          <el-table :data="tableData" height="548" :row-class-name="tableRowClassName">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="220" fixed="left" prop="outTradeNo" label="订单号">
@@ -147,10 +147,6 @@
             </el-table-column>
             <el-table-column fixed="right" v-if="powerTrue" :width="optionW" label="操作" >
               <template slot-scope="scope">
-                <!--<span class="amountred">已被锁定</span>-->
-                <!--{{scope.row.state}}-->
-                <!--{{scope.row.isLocking}}-->
-                <!--{{scope.row.locking}}-->
                 <el-button type="warning" plain v-if="lock && scope.row.state==1 && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>锁定</el-button>
                 <el-button type="primary"  plain v-if="lock && scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>解锁</el-button>
                 <el-button type="success" plain v-if="exa && scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking==2"  @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>处理</el-button>
@@ -247,7 +243,7 @@
           </div>
         </el-dialog>
         <el-dialog title="处理" :visible.sync="dialogTableVisible" width="700px">
-          <el-form label-position="left" inline class="demo-table-expand ev">
+          <el-form label-position="left"   inline class="demo-table-expand ev">
             <el-form-item label="提现订单号">
               <span class="tex_ali">{{messageForm.outTradeNo}}</span>
             </el-form-item>
@@ -296,7 +292,7 @@
       </div>
       <div class="sun_sty" v-if="tableData">
         <p>小计<span>({{pageCount}})：</span>[ 实际提现金额：{{subTotalPrice}} ]</p>
-        <p>合计<span>({{totalCount}})：</span>[ 实际提现金额：{{totalPrice }} ]</p>
+        <p>合计<span>({{count}})：</span>[ 实际提现金额：{{totalPrice }} ]</p>
       </div>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
@@ -372,7 +368,7 @@
         lockAll:false,
         exa:false,
         lock:false,
-
+        count:'',
       }
     },
     created() {
@@ -645,6 +641,7 @@
             this.subTotalPrice =  res.data.subTotalPrice;
             this.totalPrice =  res.data.totalPrice;
             this.pageCount=res.data.pageCount;
+            this.count = res.data.count;
           } else {
             this.$message({
               type: 'error',
