@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+import {getSession} from '../utils/cookie'
 // import HelloWorld from '@/components/HelloWorld'
-import Index from '@/components/Index'
+/*import Index from '@/components/Index'
 import LogIn from '@/components/LogIn' // 登录
 import MobilePage from '@/components/MobilePage'
 
@@ -85,7 +87,7 @@ import DataStatistics from '@/components/views/DataStatistics' //数据统计
 
 import Statistics from '@/components/views/Statistics' //首页统计
 
-import CashManage from '@/components/views/CashManage' //提现管理
+import CashManage from '@/components/views/CashManage' //提现管理*/
 
 
 
@@ -97,300 +99,300 @@ const routes = [
   {
     path: '/',
     name: 'LogIn',
-    component: LogIn
+    component: resolve => require(['../components/LogIn.vue'], resolve),
   },
   {
     path: '/mobile-page',
     name: 'MobilePage',
-    component: MobilePage
+    component: resolve => require(['../components/MobilePage.vue'], resolve),
   },
   {
     path: '/',
     redirect: '/home-page',
     name: 'Index',
-    component: Index,
+    component: resolve => require(['../components/Index.vue'], resolve),
     meta: {auth: true},
     children: [{
       path: 'administrator-manage',
       name: 'AdministratorManage',
-      component: AdministratorManage
+      component: resolve => require(['../components/views/AdministratorManage.vue'], resolve),
     },
       {
         path: 'authority-management',
         name: 'AuthorityManagement',
-        component: AuthorityManagement
+        component: resolve => require(['../components/views/AuthorityManagement.vue'], resolve),
       },
       {
         path: 'userInfo',
         name: 'UserInfo',
-        component: UserInfo
+        component: resolve => require(['../components/views/UserInfo.vue'], resolve),
       },
       {
         path: 'userlevel',
         name: 'UserLevel',
-        component: UserLevel
+        component: resolve => require(['../components/views/UserLevel.vue'], resolve),
       },
       {
         path: 'dictionary',
         name: 'Dictionary',
-        component: Dictionary
+        component: resolve => require(['../components/views/Dictionary.vue'], resolve),
       },
       {
         path: 'attendance-rules',
         name: 'AttendanceRules',
-        component: AttendanceRules
+        component: resolve => require(['../components/views/AttendanceRules.vue'], resolve),
       },
       {
         path: 'news-notice',
         name: 'NewsNotice',
-        component: NewsNotice
+        component: resolve => require(['../components/views/NewsNotice.vue'], resolve),
       },
       {
         path: 'news-info',
         name: 'NewsInfo',
-        component: NewsInfo
+        component: resolve => require(['../components/views/NewsInfo.vue'], resolve),
       },
       {
         path: 'balance-change',
         name: 'BalanceChange',
-        component: BalanceChange
+        component: resolve => require(['../components/views/BalanceChange.vue'], resolve),
       },
       {
         path: 'transaction-change',
         name: 'TransactionChange',
-        component: TransactionChange
+        component: resolve => require(['../components/views/TransactionChange.vue'], resolve),
       },
 
       {
         path: 'active-manage',
         name: 'ActiveManage',
-        component: ActiveManage
+        component: resolve => require(['../components/views/ActiveManage.vue'], resolve),
       },
       {
         path: 'coin-change',
         name: 'CoinChange',
-        component: CoinChange
+        component: resolve => require(['../components/views/CoinChange.vue'], resolve),
       },
       {
         path: 'banner-manage',
         name: 'BannerManage',
-        component: BannerManage
+        component: resolve => require(['../components/views/BannerManage.vue'], resolve),
       },
       {
         path: 'sign-list',
         name: 'SignList',
-        component: SignList
+        component: resolve => require(['../components/views/SignList.vue'], resolve),
       },
       {
         path: 'fighting-info',
         name: 'FightingInfo',
-        component: FightingInfo
+        component: resolve => require(['../components/views/FightingInfo.vue'], resolve),
       },
       {
         path: 'fighting-rules',
         name: 'FightingRules',
-        component: FightingRules
+        component: resolve => require(['../components/views/FightingRules.vue'], resolve),
       },
       {
         path: 'fighting-question',
         name: 'FightingQuestion',
-        component: FightingQuestion
+        component: resolve => require(['../components/views/FightingQuestion.vue'], resolve),
       },
 
       {
         path: 'home-page',
         name: 'HomePage',
-        component: HomePage
+        component: resolve => require(['../components/views/HomePage.vue'], resolve),
       },
       {
         path: 'commodity',
         name: 'Commodity',
-        component: Commodity
+        component: resolve => require(['../components/views/Commodity.vue'], resolve),
       },
       {
         path: 'classify',
         name: 'Classify',
-        component: Classify
+        component: resolve => require(['../components/views/Classify.vue'], resolve),
       },
       {
         path: 'order',
         name: 'Order',
-        component: Order
+        component: resolve => require(['../components/views/Order.vue'], resolve),
       },
       {
         path: 'menu-management',
         name: 'MenuManagement',
-        component: MenuManagement
+        component: resolve => require(['../components/views/MenuManagement.vue'], resolve),
       },
       {
         path: 'role-management',
         name: 'RoleManagement',
-        component: RoleManagement
+        component: resolve => require(['../components/views/RoleManagement.vue'], resolve),
       },
       {
         path: 'card-voucher',
         name: 'CardVoucher',
-        component: CardVoucher
+        component: resolve => require(['../components/views/CardVoucher.vue'], resolve),
       },
       {
         path: 'vip-manage',
         name: 'VipManage',
-        component: VipManage
+        component: resolve => require(['../components/views/VipManage.vue'], resolve),
       },
       {
         path: 'pig-change',
         name: 'PigChange',
-        component: PigChange
+        component: resolve => require(['../components/views/PigChange.vue'], resolve),
       },
       {
         path: 'game-merchant',
         name: 'GameMerchant',
-        component: GameMerchant
+        component: resolve => require(['../components/views/GameMerchant.vue'], resolve),
       },
       {
         path: 'game-interface',
         name: 'GameInterface',
-        component: GameInterface
+        component: resolve => require(['../components/views/GameInterface.vue'], resolve),
       },
       {
         path: 'recharge-change',
         name: 'RechargeChange',
-        component: RechargeChange
+        component: resolve => require(['../components/views/RechargeChange.vue'], resolve),
       },
       {
         path: 'game-types',
         name: 'GameTypes',
-        component: GameTypes
+        component: resolve => require(['../components/views/GameTypes.vue'], resolve),
       },
       {
         path: 'game-task',
         name: 'GameTask',
-        component: GameTask
+        component: resolve => require(['../components/views/GameTask.vue'], resolve),
       },
       {
         path: 'game-list',
         name: 'GameList',
-        component: GameList
+        component: resolve => require(['../components/views/GameList.vue'], resolve),
       },
       {
         path: 'application-market',
         name: 'ApplicationMarket',
-        component: ApplicationMarket
+        component: resolve => require(['../components/views/ApplicationMarket.vue'], resolve),
       },
       {
         path: 'task-job',
         name: 'TaskJob',
-        component: TaskJob
+        component: resolve => require(['../components/views/TaskJob.vue'], resolve),
       },
       {
         path: 'ip-black',
         name: 'IpBlack',
-        component: IpBlack
+        component: resolve => require(['../components/views/IpBlack.vue'], resolve),
       },
       {
         path: 'ip-white',
         name: 'IpWhite',
-        component: IpWhite
+        component: resolve => require(['../components/views/IpWhite.vue'], resolve),
       },
       {
         path: 'lottery-type',
         name: 'LotteryType',
-        component: LotteryType
+        component: resolve => require(['../components/views/LotteryType.vue'], resolve),
       },
       {
         path: 'lottery-goods',
         name: 'LotteryGoods',
-        component: LotteryGoods
+        component: resolve => require(['../components/views/LotteryGoods.vue'], resolve),
       },
       {
         path: 'lottery-order',
         name: 'LotteryOrder',
-        component: LotteryOrder
+        component: resolve => require(['../components/views/LotteryOrder.vue'], resolve),
       },
       {
         path: 'odds-manage',
         name: 'OddsManage',
-        component: OddsManage
+        component: resolve => require(['../components/views/OddsManage.vue'], resolve),
       },
       {
         path: 'play-group',
         name: 'PlayGroup',
-        component: PlayGroup
+        component: resolve => require(['../components/views/PlayGroup.vue'], resolve),
       },
       {
         path: 'feed-back',
         name: 'FeedBack',
-        component: FeedBack
+        component: resolve => require(['../components/views/FeedBack.vue'], resolve),
       },
       {
         path: 'channel-manage',
         name: 'ChannelManage',
-        component: ChannelManage
+        component: resolve => require(['../components/views/ChannelManage.vue'], resolve),
       },
       {
         path: 'resource-type',
         name: 'ResourceType',
-        component: ResourceType
+        component: resolve => require(['../components/views/ResourceType.vue'], resolve),
       },
       {
         path: 'resource-collect',
         name: 'ResourceCollect',
-        component: ResourceCollect
+        component: resolve => require(['../components/views/ResourceCollect.vue'], resolve),
       },
       {
         path: 'version-manage',
         name: 'VersionManage',
-        component: VersionManage
+        component: resolve => require(['../components/views/VersionManage.vue'], resolve),
       },
       {
         path: 'resource-list',
         name: 'ResourceList',
-        component: ResourceList
+        component: resolve => require(['../components/views/ResourceList.vue'], resolve),
       },
       {
         path: 'lottery-result',
         name: 'LotteryResult',
-        component: LotteryResult
+        component: resolve => require(['../components/views/LotteryResult.vue'], resolve),
       },
       {
         path: 'channel-user',
         name: 'ChannelUser',
-        component: ChannelUser
+        component: resolve => require(['../components/views/ChannelUser.vue'], resolve),
       },
       {
         path: 'game-side',
         name: 'GameSide',
-        component: GameSide
+        component: resolve => require(['../components/views/GameSide.vue'], resolve),
       },
       {
         path: 'game-order',
         name: 'GameOrder',
-        component: GameOrder
+        component: resolve => require(['../components/views/GameOrder.vue'], resolve),
       },
       {
         path: 'fission-case',
         name: 'FissionCase',
-        component: FissionCase
+        component: resolve => require(['../components/views/FissionCase.vue'], resolve),
       },
       {
         path: 'channel-set',
         name: 'ChannelSet',
-        component: ChannelSet
+        component: resolve => require(['../components/views/ChannelSet.vue'], resolve),
       },
       {
         path: 'data-statistics',
         name: 'DataStatistics',
-        component: DataStatistics
+        component: resolve => require(['../components/views/DataStatistics.vue'], resolve),
       },
       {
         path: 'statistics',
         name: 'Statistics',
-        component: Statistics
+        component: resolve => require(['../components/views/Statistics.vue'], resolve),
       },
       {
         path: 'cash-manage',
         name: 'CashManage',
-        component: CashManage
+        component: resolve => require(['../components/views/CashManage.vue'], resolve),
       },
 
     ]
