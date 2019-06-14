@@ -464,6 +464,7 @@
       })
       },
       update(formtwo) {
+        // this.formInline.menuName = '';
         this.$post('/api/pMenu/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
           this.$message({

@@ -20,7 +20,7 @@
           </div>
         </el-col>
         <el-col :span="6" >
-          <div @click="turnTap('cw','CashManage')" class="grid_item bg3 grid-content">
+          <div @click="turnTap('cw','CashManage')" class="point grid_item bg3 grid-content">
             <img src="../../assets/statistics/tixian.png"/>
             <div class="dec">
               <p>{{tipData.txCount}}<span>人</span></p>
@@ -30,7 +30,7 @@
         </el-col>
 
         <el-col :span="6">
-          <div @click="turnTap('cw','LotteryOrder')" class="grid_item bg4 grid-content">
+          <div @click="turnTap('cw','LotteryOrder')" class="point grid_item bg4 grid-content">
             <img src="../../assets/statistics/duihuan.png"/>
             <div class="dec">
               <p>{{tipData.dhCount}}<span>人</span></p>
@@ -892,6 +892,9 @@
      background:rgba(81,134,240,1);
    }
 
+   .point{
+     cursor: pointer;
+   }
    .bg2{
      background:rgba(240,123,32,1);
    }

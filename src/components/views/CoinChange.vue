@@ -747,14 +747,14 @@
     height: 30px;
   }
   .sun_sty .list .item:nth-child(1){
-    width: 80px;
-    max-width: 100px;
+    width: 100px;
+    max-width: 200px;
   }
   .sun_sty .list .item{
     float: left;
     width: 150px;
     height: 30px;
-    max-width: 200px;
+    max-width: 300px;
   }
 
   .sun_sty p{

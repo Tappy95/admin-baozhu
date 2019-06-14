@@ -616,8 +616,8 @@
     height: 30px;
   }
   .sun_sty .list .item:nth-child(1){
-    width: 80px;
-    max-width: 100px;
+    width: 120px;
+    max-width: 180px;
   }
   .sun_sty .list .item{
     float: left;
