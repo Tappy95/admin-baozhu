@@ -31,7 +31,7 @@
               <el-date-picker
                 @change="timeChang"
                 v-model="selectTime"
-                type="daterange"
+                type="datetimerange"
                 align="right"
                 unlink-panels
                 range-separator="至"
