@@ -156,8 +156,15 @@ export default {
         .then(() => {
           this.$fetch('/api/pAdmin/quit').then(res => {
             this.$router.push({ path: '/' })
-            delSession('token')
-            delSession('authSize')
+            delSession('token');
+            delSession('sign');
+            delSession('authSize');
+            delSession('channelCode');
+            delSession('adminId');
+            delSession('token');
+            delSession('mobileCookie');
+            delSession('roleName');
+            delSession('userRelation');
           })
         })
         .catch(() => {})
