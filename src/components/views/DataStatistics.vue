@@ -28,7 +28,7 @@
              <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>
           </el-form-item>
           <el-form-item >
-             <el-button type="success" plain @click="queryExport()">导出表格</el-button>
+             <el-button type="success" plain @click="queryExport()" v-if="exportExle">导出表格</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -76,6 +76,7 @@
         channelNameList:[],
         menuId:'',
         formLabelWidth: '120px',
+        exportExle:false,
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
@@ -110,6 +111,7 @@
     },
     created() {
       this.menuId=this.$route.query.id;
+      this.queryBtns();
       this.channelList();
       this.accountList();
     },
@@ -141,6 +143,22 @@
               message: res.message,
               duration: 3000
             })
+          }
+        })
+      },
+
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'exportExle') {
+                this.exportExle =true;
+              }
+            }
+          } else {
           }
         })
       },
