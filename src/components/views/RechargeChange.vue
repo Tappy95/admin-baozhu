@@ -34,7 +34,7 @@
             </el-select>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
-          <el-button type="success" plain @click="queryExport()">导出表格</el-button>
+          <el-button type="success" plain @click="queryExport()" v-if="exportExle">导出表格</el-button>
         </el-form>
         <div>
           <p class="sun_sty">1元=10000金币=100000金猪</p>
@@ -196,6 +196,7 @@
         count:'',
         pTime:false,
         cTime:false,
+        exportExle:false,
         dialogTable:false,
         formLabelWidth: '120px',
         currentPage: 1,
@@ -235,11 +236,14 @@
             }
           }]
         },
-        fullscreenLoading:false
+        fullscreenLoading:false,
+        menuId:''
       }
     },
     created() {
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     filters: {
       currencyFixed: function (num){
@@ -257,6 +261,21 @@
           return ''
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
+      },
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'exportExle') {
+                this.exportExle =true;
+              }
+            }
+          } else {
+          }
+        })
       },
       accountList() {
         let parameterData = {

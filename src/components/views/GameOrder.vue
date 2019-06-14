@@ -49,7 +49,7 @@
             </el-select>
           </el-form-item>
           <el-button type="primary" plain style="margin-bottom: 30px;margin-left: 10px" @click="search()">查询</el-button>
-          <el-button type="success" plain style="margin-bottom: 20px;margin-left: 10px" @click="queryExport()">导出表格</el-button>
+          <el-button type="success" plain style="margin-bottom: 20px;margin-left: 10px" v-if="exportExle" @click="queryExport()">导出表格</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -284,6 +284,7 @@
         optionW:'75px',
         menuId:'',
         exa:false,
+        exportExle:false,
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
@@ -333,6 +334,8 @@
     },
 
     created() {
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
       this.accountList();
       this.gameData();
     },
@@ -354,6 +357,21 @@
           return ''
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
+      },
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'exportExle') {
+                this.exportExle =true;
+              }
+            }
+          } else {
+          }
+        })
       },
       accountList() {
         let parameterData = {

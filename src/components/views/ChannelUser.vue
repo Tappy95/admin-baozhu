@@ -46,7 +46,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="success" plain @click="queryExport()" >导出表格</el-button>
+            <el-button type="success" plain v-if="exportExle" @click="queryExport()" >导出表格</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -246,6 +246,7 @@
         },
         selectTime: '',
         setSuperMan:false,
+        exportExle:false,
         loading:true
       }
     },
@@ -276,6 +277,9 @@
               if(res.data[i].btnCode == 'setSuperMan') {
                 this.setSuperMan =true;
                 // this.qxW = '140px';
+              }
+              if(res.data[i].btnCode == 'exportExle') {
+                this.exportExle =true;
               }
             }
           } else {

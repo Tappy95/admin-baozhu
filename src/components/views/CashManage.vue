@@ -65,7 +65,7 @@
             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
           <el-form-item v-if="exportExle" :label-width="labelWidth">
-            <el-button type="success"  plain @click="queryExport()">导出表格</el-button>
+            <el-button type="success"  plain @click="queryExport()" >导出表格</el-button>
           </el-form-item>
           <el-form-item :label-width="labelWidth">
             <el-button  v-if="lockAll" type="warning" plain @click="lockAllTap()">全部锁定</el-button>
@@ -371,6 +371,7 @@
         exa:false,
         lock:false,
         count:'',
+        menuId:''
       }
     },
     created() {
@@ -600,7 +601,6 @@
                 this.lock =true;
               }
               if(res.data[i].btnCode == 'exportExle') {
-                this.powerTrue =true;
                 this.exportExle =true;
               }
             }

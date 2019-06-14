@@ -38,7 +38,7 @@
           <el-button type="primary" plain @click="search" >查询</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="success" plain @click="queryExport" >导出表格</el-button>
+          <el-button type="success" plain @click="queryExport" v-if="exportExle">导出表格</el-button>
         </el-form-item>
       </el-form>
 
@@ -92,6 +92,7 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
+        exportExle:false,
         formInline: {},
         tableData: [],
         pickerOptions: {
@@ -163,23 +164,8 @@
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             for(let i = res.data.length - 1; i >= 0; i--) {
-              if(res.data[i].btnCode == 'add') {
-                this.add=true
-              }
-              if(res.data[i].btnCode == 'upd') {
-                this.upd=true;
-                this.powerTrue =true;
-                this.optionW = '160px'
-              }
-              if(res.data[i].btnCode == 'del') {
-                this.del=true;
-                this.powerTrue =true;
-                this.optionW = '160px'
-              }
-
-              if (this.upd && this.del) {
-                this.powerTrue =true;
-                this.optionW = '230px'
+              if(res.data[i].btnCode == 'exportExle') {
+                this.exportExle=true
               }
             }
           } else {

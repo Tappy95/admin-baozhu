@@ -56,7 +56,7 @@
             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" plain @click="queryExport()">导出表格</el-button>
+            <el-button type="success" plain @click="queryExport()" v-if="exportExle">导出表格</el-button>
           </el-form-item>
         </el-form>
         </el-form>
@@ -313,6 +313,8 @@
           width: '200px',
         },
         searchTrue:false,
+        exportExle:false,
+        menuId:'',
         isNotAuditing:false,
         labelWidth:'80px',
         optionW:'1px',
@@ -509,6 +511,10 @@
             if(res.data[i].btnCode == 'search') {
               this.searchTrue =true;
             }
+            if(res.data[i].btnCode == 'exportExle') {
+              this.exportExle =true;
+            }
+
           }
         } else {
         }

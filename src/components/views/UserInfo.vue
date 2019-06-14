@@ -41,7 +41,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="success" plain @click="queryExport()" >导出表格</el-button>
+            <el-button type="success" v-if="exportExle" plain @click="queryExport()" >导出表格</el-button>
           </el-form-item>
 
         </el-form>
@@ -480,6 +480,7 @@
         upd:false,
         exa:false,
         setNo:false,
+        exportExle:false,
         types:'',
         rules: {
           remark: [
@@ -564,6 +565,9 @@
             if(res.data[i].btnCode == 'rew') {
               this.rew=true;
               this.optionW = '160px'
+            }
+            if(res.data[i].btnCode == 'exportExle') {
+              this.exportExle=true;
             }
             if(res.data[i].btnCode == 'apprentice') {
               this.apprentice=true;

@@ -469,7 +469,6 @@
                 this.lock=true;
               }
               if(res.data[i].btnCode == 'exportExle') {
-                this.powerTrue =true;
                 this.exportExle =true;
               }
             }
