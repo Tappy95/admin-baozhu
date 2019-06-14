@@ -472,7 +472,6 @@
         };
       },
       created(){
-
           this.channelList();
           this.tipList();
           this.list();
