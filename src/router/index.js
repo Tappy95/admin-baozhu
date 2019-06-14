@@ -277,7 +277,7 @@ const routes = [
       {
         path: 'application-market',
         name: 'ApplicationMarket',
-        component: resolve => require(['../components/views/ApplicationMarket.vue'], resolve),
+        component: resolve => require(['../components/views/applicationMarket.vue'], resolve),
       },
       {
         path: 'task-job',
