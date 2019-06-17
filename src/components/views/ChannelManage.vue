@@ -130,10 +130,68 @@
                 </el-form-item>
               </el-col>
 
-
               <el-col :span="23">
                 <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
                   <el-input  spellcheck="false" v-model="form.downloadUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" v-if="payEdit">
+                <el-form-item label="开启微信支付:" prop="openWx" :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="form.openWx" placeholder="">
+                    <el-option label="开启" value="1"></el-option>
+                    <el-option label="关闭" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12"  v-if="payEdit">
+                <el-form-item label="开启支付宝支付:" prop="openAli" :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="form.openAli" placeholder="">
+                    <el-option label="开启" value="1"></el-option>
+                    <el-option label="关闭" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="form.openWx==1">
+                <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
+                  <el-input spellcheck="false"   v-model="form.wxAppId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="form.openWx==1">
+                <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
+                  <el-input spellcheck="false"  v-model="form.mchId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="form.openWx==1">
+                <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.apiKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="form.openAli==1">
+                <el-form-item label="支付宝appId:"  :label-width="formLabelWidth" >
+                  <el-input   spellcheck="false"  v-model="form.aliAppId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="form.openAli==1">
+                <el-form-item label="支付宝私钥:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}"  v-model="form.aliPrivateKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="23" v-if="form.openAli==1">
+                <el-form-item label="支付宝公钥:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.aliPublicKey" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -146,28 +204,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model="form.wxAppId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" v-model="form.mchId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="23">
-                <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
-                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.apiKey" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
 
             </el-row>
           </el-form>
@@ -238,34 +274,70 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="12" v-if="payEdit">
+                <el-form-item label="开启微信支付:" prop="openWx" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.openWx" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-if="payEdit">
+                <el-form-item  label="开启支付宝支付:" prop="openAli" :label-width="formLabelWidth">
+                  <el-select  :style="styleObject" v-model="formtwo.openAli" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwo.openWx==1 && payEdit">
+                <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
+                  <el-input  spellcheck="false"  v-model="formtwo.wxAppId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwo.openWx==1 && payEdit">
+                <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
+                  <el-input  spellcheck="false"   v-model="formtwo.mchId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwo.openWx==1 && payEdit">
+                <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false"   type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.apiKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwo.openAli==1 && payEdit">
+                <el-form-item label="支付宝appId:"  :label-width="formLabelWidth" >
+                  <el-input   spellcheck="false"  v-model="formtwo.aliAppId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwo.openAli==1 && payEdit">
+                <el-form-item label="支付宝私钥:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}"  v-model="formtwo.aliPrivateKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="23" v-if="formtwo.openAli==1 && payEdit">
+                <el-form-item label="支付宝公钥:"  :label-width="formLabelWidth" >
+                  <el-input   spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.aliPublicKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="20">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
                   </el-select>
-                </el-form-item>
-              </el-col>
-
-
-              <el-col :span="12">
-                <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :disabled="true"  v-model="formtwo.wxAppId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  :disabled="true" v-model="formtwo.mchId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="23">
-                <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
-                  <el-input spellcheck="false"  :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.apiKey" auto-complete="off"  clearable>
-                  </el-input>
                 </el-form-item>
               </el-col>
 
@@ -338,6 +410,65 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="12" v-if="payEdit">
+                <el-form-item label="开启微信支付:"  :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.openWx" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-if="payEdit">
+                <el-form-item :disabled="true" label="开启支付宝支付:"  :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.openAli" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+                <el-col :span="12" v-if="formtwoInfo.openWx==1 && payEdit">
+                  <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
+                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.wxAppId" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="12" v-if="formtwoInfo.openWx==1 && payEdit">
+                  <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
+                    <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.mchId" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="23" v-if="formtwoInfo.openWx==1 && payEdit">
+                  <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
+                    <el-input :disabled="true"  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.apiKey" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+
+              <el-col :span="23" v-if="formtwoInfo.openAli==1 && payEdit">
+                <el-form-item label="支付宝appId:"  :label-width="formLabelWidth" >
+                  <el-input  spellcheck="false" :disabled="true" v-model="formtwoInfo.aliAppId" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwoInfo.openAli==1 && payEdit">
+                <el-form-item label="支付宝私钥:"  :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows:6}"  v-model="formtwoInfo.aliPrivateKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="23" v-if="formtwoInfo.openAli==1 && payEdit">
+                <el-form-item label="支付宝公钥:"  :label-width="formLabelWidth" >
+                  <el-input :disabled="true" spellcheck="false" type="textarea" :autosize="{ minRows:4, maxRows: 6}" v-model="formtwoInfo.aliPublicKey" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.status" placeholder="">
@@ -347,35 +478,12 @@
                 </el-form-item>
               </el-col>
 
-                <el-col :span="12">
-                  <el-form-item label="创建时间:" :label-width="formLabelWidth">
-                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createTime" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.wxAppId" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
-                    <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.mchId" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="23">
-                  <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
-                    <el-input :disabled="true"  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.apiKey" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-
+              <el-col :span="12">
+                <el-form-item label="创建时间:" :label-width="formLabelWidth">
+                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createTime" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
             </el-row>
           </el-form>
@@ -411,6 +519,7 @@
         add:false,
         del:false,
         upd:false,
+        payEdit:false,
         addChannelName:false,
         dialogTableVisible: false,
         formtwo: {},
@@ -419,7 +528,9 @@
         dialogChannel:false,
         formtwoInfo:{},
         form: {
-          channelName:''
+          channelName:'',
+          openAli:2,
+          openWx:2
         },
         formChannel:{
         },
@@ -470,6 +581,16 @@
             message: '请输入渠道名称',
             trigger: 'blur'
           }],
+         openAli: [{
+            required: true,
+            message: '请选择是否开启支付宝支付',
+            trigger: 'change'
+         }],
+          openWx: [{
+            required: true,
+            message: '请选择是否开启微信支付',
+            trigger: 'change'
+          }],
         },
         formLabelWidth: '150px',
         currentPage: 1,
@@ -480,10 +601,6 @@
         },
         tableData: [],
         isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
         channelNameList:[],
         showImg:false,
       }
@@ -528,6 +645,10 @@
               if(res.data[i].btnCode == 'addChannelName') {
                 this.addChannelName=true
               }
+              if(res.data[i].btnCode == 'payEdit') {
+                this.payEdit=true
+              }
+
               if(res.data[i].btnCode == 'add') {
                 this.add=true
               }
@@ -601,6 +722,7 @@
       load() {
         this.form={};
         this.dialogFormVisible = true;
+        this.imageUrl = "";
       },
       //渠道名称
       loadChannel() {
@@ -640,6 +762,13 @@
       },
       //添加渠道
       addBtn(form) {
+
+          //无修改支付权限时
+        if (!this.payEdit){
+          this.form.openAli =2;
+          this.form.openWx =2;
+        }
+
         if (this.form.channelPushType==1) {
           this.form.content = this.imageUrl
         }
