@@ -554,6 +554,7 @@
 
         //提现申请 礼品兑换跳转
         turnTap(type,names){
+            let id = "";
           let myauth = getSession("authSize");
           this.powers = JSON.parse(myauth);
           let n=0;
@@ -562,6 +563,7 @@
                 for (var j=0; j<this.powers[i].rightCollections.length;j++){
                   if( this.powers[i].rightCollections[j].fileName==names){
                     n++;
+                    id = this.powers[i].rightCollections[j].id
                     break;
                   }
                 }
@@ -570,7 +572,8 @@
             }
           if (n>0){
             this.$router.push({
-              name: names
+              name: names,
+              query:{id:id}
             })
           }else {
             this.$message({

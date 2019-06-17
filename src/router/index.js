@@ -147,7 +147,7 @@ const routes = [
         path: 'attendance-rules',
         name: 'AttendanceRules',
         component: resolve => require(['../components/views/AttendanceRules.vue'], resolve),
-        meta: { title: '来访规则'}
+        meta: { title: '来访礼规则'}
       },
       {
         path: 'news-notice',
@@ -238,7 +238,7 @@ const routes = [
         path: 'order',
         name: 'Order',
         component: resolve => require(['../components/views/Order.vue'], resolve),
-        meta: { title: '来访礼记录'}
+        meta: { title: ''}
       },
       {
         path: 'menu-management',
