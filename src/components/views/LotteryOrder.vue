@@ -114,6 +114,9 @@
 
             <el-table-column fixed="right" v-if="powerTrue" label="操作" :width="optionW">
               <template slot-scope="scope">
+                <!--{{scope.row.status}}-->
+                <!--{{scope.row.isLocking}}-->
+                <!--{{scope.row.locking}}-->
                 <el-button type="warning" plain v-if="lock && scope.row.status!=2 && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" >锁定</el-button>
                 <el-button type="primary"  plain v-if="lock && scope.row.status!=2 && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" >解锁</el-button>
                 <span style="text-align: center" class="pla-span amountred" v-if="scope.row.status!=2 && scope.row.isLocking==1 && scope.row.locking!=2">已被{{scope.row.admin}}锁定<span v-if="optionW='150px'"></span></span>

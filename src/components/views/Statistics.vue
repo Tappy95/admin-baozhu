@@ -11,7 +11,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid_item bg2 grid-content">
+          <div @click="turnTap('user','UserInfo')" class="point grid_item bg2 grid-content">
             <img src="../../assets/statistics/youxian_vip.png"/>
             <div class="dec">
               <p>{{tipData.vipCount}}<span>人</span></p>
@@ -557,6 +557,7 @@
             let id = "";
           let myauth = getSession("authSize");
           this.powers = JSON.parse(myauth);
+          console.log(this.powers)
           let n=0;
           for (var i=0;i< this.powers.length;i++) {
               if( this.powers[i].fileName==type){
@@ -571,10 +572,18 @@
               }
             }
           if (n>0){
-            this.$router.push({
-              name: names,
-              query:{id:id}
-            })
+            //用户信息
+            if (type=='user'){
+              this.$router.push({
+                name: names,
+                query:{id:id,vip:1}
+              })
+            }else { //礼品兑换，提现
+              this.$router.push({
+                name: names,
+                query:{id:id}
+              })
+            }
           }else {
             this.$message({
               message: '您暂无权限',
@@ -582,7 +591,7 @@
             });
           }
         },
-      }
+      },
     }
 </script>
 

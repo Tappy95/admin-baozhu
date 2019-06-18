@@ -769,6 +769,15 @@
           this.form.openWx =2;
         }
 
+        //将加号替换为%2B
+        if (this.form.aliPublicKey && this.form.aliPublicKey.indexOf('+')!=-1){
+          this.form.aliPublicKey = this.form.aliPublicKey.replace(/\+/g,"%2B");
+        }
+        //将加号替换为%2B
+        if (this.form.aliPrivateKey && this.form.aliPrivateKey.indexOf('+')!=-1){
+          this.form.aliPrivateKey = this.form.aliPrivateKey.replace(/\+/g,"%2B");
+        }
+
         if (this.form.channelPushType==1) {
           this.form.content = this.imageUrl
         }
@@ -844,6 +853,16 @@
       update(formtwo) {
         if (this.formtwo.channelPushType==1) {
           this.formtwo.content = this.imageUrl
+        }
+
+        //将加号替换为%2B
+        if (this.formtwo.aliPublicKey && this.formtwo.aliPublicKey.indexOf('+')!=-1){
+          this.formtwo.aliPublicKey = this.formtwo.aliPublicKey.replace(/\+/g,"%2B")
+        }
+
+        //将加号替换为%2B
+        if (this.formtwo.aliPrivateKey && this.formtwo.aliPrivateKey.indexOf('+')!=-1){
+          this.formtwo.aliPrivateKey = this.formtwo.aliPrivateKey.replace(/\+/g,"%2B")
         }
 
         this.$put('/api/mChannelInfo/modify', this.formtwo).then(res => {

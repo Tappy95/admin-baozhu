@@ -29,12 +29,20 @@
             </el-select>
           </el-form-item>
 
-            <el-form-item label="渠道标识:" :label-width="formLabelWidth" >
+            <el-form-item label="渠道标识:">
               <el-select   v-model="formInline.channelCode" placeholder="请选择渠道标识">
                 <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                 <el-option label="全部" value=""></el-option>
               </el-select>
             </el-form-item>
+
+          <el-form-item label="是否购买vip:" :label-width="formLabelWidth" >
+            <el-select  v-model="formInline.isRechargeVip" placeholder="请选择是否购买vip">
+              <el-option label="是" value="1"></el-option>
+              <el-option label="否" value="2"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
 
           <el-form-item>
             <el-button @click="search()" type="primary" plain>查询</el-button>
@@ -43,7 +51,6 @@
           <el-form-item>
             <el-button type="success" v-if="exportExle" plain @click="queryExport()" >导出表格</el-button>
           </el-form-item>
-
         </el-form>
       </div>
       <div class="userloanInformation-table">
@@ -518,7 +525,9 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
-        formInline: {},
+        formInline: {
+          isRechargeVip:''
+        },
         tableData:[],
         onetableData:[],
         rewardtableData:[],
@@ -533,11 +542,17 @@
         levelList:[],
         interface:'',
         loading:true,
-        fullscreenLoading:false
+        fullscreenLoading:false,
+        vip:"",
       }
     },
     created() {
       this.menuId=this.$route.query.id;
+      if (this.$route.query.vip) {
+        this.formInline.isRechargeVip = this.$route.query.vip.toString();
+      }else {
+        this.formInline.isRechargeVip = '';
+      }
       this.channelList();//调取渠道标识列表
       this.levelListD();//调取用户等级
       this.queryBtns();//权限
@@ -729,7 +744,8 @@
           accountId:this.formInline.accountId,
           mobile:this.formInline.mobile,
           level:this.formInline.level,
-          channelCode:this.formInline.channelCode
+          channelCode:this.formInline.channelCode,
+          isRechargeVip:this.formInline.isRechargeVip
         }
         this.$fetch('/api/userInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
