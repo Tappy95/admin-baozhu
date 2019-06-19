@@ -58,7 +58,7 @@
                 </el-col>
 
                 <el-col :span="12">
-                  <el-form-item label="一级分佣:"
+                  <el-form-item label="一级分佣(%):"
                                 prop="oneCommission"
                                 :label-width="formLabelWidth">
                     <el-input :style="styleObject" type="number" v-model="form.oneCommission"
@@ -69,7 +69,7 @@
 
 
                 <el-col :span="12">
-                  <el-form-item label="二级分佣:"
+                  <el-form-item label="二级分佣(%):"
                                 prop="twoCommission"
                                 :label-width="formLabelWidth">
                     <el-input :style="styleObject" type="number" v-model="form.twoCommission"
@@ -80,7 +80,7 @@
 
 
                 <el-col :span="12">
-                  <el-form-item label="合伙人分佣:"
+                  <el-form-item label="合伙人分佣(%):"
                                 prop="partnerCommission"
                                 :label-width="formLabelWidth">
                     <el-input :style="styleObject" type="number" v-model="form.partnerCommission"
@@ -246,13 +246,13 @@
                              label="团队长价格">
             </el-table-column>
             <el-table-column prop="oneCommission" min-width="120px"
-                             label="一级分佣">
+                             label="一级分佣(%)">
             </el-table-column>
             <el-table-column prop="twoCommission" min-width="120px"
-                             label="二级分佣">
+                             label="二级分佣(%)">
             </el-table-column>
             <el-table-column prop="partnerCommission" min-width="120px"
-                             label="合伙人分佣">
+                             label="合伙人分佣(%)">
             </el-table-column>
 
             <!--<el-table-column min-width="200px" label="方案说明图">
@@ -321,7 +321,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="一级分佣:"
+                <el-form-item label="一级分佣(%):"
                               prop="oneCommission"
                               :label-width="formLabelWidth">
                   <el-input :style="styleObject" type="number" v-model="formtwo.oneCommission"
@@ -332,7 +332,7 @@
 
 
               <el-col :span="12">
-                <el-form-item label="二级分佣:"
+                <el-form-item label="二级分佣(%):"
                               prop="twoCommission"
                               :label-width="formLabelWidth">
                   <el-input :style="styleObject" type="number" v-model="formtwo.twoCommission"
@@ -342,7 +342,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="合伙人分佣:"
+                <el-form-item label="合伙人分佣(%):"
                               prop="partnerCommission"
                               :label-width="formLabelWidth">
                   <el-input :style="styleObject" type="number" v-model="formtwo.partnerCommission"
@@ -512,7 +512,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="一级分佣:"
+                <el-form-item label="一级分佣(%):"
                               :label-width="formLabelWidth">
                   <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.oneCommission"
                             auto-complete="off"
@@ -522,7 +522,7 @@
 
 
               <el-col :span="12">
-                <el-form-item label="二级分佣:"
+                <el-form-item label="二级分佣(%):"
                               :label-width="formLabelWidth">
                   <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.twoCommission"
                             auto-complete="off"
@@ -531,7 +531,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="合伙人分佣:"
+                <el-form-item label="合伙人分佣(%):"
                               :label-width="formLabelWidth">
                   <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.partnerCommission"
                             auto-complete="off"

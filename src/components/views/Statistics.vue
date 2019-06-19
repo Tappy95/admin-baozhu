@@ -100,16 +100,16 @@
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
                 :placement=place
-                title="签到人数"
+                title="来访人数"
                 width="200"
                 :offset=off
                 trigger="hover"
-                content="时间段内参加每日签到的人数">
+                content="时间段内参加每日来访的人数">
                   <div slot="reference" class="list grid-content">
                     <img src="../../assets/statistics/sign_num.png"/>
                     <div class="dec">
                       <p>{{listData.signCount}}<span>人</span></p>
-                      <p>签到人数</p>
+                      <p>来访人数</p>
                     </div>
                   </div>
               </el-popover>
