@@ -49,6 +49,7 @@
             <el-button type="success" plain v-if="exportExle" @click="queryExport()" >导出表格</el-button>
           </el-form-item>
         </el-form>
+        <div class="no-tip">默认初始无数据，请根据条件筛选进行搜索即可！</div>
       </div>
       <div class="userloanInformation-table">
         <template>
@@ -253,7 +254,7 @@
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
-      this.accountList();
+      // this.accountList();
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
@@ -472,6 +473,11 @@
   }
 </script>
 <style type="text/css">
+  .no-tip{
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #ff4d51;
+  }
   .amountblue{
     color: #409eff;
   }
