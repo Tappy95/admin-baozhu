@@ -49,7 +49,7 @@
             <el-button type="success" plain v-if="exportExle" @click="queryExport()" >导出表格</el-button>
           </el-form-item>
         </el-form>
-        <div class="no-tip">默认初始无数据，请根据条件筛选进行搜索即可！</div>
+        <div class="no-tip">默认初始无数据，请根据条件筛选进行查询即可！</div>
       </div>
       <div class="userloanInformation-table">
         <template>
@@ -248,7 +248,7 @@
         selectTime: '',
         setSuperMan:false,
         exportExle:false,
-        loading:true
+        loading:false
       }
     },
     created() {
@@ -419,6 +419,7 @@
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
       accountList() {
+        this.loading = true
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -474,7 +475,7 @@
 </script>
 <style type="text/css">
   .no-tip{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 14px;
     color: #ff4d51;
   }
