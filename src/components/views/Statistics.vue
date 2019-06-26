@@ -311,7 +311,7 @@
                 :offset=off
                 trigger="hover"
                 :tabindex=tabindex
-                content="时间段内参加答题、签到、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">
+                content="时间段内参加答题、来访、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">
                 <div slot="reference" class="list grid-content">
                   <img src="../../assets/statistics/flag.png"/>
                   <div class="dec">

@@ -83,10 +83,19 @@
             <el-table-column min-width="150" label="支出">
               <template slot-scope="scope">
                 <span class="amountgreen">
-                  -{{scope.row.expend | currency}}
+                   <span v-if="scope.row.expend>0">-</span>{{scope.row.expend | currency}}
                 </span>
               </template>
             </el-table-column>
+
+            <!--<el-table-column min-width="150" label="金猪余额">-->
+              <!--<template slot-scope="scope">-->
+                <!--<span class="amountyellow">-->
+                 <!--{{scope.row.pigBalance | currency}}-->
+                <!--</span>-->
+              <!--</template>-->
+            <!--</el-table-column>-->
+
             <!-- <el-table-column min-width="150" label="金币变动">
                <template slot-scope="scope">
                  <span :class="scope.row.flowType==1?'amountred':'amountgreen'">
@@ -582,6 +591,9 @@
   }
   .amountgreen{
     color: #13ce66;
+  }
+  .amountyellow{
+    color: #E6A23C;
   }
   .administratormanage-wrap {
     width: 100%;

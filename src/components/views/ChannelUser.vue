@@ -15,6 +15,12 @@
                       clearable></el-input>
           </el-form-item>
 
+          <el-form-item label="用户等级:">
+            <el-input v-model="formInline.level"
+                      placeholder="请输入用户id"
+                      clearable></el-input>
+          </el-form-item>
+
           <el-form-item label="累计赚取金币数:">
             <el-input v-model="formInline.minCoin"
                       placeholder="请输入最小值"
@@ -84,6 +90,9 @@
                 <span v-if="scope.row.roleType==2">团队长</span>
                 <span v-if="scope.row.roleType==3">超级合伙人</span>
               </template>
+            </el-table-column>
+            <el-table-column min-width="150px" prop="level"
+                             label="用户等级">
             </el-table-column>
             <el-table-column min-width="150px"
                              label="累计充值(￥)">
@@ -307,6 +316,7 @@
           this.formInline.endTime = ''
         }
         let accountId=this.formInline.accountId;
+        let level=this.formInline.level;
         let startTime=this.formInline.startTime;
         let endTime=this.formInline.endTime;
         let minCoin=this.formInline.minCoin;
@@ -316,12 +326,13 @@
         let relation= getSession("userRelation");
 
         let url = '/api/excl/channelExclUser';
-        let data = {url,accountId,startTime,endTime,minCoin,maxCoin,token,channel,relation};
+        let data = {url,accountId,level,startTime,endTime,minCoin,maxCoin,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
         let url = obj.url,
           accountId=obj.accountId,
+          level=obj.level,
           startTime=obj.startTime,
           endTime=obj.endTime,
           minCoin=obj.minCoin,
@@ -336,6 +347,15 @@
            if(accountId!=null && accountId!=''){
              http=http+'?accountId=' + accountId
            }
+        }
+        if(http==url){
+          if(level!=null && level!=''){
+            http=http+'?level=' + level
+          }
+        }else{
+          if(level!=null && level!=''){
+            http=http+'&level=' + level
+          }
         }
         if(http==url){
           if(startTime!=null && startTime!=''){
@@ -424,6 +444,7 @@
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           accountId:this.formInline.accountId,
+          level:this.formInline.level,
           startTime:this.formInline.startTime,
           endTime:this.formInline.endTime,
           minCoin:this.formInline.minCoin,
