@@ -17,7 +17,7 @@
 
           <el-form-item label="用户等级:">
             <el-input v-model="formInline.level"
-                      placeholder="请输入用户id"
+                      placeholder="请输入用户等级"
                       clearable></el-input>
           </el-form-item>
 
