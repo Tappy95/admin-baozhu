@@ -93,9 +93,14 @@
                              min-width="110px">
             </el-table-column>
 
-            <el-table-column prop="channelCode"
+            <el-table-column
                              label="渠道"
                              min-width="100px">
+              <template slot-scope="scope">
+                <span v-if="scope.row.channelCode">{{scope.row.channelCode}}</span>
+                <span v-else>{{scope.row.parentChannelCode}}</span>
+              </template>
+
             </el-table-column>
             <el-table-column prop="channelRelation"
                              label="渠道关系"
@@ -224,7 +229,7 @@
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="上级代理:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.referrerMobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
+                  <el-input :style="styleObject" :value="message.referrer" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
 
