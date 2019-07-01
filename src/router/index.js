@@ -450,6 +450,18 @@ const routes = [
         component: resolve => require(['../components/views/CashManage.vue'], resolve),
         meta: { title: '提现管理'}
       },
+      {
+        path: 'platform-tasks',
+        name: 'PlatformTasks',
+        component: resolve => require(['../components/views/PlatformTasks.vue'], resolve),
+        meta: { title: '平台任务'}
+      },
+      {
+        path: 'platform-tasks-detail',
+        name: 'PlatformTasksDetail',
+        component: resolve => require(['../components/views/PlatformTasksDetail.vue'], resolve),
+        meta: { title: '平台任务'}
+      },
     ]
   }
 ]

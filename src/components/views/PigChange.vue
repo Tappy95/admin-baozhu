@@ -88,13 +88,13 @@
               </template>
             </el-table-column>
 
-            <!--<el-table-column min-width="150" label="金猪余额">-->
-              <!--<template slot-scope="scope">-->
-                <!--<span class="amountyellow">-->
-                 <!--{{scope.row.pigBalance | currency}}-->
-                <!--</span>-->
-              <!--</template>-->
-            <!--</el-table-column>-->
+            <el-table-column min-width="150" label="金猪余额">
+              <template slot-scope="scope">
+                <span class="amountyellow">
+                 {{scope.row.pigBalance | currency}}
+                </span>
+              </template>
+            </el-table-column>
 
             <!-- <el-table-column min-width="150" label="金币变动">
                <template slot-scope="scope">

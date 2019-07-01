@@ -89,13 +89,13 @@
               </template>
             </el-table-column>
 
-            <!--<el-table-column min-width="150" label="金币余额">-->
-              <!--<template slot-scope="scope">-->
-                <!--<span class="amountyellow">-->
-                 <!--{{scope.row.coinBalance | currency}}-->
-                <!--</span>-->
-              <!--</template>-->
-            <!--</el-table-column>-->
+            <el-table-column min-width="150" label="金币余额">
+              <template slot-scope="scope">
+                <span class="amountyellow">
+                 {{scope.row.coinBalance | currency}}
+                </span>
+              </template>
+            </el-table-column>
 
             <el-table-column prop="changedTime" min-width="170px" label="变更时间">
             </el-table-column>
