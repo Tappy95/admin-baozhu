@@ -47,7 +47,7 @@
             </el-table-column>
 
             <el-table-column prop="name"
-                             min-width="120"
+                             min-width="200"
                              label="任务名称" fixed="left" >
             </el-table-column>
 

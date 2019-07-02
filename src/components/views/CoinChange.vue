@@ -49,6 +49,7 @@
                   <el-option label="分享资讯" value="20"></el-option>
                   <el-option label="签到赚" value="21"></el-option>
                   <el-option label="大众团队长分佣" value="22"></el-option>
+                  <el-option label="快速赚任务" value="23"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -160,6 +161,9 @@
                     <el-option label="居间返利" :value="18"></el-option>
                     <el-option label="阅读广告奖励" :value="19"></el-option>
                     <el-option label="分享资讯" :value="20"></el-option>
+                    <el-option label="签到赚" :value="21"></el-option>
+                    <el-option label="大众团队长分佣" :value="22"></el-option>
+                    <el-option label="快速赚任务" :value="23"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -256,6 +260,9 @@
                     <el-option label="居间返利" :value="18"></el-option>
                     <el-option label="阅读广告奖励" :value="19"></el-option>
                     <el-option label="分享资讯" :value="20"></el-option>
+                    <el-option label="签到赚" :value="21"></el-option>
+                    <el-option label="大众团队长分佣" :value="22"></el-option>
+                    <el-option label="快速赚任务" :value="23"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -622,6 +629,9 @@
                 break;
               case 22:
                 res.data.list[i].changedType = '大众团队长分佣';
+                break;
+              case 23:
+                res.data.list[i].changedType = '快速赚任务';
                 break;
               // default:
             }

@@ -31,9 +31,9 @@
           <el-table :data="tableData" height="580">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column fixed="left" min-width="150" prop="orderNum"  label="订单号">
+            <el-table-column fixed="left" min-width="180" prop="orderNum"  label="订单号">
             </el-table-column>
-            <el-table-column prop="name" min-width="170" label="任务名称">
+            <el-table-column prop="name" min-width="200" label="任务名称">
             </el-table-column>
             <el-table-column prop="userId" min-width="170" label="用户id">
             </el-table-column>
@@ -75,7 +75,7 @@
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
   export default {
-    name: 'BalanceChange',
+    name: 'PlatformTasksDetail',
     data() {
       return {
         menuId:'',

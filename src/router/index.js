@@ -460,7 +460,7 @@ const routes = [
         path: 'platform-tasks-detail',
         name: 'PlatformTasksDetail',
         component: resolve => require(['../components/views/PlatformTasksDetail.vue'], resolve),
-        meta: { title: '平台任务'}
+        meta: { title: '平台任务明细'}
       },
     ]
   }
