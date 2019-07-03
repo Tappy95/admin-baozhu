@@ -33,7 +33,7 @@
           <el-button type="success" plain @click="taskGetTap()" v-if="taskGet">获取任务</el-button>
         </el-form>
       </div>
-      <div>
+        <div>
       </div>
       <div class="bannermanage-table">
         <template>

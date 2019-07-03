@@ -17,7 +17,7 @@
             <el-input v-model="formInline.userId" placeholder="请输入用户id" clearable></el-input>
           </el-form-item>
           <el-form-item label="审核结果:">
-           <el-select placeholder="请选择审核结果">
+           <el-select v-model="formInline.resultCode" placeholder="请选择审核结果">
              <el-option label="通过" value="1"></el-option>
                <el-option label="拒绝" value="2"></el-option>
                <el-option label="全部" value=""></el-option>
@@ -92,7 +92,7 @@
     },
     created() {
       this.menuId=this.$route.query.id;
-      this.queryBtns();
+      // this.queryBtns();
       this.accountList();
     },
     filters: {
@@ -110,17 +110,6 @@
         }
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            // for(let i = res.data.length - 1; i >= 0; i--) {
-            //   //审核
-            //   if(res.data[i].btnCode == 'exa') {
-            //     this.exa=true
-            //   }
-            //
-            //   if (this.exa) {
-            //     this.powerTrue =true;
-            //     this.optionW = '150px'
-            //   }
-            // }
           } else {
           }
         })
