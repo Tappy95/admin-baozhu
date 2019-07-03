@@ -115,7 +115,7 @@
                 <el-button type="info" plain size="mini"
                            @click="getInfo(scope.row.id,1)">详情</el-button>
                 <el-button type="warning" plain size="mini"
-                           @click="getInfo(scope.row.id,2)">修改</el-button>
+                           @click="getInfo(scope.row.id,2)" v-if="upd">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -414,7 +414,6 @@
       },
       handleClose(tag) {
         this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-        console.log(this.dynamicTags)
       },
       //任务类型
       taskType(){
@@ -437,12 +436,6 @@
             for(let i = res.data.list.length - 1; i >= 0; i--) {
                   if (res.data.list[i].label){
                     res.data.list[i].label = res.data.list[i].label.split(',')
-                    console.log(res.data.list[i].label)
-                    // this.lableArr = res.data.list[i].label;
-                    // console.log(this.lableArr)
-                    // let arr ={};
-                    // arr.id = '';
-                    // arr.name = ''
                   }
             }
             this.tableData = res.data.list
