@@ -29,8 +29,20 @@
             </el-select>
           </el-form-item>
           <el-form-item  :label-width="labelWidth" label="银行卡号:">
-            <el-input style="width: 250px"  v-model="formInline.bankNum" placeholder="请输入银行卡号" clearable></el-input>
+            <el-input  v-model="formInline.bankNum" placeholder="请输入银行卡号" clearable></el-input>
           </el-form-item>
+
+          <el-form-item  :label-width="labelWidth" label="渠道标识:">
+            <el-input  v-model="formInline.channelCode" placeholder="请输入渠道标识" clearable></el-input>
+          </el-form-item>
+
+          <el-form-item :label-width="labelWidth"  label="提现金额:">
+            <el-input type="number" style="width: 150px" min="0" v-model="formInline.coinMin" placeholder="最小金额" clearable></el-input>
+          </el-form-item>
+          <el-form-item  label="至">
+            <el-input type="number" style="width: 150px" min="0" v-model="formInline.coinMax" placeholder="最大金额" clearable></el-input>
+          </el-form-item>
+
           <el-form-item :label-width="labelWidth" label="提现时间:">
             <el-date-picker
               v-model="selectTime"
@@ -55,12 +67,7 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-          <el-form-item :label-width="labelWidth"  label="提现金额:">
-            <el-input type="number" min="0" v-model="formInline.coinMin" placeholder="请输入最小提现金额" clearable></el-input>
-          </el-form-item>
-          <el-form-item  label="至">
-            <el-input type="number" min="0" v-model="formInline.coinMax" placeholder="请输入最大提现金额" clearable></el-input>
-          </el-form-item>
+
           <el-form-item :label-width="labelWidth">
             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
@@ -443,11 +450,13 @@
         let  examineEndTime=this.formInline.examineEndTime;
         let  coinMin=this.formInline.coinMin;
         let  coinMax=this.formInline.coinMax;
+        let  channelCode=this.formInline.channelCode;
+
         let token= getSession("token");
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
         let url = '/api/excl/exclCash';
-        let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,token,channel,relation};
+        let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,channelCode,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -465,7 +474,8 @@
           coinMax=obj.coinMax,
           token= obj.token,
           channel=obj.channel,
-          relation=obj.relation
+          relation=obj.relation,
+          channelCode=obj.channelCode
 
         let a1 = document.createElement('a');
 
@@ -566,6 +576,17 @@
             http=http+'&coinMax=' + coinMax
           }
         }
+
+        if(http==url){
+          if(channelCode){
+            http=http+'?channelCode=' + channelCode
+          }
+        }else{
+          if(channelCode){
+            http=http+'&channelCode=' + channelCode
+          }
+        }
+
         if(http==url){
           http=http+'?token='+token+'&channel='+channel+'&relation='+relation
         }else{
@@ -634,7 +655,8 @@
           examineStartTime:this.formInline.examineStartTime,
           examineEndTime:this.formInline.examineEndTime,
           coinMin:this.formInline.coinMin,
-          coinMax:this.formInline.coinMax
+          coinMax:this.formInline.coinMax,
+          channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/lUserExchangeCash/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
