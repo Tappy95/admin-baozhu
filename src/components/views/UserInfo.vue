@@ -427,8 +427,6 @@
                  ref="formSet">
           <div class="form">
             <el-row>
-
-
               <el-col :span="12">
                 <el-form-item v-if="types==2" label="设置为超级合伙人:"
                               prop="isSuper"
@@ -438,16 +436,14 @@
                     <el-option label="否" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
-
                 <el-form-item v-if="types==1" label="是否冻结账户:"
-                              prop="isFro"
+                              prop="isSuper"
                               :label-width="formWidth">
                   <el-select :style="styleObject"  v-model="formSet.isSuper" placeholder="">
                     <el-option label="是" :value="3"></el-option>
                     <el-option label="否" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
-
               </el-col>
               <el-col :span="22">
                 <el-form-item label="描述:"
@@ -461,7 +457,6 @@
               </el-col>
             </el-row>
           </div>
-
         </el-form>
         <div slot="footer"
              class="dialog-footer">
@@ -659,10 +654,11 @@
         if (this.types==2) {
           this.interface = '/api/userInfo/setSuperPartner'
         }else if (this.types==1) {
-          // this.formSet.status =  this.formSet.isSuper;
           this.interface = '/api/userInfo/freezeUser'
         }
-        this.$refs.formSet.validate(valid => {
+
+        console.log(this.formSet)
+        this.$refs[formSet].validate(valid => {
           if (valid) {
             this.$post(this.interface,this.formSet).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
