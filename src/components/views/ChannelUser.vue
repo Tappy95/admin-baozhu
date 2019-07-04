@@ -21,17 +21,17 @@
                       clearable></el-input>
           </el-form-item>
 
-          <el-form-item label="累计赚取金币数:">
-            <el-input v-model="formInline.minCoin"
-                      placeholder="请输入最小值"
-                      clearable></el-input>
-          </el-form-item>
+          <!--<el-form-item label="累计赚取金币数:">-->
+            <!--<el-input v-model="formInline.minCoin"-->
+                      <!--placeholder="请输入最小值"-->
+                      <!--clearable></el-input>-->
+          <!--</el-form-item>-->
 
-          <el-form-item>
-            <el-input v-model="formInline.maxCoin"
-                    placeholder="请输入最大值"
-                    clearable></el-input>
-          </el-form-item>
+          <!--<el-form-item>-->
+            <!--<el-input v-model="formInline.maxCoin"-->
+                    <!--placeholder="请输入最大值"-->
+                    <!--clearable></el-input>-->
+          <!--</el-form-item>-->
 
           <el-form-item label="注册时间:">
               <el-date-picker
@@ -59,7 +59,7 @@
       </div>
       <div class="userloanInformation-table">
         <template>
-          <el-table :data="tableData"
+          <el-table class="table-th" :data="tableData"
                     style="width: 100%"
                     v-loading="loading"
                     height="560">
@@ -319,14 +319,14 @@
         let level=this.formInline.level;
         let startTime=this.formInline.startTime;
         let endTime=this.formInline.endTime;
-        let minCoin=this.formInline.minCoin;
-        let maxCoin=this.formInline.maxCoin;
+        // let minCoin=this.formInline.minCoin;
+        // let maxCoin=this.formInline.maxCoin;
         let token= getSession("token");
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
 
         let url = '/api/excl/channelExclUser';
-        let data = {url,accountId,level,startTime,endTime,minCoin,maxCoin,token,channel,relation};
+        let data = {url,accountId,level,startTime,endTime,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -335,8 +335,8 @@
           level=obj.level,
           startTime=obj.startTime,
           endTime=obj.endTime,
-          minCoin=obj.minCoin,
-          maxCoin=obj.maxCoin,
+          // minCoin=obj.minCoin,
+          // maxCoin=obj.maxCoin,
           token= obj.token,
           channel=obj.channel,
           relation=obj.relation
@@ -375,24 +375,24 @@
             http=http+'&endTime=' + endTime
           }
         }
-        if(http==url){
-          if(minCoin!=null && minCoin!=''){
-            http=http+'?minCoin=' + minCoin
-          }
-        }else{
-          if(minCoin!=null && minCoin!=''){
-            http=http+'&minCoin=' + minCoin
-          }
-        }
-        if(http==url){
-          if(maxCoin!=null && maxCoin!=''){
-            http=http+'?maxCoin=' + maxCoin
-          }
-        }else{
-          if(maxCoin!=null && maxCoin!=''){
-            http=http+'&maxCoin=' + maxCoin
-          }
-        }
+        // if(http==url){
+        //   if(minCoin!=null && minCoin!=''){
+        //     http=http+'?minCoin=' + minCoin
+        //   }
+        // }else{
+        //   if(minCoin!=null && minCoin!=''){
+        //     http=http+'&minCoin=' + minCoin
+        //   }
+        // }
+        // if(http==url){
+        //   if(maxCoin!=null && maxCoin!=''){
+        //     http=http+'?maxCoin=' + maxCoin
+        //   }
+        // }else{
+        //   if(maxCoin!=null && maxCoin!=''){
+        //     http=http+'&maxCoin=' + maxCoin
+        //   }
+        // }
         if(http==url){
           http=http+'?token='+token+'&channel='+channel+'&relation='+relation
         }else{
@@ -447,8 +447,8 @@
           level:this.formInline.level,
           startTime:this.formInline.startTime,
           endTime:this.formInline.endTime,
-          minCoin:this.formInline.minCoin,
-          maxCoin:this.formInline.maxCoin
+          // minCoin:this.formInline.minCoin,
+          // maxCoin:this.formInline.maxCoin
         }
         this.$fetch('/api/userInfo/channelList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -495,6 +495,9 @@
   }
 </script>
 <style type="text/css">
+  .table-th th{
+    padding: 0;
+  }
   .no-tip{
     margin-bottom: 10px;
     font-size: 14px;
