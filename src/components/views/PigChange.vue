@@ -62,25 +62,25 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" height="539">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="100" fixed="left" prop="accountId" label="用户id">
             </el-table-column>
             <el-table-column min-width="120" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column min-width="120" prop="level" label="成长等级">
+            <el-table-column sortable min-width="120" prop="level" label="成长等级">
             </el-table-column>
             <el-table-column prop="changedType" min-width="170px" label="类型">
             </el-table-column>
-            <el-table-column min-width="150" label="收入">
+            <el-table-column sortable min-width="150" label="收入">
               <template slot-scope="scope">
                 <span class="amountred">
                   +{{scope.row.revenue | currency}}
                 </span>
               </template>
             </el-table-column>
-            <el-table-column min-width="150" label="支出">
+            <el-table-column sortable min-width="150" label="支出">
               <template slot-scope="scope">
                 <span class="amountgreen">
                    <span v-if="scope.row.expend>0">-</span>{{scope.row.expend | currency}}
@@ -88,8 +88,8 @@
               </template>
             </el-table-column>
 
-            <el-table-column min-width="150" label="金猪余额">
-              <template slot-scope="scope">
+            <el-table-column  prop="pigBalance" sortable min-width="150" label="金猪余额">
+              <template  slot-scope="scope">
                 <span class="amountyellow">
                  {{scope.row.pigBalance | currency}}
                 </span>
@@ -106,7 +106,10 @@
             <!--<el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>-->
 
-            <el-table-column prop="changedTime" min-width="170px" label="变更时间">
+            <el-table-column prop="changedTime" sortable min-width="170px" label="变更时间">
+            </el-table-column>
+
+            <el-table-column prop="registerTime" sortable :formatter="dateFormat" min-width="170px" label="注册时间">
             </el-table-column>
             <el-table-column min-width="150" prop="remarks" label="备注">
             </el-table-column>

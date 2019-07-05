@@ -11,7 +11,8 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div @click="turnTap('user','UserInfo')" class="point grid_item bg2 grid-content">
+          <!--@click="turnTap('user','UserInfo')"-->
+          <div class="grid_item bg2 grid-content">
             <img src="../../assets/statistics/youxian_vip.png"/>
             <div class="dec">
               <p>{{tipData.vipCount}}<span>人</span></p>

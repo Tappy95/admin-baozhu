@@ -18,6 +18,7 @@
               <el-option label="审核中" value="1"></el-option>
               <el-option label="提现成功" value="2"></el-option>
               <el-option label="提现失败" value="3"></el-option>
+              <el-option label="提现异常" value="4"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -146,6 +147,7 @@
                 <span class="blue" v-if="scope.row.state==1">审核中</span>
                 <span class="amountgreen" v-if="scope.row.state==2">提现成功</span>
                 <span class="amountred" v-if="scope.row.state==3">提现失败</span>
+                <span class="amountred" v-if="scope.row.state==4">提现异常</span>
               </template>
             </el-table-column>
             <el-table-column  min-width="120px" label="是否锁定">

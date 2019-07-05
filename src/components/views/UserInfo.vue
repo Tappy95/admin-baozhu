@@ -36,13 +36,13 @@
               </el-select>
             </el-form-item>
 
-          <el-form-item label="是否购买vip:" :label-width="formLabelWidth" >
-            <el-select  v-model="formInline.isRechargeVip" placeholder="请选择是否购买vip">
-              <el-option label="是" value="1"></el-option>
-              <el-option label="否" value="2"></el-option>
-              <el-option label="全部" value=""></el-option>
-            </el-select>
-          </el-form-item>
+          <!--<el-form-item label="是否购买vip:" :label-width="formLabelWidth" >-->
+            <!--<el-select  v-model="formInline.isRechargeVip" placeholder="请选择是否购买vip">-->
+              <!--<el-option label="是" value="1"></el-option>-->
+              <!--<el-option label="否" value="2"></el-option>-->
+              <!--<el-option label="全部" value=""></el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
 
           <el-form-item>
             <el-button @click="search()" type="primary" plain>查询</el-button>
@@ -548,11 +548,13 @@
     },
     created() {
       this.menuId=this.$route.query.id;
-      if (this.$route.query.vip) {
-        this.formInline.isRechargeVip = this.$route.query.vip.toString();
-      }else {
-        this.formInline.isRechargeVip = '';
-      }
+
+      //从首页总会员跳转过来
+      // if (this.$route.query.vip) {
+      //   this.formInline.isRechargeVip = this.$route.query.vip.toString();
+      // }else {
+      //   this.formInline.isRechargeVip = '';
+      // }
       this.channelList();//调取渠道标识列表
       this.levelListD();//调取用户等级
       this.queryBtns();//权限
@@ -656,8 +658,7 @@
         }else if (this.types==1) {
           this.interface = '/api/userInfo/freezeUser'
         }
-
-        console.log(this.formSet)
+        // console.log(this.formSet)
         this.$refs[formSet].validate(valid => {
           if (valid) {
             this.$post(this.interface,this.formSet).then(res => {
@@ -745,8 +746,8 @@
           accountId:this.formInline.accountId,
           mobile:this.formInline.mobile,
           level:this.formInline.level,
-          channelCode:this.formInline.channelCode,
-          isRechargeVip:this.formInline.isRechargeVip
+          channelCode:this.formInline.channelCode
+          // isRechargeVip:this.formInline.isRechargeVip
         }
         this.$fetch('/api/userInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

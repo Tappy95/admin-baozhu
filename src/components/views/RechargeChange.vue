@@ -13,6 +13,17 @@
           <el-form-item  label="订单号:">
             <el-input style="width: 250px" v-model="formInline.outTradeNo" placeholder="请输入订单号" clearable></el-input>
           </el-form-item>
+          <el-form-item  label="渠道标识:">
+            <el-input  v-model="formInline.channelCode" placeholder="请输入渠道标识" clearable></el-input>
+          </el-form-item>
+          <el-form-item  label="状态:" >
+            <el-select v-model="formInline.state" placeholder="请选择状态">
+              <el-option label="待支付" value="1"></el-option>
+              <el-option label="已支付" value="2"></el-option>
+              <el-option label="已取消" value="3"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item :label-width="labelWidth" label="订单时间:">
             <el-date-picker
               v-model="selectTime"
@@ -24,14 +35,6 @@
               end-placeholder="结束日期"
               :picker-options="pickerOptions">
             </el-date-picker>
-          </el-form-item>
-          <el-form-item  label="状态:" >
-            <el-select v-model="formInline.state" placeholder="请选择状态">
-              <el-option label="待支付" value="1"></el-option>
-              <el-option label="已支付" value="2"></el-option>
-              <el-option label="已取消" value="3"></el-option>
-              <el-option label="全部" value=""></el-option>
-            </el-select>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="queryExport()" v-if="exportExle">导出表格</el-button>
@@ -49,7 +52,12 @@
             </el-table-column>
             <el-table-column min-width="120" fixed="left" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column min-width="120" fixed="left" prop="accountId" label="用户id">
+            <el-table-column min-width="120" fixed="left"  label="用户id">
+              <template slot-scope="scope">
+                <span :class="formInline.accountId?amountyellow:''">{{scope.row.accountId}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column min-width="120" fixed="left" prop="userChannelCode" label="渠道标识">
             </el-table-column>
             <el-table-column min-width="150" prop="purposeName" label="购买类型">
             </el-table-column>
@@ -72,7 +80,7 @@
             </el-table-column>
             <el-table-column min-width="150" sortable prop="balance" label="余额抵扣">
             </el-table-column>
-            <el-table-column prop="creatorTime" :formatter="dateFormat" width="170px" label="创建时间">
+            <el-table-column prop="creatorTime" sortable :formatter="dateFormat" width="170px" label="创建时间">
             </el-table-column>
             <el-table-column min-width="100" prop="state" label="状态">
               <template slot-scope="scope">
@@ -285,7 +293,8 @@
           outTradeNo:this.formInline.outTradeNo,
           state:this.formInline.state,
           startTime:this.formInline.startTime,
-          endTime:this.formInline.endTime
+          endTime:this.formInline.endTime,
+          channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/pay/page', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -364,13 +373,14 @@
         let accountId=this.formInline.accountId;
         let  outTradeNo=this.formInline.outTradeNo;
         let  state=this.formInline.state;
+        let  channelCode=this.formInline.channelCode;
         let  startTime=this.formInline.startTime;
         let  endTime=this.formInline.endTime;
         let token= getSession("token");
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
         let url = '/api/excl/payExcl';
-        let data = {url,accountId,state,startTime,endTime,outTradeNo,token,channel,relation};
+        let data = {url,accountId,state,channelCode,startTime,endTime,outTradeNo,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -378,6 +388,7 @@
           accountId=obj.accountId,
           outTradeNo=obj.outTradeNo,
           state=obj.state,
+          channelCode=obj.channelCode,
           startTime=obj.startTime,
           endTime=obj.endTime,
           token= obj.token,
@@ -398,6 +409,16 @@
         }else{
           if(state){
             http=http+'&state=' + state
+          }
+        }
+
+        if(http==url){
+          if(channelCode){
+            http=http+'?channelCode=' + channelCode
+          }
+        }else{
+          if(channelCode){
+            http=http+'&channelCode=' + channelCode
           }
         }
 
@@ -482,6 +503,10 @@
   }
   .amountyellow{
     color: #e6a23c;
+  }
+
+  .red{
+    color: #ff4d51;
   }
 
   amountred{
