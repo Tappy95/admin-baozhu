@@ -78,7 +78,7 @@
             <el-table-column prop="revenue" sortable min-width="150" label="收入">
               <template slot-scope="scope">
                 <span class="amountred">
-                  +{{scope.row.revenue | currency}}
+                  <span v-if="scope.row.revenue>0">+</span>{{scope.row.revenue | currency}}
                 </span>
               </template>
             </el-table-column>

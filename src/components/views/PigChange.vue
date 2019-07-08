@@ -73,10 +73,10 @@
             </el-table-column>
             <el-table-column prop="changedType" min-width="170px" label="类型">
             </el-table-column>
-            <el-table-column sortable min-width="150" label="收入">
+            <el-table-column sortable prop="revenue" min-width="150" label="收入">
               <template slot-scope="scope">
                 <span class="amountred">
-                  +{{scope.row.revenue | currency}}
+                   <span v-if="scope.row.revenue>0">+</span>{{scope.row.revenue | currency}}
                 </span>
               </template>
             </el-table-column>
@@ -87,7 +87,6 @@
                 </span>
               </template>
             </el-table-column>
-
             <el-table-column  prop="pigBalance" sortable min-width="150" label="金猪余额">
               <template  slot-scope="scope">
                 <span class="amountyellow">
@@ -95,7 +94,6 @@
                 </span>
               </template>
             </el-table-column>
-
             <!-- <el-table-column min-width="150" label="金币变动">
                <template slot-scope="scope">
                  <span :class="scope.row.flowType==1?'amountred':'amountgreen'">
@@ -105,10 +103,8 @@
              </el-table-column>-->
             <!--<el-table-column min-width="120" prop="roleType" label="身份标识">
             </el-table-column>-->
-
             <el-table-column prop="changedTime" sortable min-width="170px" label="变更时间">
             </el-table-column>
-
             <el-table-column prop="registerTime" sortable :formatter="dateFormat" min-width="170px" label="注册时间">
             </el-table-column>
             <el-table-column min-width="150" prop="remarks" label="备注">
