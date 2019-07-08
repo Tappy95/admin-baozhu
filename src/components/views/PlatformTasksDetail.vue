@@ -18,8 +18,8 @@
           </el-form-item>
           <el-form-item label="审核结果:">
            <el-select v-model="formInline.resultCode" placeholder="请选择审核结果">
-             <el-option label="通过" value="1"></el-option>
-               <el-option label="拒绝" value="2"></el-option>
+             <el-option label="通过" value="2"></el-option>
+               <el-option label="拒绝" value="1"></el-option>
                <el-option label="全部" value=""></el-option>
            </el-select>
           </el-form-item>
@@ -45,8 +45,8 @@
             </el-table-column>
             <el-table-column min-width="170"  label="审核结果">
               <template slot-scope="scope">
-                <span class="green" v-if="scope.row.resultCode==1">通过</span>
-                <span class="red" v-if="scope.row.resultCode==2">拒绝</span>
+                <span class="green" v-if="scope.row.resultCode==2">通过</span>
+                <span class="red" v-if="scope.row.resultCode==1">拒绝</span>
               </template>
             </el-table-column>
             <el-table-column prop="status" min-width="120" label="处理结果">
