@@ -462,6 +462,12 @@ const routes = [
         component: resolve => require(['../components/views/PlatformTasksDetail.vue'], resolve),
         meta: { title: '平台任务明细'}
       },
+      {
+        path: 'sms-config',
+        name: 'SmsConfig',
+        component: resolve => require(['../components/views/SmsConfig.vue'], resolve),
+        meta: { title: '短信配置'}
+      },
     ]
   }
 ]
