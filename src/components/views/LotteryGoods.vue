@@ -141,18 +141,24 @@
             </el-table-column>
             <el-table-column prop="status" width="120px"
                              label="状态">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.status==1">已启用</span>
+                <span class="red" v-if="scope.row.status==2">已停用</span>
+                <span class="zi" v-if="scope.row.status==3">已删除</span>
+              </template>
             </el-table-column>
-            <el-table-column width="200px" :formatter="dateFormat" prop="createTime"
+            <el-table-column width="170px" :formatter="dateFormat" prop="createTime"
                              label="创建时间">
             </el-table-column>
             <el-table-column fixed="right"
                              label="操作" v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain size="mini"
-                           @click="getInfo(scope.row.id,1)" v-if="del">详情</el-button>
+                           @click="getInfo(scope.row.id,1)">详情</el-button>
                 <el-button type="warning" plain size="mini"
-                           @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-                <el-button  type="success" plain @click="getInfo(scope.row.id,2)" size="mini">修改</el-button>
+                           @click="Delete(scope.row.id)" v-if="del && scope.row.status!=3"><span v-if="optionW='220px'"></span> 删除</el-button>
+                <el-button  type="success" v-if="upd && scope.row.status!=3" plain @click="getInfo(scope.row.id,2)" size="mini">
+                  <span v-if="optionW='220px'"></span> 修改</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -160,7 +166,7 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog width="600px" title="修改奖品"
+        <el-dialog width="700px" title="修改奖品"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <el-row>
@@ -240,7 +246,7 @@
                        @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog width="600px" title="奖品详情"
+        <el-dialog width="700px" title="奖品详情"
                    :visible.sync="dialogTableDetail">
           <el-form :model="formtwo">
             <el-row>
@@ -271,6 +277,7 @@
                   <el-select :disabled="true" v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
+                    <el-option label="已删除" :value="3"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -340,7 +347,7 @@
       return {
         uploadData:{},
         powerTrue:false,
-        optionW:'0px',
+        optionW:'75px',
         menuId:'',
         add:false,
         del:false,
@@ -417,7 +424,6 @@
               if(res.data[i].btnCode == 'upd') {
                 this.upd=true;
                 this.powerTrue =true;
-                this.optionW = '150px'
               }
               if(res.data[i].btnCode == 'del') {
                 this.del=true;
@@ -465,13 +471,6 @@
         }
         this.$fetch('/api/mLotteryGoods/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            for (let i = res.data.list.length - 1; i >= 0; i--) {
-              if(res.data.list[i].status ==1){
-                res.data.list[i].status ="已启用"
-              }else {
-                res.data.list[i].status ="已禁用"
-              }
-            }
             this.tableData = res.data.list
             this.totalCount = res.data.total
           } else {
@@ -586,6 +585,23 @@
   }
 </script>
 <style type="text/css">
+  .blue{
+    color: #409eff;
+  }
+  .green{
+    color: #13ce66;
+  }
+  .yellow{
+    color: #e6a23c;
+  }
+
+  .red{
+    color: #ff4d51;
+  }
+
+  .zi{
+    color: #d8b1ee;
+  }
   .bannermanage-wrap {
     width: 100%;
   }
