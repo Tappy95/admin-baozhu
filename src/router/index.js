@@ -468,6 +468,31 @@ const routes = [
         component: resolve => require(['../components/views/SmsConfig.vue'], resolve),
         meta: { title: '短信配置'}
       },
+      {
+        path: 'pcdd-callback',
+        name: 'PcddCallback',
+        component: resolve => require(['../components/views/PcddCallback.vue'], resolve),
+        meta: { title: 'pcdd回调'}
+      },
+      {
+        path: 'xianWan-callback',
+        name: 'XianWanCallback',
+        component: resolve => require(['../components/views/XianWanCallback.vue'], resolve),
+        meta: { title: '闲玩回调'}
+      },
+      {
+        path: 'youLe-callback',
+        name: 'YouLeCallback',
+        component: resolve => require(['../components/views/YouLeCallback.vue'], resolve),
+        meta: { title: '闲玩回调'}
+      },
+      {
+        path: 'jms-log',
+        name: 'JmsLog',
+        component: resolve => require(['../components/views/JmsLog.vue'], resolve),
+        meta: { title: 'jms日志'}
+      },
+
     ]
   }
 ]
