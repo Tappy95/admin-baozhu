@@ -33,7 +33,7 @@
             <el-input  v-model="formInline.bankNum" placeholder="请输入银行卡号" clearable></el-input>
           </el-form-item>
 
-          <el-form-item  :label-width="labelWidth" label="渠道标识:">
+          <el-form-item v-if="channelCode=='baozhu'" :label-width="labelWidth" label="渠道标识:">
             <el-input  v-model="formInline.channelCode" placeholder="请输入渠道标识" clearable></el-input>
           </el-form-item>
 
@@ -42,6 +42,10 @@
           </el-form-item>
           <el-form-item  label="至">
             <el-input type="number" style="width: 150px" min="0" v-model="formInline.coinMax" placeholder="最大金额" clearable></el-input>
+          </el-form-item>
+          <el-form-item :label-width="labelWidth"  label="第">
+            <el-input type="number" style="width: 120px" min="0" v-model="formInline.days" placeholder="请输入天数" clearable></el-input>
+            <span class="day-title">天提现</span><span class="day-tip">(距注册时间)</span>
           </el-form-item>
 
           <el-form-item :label-width="labelWidth" label="提现时间:">
@@ -122,6 +126,14 @@
             </el-table-column>
             <el-table-column prop="userName" min-width="150"  label="用户真实姓名">
             </el-table-column>
+            <el-table-column prop="registerTime" min-width="170"  label="注册时间">
+              <template slot-scope="scope">
+                <span v-if="scope.row.registerTime">
+                  {{scope.row.registerTime | dateForm}}
+                </span>
+                <span v-else> </span>
+              </template>
+            </el-table-column>
             <el-table-column  min-width="160px" label="用户提现时间">
               <template slot-scope="scope">
                 <span v-if="scope.row.creatorTime">
@@ -140,7 +152,7 @@
                 <span v-else> </span>
               </template>
             </el-table-column>
-            <el-table-column prop="remarks" min-width="180"  label="备注">
+            <el-table-column prop="remarks" min-width="220"  label="备注">
             </el-table-column>
             <el-table-column  min-width="120px" label="状态">
               <template slot-scope="scope">
@@ -341,7 +353,9 @@
         pageCount:0,
         subTotalPrice:'',
         totalPrice:'',
-        formInline: {},
+        formInline: {
+          channelCode:''
+        },
         tableData: [],
         message:{},
         pickerOptions: {
@@ -380,11 +394,13 @@
         exa:false,
         lock:false,
         count:'',
-        menuId:''
+        menuId:'',
+        channelCode:''
       }
     },
     created() {
       this.menuId=this.$route.query.id;
+      this.channelCode=getSession("channelCode");
       this.queryBtns();
       this.accountList();
     },
@@ -453,12 +469,13 @@
         let  coinMin=this.formInline.coinMin;
         let  coinMax=this.formInline.coinMax;
         let  channelCode=this.formInline.channelCode;
+        let  days=this.formInline.days;
 
         let token= getSession("token");
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
         let url = '/api/excl/exclCash';
-        let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,channelCode,token,channel,relation};
+        let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,channelCode,days,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -474,6 +491,7 @@
           examineEndTime=obj.examineEndTime,
           coinMin=obj.coinMin,
           coinMax=obj.coinMax,
+          days=obj.days,
           token= obj.token,
           channel=obj.channel,
           relation=obj.relation,
@@ -590,6 +608,16 @@
         }
 
         if(http==url){
+          if(days){
+            http=http+'?days=' + days
+          }
+        }else{
+          if(days){
+            http=http+'&days=' + days
+          }
+        }
+
+        if(http==url){
           http=http+'?token='+token+'&channel='+channel+'&relation='+relation
         }else{
           http=http+'&token='+token+'&channel='+channel+'&relation='+relation
@@ -658,7 +686,8 @@
           examineEndTime:this.formInline.examineEndTime,
           coinMin:this.formInline.coinMin,
           coinMax:this.formInline.coinMax,
-          channelCode:this.formInline.channelCode
+          channelCode:this.formInline.channelCode,
+          days:this.formInline.days
         }
         this.$fetch('/api/lUserExchangeCash/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -923,5 +952,16 @@
 
   .el-table th {
     background-color: #e6e6e6;
+  }
+
+  .day-tip{
+    font-size: 12px;
+    color: #ff4d51;
+  }
+
+  .day-title{
+    color: #606266;
+    margin-right: 5px;
+    font-size: 14px;
   }
 </style>
