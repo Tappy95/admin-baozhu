@@ -43,10 +43,10 @@
           <el-form-item  label="至">
             <el-input type="number" style="width: 150px" min="0" v-model="formInline.coinMax" placeholder="最大金额" clearable></el-input>
           </el-form-item>
-          <el-form-item :label-width="labelWidth"  label="第">
-            <el-input type="number" style="width: 120px" min="0" v-model="formInline.days" placeholder="请输入天数" clearable></el-input>
-            <span class="day-title">天提现</span><span class="day-tip">(相对注册时间而言 注册当天算第一天)</span>
-          </el-form-item>
+          <!--<el-form-item :label-width="labelWidth"  label="第">-->
+            <!--<el-input type="number" style="width: 120px" min="0" v-model="formInline.days" placeholder="请输入天数" clearable></el-input>-->
+            <!--<span class="day-title">天提现</span><span class="day-tip">(相对注册时间而言首次提现 注册当天算第一天)</span>-->
+          <!--</el-form-item>-->
           <el-form-item :label-width="labelWidth" label="提现时间:">
             <el-date-picker
               v-model="selectTime"
@@ -353,7 +353,8 @@
         subTotalPrice:'',
         totalPrice:'',
         formInline: {
-          channelCode:''
+          channelCode:'',
+          days:''
         },
         tableData: [],
         message:{},
