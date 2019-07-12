@@ -45,9 +45,8 @@
           </el-form-item>
           <el-form-item :label-width="labelWidth"  label="第">
             <el-input type="number" style="width: 120px" min="0" v-model="formInline.days" placeholder="请输入天数" clearable></el-input>
-            <span class="day-title">天提现</span><span class="day-tip">(距注册时间)</span>
+            <span class="day-title">天提现</span><span class="day-tip">(相对注册时间而言 注册当天算第一天)</span>
           </el-form-item>
-
           <el-form-item :label-width="labelWidth" label="提现时间:">
             <el-date-picker
               v-model="selectTime"

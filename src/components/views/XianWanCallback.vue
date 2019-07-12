@@ -83,7 +83,7 @@
 
       <div class="sun_sty" v-if="tableData.length>0">
         <div class="list">
-          <div class="item"><p>小计：</p></div>
+          <div class="item" style="width: 50px"><p>小计：</p></div>
           <div class="item su"><p> [ 成功数： {{smallSuccessCount | currency}} ]</p></div>
           <div class="item"><p> [ 平台奖励：{{smallPriceSum | currency}} ]</p></div>
           <div class="item"><p> [ 用户奖励：{{smallMoneySum | currency}} ]</p></div>

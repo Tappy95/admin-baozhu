@@ -85,7 +85,7 @@
         </template>
       </div>
 
-      <div class="sun_sty" v-if="tableData.length>0">
+      <div class="sun_sty xiao" v-if="tableData.length>0">
         <div class="list">
           <div class="item"><p>小计：</p></div>
           <div class="item su"><p> [ 成功数： {{smallSuccessCount | currency}} ]</p></div>
@@ -243,7 +243,7 @@
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item:nth-child(1){
+  .sun_sty.xiao .list .item:nth-child(1){
     width: 50px;
     min-width: 50px;
     max-width: 50px
