@@ -246,16 +246,14 @@
         </el-dialog>
       </div>
 
-
-
       <div class="sun_sty" v-if="tableData.length>0">
         <div class="list">
-          <div class="item"><p>小计<span>({{tableData.length}})</span>:</p></div>
+          <div class="item"><p>小计<span>({{tableData.length}})：</span></p></div>
           <div class="item"><p> [ 总游戏竞猜： {{subAmountSum | currency}} ]</p></p></div>
           <div class="item"><p>[ 总游戏中奖：{{subBonusSum | currency}} ]</p></div>
         </div>
         <div class="list">
-          <div class="item"><p>合计<span>({{totalCount}})</span>:</p></div>
+          <div class="item"><p>合计<span>({{totalCount}})：</span></p></div>
           <div class="item"><p> [ 总游戏竞猜： {{amountSum | currency}} ]</p></div>
           <div class="item"><p>[ 总游戏中奖：{{bonusSum | currency}} ]</p></p></div>
         </div>
