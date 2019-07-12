@@ -87,13 +87,13 @@
 
       <div class="sun_sty xiao" v-if="tableData.length>0">
         <div class="list">
-          <div class="item" style="width: 50px"><p>小计：</p></div>
+          <div class="item xiao"><p>小计：</p></div>
           <div class="item su"><p> [ 成功数： {{smallSuccessCount | currency}} ]</p></div>
           <div class="item"><p> [ 平台奖励：{{smallPriceSum | currency}} ]</p></div>
           <div class="item"><p> [ 用户奖励：{{smallMoneySum | currency}} ]</p></div>
         </div>
         <div class="list">
-          <div class="item" style="width: 50px"><p>合计：</p></div>
+          <div class="item xiao"><p>合计：</p></div>
           <div class="item su"><p> [ 成功数： {{successCount | currency}} ]</p></div>
           <div class="item"><p> [ 平台奖励：{{priceSum | currency}} ]</p></div>
           <div class="item"><p> [ 用户奖励：{{moneySum | currency}} ]</p></div>
@@ -243,11 +243,12 @@
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item:nth-child(1){
-    width: 150px;
-    min-width: 150px;
-    max-width: 150px
+  .sun_sty .list .item.xiao:nth-child(1){
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px
   }
+
   .sun_sty .list .item.su{
     float: left;
     min-width: 150px;
