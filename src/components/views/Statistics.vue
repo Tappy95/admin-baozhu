@@ -134,6 +134,24 @@
               </el-popover>
             </el-col>
 
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
+                title="连续登录人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                content="时间段内每天有登录过的人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/login_num.png"/>
+                  <div class="dec">
+                    <p>{{listData.lxdlCount}}<span>人</span></p>
+                    <p>连续登录人数</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
+
 
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
@@ -342,6 +360,63 @@
               </el-popover>
             </el-col>
 
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
+                title="参与快速赚人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                :tabindex=tabindex
+                content="时间段内在快速赚中至少完成一个任务（金币变动）的人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/person.png"/>
+                  <div class="dec">
+                    <p>{{listData.kszUserNum}}<span>人</span></p>
+                    <p>参与快速赚人数</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
+                title="参与签到赚人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                :tabindex=tabindex
+                content="时间段内在签到赚中至少完成一个任务（金币变动）的人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/person.png"/>
+                  <div class="dec">
+                    <p>{{listData.qdzUserNum}}<span>人</span></p>
+                    <p>参与签到赚人数</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
+                title="参与答题赚人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                :tabindex=tabindex
+                content="时间段内成功参加答题、出题（金币变动）的人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/person.png"/>
+                  <div class="dec">
+                    <p>{{listData.dtCount }}<span>人</span></p>
+                    <p>参与答题赚人数</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
           </el-row>
           <el-row style="padding-bottom: 30px">
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
