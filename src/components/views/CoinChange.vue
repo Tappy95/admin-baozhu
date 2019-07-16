@@ -13,6 +13,12 @@
               <el-form-item  label="电话号码:">
                 <el-input  v-model="formInline.mobile" placeholder="请输入电话号码" clearable></el-input>
               </el-form-item>
+              <el-form-item :label-width="labelWidth"  label="金币:">
+                <el-input type="number" min="0" v-model="formInline.coinMin" placeholder="请输入最小金额" clearable></el-input>
+              </el-form-item>
+              <el-form-item  label="至">
+                <el-input type="number" min="0" v-model="formInline.coinMax" placeholder="请输入最大金额" clearable></el-input>
+              </el-form-item>
               <el-form-item :label-width="labelWidth" label="兑换时间:">
                 <el-date-picker
                   v-model="selectTime"
@@ -53,6 +59,7 @@
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
+
           <el-form-item>
             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
@@ -429,12 +436,14 @@
           let  accountId=this.formInline.accountId;
           let  startTime=this.formInline.startTime;
           let  endTime=this.formInline.endTime;
+          let  coinMin=this.formInline.coinMin;
+          let  coinMax=this.formInline.coinMax;
           let token= getSession("token");
           let channel= getSession("channelCode")
           let relation= getSession("userRelation");
 
           let url = '/api/excl/exclCoinChange';
-          let data = {url,changedType,mobile,accountId,startTime,endTime,token,channel,relation};
+          let data = {url,changedType,mobile,accountId,startTime,endTime,coinMin,coinMax,token,channel,relation};
           this.doDownload(data);
       },
       doDownload(obj) {
@@ -445,6 +454,8 @@
           changedType=obj.changedType,
           startTime=obj.startTime,
           endTime=obj.endTime,
+          coinMin=obj.coinMin,
+          coinMax=obj.coinMax,
           token= obj.token,
           channel=obj.channel,
           relation=obj.relation
@@ -496,7 +507,24 @@
             http=http+'&endTime=' + endTime
           }
         }
-
+        if(http==url){
+          if(coinMin){
+            http=http+'?coinMin=' + coinMin
+          }
+        }else{
+          if(coinMin){
+            http=http+'&coinMin=' + coinMin
+          }
+        }
+        if(http==url){
+          if(coinMax){
+            http=http+'?coinMax=' + coinMax
+          }
+        }else{
+          if(coinMax){
+            http=http+'&coinMax=' + coinMax
+          }
+        }
         if(http==url){
           http=http+'?token='+token+'&channel='+channel+'&relation='+relation
         }else{
@@ -558,7 +586,9 @@
           accountId:this.formInline.accountId,
           /*flowType:this.formInline.flowType*/
           startTime:this.formInline.startTime,
-          endTime:this.formInline.endTime
+          endTime:this.formInline.endTime,
+          coinMin:this.formInline.coinMin,
+          coinMax:this.formInline.coinMax
         }
 
         this.$fetch('/api/lCoinChange/page', parameterData).then(res => {

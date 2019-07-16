@@ -588,8 +588,8 @@
           }
         }
         if(http==url){
-          if(coinMin){
-            http=http+'?coinMin=' + coinMin
+          if(coinMax){
+            http=http+'?coinMax=' + coinMax
           }
         }else{
           if(coinMax){
