@@ -143,7 +143,7 @@
                 trigger="hover"
                 content="时间段内每天有登录过的人数">
                 <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/login_num.png"/>
+                  <img src="../../assets/statistics/lxdenlu.png"/>
                   <div class="dec">
                     <p>{{listData.lxdlCount}}<span>人</span></p>
                     <p>连续登录人数</p>
@@ -371,7 +371,7 @@
                 :tabindex=tabindex
                 content="时间段内在快速赚中至少完成一个任务（金币变动）的人数">
                 <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/person.png"/>
+                  <img src="../../assets/statistics/fast_zhuan.png"/>
                   <div class="dec">
                     <p>{{listData.kszUserNum}}<span>人</span></p>
                     <p>参与快速赚人数</p>
@@ -390,7 +390,7 @@
                 :tabindex=tabindex
                 content="时间段内在签到赚中至少完成一个任务（金币变动）的人数">
                 <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/person.png"/>
+                  <img src="../../assets/statistics/qiandao.png"/>
                   <div class="dec">
                     <p>{{listData.qdzUserNum}}<span>人</span></p>
                     <p>参与签到赚人数</p>
@@ -409,7 +409,7 @@
                 :tabindex=tabindex
                 content="时间段内成功参加答题、出题（金币变动）的人数">
                 <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/person.png"/>
+                  <img src="../../assets/statistics/dati.png"/>
                   <div class="dec">
                     <p>{{listData.dtCount }}<span>人</span></p>
                     <p>参与答题赚人数</p>
