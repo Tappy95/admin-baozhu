@@ -407,7 +407,7 @@
                 :offset=off
                 trigger="hover"
                 :tabindex=tabindex
-                content="时间段内成功参加答题、出题（金币变动）的人数">
+                content="时间段内成功参加答题、出题的人数">
                 <div slot="reference" class="list grid-content">
                   <img src="../../assets/statistics/dati.png"/>
                   <div class="dec">
