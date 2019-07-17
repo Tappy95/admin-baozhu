@@ -22,33 +22,33 @@
       <div class="administratormanage-table">
         <template>
           <!--:class="showW?'u':'a'"-->
-          <el-table :class="showW?'a':'u'" :data="tableData" max-height="600">
+          <el-table :data="tableData" max-height="600">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="150" fixed="left" prop="jmsDestination" label="队列名称">
             </el-table-column>
             <el-table-column min-width="200"  prop="jmsException" label="异常原因">
             </el-table-column>
-            <el-table-column min-width="120"  label="状态">
+            <el-table-column width="120"  label="状态">
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.state==1">成功</span>
                 <span class="red" v-if="scope.row.state==2">失败</span>
               </template>
             </el-table-column>
-            <el-table-column width="170" prop="createrTime" label="创建时间">
+            <el-table-column width="170" prop="createrTime" label="创建时间" :formatter="dateFormat">
             </el-table-column>
-            <el-table-column fixed="right"
-                             label="操作" v-show="showW" :width="optionW" >
-              <template slot-scope="scope">
-                <el-button  type="success" v-if="rep &&  scope.row.state==2" plain @click="repTap(scope.row.id)" size="mini">
-                  <span v-if="showW=true"></span>
-                  <span v-else="showW=false"></span>
-                  <span v-if="optionW='75'"></span>
-                  <span v-else="optionW='1px'"></span>
-                  重发
-                </el-button>
-              </template>
-            </el-table-column>
+            <!--<el-table-column fixed="right"-->
+                             <!--label="操作" v-show="showW" :width="optionW" >-->
+              <!--<template slot-scope="scope">-->
+                <!--<el-button  type="success" v-if="rep &&  scope.row.state==2" plain @click="repTap(scope.row.id)" size="mini">-->
+                  <!--<span v-if="showW=true"></span>-->
+                  <!--<span v-else="showW=false"></span>-->
+                  <!--<span v-if="optionW='75'"></span>-->
+                  <!--<span v-else="optionW='1px'"></span>-->
+                  <!--重发-->
+                <!--</el-button>-->
+              <!--</template>-->
+            <!--</el-table-column>-->
           </el-table>
         </template>
       </div>

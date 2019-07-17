@@ -17,6 +17,11 @@
                       v-model="formInline.adname"
                       clearable></el-input>
           </el-form-item>
+          <el-form-item label="订单号:" >
+            <el-input placeholder="请输入订单号"
+                      v-model="formInline.ordernum"
+                      clearable></el-input>
+          </el-form-item>
           <el-form-item label="状态:" >
             <el-select v-model="formInline.status " placeholder="请选择状态">
               <el-option label="失败" value="1"></el-option>
@@ -70,7 +75,7 @@
             <el-table-column fixed="right"
                              label="操作" v-show="showW" :width="optionW" >
               <template slot-scope="scope">
-                <el-button  type="success" v-if="rep &&  scope.row.status==1" plain @click="getInfo(scope.row.id,2)" size="mini">
+                <el-button  type="success" v-if="rep &&  scope.row.status==1" plain @click="repTap(scope.row.ordernum)" size="mini">
                   <span v-if="showW=true"></span>
                   <span v-else="showW=false"></span>
                   <span v-if="optionW='75'"></span>
@@ -82,7 +87,6 @@
           </el-table>
         </template>
       </div>
-
       <div class="sun_sty xiao" v-if="tableData.length>0">
         <div class="list">
           <div class="item xiao"><p>小计：</p></div>
@@ -148,6 +152,43 @@
       indexMethod(index) {
         return index * 1 + 1
       },
+      //重发
+      repTap(id) {
+        this.$confirm('此操作将重发消息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            let parameterData = {
+              ordernum: id
+            }
+              this.$fetch('/api/PCDDCallback/reSend', parameterData).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({
+                  type: 'success',
+                  message: '重发成功！'
+                })
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message
+                })
+              }
+
+            this.accountList()
+            })
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消重发操作'
+            })
+          })
+      },
+
+
       dateFormat(row, column) {
         var date = row[column.property]
         if (date == undefined) {
@@ -161,7 +202,8 @@
           pageSize: this.pageSize,
           accountId:this.formInline.accountId,
           adname:this.formInline.adname,
-          status:this.formInline.status
+          status:this.formInline.status,
+          ordernum:this.formInline.ordernum
         }
         this.$fetch('/api/PCDDCallback/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
