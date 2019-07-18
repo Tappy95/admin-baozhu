@@ -853,15 +853,15 @@
   .bannerAvatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-   height: 178px;
-    line-height: 178px;
+    width: 148px;
+   height: 148px;
+    line-height: 148px;
     text-align: center;
   }
 
   .img_loadBox{
-    width: 178px;
-    height: 178px;
+    width: 148px;
+    height: 148px;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -870,8 +870,8 @@
   }
 
   .avatar {
-    max-width: 178px;
-    max-height: 178px;
+    max-width: 148px;
+    max-height: 148px;
     display: block;
   }
   .form {
@@ -882,7 +882,7 @@
     line-height:0;
   }
   .bannerAvatar-uploader-icon{
-    line-height: 178px !important;
+    line-height: 148px !important;
   }
 
   .demo-table-expand {

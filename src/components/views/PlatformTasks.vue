@@ -596,14 +596,14 @@
   .bannerAvatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 148px;
+    height: 148px;
     display: block;
   }
 
@@ -611,13 +611,13 @@
     line-height:0;
   }
   .bannerAvatar-uploader-icon{
-    line-height: 178px !important;
+    line-height: 148px !important;
   }
 
   .box_img{
     height: auto;
     width: 560px;
-    min-height: 178px;
+    min-height: 148px;
     border: 1px solid #dcdfe6;
     float: left;
     background-color: #f5f7fa;

@@ -636,7 +636,7 @@
 
   .box_img{
     width: 560px;
-    height: 178px;
+    height: 148px;
     padding: 10px;
     border: 1px solid #dcdfe6;
     float: left;
@@ -648,14 +648,14 @@
   }
 
   .box_img .box_min{
-    max-width:178px;
-    max-height:178px;
+    max-width:148px;
+    max-height:148px;
     float: left;
     margin-right: 10px;
   }
   .box_img img{
-    max-width:178px;
-    max-height:178px;
+    max-width:148px;
+    max-height:148px;
   }
   .administratormanage-wrap {
     width: 100%;
@@ -696,14 +696,14 @@
   .bannerAvatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
     text-align: center;
   }
   .avatar {
-    max-width: 178px;
-    max-height: 178px;
+    max-width: 148px;
+    max-height: 148px;
     display: block;
     cursor: pointer;
   }

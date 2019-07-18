@@ -48,7 +48,7 @@
             </el-table-column>
             <el-table-column width="170" prop="rangeMax" label="随机范围(max)">
             </el-table-column>
-            <el-table-column  width="170" prop="upNum" label="最小值随机值小于">
+            <el-table-column  width="170" prop="upNum" label="真实用户上榜数">
             </el-table-column>
             <el-table-column  prop="createTime" width="170" :formatter="dateFormat" label="创建时间">
             </el-table-column>
@@ -100,7 +100,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="最小值随机值小于:"  prop="upNum" :label-width="formLabelWidth">
+                <el-form-item label="真实用户上榜数:"  prop="upNum" :label-width="formLabelWidth">
                   <el-input :style="styleObject" v-model.number="form.upNum" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
@@ -150,7 +150,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="最小值随机值小于:"  prop="upNum" :label-width="formLabelWidth">
+                <el-form-item label="真实用户上榜数:"  prop="upNum" :label-width="formLabelWidth">
                   <el-input :style="styleObject" v-model.number="formtwo.upNum" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
@@ -205,7 +205,7 @@
                   </div>
                 </div>
                 <div class="body_list">
-                  <div class="title">最小值随机值小于:</div>
+                  <div class="title">真实用户上榜数:</div>
                   <div class="name">{{formtwoInfo.upNum}}</div>
                 </div>
                 <div class="body_list">
@@ -282,7 +282,7 @@
             { type: 'number', message: '请输入数字值'}
           ],
           upNum: [
-            { required: true, message: '最小值随机值小于', trigger: 'blur' },
+            { required: true, message: '真实用户上榜数', trigger: 'blur' },
             { type: 'number', message: '请输入数字值'}
           ],
         },

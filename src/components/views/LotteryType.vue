@@ -698,7 +698,7 @@
     line-height:0;
   }
   .bannerAvatar-uploader-icon{
-    line-height: 178px !important;
+    line-height: 148px !important;
   }
 
   .demo-table-expand {

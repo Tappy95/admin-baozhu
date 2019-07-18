@@ -1298,6 +1298,16 @@
     line-height: 148px !important;
   }
 
+  .bannerAvatar-uploader .el-upload{
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+  }
+  .el-upload el-upload--text{
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+  }
 
   .yichu{
     width: 100%;

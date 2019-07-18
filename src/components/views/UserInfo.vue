@@ -925,8 +925,8 @@
     line-height: 25px;
   }
   .informationImg{
-    width: 178px;
-    height: 178px;
+    width: 148px;
+    height: 148px;
   }
   .information-three div{
     display: inline-grid;

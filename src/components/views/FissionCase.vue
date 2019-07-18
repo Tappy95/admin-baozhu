@@ -612,7 +612,7 @@
               <el-col :span="24">
                 <el-form-item  label="奖励图:"
                                :label-width="formLabelWidth">
-                  <div class="box_img_w" style="min-height: 178px">
+                  <div class="box_img_w" style="min-height: 148px">
                     <div  @click="clickImg(item.url)" v-if="item.url" class="box_min" v-for="(item,index) in fileList1" :key="index" >
                       <img :src="item.url" class="avatar">
                     </div>
@@ -622,7 +622,7 @@
               <el-col :span="24">
                 <el-form-item  label="普通用户奖励图:"
                                :label-width="formLabelWidth">
-                  <div class="box_img_w" style="min-height: 178px">
+                  <div class="box_img_w" style="min-height: 148px">
                     <div @click="clickImg(item.url)" v-if="item.url" class="box_min"  v-for="(item,index) in fileList2" :key="index" >
                       <img :src="item.url" class="avatar">
                     </div>
@@ -632,7 +632,7 @@
               <el-col :span="24">
                 <el-form-item  label="团队长奖励图:"
                                :label-width="formLabelWidth">
-                  <div class="box_img_w" style="min-height: 178px">
+                  <div class="box_img_w" style="min-height: 148px">
                     <div @click="clickImg(item.url)" v-if="item.url" class="box_min"  v-for="(item,index) in fileList3" :key="index" >
                       <img :src="item.url" class="avatar">
                     </div>
@@ -1143,13 +1143,13 @@
     line-height:0;
   }
   .bannerAvatar-uploader-icon{
-    line-height: 178px !important;
+    line-height: 148px !important;
   }
 
   .box_img_w{
     height: auto;
      width: 560px;
-     min-height: 178px;
+     min-height: 148px;
     float: left;
     position: relative;
     display: flex;
