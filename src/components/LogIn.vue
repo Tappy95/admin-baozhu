@@ -4,27 +4,34 @@
 			<div class="login-header">
 				<h2>宝猪乐园后台管理系统</h2>
 			</div>
-			<div class="login-content">
-				<h3>登录</h3>
+			<div class="login-content ku">
+				<!--<h3 class="login-dl">后台登录</h3>-->
 				<el-form :model="ruleForm"
 				    :rules="rules"
 				    ref="ruleForm"
 				    class="demo-ruleForm" @keyup.enter.native="submitForm('ruleForm')">
 					<el-form-item prop="mobile">
-						<i><img src="../assets/user.png"></i>
-						<el-input v-model="ruleForm.mobile"
+            <span class="i-span">用户名:</span>
+            <!--<i class="fa fa-user-circle-o" aria-hidden="true"></i>-->
+						<!--<i><img src="../assets/user.png"></i>-->
+						<el-input  v-model="ruleForm.mobile"
 						    placeholder="请输入手机号码"
-						    style="width:70%;margin-left: 10px;"></el-input>
+						    style="width:70%;margin-left: 10px;">
+              <i slot="prefix" class="el-input__icon fa fa-user-o"></i>
+            </el-input>
 					</el-form-item>
-					<el-form-item prop="password">
-						<i><img src="../assets/code.png"></i>
+					<el-form-item prop="password" >
+            <span class="i-span">密&nbsp; &nbsp; 码:</span>
+						<!--<i><img src="../assets/code.png"></i>-->
 						<el-input type="password" v-model="ruleForm.password"
 						    placeholder="请输入密码"
-						    style="width:70%;margin-left: 10px;" ></el-input>
+						    style="width:70%;margin-left: 10px;" >
+              <i slot="prefix" class="el-input__icon fa fa-key"></i>
+            </el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary"
-						    @click="submitForm('ruleForm')">登录</el-button>
+            <el-button class="login-btn"  @click="submitForm('ruleForm')">登&nbsp;录
+            </el-button>
 					</el-form-item>
 				</el-form>
 			</div>
@@ -135,6 +142,18 @@ export default {
 }
 </script>
 <style type="text/css">
+
+  .login-dl{
+    color: #222b38;
+  }
+  .login_i{
+    padding-left:5px;
+  }
+  .i-span{
+    font-size: 14px;
+    color: #21b384;
+  }
+
 .login-main {
   width: 100%;
   height: 100%;
@@ -151,23 +170,53 @@ export default {
   width: 260px;
   margin: 0 auto;
   position: relative;
-  top: 220px;
+  top: 180px;
   padding: 0 100px;
 }
 
-.login-header h2 {
+  .login-btn {
+    width: 150px;
+    height: 40px;
+    color: #fff;
+    border: 1px solid transparent;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 0 auto;
+    line-height: 40px;
+    padding: 0;
+    transition: all 0.35s;
+    outline: none;
+    background: linear-gradient(to right, #84d9d2, #07cdae);
+  }
+
+  .login-btn:hover{
+    background-color:#84d9d2;
+    color: #fff;
+    border: 1px solid transparent;
+    border-bottom:0px solid #1fa67a;
+    outline: none;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  }
+  .login-header h2 {
   color: #fff;
-}
+  }
+
+  .ku .el-form-item__error{
+    left: 100px;
+  }
 .login-content {
   background-color: #fff;
   position: fixed;
   left: 0;
   right: 0;
   top: 320px;
-  width: 500px;
+  width: 450px;
   border: 2px solid #e6e6e6;
   margin: 0 auto;
-  padding: 20px;
+  padding: 70px 20px 30px 20px;
 }
 .login-content img {
   width: 35px;

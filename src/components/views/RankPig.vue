@@ -252,6 +252,8 @@
   .administratormanage-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
+    overflow: auto;
+    /*border: 1px solid violet;*/
   }
 
   .el-table th {
@@ -261,4 +263,7 @@
   .list_img{
     cursor: pointer;
   }
+
+
+
 </style>

@@ -4,14 +4,44 @@
 			<div class="index-header">
 				<h2>宝猪乐园后台管理系统</h2>
 				<div class="login-message">
-					<span>{{role}}  {{realName}}</span>
-					<span class="cutline">|</span>
-					<div class="exit"
-					  @click="editPw"> 修改密码</div>
+					<span class="dl_name">{{role}}  {{realName}} </span>
+					<!--<span class="cutline">|</span>-->
+					<!--<div class="exit"-->
+					  <!--@click="editPw"> 修改密码</div>-->
+          <el-popover
+            placement="bottom-end"
+            width="500"
+            trigger="click">
+            <div class="box_passWord">
+              <p class="box_passWord_title">修改密码</p>
+              <el-form :model="form" :rules="rules" ref="form">
+                <el-form-item label="旧密码:" :label-width="formLabelWidth" prop="oldPassword">
+                  <el-input style="width: 240px" type="password" show-password v-model="form.oldPassword" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="新密码:" prop="password" :label-width="formLabelWidth">
+                  <el-input style="width: 240px" show-password type="password"  v-model="form.password" auto-complete="off" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="确认新密码:" prop="mitPassword" :label-width="formLabelWidth">
+                  <el-input style="width: 240px" type="password"  show-password v-model="form.mitPassword" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-form>
+              <div class="pass_btn">
+                <el-button type="primary" size="small" plain @click="addBtn('form')">确 定</el-button>
+              </div>
+            </div>
+            <div class="exit" slot="reference">
+              <i class="power_exit key_i fa fa-key" aria-hidden="true"></i>
+            </div>
+            <!--@click="editPw"-->
+          </el-popover>
+          <!--<span class="cutline">|</span>-->
+          <!--<div class="exit"-->
+               <!--@click="quit"> 退出</div>-->
+          <div class="exit" @click="quit">
+            <i class="power_exit exit_i fa fa-power-off" aria-hidden="true"></i>
+          </div>
 
-          <span class="cutline">|</span>
-          <div class="exit"
-               @click="quit"> 退出</div>
 				</div>
 			</div>
 
@@ -189,6 +219,42 @@ export default {
 }
 </script>
 <style type="text/css">
+ .dl_name{
+   margin-right: 5px;
+ }
+
+.pass_btn{
+  float: right;
+  margin: 20px;
+}
+  .power_exit{
+    font-size: 20px;
+    /*margin-top: 2px;*/
+    margin: 2px 10px auto 10px;
+  }
+
+  .box_passWord_title{
+    font-size: 14px;
+    color: #31caab;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .user_i{
+    /*color: rgba(231, 76, 60, 0.7);*/
+    color:#fff;
+  }
+
+  .key_i{
+    /*color: rgba(252, 130, 41, 0.7);*/
+    color:#fff;
+  }
+
+  .exit_i{
+    color:#fff;
+    /*color: #84d9d2;*/
+  }
+
 .router-show {
   margin-left: 230px;
   padding-top: 60px;
@@ -219,7 +285,7 @@ export default {
 }
 .login-message .exit {
   cursor: pointer;
-  padding: 0 0 10px 10px;
+  /*padding: 0 0 10px 10px;*/
 }
 .index-header h2 {
   /*width: 500px;*/
@@ -251,8 +317,8 @@ export default {
   width: 100%;
 }
 .index-side::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  width: 6px;
+  height: 6px;
   background-color: #f5f5f5;
 }
 .index-side::-webkit-scrollbar-thumb {
@@ -275,4 +341,5 @@ export default {
 .index-side::-webkit-scrollbar-track:hover {
   background-color: rgba(0, 0, 0, 0.01);
 }
+
 </style>

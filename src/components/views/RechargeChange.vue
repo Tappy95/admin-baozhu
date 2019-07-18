@@ -28,7 +28,20 @@
             <el-date-picker
               v-model="selectTime"
               type="datetimerange"
-              align="right"
+              align="left"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+
+          <el-form-item :label-width="labelWidth" label="支付时间:">
+            <el-date-picker
+              v-model="selectTimePay"
+              type="datetimerange"
+              align="left"
               unlink-panels
               range-separator="至"
               start-placeholder="开始日期"
@@ -79,6 +92,12 @@
               </template>
             </el-table-column>
             <el-table-column min-width="150" sortable prop="balance" label="余额抵扣">
+            </el-table-column>
+            <el-table-column prop="payTime" sortable :formatter="dateFormat" width="170px" label="支付时间">
+                <template slot-scope="scope">
+                <span v-if="scope.row.payTime>0">{{scope.row.payTime | dateFont}}</span>
+                <span v-else>-</span>
+             </template>
             </el-table-column>
             <el-table-column prop="creatorTime" sortable :formatter="dateFormat" width="170px" label="创建时间">
             </el-table-column>
@@ -215,6 +234,7 @@
         message:{},
         labelWidth:'80px',
         selectTime:'',
+        selectTimePay:'',
         subTotalPrice:'',
         totalPrice:'',
         pickerOptions: {
@@ -258,6 +278,9 @@
         var dataval = parseInt(num);
         return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
+      dateFont:function (time) {
+        return formatDate(new Date(time), 'yyyy-MM-dd hh:mm:sss')
+      }
     },
     methods: {
       indexMethod(index) {
@@ -294,6 +317,8 @@
           state:this.formInline.state,
           startTime:this.formInline.startTime,
           endTime:this.formInline.endTime,
+          startPayTime:this.formInline.startPayTime,
+          endPayTime:this.formInline.endPayTime,
           channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/pay/page', parameterData).then(res => {
@@ -346,6 +371,18 @@
         }else {
           this.formInline.endTime ='';
         }
+
+        if (this.selectTimePay && this.selectTimePay[0]) {
+          this.formInline.startPayTime = this.selectTimePay[0].getTime();
+        }else {
+          this.formInline.startPayTime ='';
+        }
+        if (this.selectTimePay && this.selectTimePay[1]) {
+          this.formInline.endPayTime = this.selectTimePay[1].getTime();
+        }else {
+          this.formInline.endPayTime ='';
+        }
+
         this.currentPage = 1;
         this.pageSize = 10;
         this.accountList();
@@ -370,17 +407,31 @@
           this.formInline.endTime =''
         }
 
+        if (this.selectTimePay && this.selectTimePay[0]) {
+          this.formInline.startPayTime = this.selectTimePay[0].getTime();
+        }else {
+          this.formInline.startPayTime ='';
+        }
+        if (this.selectTimePay && this.selectTimePay[1]) {
+          this.formInline.endPayTime = this.selectTimePay[1].getTime();
+        }else {
+          this.formInline.endPayTime ='';
+        }
+
+
         let accountId=this.formInline.accountId;
         let  outTradeNo=this.formInline.outTradeNo;
         let  state=this.formInline.state;
         let  channelCode=this.formInline.channelCode;
         let  startTime=this.formInline.startTime;
         let  endTime=this.formInline.endTime;
+        let  startPayTime=this.formInline.startPayTime;
+        let  endPayTime=this.formInline.endPayTime;
         let token= getSession("token");
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
         let url = '/api/excl/payExcl';
-        let data = {url,accountId,state,channelCode,startTime,endTime,outTradeNo,token,channel,relation};
+        let data = {url,accountId,state,channelCode,startTime,endTime,startPayTime,endPayTime,outTradeNo,token,channel,relation};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -391,6 +442,8 @@
           channelCode=obj.channelCode,
           startTime=obj.startTime,
           endTime=obj.endTime,
+          startPayTime=obj.startPayTime,
+          endPayTime=obj.endPayTime,
           token= obj.token,
           channel=obj.channel,
           relation=obj.relation
@@ -448,6 +501,25 @@
         }else{
           if(endTime){
             http=http+'&endTime=' + endTime
+          }
+        }
+
+        if(http==url){
+          if(startPayTime){
+            http=http+'?startPayTime=' + startPayTime
+          }
+        }else{
+          if(startPayTime){
+            http=http+'&startPayTime=' + startPayTime
+          }
+        }
+        if(http==url){
+          if(endPayTime){
+            http=http+'?endPayTime=' + endPayTime
+          }
+        }else{
+          if(endPayTime){
+            http=http+'&endPayTime=' + endPayTime
           }
         }
 

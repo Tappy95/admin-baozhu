@@ -121,9 +121,17 @@
             </el-table-column>
             <el-table-column prop="bankName" min-width="120"  label="银行名称">
             </el-table-column>
-            <el-table-column prop="bankNum" min-width="150px" label="银行卡号">
+            <el-table-column  min-width="150px" label="银行卡号">
+              <template slot-scope="scope">
+                <span v-if="scope.row.bankAccount">{{scope.row.bankAccount}}</span>
+                <span v-else>{{scope.row.bankNum}}</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="userName" min-width="150"  label="用户真实姓名">
+            <el-table-column min-width="150"  label="用户真实姓名">
+              <template slot-scope="scope">
+                <span v-if="scope.row.realName">{{scope.row.realName}}</span>
+                <span v-else>{{scope.row.userName}}</span>
+              </template>
             </el-table-column>
             <el-table-column prop="registerTime" min-width="170"  label="注册时间">
               <template slot-scope="scope">

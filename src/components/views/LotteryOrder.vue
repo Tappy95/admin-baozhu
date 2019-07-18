@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="用户id：">
+          <el-form-item label="用户id:">
             <el-input v-model="formInline.accountId" placeholder="请输入账户id" clearable></el-input>
           </el-form-item>
           <el-form-item :label-width="labelWidth"  label="礼品金额:">
@@ -781,7 +781,6 @@
         this.currentPage = val
         this.accountList()
       },
-
     },
   }
 </script>
