@@ -612,37 +612,29 @@
               <el-col :span="24">
                 <el-form-item  label="奖励图:"
                                :label-width="formLabelWidth">
-                  <div class="box_img" style="min-height: 178px">
-                    <div class="box_min" v-for="(item,index) in fileList1" :key="index" >
-                      <img @click="clickImg(item.url)" v-if="item.url"
-                           :src="item.url"
-                           class="avatar">
+                  <div class="box_img_w" style="min-height: 178px">
+                    <div  @click="clickImg(item.url)" v-if="item.url" class="box_min" v-for="(item,index) in fileList1" :key="index" >
+                      <img :src="item.url" class="avatar">
                     </div>
-
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item  label="普通用户奖励图:"
                                :label-width="formLabelWidth">
-                  <div class="box_img" style="min-height: 178px">
-                    <div class="box_min"  v-for="(item,index) in fileList2" :key="index" >
-                      <img @click="clickImg(item.url)" v-if="item.url"
-                        :src="item.url"
-                        class="avatar">
+                  <div class="box_img_w" style="min-height: 178px">
+                    <div @click="clickImg(item.url)" v-if="item.url" class="box_min"  v-for="(item,index) in fileList2" :key="index" >
+                      <img :src="item.url" class="avatar">
                     </div>
-
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item  label="团队长奖励图:"
                                :label-width="formLabelWidth">
-                  <div class="box_img" style="min-height: 178px">
-                    <div class="box_min"  v-for="(item,index) in fileList3" :key="index" >
-                      <img @click="clickImg(item.url)" v-if="item.url"
-                        :src="item.url"
-                        class="avatar">
+                  <div class="box_img_w" style="min-height: 178px">
+                    <div @click="clickImg(item.url)" v-if="item.url" class="box_min"  v-for="(item,index) in fileList3" :key="index" >
+                      <img :src="item.url" class="avatar">
                     </div>
                   </div>
                 </el-form-item>
@@ -831,16 +823,22 @@
       },
 
       handlePictureCardPreview1(file,fileList) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+        // this.dialogImageUrl = file.url;
+        // this.dialogVisible = true;
+        this.showImg = true;
+        this.imgSrc = file.url;
       },
       handlePictureCardPreview2(file,fileList) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+        // this.dialogImageUrl = file.url;
+        // this.dialogVisible = true;
+        this.showImg = true;
+        this.imgSrc = file.url;
       },
       handlePictureCardPreview3(file,fileList) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+        // this.dialogImageUrl = file.url;
+        // this.dialogVisible = true;
+        this.showImg = true;
+        this.imgSrc = file.url;
       },
       queryBtns(){
         let parameterData = {
@@ -1148,18 +1146,20 @@
     line-height: 178px !important;
   }
 
-  .box_img{
+  .box_img_w{
     height: auto;
      width: 560px;
      min-height: 178px;
-    border: 1px solid #dcdfe6;
     float: left;
-    background-color: #f5f7fa;
-    display: block;
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
   }
 
-  .box_img .box_min{
+  .box_img_w .box_min{
     width: 148px;
     height: 148px;
     margin-bottom: 10px;
@@ -1168,14 +1168,16 @@
     align-content: space-between;
     align-items: center;
     border: 1px dashed #ccc;
+    margin: 5px;
+    cursor: pointer;
     /*position: relative;*/
   }
 
-  .box_img img{
+  .box_img_w img{
     max-width: 148px;
     max-height: 148px;
   }
-  .box_img .box_min img.avatar{
+  .box_img_w .box_min img.avatar{
     position: relative;
     top: 0;
     left: 0;
@@ -1186,6 +1188,7 @@
     height: auto;
     max-width: 148px;
     max-height: 148px;
+    /*padding: 0;*/
   }
 
 </style>
