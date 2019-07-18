@@ -17,26 +17,74 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column fixed="left" type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="抽奖编号：">
+                    <span>{{ props.row.id }}</span>
+                  </el-form-item>
+                  <el-form-item label="每天次数限制：">
+                    <span>{{ props.row.timesOneday }}</span>
+                  </el-form-item>
+                  <el-form-item label="每次所需金猪：">
+                    <span>{{ props.row.expendPigCoin }}</span>
+                  </el-form-item>
+                  <el-form-item label="适用人群：">
+                    <span v-if="props.row.applyCrowd==1">全部</span>
+                    <span v-else>已停用</span>
+                  </el-form-item>
+                  <el-form-item label="抽奖分类：">
+                    <span class="green" v-if="props.row.lotterySort==1">兑换</span>
+                    <span class="blue" v-if="props.row.lotterySort==2">抽奖</span>
+                  </el-form-item>
+                  <el-form-item label="类型状态：">
+                    <span class="green" v-if="props.row.status==1">已启用</span>
+                    <span class="blue" v-if="props.row.status==2">已停用</span>
+                  </el-form-item>
+                  <el-form-item label="创建时间：">
+                    <span>{{ props.row.createTime | dateFont}}</span>
+                  </el-form-item>
+                  <el-form-item label="类型名称：" style="width: 100%">
+                    <span>{{ props.row.typeName }}</span>
+                  </el-form-item>
+                  <el-form-item label="类型描述："style="width:60%;">
+                    <span>{{ props.row.remark }}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
             </el-table-column>
-
-            <el-table-column width="200px" prop="typeName" label="类型名称">
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-
+            <el-table-column fixed="left" width="200px" prop="typeName" label="类型名称">
+            </el-table-column>
             <el-table-column width="150px" prop="id" label="抽奖编号">
             </el-table-column>
-
             <el-table-column width="120px" prop="timesOneday" label="每天次数限制">
             </el-table-column>
             <el-table-column width="120px" prop="expendPigCoin" label="每次所需金猪">
             </el-table-column>
             <el-table-column width="300px" prop="remark" label="类型描述">
+              <template slot-scope="scope">
+                <span class="yichu">{{scope.row.remark}}</span>
+              </template>
             </el-table-column>
             <el-table-column width="200px" prop="applyCrowd" label="适用人群">
+              <template slot-scope="scope">
+                <span v-if="scope.row.applyCrowd==1">全部</span>
+                <span v-else>已停用</span>
+              </template>
             </el-table-column>
             <el-table-column width="120px" prop="lotterySort" label="抽奖分类">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.lotterySort==1">兑换</span>
+                <span class="blue" v-if="scope.row.lotterySort==2">抽奖</span>
+              </template>
             </el-table-column>
             <el-table-column width="120px" prop="status" label="类型状态">
+              <template slot-scope="scope">
+                <span class="green"  v-if="scope.row.status==1">已启用</span>
+                <span class="red"  v-if="scope.row.status==2">已停用</span>
+              </template>
             </el-table-column>
             <el-table-column width="200px" prop="createTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
@@ -49,65 +97,65 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加抽奖类型" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加抽奖类型" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="24">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-input v-model="form.typeName" auto-complete="off"  clearable>
+                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.lotterySort" placeholder="">
+                    <el-option label="兑换" value="1"></el-option>
+                    <el-option label="抽奖" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" v-if="form.lotterySort==2">
+                <el-form-item  label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">
+                  <el-input :style="styleObject"  v-model.number="form.expendPigCoin" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" v-if="form.lotterySort==2">
+                <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
+                  <el-input :style="styleObject"  v-model.number="form.timesOneday" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-if="form.lotterySort==2">
+                <el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">
+                  <el-input :style="styleObject"  v-model.number="form.dayNum" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
-                  <el-input  type="number" min="0" v-model="form.timesOneday" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">
-                  <el-input  type="number" min="0" v-model="form.dayNum" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">
-                  <el-input type="number" min="0" v-model="form.expendPigCoin" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
                 <el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">
-                  <el-select v-model="form.applyCrowd" placeholder="">
+                  <el-select :style="styleObject" v-model="form.applyCrowd" placeholder="">
                     <el-option label="全部" value="1"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
-                  <el-select v-model="form.lotterySort" placeholder="">
-                    <el-option label="实物" :value="1"></el-option>
-                    <el-option label="虚拟" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
 
               <el-col :span="12">
                 <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
-                  <el-select v-model="form.status" placeholder="">
+                  <el-select :style="styleObject" v-model="form.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+              <el-col :span="22">
+                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                  <el-input  v-model="form.typeName" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
-
+              <el-col :span="22">
+                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -115,67 +163,125 @@
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改抽奖类型" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="修改抽奖类型" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="24">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-input v-model="formtwo.typeName" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
-                  <el-input  type="number" min="0" v-model="formtwo.timesOneday" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">
-                  <el-input  type="number" min="0" v-model="formtwo.dayNum" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">
-                  <el-input type="number" min="0" v-model="formtwo.expendPigCoin" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.applyCrowd" placeholder="">
-                    <el-option label="全部" :value="1"></el-option>
+                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.lotterySort" placeholder="">
+                    <el-option label="兑换" :value="1"></el-option>
+                    <el-option label="抽奖" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" v-if="formtwo.lotterySort==2">
+                <el-form-item  label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">
+                  <el-input :style="styleObject"  v-model.number="formtwo.expendPigCoin" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" v-if="formtwo.lotterySort==2">
+                <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
+                  <el-input :style="styleObject"  v-model.number="formtwo.timesOneday" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12" v-if="formtwo.lotterySort==2">
+                <el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">
+                  <el-input :style="styleObject"  v-model.number="formtwo.dayNum" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
-                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.lotterySort" placeholder="">
-                    <el-option label="实物" :value="1"></el-option>
-                    <el-option label="虚拟" :value="2"></el-option>
+                <el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.applyCrowd" placeholder="">
+                    <el-option label="全部" :value="1"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
                 <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.status" placeholder="">
+                  <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <el-col :span="24">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
+              <el-col :span="22">
+                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
+                  <el-input  v-model="formtwo.typeName" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
-
+              <el-col :span="22" v-if="form.lotterySort==2">
+                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
             </el-row>
+            <!--<el-row>-->
+              <!--<el-col :span="24">-->
+                <!--<el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">-->
+                  <!--<el-input v-model="formtwo.typeName" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">-->
+                  <!--<el-input  type="number" min="0" v-model="formtwo.timesOneday" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">-->
+                  <!--<el-input  type="number" min="0" v-model="formtwo.dayNum" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">-->
+                  <!--<el-input type="number" min="0" v-model="formtwo.expendPigCoin" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">-->
+                  <!--<el-select v-model="formtwo.applyCrowd" placeholder="">-->
+                    <!--<el-option label="全部" :value="1"></el-option>-->
+                  <!--</el-select>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">-->
+                  <!--<el-select v-model="formtwo.lotterySort" placeholder="">-->
+                    <!--<el-option label="实物" :value="1"></el-option>-->
+                    <!--<el-option label="虚拟" :value="2"></el-option>-->
+                  <!--</el-select>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">-->
+                  <!--<el-select v-model="formtwo.status" placeholder="">-->
+                    <!--<el-option label="启用" :value="1"></el-option>-->
+                    <!--<el-option label="停用" :value="2"></el-option>-->
+                  <!--</el-select>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+              <!--<el-col :span="24">-->
+                <!--<el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">-->
+                  <!--<el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+            <!--</el-row>-->
 
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -183,82 +289,66 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="抽奖类型详情" :visible.sync="dialogTableDetail" width="600px">
+        <el-dialog title="抽奖类型详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo">
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-input :disabled="true" v-model="formtwoInfo.typeName" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-
-              <el-col :span="12">
-                <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
-                  <el-input  :disabled="true" type="number" min="0" v-model="formtwoInfo.timesOneday" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">
-                  <el-input :disabled="true" type="number" min="0" v-model="formtwoInfo.dayNum" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">
-                  <el-input  :disabled="true" type="number" min="0" v-model="formtwoInfo.expendPigCoin" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwoInfo.applyCrowd" placeholder="">
-                    <el-option label="全部" :value="1"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwoInfo.lotterySort" placeholder="">
-                    <el-option label="实物" :value="1"></el-option>
-                    <el-option label="虚拟" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwoInfo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="创建时间" prop="remark" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  v-model="formtwoInfo.createTime" auto-complete="off"  clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="抽奖编号" prop="抽奖编号" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  style="width: 160px" v-model="formtwoInfo.id" auto-complete="off"  clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="24">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input :disabled="true" style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remark" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-
-            </el-row>
+            <div class="box_xinxi">
+              <div class="wrap_da">
+                <div class="header">
+                  <span>详情信息</span>
+                  <span></span>
+                </div>
+                <div class="body_list">
+                  <div class="title">抽奖编号:</div>
+                  <div class="name">
+                    {{formtwoInfo.id}}
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">抽奖分类:</div>
+                  <div class="name">
+                    <span v-if="formtwoInfo.lotterySort==1">兑换</span>
+                    <span  v-if="formtwoInfo.lotterySort==2">抽奖</span>
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">每天次数限制:</div>
+                  <div class="name">
+                   {{formtwoInfo.timesOneday}}
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">每天发放数量:</div>
+                  <div class="name">{{formtwoInfo.dayNum}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">每次所需金猪:</div>
+                  <div class="name">{{formtwoInfo.expendPigCoin}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">适用人群:</div>
+                  <div class="name">
+                    <span v-if="formtwoInfo.applyCrowd==1">全部</span>
+                    <span v-else>已停用</span>
+                  </div>
+                </div>
+                <div class="body_list" style="width: 100%">
+                  <div class="title">创建时间:</div>
+                  <div class="name">{{formtwoInfo.createTime | dateFormat}}</div>
+                </div>
+                <div class="body_list" style="width: 100%" >
+                  <div class="title">类型名称:</div>
+                  <div class="name">
+                    {{formtwoInfo.typeName}}
+                  </div>
+                </div>
+                <div class="body_list dec" style="width: 100%" >
+                  <div class="title">类型描述:</div>
+                  <div class="name">
+                    <span class="dec">  {{formtwoInfo.remark}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableDetail = false">取 消</el-button>
@@ -291,69 +381,42 @@
         formtwoInfo:{},
         form: {
         },
-        roles: {
-          id: '',
-          realname: ''
-        },
         rules: {
-            typeName: [{
-              required: true,
-              message: '请输入类型名称',
-              trigger: 'blur'
-            }],
-            timesOneday: [{
-            required: true,
-            message: '请输入每天次数限制',
-            trigger: 'blur'
-            }],
-            expendPigCoin: [{
-            required: true,
-            message: '请输入每次所需金猪',
-            trigger: 'blur'
-            }],
-            remark: [{
-            required: true,
-            message: '请输入类型描述',
-            trigger: 'blur'
-          }],
-            status: [{
-            required: true,
-            message: '请选择类型状态',
-            trigger: 'change'
-          }],
-           applyCrowd: [{
-              required: true,
-              message: '请选择适用人群',
-              trigger: 'change'
-            }],
-            lotterySort: [{
-              required: true,
-              message: '请选择抽奖分类',
-              trigger: 'change'
-            }],
-          dayNum: [{
-            required: true,
-            message: '请输入每天发放数量',
-            trigger: 'blur'
-          }],
-        },
+            typeName: [{required: true, message: '请输入类型名称', trigger: 'blur'}],
+            timesOneday: [
+              {required: true, message: '请输入每天次数限制', trigger: 'blur'},
+              { type: 'number', message: '请输入数字值'}],
+            expendPigCoin: [
+              {required: true, message: '请输入每次所需金猪', trigger: 'blur'},
+              { type: 'number', message: '请输入数字值'}],
+            remark: [{required: true, message: '请输入类型描述', trigger: 'blur'}],
+            status: [{required: true, message: '请选择类型状态', trigger: 'change'}],
+            applyCrowd: [{required: true, message: '请选择适用人群', trigger: 'change'}],
+            lotterySort: [{required: true, message: '请选择抽奖分类', trigger: 'change'}],
+            dayNum: [
+                    {required: true, message: '请输入每天发放数量', trigger: 'blur'},
+                    { type: 'number', message: '请输入数字值'}],
+          },
         formLabelWidth: '120px',
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        styleObject:{
+          width:'200px'
+        }
       }
     },
     created() {
       this.menuId=this.$route.query.id
       this.queryBtns()
       this.accountList()
+    },
+    filters: {
+      dateFont: function (date){
+        return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss');
+      },
     },
     methods: {
       queryBtns(){
@@ -404,23 +467,6 @@
         }
         this.$fetch('/api/mLotteryType/page', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            for(let i = res.data.list.length - 1; i >= 0; i--) {
-              if(res.data.list[i].status == '1') {
-                res.data.list[i].status = '已启用'
-              } else {
-                res.data.list[i].status = '已停用'
-              }
-              if(res.data.list[i].applyCrowd == '1') {
-                res.data.list[i].applyCrowd = '全部'
-              } else {
-                res.data.list[i].applyCrowd = '已停用'
-              }
-              if(res.data.list[i].lotterySort == '1') {
-                res.data.list[i].lotterySort = '实物'
-              } else if (res.data.list[i].lotterySort == '2') {
-                res.data.list[i].lotterySort = '虚拟'
-              }
-            }
             this.tableData = res.data.list
             this.totalCount = res.data.total
           } else {
@@ -547,6 +593,140 @@
   }
 </script>
 <style type="text/css">
+
+  .yichu{
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .box_xinxi{
+    background-color: #fff;
+    border-radius: 4px;
+    /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .box_xinxi .title{
+    color: #353535;
+    font-size: 14px;
+    /*margin-bottom: 20px;*/
+  }
+
+
+  .box_xinxi .header{
+    width: 100%;
+    height: 40px;
+    background-color: #f6f8f9;
+    color: #1fa67a;
+    line-height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .wrap_da{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .box_xinxi .body_list{
+    /*display: inline-block;*/
+    /*float: left;*/
+    width: 50%;
+    height: auto;
+    height: 50px;
+    color: #353535;
+    line-height: 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e7e7eb;
+    display: inline-block;
+  }
+
+  .box_xinxi .body_list.img{
+    min-height: 50px;
+    height: auto;
+    line-height: 30px;
+  }
+
+  .box_xinxi .body_list.img img{
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+    line-height: 1px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
+  }
+
+  .box_xinxi .body_list.img .title{
+    padding-top: 10px;
+  }
+  .box_xinxi .body_list .title{
+    width: 150px;
+    float: left;
+    padding-right: 30px;
+    color: #a6a6a6;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  .box_xinxi .body_list.dec{
+    height: auto;
+    /*padding: 5px 10px;*/
+  }
+
+  .box_xinxi .body_list .name{
+    float: left;
+    color: #606266;
+  }
+
+  .box_xinxi .body_list .name .dec{
+    font-size: 14px;
+    line-height: 30px;
+    width: 500px;
+    float: left;
+    padding: 10px;
+  }
+
+
+  .el-icon-plus{
+    line-height:0;
+  }
+  .bannerAvatar-uploader-icon{
+    line-height: 178px !important;
+  }
+
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 120px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 33%;
+  }
+
+  .red{
+    color: #ff4d51;
+  }
+  .green{
+    color: #13ce66;
+  }
+  .blue{
+    color: #409EFF;
+  }
+  .administratormanage-wrap {
+    width: 100%;
+  }
+
   .administratormanage-wrap {
     width: 100%;
   }

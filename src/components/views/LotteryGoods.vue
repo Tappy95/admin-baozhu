@@ -2,7 +2,7 @@
   <div class="bannermanage-wrap">
     <div class="bannermanage-inner">
       <div class="bannermanage-header">
-        <h3>系统配置/奖品管理</h3>
+        <h3>运营管理/奖品管理</h3>
         <hr />
       </div>
       <div>
@@ -15,68 +15,71 @@
                       v-model="formInline.goodsName"
                       clearable></el-input>
           </el-form-item>
+          <el-form-item label="类型名称">
+            <el-select :style="styleObject" v-model="formInline.typeId" placeholder="">
+              <el-option v-for="item in lotterylist" :key="item.id" :label="item.typeName" :value="item.id"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加奖品</el-button>
         </el-form>
       </div>
       <div>
-        <el-dialog title="添加奖品" width="600px"
+        <el-dialog title="添加奖品" width="1000px"
                    :visible.sync="dialogFormVisible">
-          <el-form :model="form"
+          <template>
+            <el-tabs v-model="index" type="card" @tab-click="handleClick(index)">
+              <el-tab-pane v-for="item in lotterylist" :index="item" :key="item.id" :label="item.typeName"></el-tab-pane>
+            </el-tabs>
+          </template>
+          <el-form v-show="activeName==2" :model="form"
                    :rules="rules"
                    ref="form">
             <div class="form">
               <el-row>
-
-
-                <el-col :span="12">
-                  <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                    <el-select v-model="form.typeId" placeholder="">
-                      <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-
                 <el-col :span="12">
                   <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
-                    <el-input type="number" min="0" v-model="form.price" auto-complete="off"  clearable>
+                    <el-input :style="styleObject" v-model.number="form.price" auto-complete="off"  clearable>
                     </el-input>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="12">
-                  <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                    <el-input type="number" min="0" v-model="form.rate" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="12">
-                  <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
-                    <el-select v-model="form.status" placeholder="">
-                      <el-option label="启用" value="1"></el-option>
-                      <el-option label="停用" value="2"></el-option>
+                  <el-form-item label="奖品类型:"  prop="goodsType" :label-width="formLabelWidth">
+                    <el-select :style="styleObject" v-model="form.goodsType" placeholder="">
+                      <el-option label="虚拟" :value="1"></el-option>
+                      <el-option label="实物" :value="2"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
-
-                <el-col :span="24">
+                <el-col :span="12">
+                  <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                    <el-input :style="styleObject"  v-model.number="form.rate" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                    <el-select :style="styleObject" v-model="form.status" placeholder="">
+                      <el-option label="启用" :value="1"></el-option>
+                      <el-option label="停用" :value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="22">
                   <el-form-item label="奖品名称:"
                                 prop="goodsName"
                                 :label-width="formLabelWidth">
-                    <el-input v-model="form.goodsName"
+                    <el-input  v-model="form.goodsName"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
                 </el-col>
-
-                <el-col :span="24">
+                <el-col :span="22">
                   <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
-                    <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+                    <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
                   </el-form-item>
                 </el-col>
-
-
                 <el-col :span="24">
                   <el-form-item label="奖品图片:"
                                 prop="imageUrl"
@@ -95,17 +98,143 @@
                     </el-upload>
                   </el-form-item>
                 </el-col>
-
-
-
               </el-row>
             </div>
           </el-form>
-          <div slot="footer"
+           <div v-show="activeName==2" slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary"
                        @click="addBtn('form')">确 定</el-button>
+          </div>
+          <el-form v-show="activeName==1" :model="formShop"
+                   :rules="rules"
+                   ref="formShop">
+            <div class="form">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="奖品类型:"  prop="goodsType" :label-width="formLabelWidth">
+                    <el-select :style="styleObject" v-model="formShop.goodsType" placeholder="">
+                      <el-option label="虚拟" :value="1"></el-option>
+                      <el-option label="实物" :value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="排序:" :label-width="formLabelWidth" prop="orders">
+                    <el-input :style="styleObject" v-model.number="formShop.orders" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="兑换价格(金猪):" :label-width="formLabelWidth" prop="pigCoin">
+                    <el-input :style="styleObject" v-model.number="formShop.pigCoin" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="价格:" :label-width="formLabelWidth" prop="price">
+                    <el-input :style="styleObject" v-model.number="formShop.price" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="奖品数量:" :label-width="formLabelWidth" prop="goodsNumber">
+                    <el-input :style="styleObject" v-model.number="formShop.goodsNumber" auto-complete="off"  clearable>
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                    <el-select :style="styleObject" v-model="formShop.status" placeholder="">
+                      <el-option label="启用" :value="1"></el-option>
+                      <el-option label="停用" :value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                  <el-form-item label="奖品简称:"
+                                prop="goodsName"
+                                :label-width="formLabelWidth">
+                    <el-input  v-model="formShop.abbreviation"
+                               auto-complete="off"
+                               clearable></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="22">
+                  <el-form-item label="奖品名称:"
+                                prop="goodsName"
+                                :label-width="formLabelWidth">
+                    <el-input  v-model="formShop.goodsName"
+                               auto-complete="off"
+                               clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                  <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
+                    <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formShop.remark" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="上传icon:"
+                                prop="imageUrl"
+                                :label-width="formLabelWidth">
+                    <el-upload class="bannerAvatar-uploader"
+                               action="/api/upload"
+                               :data="uploadData"
+                               :show-file-list="false"
+                               :on-success="handleAvatarSuccess"
+                               :before-upload="beforeAvatarUpload">
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="奖品轮播图:"
+                                prop="carouselImg"
+                                :label-width="formLabelWidth">
+                    <el-upload
+                      action="/api/upload"
+                      list-type="picture-card"
+                      :file-list="fileList1"
+                      :on-success="handlePicture01"
+                      :on-preview="handlePictureCardPreview1"
+                      :on-remove="handleRemove01">
+                      <i class="el-icon-plus"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="24">
+                  <el-form-item label="奖品详情图:"
+                                prop="infoImg"
+                                :label-width="formLabelWidth">
+                    <el-upload
+                      action="/api/upload"
+                      list-type="picture-card"
+                      :file-list="fileList2"
+                      :on-success="handlePicture02"
+                      :on-preview="handlePictureCardPreview2"
+                      :on-remove="handleRemove02">
+                      <i class="el-icon-plus"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+          </el-form>
+          <div v-show="activeName==1" slot="footer"
+               class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary"
+                       @click="addformShop('formShop')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -119,26 +248,32 @@
                              :index="indexMethod"
                              width='80' fixed="left">
             </el-table-column>
-            <el-table-column prop="goodsName"
+            <el-table-column  prop="goodsName"
                              label="奖品名称" fixed="left" >
             </el-table-column>
+            <el-table-column width="150px" prop="typeName"
+                             label="类型名称"  >
+            </el-table-column>
 
-            <el-table-column min-width="120px" prop="price"
+            <el-table-column width="170px" prop="pigCoin"
+                             label="抽奖价格(金猪)"  >
+              <template slot-scope="scope">
+               {{scope.row.pigCoin | currency}}
+            </template>
+            </el-table-column>
+            <el-table-column width="150px" prop="price"
                              label="奖品价格(￥)"  >
             </el-table-column>
-
-
-            <el-table-column prop="rate" min-width="120px"
+            <el-table-column prop="rate" width="120px"
                              label="中奖概率(%)">
             </el-table-column>
-
-            <el-table-column min-width="200px" label="奖品图片">
-              <template slot-scope="scope">
-                <img :src='scope.row.imageUrl'
-                     style="max-width: 100px;max-height: 50px"
-                     @click="clickImg($event)">
-              </template>
-            </el-table-column>
+            <!--<el-table-column min-width="200px" label="奖品图片">-->
+              <!--<template slot-scope="scope">-->
+                <!--<img :src='scope.row.imageUrl'-->
+                     <!--style="max-width: 100px;max-height: 50px"-->
+                     <!--@click="clickImg($event)">-->
+              <!--</template>-->
+            <!--</el-table-column>-->
             <el-table-column prop="status" width="120px"
                              label="状态">
               <template slot-scope="scope">
@@ -166,11 +301,210 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog width="700px" title="修改奖品"
+        <el-dialog width="1000px" title="修改奖品"
                    :visible.sync="dialogTableVisible">
-          <el-form :model="formtwo">
-            <el-row>
+          <el-form :model="formtwo"
+                   :rules="rules"
+                   ref="formtwo">
+            <el-row v-if="formtwo.lotterySort==2">
+              <el-form  :model="formtwo"
+                       :rules="rules"
+                       ref="formtwo">
+                <div class="form">
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
+                        <el-input :style="styleObject" v-model.number="formtwo.price" auto-complete="off"  clearable>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="奖品类型:"  prop="goodsType" :label-width="formLabelWidth">
+                        <el-select :style="styleObject" v-model="formtwo.goodsType" placeholder="">
+                          <el-option label="虚拟" :value="1"></el-option>
+                          <el-option label="实物" :value="2"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
+                        <el-input :style="styleObject"  v-model.number="formtwo.rate" auto-complete="off"  clearable>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                        <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
+                          <el-option label="启用" :value="1"></el-option>
+                          <el-option label="停用" :value="2"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="22">
+                      <el-form-item label="奖品名称:"
+                                    prop="goodsName"
+                                    :label-width="formLabelWidth">
+                        <el-input  v-model="form.goodsName"
+                                   auto-complete="off"
+                                   clearable></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="22">
+                      <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
+                        <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+                      </el-form-item>
+                    </el-col>
 
+                    <el-col :span="24">
+                      <el-form-item label="奖品图片:"
+                                    prop="imageUrl"
+                                    :label-width="formLabelWidth">
+                        <el-upload class="bannerAvatar-uploader"
+                                   action="/api/upload"
+                                   :data="uploadData"
+                                   :show-file-list="false"
+                                   :on-success="handleAvatarSuccess"
+                                   :before-upload="beforeAvatarUpload">
+                          <img v-if="imageUrl"
+                               :src="imageUrl"
+                               class="avatar">
+                          <i v-else
+                             class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                        </el-upload>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                </div>
+              </el-form>
+            </el-row>
+            <el-row v-if="formtwo.lotterySort==1">
+              <el-form  :model="formtwo"
+                       :rules="rules"
+                       ref="formShop">
+                <div class="form">
+                  <el-row>
+                    <el-col :span="12">
+                      <el-form-item label="奖品类型:"  prop="goodsType" :label-width="formLabelWidth">
+                        <el-select :style="styleObject" v-model="formtwo.goodsType" placeholder="">
+                          <el-option label="虚拟" :value="1"></el-option>
+                          <el-option label="实物" :value="2"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="排序:" :label-width="formLabelWidth" prop="orders">
+                        <el-input :style="styleObject" v-model.number="formtwo.orders" auto-complete="off"  clearable>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="兑换价格(金猪):" :label-width="formLabelWidth" prop="pigCoin">
+                        <el-input :style="styleObject" v-model.number="formtwo.pigCoin" auto-complete="off"  clearable>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="价格:" :label-width="formLabelWidth" prop="price">
+                        <el-input :style="styleObject" v-model.number="formtwo.price" auto-complete="off"  clearable>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="奖品数量:" :label-width="formLabelWidth" prop="goodsNumber">
+                        <el-input :style="styleObject" v-model.number="formtwo.goodsNumber" auto-complete="off"  clearable>
+                        </el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                      <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
+                        <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
+                          <el-option label="启用" :value="1"></el-option>
+                          <el-option label="停用" :value="2"></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="22">
+                      <el-form-item label="奖品简称:"
+                                    prop="goodsName"
+                                    :label-width="formLabelWidth">
+                        <el-input  v-model="formtwo.abbreviation"
+                                   auto-complete="off"
+                                   clearable></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="22">
+                      <el-form-item label="奖品名称:"
+                                    prop="goodsName"
+                                    :label-width="formLabelWidth">
+                        <el-input  v-model="formtwo.goodsName"
+                                   auto-complete="off"
+                                   clearable></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="22">
+                      <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
+                        <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="24">
+                      <el-form-item label="上传icon:"
+                                    prop="imageUrl"
+                                    :label-width="formLabelWidth">
+                        <el-upload class="bannerAvatar-uploader"
+                                   action="/api/upload"
+                                   :data="uploadData"
+                                   :show-file-list="false"
+                                   :on-success="handleAvatarSuccess"
+                                   :before-upload="beforeAvatarUpload">
+                          <img v-if="imageUrl"
+                               :src="imageUrl"
+                               class="avatar">
+                          <i v-else
+                             class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                        </el-upload>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="24">
+                      <el-form-item label="奖品轮播图:"
+                                    prop="carouselImg"
+                                    :label-width="formLabelWidth">
+                        <el-upload
+                          action="/api/upload"
+                          list-type="picture-card"
+                          :file-list="fileList1"
+                          :on-success="handlePicture01"
+                          :on-preview="handlePictureCardPreview1"
+                          :on-remove="handleRemove01">
+                          <i class="el-icon-plus"></i>
+                        </el-upload>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="24">
+                      <el-form-item label="奖品详情图:"
+                                    prop="infoImg"
+                                    :label-width="formLabelWidth">
+                        <el-upload
+                          action="/api/upload"
+                          list-type="picture-card"
+                          :file-list="fileList2"
+                          :on-success="handlePicture02"
+                          :on-preview="handlePictureCardPreview2"
+                          :on-remove="handleRemove02">
+                          <i class="el-icon-plus"></i>
+                        </el-upload>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
+                </div>
+              </el-form>
+            </el-row>
+            <div slot="footer"
+                 class="dialog-footer">
+              <el-button @click="dialogTableVisible = false">取 消</el-button>
+              <el-button type="primary"
+                         @click="update(formtwo)">确 定</el-button>
+            </div>
+            <el-row style="display: none;">
               <el-col :span="12">
                 <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
                   <el-select v-model="formtwo.typeId" placeholder="">
@@ -178,7 +512,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
                   <el-input type="number" min="0" v-model="formtwo.price" auto-complete="off"  clearable>
@@ -234,23 +567,164 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-
-
             </el-row>
-
           </el-form>
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
             <el-button type="primary"
-                       @click="update(formtwo)">确 定</el-button>
+                       @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog width="700px" title="奖品详情"
+        <el-dialog width="1000px" title="奖品详情"
                    :visible.sync="dialogTableDetail">
           <el-form :model="formtwo">
-            <el-row>
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>详情信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">奖品类型:</div>
+                    <div class="name">
+                      <span v-if="formtwo.goodsType==1">虚拟</span>
+                      <span v-if="formtwo.goodsType==2">实物</span>
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="formtwo.lotterySort==1">
+                    <div class="title">排序:</div>
+                    <div class="name">
+                      {{formtwo.orders}}
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="formtwo.lotterySort==1">
+                    <div class="title">兑换价格(金猪):</div>
+                    <div class="name">
+                      {{formtwo.pigCoin}}
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="formtwo.lotterySort==1">
+                    <div class="title">兑换价格(金猪):</div>
+                    <div class="name">
+                      {{formtwo.pigCoin}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">价格:</div>
+                    <div class="name">
+                      {{formtwo.price}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">奖品数量:</div>
+                    <div class="name">
+                      {{formtwo.goodsNumber}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">是否启用:</div>
+                    <div class="name">
+                      <span v-if="formtwo.status==1">已启用</span>
+                      <span v-if="formtwo.status==2">已停用</span>
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="formtwo.lotterySort==1" style="width: 100%">
+                    <div class="title">奖品简称:</div>
+                    <div class="name">
+                      {{formtwo.abbreviation}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%" >
+                  <div class="title">奖品名称:</div>
+                    <div class="name">
+                     {{formtwo.goodsName}}
+                    </div>
+                  </div>
+                  <div class="body_list dec" style="width: 100%" >
+                      <div class="title">类型描述:</div>
+                      <div class="name">
+                     <span class="dec">  {{formtwo.remark}}</span>
+                   </div>
+                  </div>
+                  <div class="body_list img" style="width: 100%" >
+                    <div class="title">
+                      <span v-if="formtwo.lotterySort==1">icon:</span>
+                      <span v-else>奖品图片</span>
+                    </div>
+                    <img @click="clickImg(formtwo.imageUrl)" :src="formtwo.imageUrl" />
+                  </div>
+                  <div v-if="formtwo.lotterySort==1" class="body_list img" style="width: 100%" >
+                    <div class="title">
+                      奖品轮播图:
+                    </div>
+                    <div class="img_box">
+                      <div @click="clickImg(item.url)" v-if="fileList1" v-for="item in fileList1" class="more_img">
+                        <img  :src="item.url"  />
+                      </div>
+                    </div>
+                  </div>
 
+                  <div v-if="formtwo.lotterySort==1" class="body_list img" style="width: 100%" >
+                    <div class="title">
+                      奖品详情图:
+                    </div>
+                    <div class="img_box">
+                      <div @click="clickImg(item.url)" v-if="fileList2" v-for="item in fileList2" class="more_img">
+                        <img  :src="item.url" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--<div class="body_list">-->
+                    <!--<div class="title">抽奖分类:</div>-->
+                    <!--<div class="name">-->
+                      <!--<span v-if="formtwoInfo.lotterySort==1">兑换</span>-->
+                      <!--<span  v-if="formtwoInfo.lotterySort==2">抽奖</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list">-->
+                    <!--<div class="title">每天次数限制:</div>-->
+                    <!--<div class="name">-->
+                      <!--{{formtwoInfo.timesOneday}}-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list">-->
+                    <!--<div class="title">每天发放数量:</div>-->
+                    <!--<div class="name">{{formtwoInfo.dayNum}}</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list">-->
+                    <!--<div class="title">每次所需金猪:</div>-->
+                    <!--<div class="name">{{formtwoInfo.expendPigCoin}}</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list">-->
+                    <!--<div class="title">适用人群:</div>-->
+                    <!--<div class="name">-->
+                      <!--<span v-if="formtwoInfo.applyCrowd==1">全部</span>-->
+                      <!--<span v-else>已停用</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list" style="width: 100%">-->
+                    <!--<div class="title">创建时间:</div>-->
+                    <!--<div class="name">{{formtwoInfo.createTime | dateFormat}}</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list" style="width: 100%" >-->
+                    <!--<div class="title">类型名称:</div>-->
+                    <!--<div class="name">-->
+                      <!--{{formtwoInfo.typeName}}-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="body_list dec" style="width: 100%" >-->
+                    <!--<div class="title">类型描述:</div>-->
+                    <!--<div class="name">-->
+                      <!--<span class="dec">  {{formtwoInfo.remark}}</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </el-row>
+            <el-row style="display: none;">
               <el-col :span="12">
                 <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
                   <el-select :disabled="true" v-model="formtwo.typeId" placeholder="">
@@ -345,6 +819,13 @@
     name: 'LotteryGoods',
     data() {
       return {
+        formtwoInfo:{},
+        formShop:{
+          carouselImg:'',
+          infoImg:'',
+          imageUrl:''
+        },
+        activeName: 1,
         uploadData:{},
         powerTrue:false,
         optionW:'75px',
@@ -374,18 +855,44 @@
              { required: true, message: '请输入奖品名称', trigger: 'blur' }
             ],
           price: [
-            { required: true, message: '请输入奖品价格', trigger: 'blur' }
+            { required: true, message: '请输入奖品价格', trigger: 'blur' },
+            { type: 'number', message: '请输入数字值'}
           ],
             rate: [
-            { required: true, message: '请输入中奖概率', trigger: 'blur' }
+            { required: true, message: '请输入中奖概率', trigger: 'blur' },
+              { type: 'number', message: '请输入数字值'}
             ],
             imageUrl: [{ required: true, message: '请选择图片', trigger: 'change' }],
             remark: [
             { required: true, message: '请输入奖品描述', trigger: 'blur' }
             ],
             status: [
-            {required: true, message: '请选择状态', trigger: 'change' }
-          ]
+              {required: true, message: '请选择状态', trigger: 'change' }
+             ],
+            goodsType: [
+              {required: true, message: '请选择奖品类型', trigger: 'change' }
+            ],
+            imageUrlIcon: [
+              {required: true, message: '请选择icon', trigger: 'change' }
+            ],
+            orders: [
+              { required: true, message: '请输入排序', trigger: 'blur' },
+              { type: 'number', message: '请输入数字值'}
+            ],
+            goodsNumber: [
+              { required: true, message: '请输入剩余份数', trigger: 'blur' },
+              { type: 'number', message: '请输入数字值'}
+            ],
+          pigCoin: [
+              { required: true, message: '请输入兑换价格(金猪)', trigger: 'blur' },
+              { type: 'number', message: '请输入数字值'}
+            ],
+          price: [
+            { required: true, message: '请输入价格', trigger: 'blur' },
+            { type: 'number', message: '请输入数字值'}
+          ],
+          carouselImg: [{required: true, message: '请输入奖品轮播图', trigger: 'change' }],
+          infoImg : [{required: true, message: '请输入奖品详情图', trigger: 'change' }],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -395,22 +902,41 @@
         imgSrc: '',
         formInline: {},
         tableData: [],
-        dialogTableDetail:false
+        dialogTableDetail:false,
+        styleObject:{
+          width:'200px'
+        },
+        activeId:'',
+        imageUrlIcon:'',
+        fileList1:[],
+        fileList2:[]
       }
     },
     components: {
       'big-img': BigImg
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
       this.uploadData={
         token:getSession("token")
       }
-      this.lotteryType()
+      this.lotteryType();
     },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currency: function (num) {
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      }
+      },
     methods: {
+      handleClick(tab) {
+        this.activeName=this.lotterylist[tab].lotterySort;
+        this.activeId = this.lotterylist[tab].id;
+      },
       queryBtns(){
         let parameterData = {
           menuId: this.menuId
@@ -440,9 +966,9 @@
           }
         })
       },
-      clickImg(e) {
-        this.showImg = true
-        this.imgSrc = e.currentTarget.src
+      clickImg(img) {
+        this.showImg = true;
+        this.imgSrc = img
       },
       viewImg() {
         this.showImg = false
@@ -451,8 +977,8 @@
         this.imageUrl=res.data
       },
       beforeAvatarUpload(file) {
-
       },
+
       indexMethod(index) {
         return index * 1 + 1
       },
@@ -467,7 +993,8 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          goodsName: this.formInline.goodsName
+          goodsName: this.formInline.goodsName,
+          typeId: this.formInline.typeId
         }
         this.$fetch('/api/mLotteryGoods/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -491,10 +1018,16 @@
         this.dialogFormVisible = true;
         this.form ={};
         this.imageUrl='';
-        this.formInline = {}
+        this.formInline = {};
+        this.lotteryType();
+        this.fileList1=[];
+        this.fileList2=[];
+        this.formShop.carouselImg='';
+        this.formShop.infoImg='';
       },
       addBtn(form) {
-        this.form.imageUrl=this.imageUrl
+        this.form.imageUrl=this.imageUrl;
+        this.form.typeId =this.activeId;
         this.$refs[form].validate(valid => {
           if (valid) {
             this.$post('/api/mLotteryGoods/add', this.form).then(res => {
@@ -502,9 +1035,48 @@
                 this.dialogFormVisible = false
                 this.$message({ type: 'success', message: '添加成功！' })
                 this.accountList()
+              }else {
+                this.$message({ type: 'warning', message: res.message})
               }
             })
           } else {
+          }
+        })
+      },
+      addformShop(formShop) {
+        this.formShop.carouselImg=''; //奖品轮播图
+        this.formShop.infoImg ='';//奖品详情图
+        this.formShop.typeId =this.activeId;
+        let arr1 = '';
+        if (this.fileList1.length>0){
+          for(let i=0; i<this.fileList1.length;i++){
+            arr1+= this.fileList1[i].url +','
+          }
+        }
+        let arr2 = '';
+        if (this.fileList2.length>0){
+          for(let i=0; i<this.fileList2.length;i++){
+            arr2+= this.fileList2[i].url +','
+          }
+        }
+        this.formShop.carouselImg=arr1.substr(0, arr1.length - 1);
+        this.formShop.infoImg=arr2.substr(0, arr2.length - 1);
+        this.formShop.imageUrl=this.imageUrl;
+        this.formShop.typeId =this.activeId;
+        this.formShop.rate=100;
+        this.$refs[formShop].validate(valid => {
+          if (valid) {
+            this.$post('/api/mLotteryGoods/add', this.formShop).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogFormVisible = false
+                this.$message({ type: 'success', message: '添加成功！' })
+                this.accountList()
+              }else {
+                this.$message({ type: 'warning', message: res.message})
+              }
+            })
+          } else {
+
           }
         })
       },
@@ -535,31 +1107,76 @@
       },
       //修改
       getInfo(id,types) {
-
+        this.fileList1 = [];
+        this.fileList2 = [];
+        this.imageUrl='';
         this.$fetch('/api/mLotteryGoods/queryOne',{
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            if (types==1){
-              this.dialogTableDetail = true
+            if (types==1){//详情
+              this.dialogTableDetail = true;
               res.data.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
-            }else {
-              this.dialogTableVisible = true
             }
-            this.formtwo = res.data
-            this.imageUrl = res.data.imageUrl
+            else if(types==2) {//修改
+              this.dialogTableVisible = true;
+            }
+            if (res.data.lotterySort == 1) {
+              if (res.data.carouselImg) {
+                var arr1 = res.data.carouselImg.split(',');
+                for (var i = 0; i < arr1.length; i++) {
+                  let fileImg1 = {};
+                  fileImg1.url = arr1[i];
+                  this.fileList1.push(fileImg1);
+                }
+                if (res.data.infoImg) {
+                  var arr2 = res.data.infoImg.split(',');
+                  for (var i = 0; i < arr2.length; i++) {
+                    let fileImg2 = {};
+                    fileImg2.url = arr2[i];
+                    this.fileList2.push(fileImg2)
+                  }
+                }
+              }
+            }
+            this.formtwo = res.data;
+            this.imageUrl = res.data.imageUrl;
           }
         })
       },
       //修改的确定按钮
       update(formtwo) {
+        if (this.formtwo.lotterySort==1){
+          this.formtwo.carouselImg='';
+          this.formtwo.infoImg=''; //普通用户奖励图
+          let arr1 = '';
+          if (this.fileList1.length>0){
+            for(let i=0; i<this.fileList1.length;i++){
+              arr1+= this.fileList1[i].url +','
+            }
+          }
+          let arr2 = '';
+          if (this.fileList2.length>0){
+            for(let i=0; i<this.fileList2.length;i++){
+              arr2+= this.fileList2[i].url +','
+            }
+          }
+          this.formtwo.carouselImg=arr1.substr(0, arr1.length - 1);
+          this.formtwo.infoImg=arr2.substr(0, arr2.length - 1); //普通用户奖励图
+        }
+
         this.formtwo.imageUrl=this.imageUrl;
         this.formtwo.createTime = '';
-        this.$put('/api/mLotteryGoods/modify', this.formtwo).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            this.$message({ type: 'success', message: '修改成功！' })
-            this.dialogTableVisible = false
-            this.accountList()
+
+        this.$refs[formtwo].validate(valid => {
+          if (valid) {
+            this.$put('/api/mLotteryGoods/modify', this.formtwo).then(res => {
+              if ((res.statusCode + "").startsWith("2")) {
+                this.$message({type: 'success', message: '修改成功！'})
+                this.dialogTableVisible = false
+                this.accountList()
+              }
+            })
           }
         })
       },
@@ -569,18 +1186,44 @@
           this.$fetch('/api/mLotteryType/list').then(res => {
             if ((res.statusCode+"").startsWith("2")) {
               this.lotterylist = res.data;
+              this.activeId=this.lotterylist[0].id;
             }
           })
         },
-
-  handleSizeChange(val) {
-        this.pageSize = val
-        this.accountList()
-      },
+     handleSizeChange(val) {
+      this.pageSize = val
+      this.accountList()
+     },
       handleCurrentChange(val) {
         this.currentPage = val
         this.accountList()
-      }
+      },
+      handlePicture01(res, file, fileList){
+        let fileImg={};
+        fileImg.url=res.data;
+        this.fileList1.push(fileImg)
+      },
+
+      handlePicture02(res, file, fileList){
+        let fileImg={};
+        fileImg.url=res.data;
+        this.fileList2.push(fileImg)
+      },
+
+      handleRemove01(file, fileList1) {
+        this.fileList1=fileList1;
+      },
+      handleRemove02(file, fileList2) {
+        this.fileList2=fileList2;
+      },
+      handlePictureCardPreview1(file,fileList) {
+        this.showImg = true;
+        this.imgSrc = file.url
+      },
+      handlePictureCardPreview2(file,fileList) {
+        this.showImg = true;
+        this.imgSrc = file.url
+      },
     }
   }
 </script>
@@ -637,14 +1280,14 @@
   .bannerAvatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 148px;
+    height: 148px;
     display: block;
   }
 
@@ -652,6 +1295,131 @@
     line-height:0;
   }
   .bannerAvatar-uploader-icon{
-    line-height: 178px !important;
+    line-height: 148px !important;
+  }
+
+
+  .yichu{
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .box_xinxi{
+    background-color: #fff;
+    border-radius: 4px;
+    /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .box_xinxi .title{
+    color: #353535;
+    font-size: 14px;
+    /*margin-bottom: 20px;*/
+  }
+
+
+  .box_xinxi .header{
+    width: 100%;
+    height: 40px;
+    background-color: #f6f8f9;
+    color: #1fa67a;
+    line-height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .wrap_da{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .box_xinxi .body_list{
+    width: 50%;
+    height: auto;
+    height: 50px;
+    color: #353535;
+    line-height: 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e7e7eb;
+    display: inline-block;
+  }
+
+  .box_xinxi .body_list.img{
+    min-height: 50px;
+    height: auto;
+    line-height: 30px;
+  }
+
+  .box_xinxi .body_list.img img{
+    max-width: 120px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+    line-height: 1px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
+  }
+
+  .box_xinxi .body_list.img .more_img{
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    margin: 10px 5px;
+    float:left;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: 1px dashed #cccccc;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    border-radius:4px;
+    cursor: pointer;
+  }
+  .box_xinxi .body_list.img .more_img img{
+    box-shadow: none;
+  }
+
+  .box_xinxi .body_list.img .title{
+    padding-top: 10px;
+    float: left;
+  }
+  .box_xinxi .body_list .title{
+    width: 150px;
+    float: left;
+    padding-right: 30px;
+    color: #a6a6a6;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  .box_xinxi .body_list.dec{
+    height: auto;
+    /*padding: 5px 10px;*/
+  }
+
+  .box_xinxi .body_list .name{
+    float: left;
+    color: #606266;
+  }
+
+  .box_xinxi .body_list.img .img_box{
+    float: right;
+    width: 800px;
+    height: auto;
+    margin: -30px 10px 10px 10px;
+  }
+
+  .box_xinxi .body_list .name .dec{
+    font-size: 14px;
+    line-height: 30px;
+    width: 600px;
+    float: left;
+    padding: 10px;
   }
 </style>

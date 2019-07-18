@@ -17,15 +17,80 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="528">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column fixed="left" type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="创建时间：">
+                    <span>{{ props.row.createrTime }}</span>
+                  </el-form-item>
+                  <el-form-item label="生效时间：">
+                    <span>{{ props.row.releaserTime }}</span>
+                  </el-form-item>
+                  <el-form-item label="失效时间：">
+                    <span>{{ props.row.cancelTime }}</span>
+                  </el-form-item>
+                  <el-form-item label="公告类型：">
+                      <span v-if="props.row.noticeType==1">文字公告</span>
+                      <span v-if="props.row.noticeType==2">首页活动</span>
+                      <span v-if="props.row.noticeType=3">消息活动</span>
+                  </el-form-item>
+                  <el-form-item label="创建人：">
+                    <span>{{ props.row.createrName }}</span>
+                  </el-form-item>
+                  <el-form-item label="权限：">
+                    <span v-if="props.row.range==1">全部</span>
+                  </el-form-item>
+                  <el-form-item label="状态：">
+                    <span class="green" v-if="props.row.isRelease==1">已发布</span>
+                    <span class="blue" v-if="props.row.isRelease==2">未发布</span>
+                    <span class="red" v-if="props.row.isRelease=3">已失效</span>
+                  </el-form-item>
+                  <el-form-item label="标题：" style="width: 100%">
+                    <span>{{ props.row.noticeTitle }}</span>
+                  </el-form-item>
+                  <el-form-item label="内容："style="width:60%;">
+                    <span>{{ props.row.noticeContent }}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
             </el-table-column>
-            <el-table-column prop="noticeTitle" label="公告标题">
+            <el-table-column label="序号" type="index" fixed="left" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column prop="noticeContent" label="公告内容">
+            <el-table-column prop="noticeTitle" fixed="left" label="标题">
             </el-table-column>
-            <el-table-column prop="createrTime" :formatter="dateFormat" label="创建时间">
+            <el-table-column fixed="left" width="250" prop="noticeContent" label="内容">
+                <template slot-scope="scope">
+                  <div class="yichu">
+                    {{scope.row.noticeContent}}
+                  </div>
+                </template>
             </el-table-column>
-            <el-table-column prop="isRelease" label="发布状态">
+            <el-table-column width="170" prop="createrTime" :formatter="dateFormat" label="创建时间">
+            </el-table-column>
+            <el-table-column width="170" prop="releaserTime" :formatter="dateFormat" label="生效时间">
+            </el-table-column>
+            <el-table-column width="170" prop="cancelTime" :formatter="dateFormat" label="失效时间">
+            </el-table-column>
+            <el-table-column prop="noticeType" label="类型">
+              <template slot-scope="scope">
+                <span v-if="scope.row.noticeType==1">文字公告</span>
+                <span v-if="scope.row.noticeType==2">首页活动</span>
+                <span v-if="scope.row.noticeType=3">消息活动</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="createrName" label="创建人">
+            </el-table-column>
+            <el-table-column label="发布状态">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.isRelease==1">已发布</span>
+                <span class="blue" v-if="scope.row.isRelease==2">未发布</span>
+                <span class="red" v-if="scope.row.isRelease==3">已失效</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="range" label="权限">
+              <template slot-scope="scope">
+                <span v-if="scope.row.ranges==1">全部</span>
+              </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
@@ -36,64 +101,252 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加公告" :visible.sync="dialogFormVisible" width="600px">
+        <big-img v-if="showImg"
+                 @clickit="viewImg"
+                 :imgSrc="imgSrc"></big-img>
+        <el-dialog title="添加公告" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="公告标题" :label-width="formLabelWidth" prop="noticeTitle">
-              <el-input v-model="form.noticeTitle" auto-complete="off" style="width: 440px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="公告内容" prop="noticeContent" :label-width="formLabelWidth">
-              <el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.noticeContent" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
-              <el-select v-model="form.isRelease" placeholder="">
-                <el-option label="是" value="1"></el-option>
-                <el-option label="否" value="2"></el-option>
-              </el-select>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="公告类型" prop="noticeType" :label-width="formLabelWidth">
+                  <el-select v-model="form.noticeType" placeholder="">
+                    <el-option label="文字公告" value="1"></el-option>
+                    <el-option label="首页活动" value="2"></el-option>
+                    <el-option label="消息活动" value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="是否发布" prop="isPublish" :label-width="formLabelWidth">
+                  <el-select v-model="form.isPublish" placeholder="">
+                    <el-option label="是" value="1"></el-option>
+                    <el-option label="否" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item label="公告标题" :label-width="formLabelWidth" prop="noticeTitle">
+                  <el-input v-model="form.noticeTitle" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" v-if="form.noticeType==3">
+                <el-form-item label="链接地址" :label-width="formLabelWidth" prop="linkAddress">
+                  <el-input spellcheck="false" v-model="form.linkAddress" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item label="公告内容" prop="noticeContent" :label-width="formLabelWidth">
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.noticeContent" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24" v-if="form.noticeType==2 || form.noticeType==3">
+                <el-form-item label="图片:"
+                              :label-width="formLabelWidth">
+                  <el-upload class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <div class="img_loadBox" >
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                  <el-form-item label="发布时间:" @change="selectTap(selectTime)"  :label-width="formLabelWidth">
+                    <el-date-picker
+                      v-model="selectTime"
+                      type="datetimerange"
+                      :picker-options="pickerOptions"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期"
+                      align="left">
+                    </el-date-picker>
+                  </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改公告" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="修改公告" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
-            <el-form-item label="公告标题" prop="noticeTitle" :label-width="formLabelWidth">
-              <el-input v-model="formtwo.noticeTitle" auto-complete="off" style="" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="公告内容" prop="noticeContent" :label-width="formLabelWidth">
-              <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.noticeContent" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
-              <el-select v-model="formtwo.isRelease" placeholder="">
-                <el-option label="是" :value="1"></el-option>
-                <el-option label="否" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="公告类型"  :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.noticeType" placeholder="">
+                    <el-option label="文字公告" :value="1"></el-option>
+                    <el-option label="首页活动" :value="2"></el-option>
+                    <el-option label="消息活动" :value="3"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="是否发布"  :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.isPublish" placeholder="">
+                    <el-option label="是" :value="1"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item label="公告标题" :label-width="formLabelWidth" >
+                  <el-input v-model="formtwo.noticeTitle" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" v-if="formtwo.noticeType==3">
+                <el-form-item label="链接地址" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" v-model="formtwo.linkAddress" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22">
+                <el-form-item label="公告内容"  :label-width="formLabelWidth">
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.noticeContent" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24" v-if="formtwo.noticeType==2 || formtwo.noticeType==3">
+                <el-form-item label="图片:"
+                              :label-width="formLabelWidth">
+                  <el-upload class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <div class="img_loadBox">
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24" >
+                <el-form-item label="发布时间:"   :label-width="formLabelWidth">
+                  <el-date-picker
+                    v-model="selectTime"
+                    type="datetimerange"
+                    :picker-options="pickerOptions"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    align="left">
+                  </el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="公告详情" :visible.sync="dialogTableDetail" width="600px">
+        <el-dialog title="公告详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo">
-            <el-form-item label="公告标题" :label-width="formLabelWidth">
-            <el-input v-model="formtwoInfo.noticeTitle" :disabled="true" auto-complete="off" style="" clearable></el-input>
-          </el-form-item>
-            <el-form-item label="公告内容" prop="noticeContent" :label-width="formLabelWidth">
-              <el-input type="textarea" :disabled="true" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.noticeContent" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="创建时间" :label-width="formLabelWidth">
-              <el-input  v-model="formtwoInfo.createrTime" :disabled="true" auto-complete="off" style="width:220px" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="是否发布"  :label-width="formLabelWidth">
-              <el-select v-model="formtwoInfo.isRelease" :disabled="true" placeholder="">
-                <el-option label="是" :value="1"></el-option>
-                <el-option label="否" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+            <div class="box_xinxi">
+              <div class="wrap_da">
+                <div class="header">
+                  <span>详情信息</span>
+                  <span></span>
+                </div>
+                <div class="body_list">
+                  <div class="title">发布状态:</div>
+                  <div class="name">
+                    <span  v-if="formtwoInfo.isRelease==1">已发布</span>
+                    <span  v-if="formtwoInfo.isRelease==2">未发布</span>
+                    <span  v-if="formtwoInfo.isRelease==3">已失效</span>
+                   </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">公告类型:</div>
+                  <div class="name">
+                    <span class="badeg status_on" v-if="formtwoInfo.noticeType==1">文字公告</span>
+                    <span class="badeg status_wait" v-if="formtwoInfo.noticeType==2">首页活动</span>
+                    <span class="badeg status_off" v-if="formtwoInfo.noticeType==3">消息活动</span>
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">权限:</div>
+                  <div class="name">
+                    <span v-if="formtwoInfo.ranges==1">全部</span>
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">创建时间:</div>
+                  <div class="name">{{formtwoInfo.createrTime | dateFont}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">生效时间:</div>
+                  <div class="name">{{formtwoInfo.releaserTime | dateFont}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">失效时间:</div>
+                  <div class="name">{{formtwoInfo.cancelTime | dateFont }}</div>
+                </div>
+                <div class="body_list" style="width: 100%" >
+                <div class="title">公告标题:</div>
+                  <div class="name">
+                  {{formtwoInfo.noticeTitle}}
+                  </div>
+                </div>
+                <div class="body_list dec" style="width: 100%" >
+                  <div class="title">公告内容:</div>
+                  <div class="name">
+                    <span class="dec">  {{formtwoInfo.noticeContent}}</span>
+                  </div>
+                </div>
+                <div class="body_list" style="width: 100%" v-if="formtwoInfo.noticeType==3">
+                  <div class="title">链接地址:</div>
+                  <div class="name">{{formtwoInfo.linkAddress}}</div>
+                </div>
+                <div class="body_list img" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
+                  <div class="title">任务logo:</div>
+                  <div class="name">
+                    <img @click="clickImg(formtwoInfo.imgUrl)" :src="formtwoInfo.imgUrl" />
+                  </div>
+                </div>
+                <!--<div class="body_list" style="width: 100%" >-->
+                  <!--<div class="title">任务说明:</div>-->
+                  <!--<div class="name">-->
+                    <!--{{taskInfo.explains}}-->
+                  <!--</div>-->
+                <!--</div>-->
+
+             <!---->
+                <!--<div class="body_list" style="width: 100%" >-->
+                  <!--<div class="title">温馨提示:</div>-->
+                  <!--<div class="name">-->
+                    <!--{{taskInfo.remind}}-->
+                  <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="body_list"  style="width: 100%" >-->
+                  <!--<div class="title">备注:</div>-->
+                  <!--<div class="name">-->
+                    <!--{{taskInfo.remarks}}-->
+                  <!--</div>-->
+                <!--</div>-->
+              </div>
+            </div>
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableDetail = false">取 消</el-button>
@@ -109,7 +362,8 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
-
+  import { delSession, getSession } from '../../utils/cookie'
+  import BigImg from './BigImg'
   export default {
     name: 'NewsNotice',
     data() {
@@ -125,16 +379,8 @@
         dialogFormVisible: false,
         dialogTableDetail:false,
         formtwoInfo:{},
-        form: {
-          noticeTitle: '',
-          noticeContent: '',
-          password: '',
-          isRelease: '1'
-        },
-        roles: {
-          id: '',
-          realname: ''
-        },
+        form: {},
+        imageUrl:'',
         rules: {
           noticeTitle: [{
             required: true,
@@ -150,7 +396,22 @@
             required: true,
             message: '请选择是否发布',
             trigger: 'change'
-          }]
+          }],
+          noticeType: [{
+            required: true,
+            message: '请选择公告类型',
+            trigger: 'change'
+          }],
+          isPublish: [{
+            required: true,
+            message: '请选择是否发布',
+            trigger: 'change'
+          }],
+          temps: [{
+            required: true,
+            message: '请选择发布时间',
+            trigger: 'change'
+          }],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -158,19 +419,70 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        uploadData:{},
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        selectTime: [],
+        showImg:false
       }
     },
+    components: {
+      'big-img': BigImg
+    },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
+      this.uploadData={
+        token:getSession("token")
+      }
+    },
+    filters: {
+      dateFont: function (date){
+        return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss');
+      },
     },
     methods: {
+      clickImg(img) {
+        console.log(img)
+        this.showImg = true
+        this.imgSrc = img
+      },
+      viewImg() {
+        this.showImg = false
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl=res.data
+      },
+      beforeAvatarUpload(file) {
+      },
+      selectTap(time){
+      },
       queryBtns(){
         let parameterData = {
           menuId: this.menuId
@@ -219,14 +531,13 @@
         }
         this.$fetch('/api/appNotice/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].isRelease == '1') {
-              res.data.list[i].isRelease = '已发布'
-            } else {
-              res.data.list[i].isRelease = '未发布'
-            }
-          }
-
+          // for(let i = res.data.list.length - 1; i >= 0; i--) {
+          //   if(res.data.list[i].isRelease == '1') {
+          //     res.data.list[i].isRelease = '已发布'
+          //   } else {
+          //     res.data.list[i].isRelease = '未发布'
+          //   }
+          // }
           this.tableData = res.data.list
           this.totalCount = res.data.total
         } else {
@@ -247,18 +558,30 @@
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.imageUrl = ""
       },
       addBtn(form) {
+        if (this.selectTime && this.selectTime[0]) {
+          this.form.releaserTime = this.selectTime[0].getTime();
+        }else {
+          this.form.releaserTime = ''
+        }
+        if (this.selectTime && this.selectTime[1]) {
+          this.form.cancelTime = this.selectTime[1].getTime();
+        }else {
+          this.form.cancelTime = ''
+        }
+        this.form.imgUrl = this.imageUrl;
         this.$refs[form].validate(valid => {
           if(valid) {
             this.$post('/api/appNotice/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-              this.dialogFormVisible = false
+              this.dialogFormVisible = false;
               this.$message({
                 type: 'success',
                 message: '添加成功！'
               })
-              this.accountList()
+              this.accountList();
             } else {
               this.$message({
                 type: 'error',
@@ -311,11 +634,37 @@
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          this.formtwo = res.data
+            let  arr =[]
+            if (res.data.releaserTime) {
+              let releaserTime = new Date(res.data.releaserTime);
+              arr.push(releaserTime)
+            }
+            if (res.data.cancelTime) {
+              let cancelTime = new Date(res.data.cancelTime);
+              arr.push(cancelTime)
+            }
+            if (res.data.releaserTime && res.data.cancelTime) {
+              this.selectTime = arr;
+              console.log(this.selectTime)
+            }
+            this.imageUrl = res.data.imgUrl
+          this.formtwo = res.data;
         }
       })
       },
       update(formtwo) {
+        if (this.selectTime && this.selectTime[0]) {
+          this.formtwo.releaserTime = this.selectTime[0].getTime();
+        }else {
+          this.formtwo.releaserTime = ''
+        }
+        if (this.selectTime && this.selectTime[1]) {
+          this.formtwo.cancelTime = this.selectTime[1].getTime();
+        }else {
+          this.formtwo.cancelTime = ''
+        }
+        this.formtwo.imgUrl = this.imageUrl;
+
         this.$put('/api/appNotice/update', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
           this.$message({
@@ -324,7 +673,12 @@
           })
           this.dialogTableVisible = false
           this.accountList()
-        }
+        }else {
+            this.$message({
+              type: 'danger',
+              message: res.message
+            })
+          }
       })
       },
       getOne(id){
@@ -346,13 +700,118 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
   }
 </script>
 <style type="text/css">
+  .yichu{
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .box_xinxi{
+    background-color: #fff;
+    border-radius: 4px;
+    /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .box_xinxi .title{
+    color: #353535;
+    font-size: 14px;
+    /*margin-bottom: 20px;*/
+  }
+
+
+  .box_xinxi .header{
+    width: 100%;
+    height: 40px;
+    background-color: #f6f8f9;
+    color: #1fa67a;
+    line-height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .wrap_da{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .box_xinxi .body_list{
+    /*display: inline-block;*/
+    /*float: left;*/
+    width: 50%;
+    height: auto;
+    height: 50px;
+    color: #353535;
+    line-height: 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e7e7eb;
+    display: inline-block;
+  }
+
+  .box_xinxi .body_list.img{
+    min-height: 50px;
+    height: auto;
+    line-height: 30px;
+  }
+
+  .box_xinxi .body_list.img img{
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+    line-height: 1px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
+  }
+
+  .box_xinxi .body_list.img .title{
+    padding-top: 10px;
+  }
+  .box_xinxi .body_list .title{
+    width: 150px;
+    float: left;
+    padding-right: 30px;
+    color: #a6a6a6;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  .box_xinxi .body_list.dec{
+    height: auto;
+    /*padding: 5px 10px;*/
+  }
+
+  .box_xinxi .body_list .name{
+    float: left;
+    color: #606266;
+  }
+
+  .box_xinxi .body_list .name .dec{
+    font-size: 14px;
+    /*line-height: 30px;*/
+    width: 500px;
+    float: left;
+  }
+
+
+  .red{
+    color: #ff4d51;
+  }
+  .green{
+    color: #13ce66;
+  }
+  .blue{
+    color: #409EFF;
+  }
   .administratormanage-wrap {
     width: 100%;
   }
@@ -378,5 +837,64 @@
 
   .el-table th {
     background-color: #e6e6e6;
+  }
+
+
+  .bannerAvatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .bannerAvatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .bannerAvatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+   height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+
+  .img_loadBox{
+    width: 178px;
+    height: 178px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+  }
+
+  .avatar {
+    max-width: 178px;
+    max-height: 178px;
+    display: block;
+  }
+  .form {
+    /*overflow-y: scroll;*/
+    /*height: auto;*/
+  }
+  .el-icon-plus{
+    line-height:0;
+  }
+  .bannerAvatar-uploader-icon{
+    line-height: 178px !important;
+  }
+
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 33%;
   }
 </style>

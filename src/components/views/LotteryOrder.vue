@@ -7,24 +7,15 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <!--<el-form-item label="抽奖编号：">
-            <el-input v-model="formInline.id" placeholder="请输入抽奖编号" clearable></el-input>
-          </el-form-item>-->
-
           <el-form-item label="用户id：">
             <el-input v-model="formInline.accountId" placeholder="请输入账户id" clearable></el-input>
           </el-form-item>
-
-          <!--<el-form-item label="电话：">
-            <el-input v-model="formInline.mobile" placeholder="请输入电话" clearable></el-input>
-          </el-form-item>-->
           <el-form-item :label-width="labelWidth"  label="礼品金额:">
             <el-input type="number" min="0" v-model="formInline.minPrice" placeholder="请输入最小金额" clearable></el-input>
           </el-form-item>
           <el-form-item  label="至">
             <el-input type="number" min="0" v-model="formInline.maxPrice" placeholder="请输入最大金额" clearable></el-input>
           </el-form-item>
-
           <el-form-item :label-width="labelWidth" label="兑换时间:">
             <el-date-picker
               v-model="selectTime"
@@ -37,7 +28,6 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-
           <el-form-item label="状态:">
             <el-select  v-model="formInline.status" placeholder="请选择状态">
               <el-option label="审核中" value="1"></el-option>
@@ -48,11 +38,9 @@
             </el-select>
           </el-form-item>
           <el-button type="primary" plain style="margin-bottom: 30px" @click="search()">查询</el-button>
-
           <el-form-item v-if="exportExle" >
             <el-button type="success"  plain @click="queryExport()">导出表格</el-button>
           </el-form-item>
-
           <el-form-item v-if="lockAll">
             <el-button type="warning" plain @click="lockAllTap()">全部锁定</el-button>
           </el-form-item>
@@ -63,34 +51,24 @@
           <el-table :data="tableData" height="528" :row-class-name="tableRowClassName">
             <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-
             <el-table-column min-width="200" prop="id" label="订单号">
             </el-table-column>
-
             <el-table-column min-width="150px" prop="accountId" label="用户id">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="channelCode" label="渠道">
             </el-table-column>
-
             <el-table-column width="150px" prop="expendPigCoin" label="消耗金猪">
             </el-table-column>
-
             <el-table-column min-width="200px" prop="goodsName" label="商品名称">
             </el-table-column>
-
             <el-table-column min-width="150px" prop="price" label="礼品对等价格(元)">
             </el-table-column>
-
             <el-table-column width="170px" prop="createTime" :formatter="dateFormat" label="兑换时间">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="operatorName" label="财务操作人">
             </el-table-column>
-
             <el-table-column width="170px" prop="updateTime" :formatter="dateFormat" label="财务处理时间">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="status" label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.status==1">待审核</span>
@@ -99,30 +77,20 @@
                 <span v-if="scope.row.status==4">已发货</span>
               </template>
             </el-table-column>
-
             <el-table-column min-width="120px" prop="receiver" label="邮寄人姓名">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="mobile" label="邮寄人电话">
             </el-table-column>
-
             <el-table-column min-width="300px" prop="detailAddress" label="邮寄地址">
             </el-table-column>
-
             <el-table-column min-width="300px" prop="remarks" label="备注">
             </el-table-column>
-
             <el-table-column fixed="right" v-if="powerTrue" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <!--{{scope.row.status}}-->
-                <!--{{scope.row.isLocking}}-->
-                <!--{{scope.row.locking}}-->
                 <el-button type="warning" plain v-if="lock && scope.row.status!=2 && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" >锁定</el-button>
                 <el-button type="primary"  plain v-if="lock && scope.row.status!=2 && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" >解锁</el-button>
                 <span style="text-align: center" class="pla-span amountred" v-if="scope.row.status!=2 && scope.row.isLocking==1 && scope.row.locking!=2">已被{{scope.row.admin}}锁定<span v-if="optionW='150px'"></span></span>
-                <!--<el-button type="info" plain size="mini" @click="getOne(scope.row.id)">详情</el-button>-->
                 <el-button size="mini" type="success" plain v-if="exa && scope.row.status!=2 && exa && scope.row.isLocking==1 && scope.row.locking==2" @click="getInfo(scope.row.id)"><span v-if="optionW='150px'"></span>处理</el-button>
-
               </template>
             </el-table-column>
           </el-table>
@@ -184,22 +152,7 @@
           </div>
         </el-dialog>
         <el-dialog title="兑换请求处理" :visible.sync="dialogTableVisible" width="700px">
-          <el-form :model="formtwo">
-            <!--<el-row>-->
-                <!--<div class="change_box">-->
-                  <!--<div class="status_list">-->
-                    <!--<div class="item">-->
-                      <!--<el-radio v-model="formtwo.status" :label="1" border>备选项1</el-radio>-->
-                    <!--</div>-->
-                    <!--<div class="item">-->
-                      <!--<el-radio v-model="formtwo.status" :label="2" border>备选项2</el-radio>-->
-                    <!--</div>-->
-                    <!--<div class="item">-->
-                      <!--<el-radio v-model="formtwo.status" :label="3" border>备选项2</el-radio>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</div>-->
-            <!--</el-row>-->
+          <el-form :model="formtwo" :rules="rules" ref="formtwo" >
             <el-row>
               <el-col :span="14">
                 <el-form-item label="审核状态:" :label-width="formLabelWidth" prop="status">
@@ -211,43 +164,41 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <el-col :span="22" v-if="formtwo.lotterySort==1 && formtwo.status==4">
+              <el-col :span="22" v-if="formtwo.goodsType==2 && formtwo.status==4">
                 <el-form-item label="快递公司:" :label-width="formLabelWidth" prop="expressCompany">
                   <el-input  min="0" v-model="formtwo.expressCompany" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22" v-if="formtwo.lotterySort==1 && formtwo.status==4">
+              <el-col :span="22" v-if="formtwo.goodsType==2 && formtwo.status==4">
                 <el-form-item label="快递单号:" :label-width="formLabelWidth" prop="expressNumbers">
                   <el-input  min="0" v-model="formtwo.expressNumbers" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22" v-if="formtwo.lotterySort==2 && formtwo.status==4">
+              <el-col :span="22" v-if="formtwo.goodsType==1 && formtwo.status==4">
                 <el-form-item label="卡号:" :label-width="formLabelWidth" prop="expressCompany">
                   <el-input  min="0" v-model="formtwo.expressCompany" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="22" v-if="formtwo.lotterySort==2 && formtwo.status==4">
+              <el-col :span="22" v-if="formtwo.goodsType==1 && formtwo.status==4">
                 <el-form-item label="卡密:" :label-width="formLabelWidth" prop="expressNumbers">
                   <el-input  min="0" v-model="formtwo.expressNumbers" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="22">
-                <el-form-item label="备注:" prop="remarks" :label-width="formLabelWidth">
-                  <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remarks" auto-complete="off" clearable></el-input>
+                <el-form-item label="备注:" :label-width="formLabelWidth">
+                  <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remarks" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="抽奖详情" :visible.sync="dialogTableDetail" width="700px">
@@ -362,7 +313,6 @@
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
   import { getSession } from '../../utils/cookie'
-
   export default {
     name: 'LotteryOrder',
     data() {
@@ -377,18 +327,30 @@
         menuId:'',
         selectTime:'',
         dialogTableVisible: false,
-        formtwo: {},
+        formtwo: {
+          expressCompany:'',
+          expressNumbers:'',
+        },
         dialogFormVisible: false,
         dialogTableDetail:false,
         formtwoInfo:{},
-        form: {
-        },
-        roles: {
-          id: '',
-          realname: ''
-        },
-
-      rules: {
+        form: {},
+        rules: {
+          status: [
+            {required: true, message: '请选择状态', trigger: 'change' }
+          ],
+          expressCompany: [
+            { required: true, message: '不可为空', trigger: 'blur' }
+          ],
+          expressNumbers: [
+            { required: true, message: '不可为空', trigger: 'blur' },
+          ],
+          expressCompany_k: [
+            { required: true, message: '请输入卡号', trigger: 'blur' }
+          ],
+          expressNumbers_k: [
+            { required: true, message: '请输入卡密', trigger: 'blur' },
+          ],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -400,11 +362,6 @@
         totalPriceCount:'',
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
         imageUrl:'',
         pickerOptions: {
           shortcuts: [{
@@ -436,9 +393,9 @@
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       //锁定样式
@@ -502,24 +459,12 @@
         }
         this.$fetch('/api/mLotteryOrder/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            /*for(let i = res.data.list.length - 1; i >= 0; i--) {
-              if(res.data.list[i].status == '1') {
-                res.data.list[i].status = '审核中'
-              } else if(res.data.list[i].status == '2') {
-                  res.data.list[i].status = '拒绝'
-              }else if(res.data.list[i].status == '3') {
-                res.data.list[i].status = '待发货'
-              }else if(res.data.list[i].status == '4') {
-                res.data.list[i].status = '已发货'
-              }
-            }*/
-
-            this.tableData = res.data.list
-            this.totalCount = parseInt(res.data.total)
-            this.pageCount=res.data.pageCount
-            this.subTotalPrice=res.data.subTotalPrice
-            this.totalPriceCount=res.data.totalPriceCount
-            this.totalPrice=res.data.totalPrice
+            this.tableData = res.data.list;
+            this.totalCount = parseInt(res.data.total);
+            this.pageCount=res.data.pageCount;
+            this.subTotalPrice=res.data.subTotalPrice;
+            this.totalPriceCount=res.data.totalPriceCount;
+            this.totalPrice=res.data.totalPrice;
           } else {
             this.$message({
               type: 'error',
@@ -546,7 +491,7 @@
       },
       load() {
         this.formInline = {};
-        this.form={}
+        this.form={};
         this.dialogFormVisible = true;
       },
       addBtn(form) {
@@ -607,6 +552,7 @@
         })
       },
       getInfo(id) {
+        this.formtwo={};
         this.dialogTableVisible = true
         this.$fetch('/api/mLotteryOrder/queryOne', {
           id: id
@@ -617,14 +563,23 @@
         })
       },
       update(formtwo) {
+        this.$refs[formtwo].validate(valid => {
+          if (valid) {
         this.$put('/api/mLotteryOrder/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
               type: 'success',
-              message: '修改成功！'
+              message: '操作成功'
             })
             this.dialogTableVisible = false
             this.accountList()
+            }else {
+            this.$message({
+              type: 'warning',
+              message: res.message
+            })
+            }
+           })
           }
         })
       },

@@ -492,7 +492,18 @@ const routes = [
         component: resolve => require(['../components/views/JmsLog.vue'], resolve),
         meta: { title: 'jms日志'}
       },
-
+      {
+        path: 'rank-pig',
+        name: 'RankPig',
+        component: resolve => require(['../components/views/RankPig.vue'], resolve),
+        meta: { title: '金猪排行'}
+      },
+      {
+        path: 'rank-config',
+        name: 'RankConfig',
+        component: resolve => require(['../components/views/RankConfig.vue'], resolve),
+        meta: { title: '排行榜'}
+      },
     ]
   }
 ]
