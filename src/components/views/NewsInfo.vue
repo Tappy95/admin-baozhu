@@ -68,7 +68,7 @@
               <el-col :span="12">
                 <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.pushMode" placeholder="">
-                    <el-option label="短信" value="1"></el-option>
+                    <!--<el-option label="短信" value="1"></el-option>-->
                     <el-option label="推送" value="2"></el-option>
                   </el-select>
                 </el-form-item>
@@ -97,7 +97,7 @@
                 <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.informType" placeholder="" @change="changeType(form.informType)">
                     <el-option label="普通通知" value="1"></el-option>
-                    <el-option label="自定义通知" value="2"></el-option>
+                    <!--<el-option label="自定义通知" value="2"></el-option>-->
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -149,7 +149,7 @@
               <el-col :span="12">
                 <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.pushMode" placeholder="">
-                    <el-option label="短信" :value="1"></el-option>
+                    <!--<el-option label="短信" :value="1"></el-option>-->
                     <el-option label="推送" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
@@ -177,7 +177,7 @@
                 <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.informType" placeholder="" >
                     <el-option label="普通通知" :value="1"></el-option>
-                    <el-option label="自定义通知" :value="2"></el-option>
+                    <!--<el-option label="自定义通知" :value="2"></el-option>-->
                   </el-select>
                 </el-form-item>
               </el-col>

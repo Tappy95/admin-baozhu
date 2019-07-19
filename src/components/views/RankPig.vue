@@ -14,16 +14,16 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="排行榜类型:">
-            <el-select placeholder="请选择排行榜类型" v-model="formInline.rankType" >
-              <el-option label="天榜" value="1"></el-option>
-              <el-option label="周榜" value="2"></el-option>
-              <el-option label="月榜" value="3"></el-option>
-              <el-option label="年榜" value="4"></el-option>
-              <el-option label="总榜" value="5"></el-option>
-              <el-option label="全部" value=""></el-option>
-            </el-select>
-          </el-form-item>
+          <!--<el-form-item label="排行榜类型:">-->
+            <!--<el-select placeholder="请选择排行榜类型" v-model="formInline.rankType" >-->
+              <!--<el-option label="天榜" value="1"></el-option>-->
+              <!--<el-option label="周榜" value="2"></el-option>-->
+              <!--<el-option label="月榜" value="3"></el-option>-->
+              <!--<el-option label="年榜" value="4"></el-option>-->
+              <!--<el-option label="总榜" value="5"></el-option>-->
+              <!--<el-option label="全部" value=""></el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
 
           <el-form-item label="排名时间:">
             <el-date-picker
@@ -69,7 +69,7 @@
             </el-table-column>
             <el-table-column   label="累计金猪数">
               <template slot-scope="scope">
-                <span class="amountyellow">
+                <span class="green">
                  {{scope.row.pigBalance | currency}}
                 </span>
               </template>
@@ -78,8 +78,7 @@
             </el-table-column>
             <el-table-column prop="createTime" width="170" :formatter="dateFormat" label="创建时间">
             </el-table-column>
-            <el-table-column prop="rankDate"  width="170" :formatter="dateFormat" label="排名时间">
-            </el-table-column>
+
             <el-table-column prop="realData"  label="是否真实用户">
               <template slot-scope="scope">
                 <span v-if="scope.row.realData==1">是</span>
@@ -187,7 +186,6 @@
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           realData:this.formInline.realData,
-          rankType:this.formInline.rankType,
           rankDate:this.formInline.rankDate
         }
         this.$fetch('/api/rankPig/list', parameterData).then(res => {
@@ -231,6 +229,10 @@
   }
 </script>
 <style type="text/css">
+  .green{
+    color: #13ce66;
+  }
+
   .administratormanage-wrap {
     width: 100%;
   }

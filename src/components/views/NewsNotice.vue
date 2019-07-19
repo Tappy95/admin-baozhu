@@ -56,7 +56,12 @@
             </el-table-column>
             <el-table-column label="序号" type="index" fixed="left" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column prop="noticeTitle" fixed="left" label="标题">
+            <el-table-column prop="noticeTitle"  fixed="left" label="标题">
+              <template slot-scope="scope">
+                <div class="yichu">
+                  {{scope.row.noticeTitle}}
+                </div>
+              </template>
             </el-table-column>
             <el-table-column fixed="left" width="250" prop="noticeContent" label="内容">
                 <template slot-scope="scope">
@@ -310,12 +315,14 @@
                 <div class="body_list dec" style="width: 100%" >
                   <div class="title">公告内容:</div>
                   <div class="name">
-                    <span class="dec">  {{formtwoInfo.noticeContent}}</span>
+                    <span class="dec" style="line-height: 30px; padding: 20px 0">  {{formtwoInfo.noticeContent}}</span>
                   </div>
                 </div>
-                <div class="body_list" style="width: 100%" v-if="formtwoInfo.noticeType==3">
+                <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==3">
                   <div class="title">链接地址:</div>
-                  <div class="name">{{formtwoInfo.linkAddress}}</div>
+                  <div class="name">
+                    <span class="dec" style="line-height: 30px; padding: 20px 0">  {{formtwoInfo.linkAddress}}</span>
+                  </div>
                 </div>
                 <div class="body_list img" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
                   <div class="title">任务logo:</div>
@@ -795,9 +802,10 @@
     color: #606266;
   }
 
-  .box_xinxi .body_list .name .dec{
+  .box_xinxi .body_list.dec .name .dec{
     font-size: 14px;
     /*line-height: 30px;*/
+    /*padding: 30px;*/
     width: 500px;
     float: left;
   }

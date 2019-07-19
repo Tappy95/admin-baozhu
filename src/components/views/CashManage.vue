@@ -930,8 +930,8 @@
     color: #ff4d51;
   }
   .amountgreen{
-    color: #13ce66;
-  }
+      color: #13ce66;
+    }
   .blue{
     color: #409EFF;
   }

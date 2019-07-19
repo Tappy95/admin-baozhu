@@ -504,6 +504,12 @@ const routes = [
         component: resolve => require(['../components/views/RankConfig.vue'], resolve),
         meta: { title: '排行榜'}
       },
+      {
+        path: 'signin-log',
+        name: 'SigninLog',
+        component: resolve => require(['../components/views/SigninLog.vue'], resolve),
+        meta: { title: '签到赚任务记录'}
+      },
     ]
   }
 ]

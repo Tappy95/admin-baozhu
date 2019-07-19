@@ -11,7 +11,6 @@
             <el-input :style="styleObject"  v-model="formInline.accountId" placeholder="请输入用户ID" auto-complete="off"  clearable>
             </el-input>
           </el-form-item>
-
           <el-form-item label="意见类型:">
             <el-select  v-model="formInline.opinionType" placeholder="请选择意见类型">
               <el-option label="会员相关" value="1"></el-option>
@@ -26,7 +25,7 @@
             <el-select  v-model="formInline.state" placeholder="请选择状态">
                 <el-option label="待处理" value="1"></el-option>
                 <el-option label="已处理" value="2"></el-option>
-                <el-option label="已反馈" value="3"></el-option>
+                <el-option label="不予处理" value="3"></el-option>
                 <el-option label="作废" value="4"></el-option>
                 <el-option label="全部" value=""></el-option>
             </el-select>
@@ -39,30 +38,22 @@
           <el-table :data="tableData" height="580">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
-
             <el-table-column fixed="left" min-width="150px" prop="accountId" label="用户ID">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="vipName"  label="会员等级">
             </el-table-column>
-
             <el-table-column min-width="150px" prop="experience" label="用户成长值">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="opinionType" label="意见类型">
             </el-table-column>
             <el-table-column min-width="250px" prop="opinionContent" label="意见内容">
             </el-table-column>
-
             <el-table-column min-width="200px" prop="email" label="邮箱">
             </el-table-column>
-
             <el-table-column min-width="100px" prop="state" label="状态">
             </el-table-column>
-
             <el-table-column min-width="300px" prop="remarks" label="备注">
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
@@ -71,22 +62,18 @@
             </el-table-column>
           </el-table>
         </template>
-
         <el-dialog title="意见审核" :visible.sync="dialogTableVisible" width="800px">
-          <el-form :model="formtwo" :rules="rules">
+          <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="审核类型:" prop="opinionType" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.opinionType" placeholder="">
-                    <el-option label="会员相关" :value="1"></el-option>
-                    <el-option label="积分提现" :value="2"></el-option>
-                    <el-option label="信息错误" :value="3"></el-option>
-                    <el-option label="友好意见" :value="4"></el-option>
-                    <el-option label="其他" :value="5"></el-option>
+                <el-form-item label="状态:" prop="opinionType" :label-width="formLabelWidth">
+                  <el-select  v-model="formtwo.state" placeholder="请选择状态">
+                    <el-option label="待处理" :value="1"></el-option>
+                    <el-option label="已处理" :value="2"></el-option>
+                    <el-option label="不予处理" :value="3"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="20">
                 <el-form-item label="备注" prop="remarks" :label-width="formLabelWidth">
                   <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remarks" auto-complete="off" clearable></el-input>
@@ -96,13 +83,13 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
         <big-img v-if="showImg"
                  @clickit="viewImg"
-                 :imgSrc="imgSrc"></big-img>
-
+                 :imgSrc="imgSrc">
+        </big-img>
         <el-dialog title="反馈详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo" >
             <el-row>
@@ -118,21 +105,18 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="用户成长值:" :label-width="formLabelWidth" >
                   <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.experience" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="邮箱:" :label-width="formLabelWidth" >
                   <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.email" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item  label="意见类型:" :label-width="formLabelWidth">
                   <el-select :disabled="true"  :style="styleObject" :label-width="formLabelWidth"  v-model="formtwoInfo.opinionType" placeholder="">
@@ -144,41 +128,32 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="创建时间:" :label-width="formLabelWidth" >
                   <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createrTime" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="20">
               <el-form-item  label="图片:"
                             :label-width="formLabelWidth">
                 <div class="box_img">
                   <div class="box_min"  v-for="(item,index) in arrImg" :key="index"  v-if="arrImg && item">
-                    <img v-if="item"  @click="clickImg(item)"
-                          :src="item"
-                          class="avatar">
+                    <img v-if="item"  @click="clickImg(item)" :src="item" class="avatar">
                   </div>
-
                 </div>
               </el-form-item>
               </el-col>
-
               <el-col :span="20">
                 <el-form-item label="备注:"  :label-width="formLabelWidth">
                   <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remarks" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="20">
                 <el-form-item label="意见内容:" :label-width="formLabelWidth">
                   <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.opinionContent" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
-
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -259,7 +234,6 @@
       this.accountList();
     },
     methods: {
-
       clickImg(img) {
         this.showImg = true;
         this.imgSrc = img;
@@ -267,7 +241,6 @@
       viewImg() {
         this.showImg = false
       },
-
       queryBtns(){
         let parameterData = {
           menuId: this.menuId
@@ -324,7 +297,7 @@
               } else if(res.data.list[i].state == '2') {
                 res.data.list[i].state = '已处理'
               }else if(res.data.list[i].state == '3') {
-                res.data.list[i].state = '已反馈'
+                res.data.list[i].state = '不予处理'
               }else if(res.data.list[i].state == '4') {
                 res.data.list[i].state = '作废'
               }
@@ -345,7 +318,6 @@
         this.pageSize = 10;
         this.accountList()
       },
-
       getInfo(id) {
         //修改前查询基本信息
         this.dialogTableVisible = true
@@ -358,6 +330,8 @@
         })
       },
       update(formtwo) {
+        this.$refs[formtwo].validate(valid => {
+          if(valid) {
         this.$put('/api/mUserOpinion/update', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
@@ -366,6 +340,13 @@
             })
             this.dialogTableVisible = false
             this.accountList()
+              }else {
+            this.$message({
+              type: 'error',
+              message: res.message
+            })
+            }
+            })
           }
         })
       },

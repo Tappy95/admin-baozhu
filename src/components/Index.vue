@@ -108,7 +108,12 @@ export default {
           ]
         }
       ],
-      form: {},
+      // if (this.form.password=='' || this.form.oldPassword=='' || this.form.mitPassword==''){
+      form: {
+        password:'',
+        oldPassword:'',
+        mitPassword:''
+      },
       mitPassword:'',
       role:[],
       rules: {
@@ -144,12 +149,20 @@ export default {
     },
 
     addBtn(form) {
+      if (!this.form.password || !this.form.oldPassword || !this.form.mitPassword){
+        this.$message({
+          type: 'warning',
+          message: '请完整填写信息'
+        })
+        return false
+      }
+
       if (this.form.password != this.form.mitPassword) {
         this.$message({
           type: 'error',
           message: '请确认新密码和确认新密码一致'
         })
-        return
+        return false
       }
 
       this.form.adminId = getSession("adminId");
