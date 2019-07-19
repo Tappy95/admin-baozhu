@@ -344,14 +344,14 @@
                       <el-form-item label="奖品名称:"
                                     prop="goodsName"
                                     :label-width="formLabelWidth">
-                        <el-input  v-model="form.goodsName"
+                        <el-input  v-model="formtwo.goodsName"
                                    auto-complete="off"
                                    clearable></el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="22">
                       <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
-                        <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
+                        <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
                       </el-form-item>
                     </el-col>
 

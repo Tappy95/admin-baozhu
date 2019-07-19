@@ -541,7 +541,7 @@
         channelNameList:[],
         levelList:[],
         interface:'',
-        loading:true,
+        loading:false,
         fullscreenLoading:false,
         vip:"",
       }
@@ -558,7 +558,7 @@
       this.channelList();//调取渠道标识列表
       this.levelListD();//调取用户等级
       this.queryBtns();//权限
-      this.accountList();//列表
+      // this.accountList();//列表
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
@@ -740,6 +740,7 @@
         })
       },
       accountList() {
+        this.loading =true;
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
