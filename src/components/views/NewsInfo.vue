@@ -778,6 +778,7 @@
     font-size: 14px;
     width: 500px;
     float: left;
+    overflow-wrap: break-word;
   }
 
   .demo-table-expand_info {

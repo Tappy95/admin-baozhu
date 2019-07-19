@@ -101,7 +101,7 @@
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="24">
-                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
+                <el-form-item label="抽奖分类:" prop="lotterySort" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.lotterySort" placeholder="">
                     <el-option label="兑换" value="1"></el-option>
                     <el-option label="抽奖" value="2"></el-option>
@@ -130,7 +130,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">
+                <el-form-item label="适用人群:" prop="applyCrowd" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.applyCrowd" placeholder="">
                     <el-option label="全部" value="1"></el-option>
                   </el-select>
@@ -138,7 +138,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
+                <el-form-item label="类型状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
@@ -152,7 +152,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="22">
-                <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
+                <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remark" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
@@ -167,21 +167,19 @@
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="24">
-                <el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">
+                <el-form-item label="抽奖分类:" prop="lotterySort" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.lotterySort" placeholder="">
                     <el-option label="兑换" :value="1"></el-option>
                     <el-option label="抽奖" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12" v-if="formtwo.lotterySort==2">
                 <el-form-item  label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">
                   <el-input :style="styleObject"  v-model.number="formtwo.expendPigCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12" v-if="formtwo.lotterySort==2">
                 <el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">
                   <el-input :style="styleObject"  v-model.number="formtwo.timesOneday" auto-complete="off"  clearable>
@@ -194,17 +192,15 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
-                <el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">
+                <el-form-item label="适用人群:" prop="applyCrowd" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.applyCrowd" placeholder="">
                     <el-option label="全部" :value="1"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
-                <el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">
+                <el-form-item label="类型状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="停用" :value="2"></el-option>
@@ -217,72 +213,12 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22" v-if="form.lotterySort==2">
+              <el-col :span="22">
                 <el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
-            <!--<el-row>-->
-              <!--<el-col :span="24">-->
-                <!--<el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">-->
-                  <!--<el-input v-model="formtwo.typeName" auto-complete="off"  clearable>-->
-                  <!--</el-input>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="每天次数限制:" :label-width="formLabelWidth" prop="timesOneday">-->
-                  <!--<el-input  type="number" min="0" v-model="formtwo.timesOneday" auto-complete="off"  clearable>-->
-                  <!--</el-input>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="每天发放数量:" :label-width="formLabelWidth" prop="dayNum">-->
-                  <!--<el-input  type="number" min="0" v-model="formtwo.dayNum" auto-complete="off"  clearable>-->
-                  <!--</el-input>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="每次所需金猪:" :label-width="formLabelWidth" prop="expendPigCoin">-->
-                  <!--<el-input type="number" min="0" v-model="formtwo.expendPigCoin" auto-complete="off"  clearable>-->
-                  <!--</el-input>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="适用人群" prop="applyCrowd" :label-width="formLabelWidth">-->
-                  <!--<el-select v-model="formtwo.applyCrowd" placeholder="">-->
-                    <!--<el-option label="全部" :value="1"></el-option>-->
-                  <!--</el-select>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="抽奖分类" prop="lotterySort" :label-width="formLabelWidth">-->
-                  <!--<el-select v-model="formtwo.lotterySort" placeholder="">-->
-                    <!--<el-option label="实物" :value="1"></el-option>-->
-                    <!--<el-option label="虚拟" :value="2"></el-option>-->
-                  <!--</el-select>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-
-              <!--<el-col :span="12">-->
-                <!--<el-form-item label="类型状态" prop="status" :label-width="formLabelWidth">-->
-                  <!--<el-select v-model="formtwo.status" placeholder="">-->
-                    <!--<el-option label="启用" :value="1"></el-option>-->
-                    <!--<el-option label="停用" :value="2"></el-option>-->
-                  <!--</el-select>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-
-              <!--<el-col :span="24">-->
-                <!--<el-form-item label="类型描述" prop="remark" :label-width="formLabelWidth">-->
-                  <!--<el-input style="width: 440px;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>-->
-                <!--</el-form-item>-->
-              <!--</el-col>-->
-
-            <!--</el-row>-->
-
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>

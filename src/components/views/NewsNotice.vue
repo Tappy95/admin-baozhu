@@ -38,7 +38,7 @@
                     <span>{{ props.row.createrName }}</span>
                   </el-form-item>
                   <el-form-item label="权限：">
-                    <span v-if="props.row.range==1">全部</span>
+                    <span v-if="props.row.ranges==1">全部</span>
                   </el-form-item>
                   <el-form-item label="状态：">
                     <span class="green" v-if="props.row.isRelease==1">已发布</span>
@@ -330,30 +330,8 @@
                     <img @click="clickImg(formtwoInfo.imgUrl)" :src="formtwoInfo.imgUrl" />
                   </div>
                 </div>
-                <!--<div class="body_list" style="width: 100%" >-->
-                  <!--<div class="title">任务说明:</div>-->
-                  <!--<div class="name">-->
-                    <!--{{taskInfo.explains}}-->
-                  <!--</div>-->
-                <!--</div>-->
-
-             <!---->
-                <!--<div class="body_list" style="width: 100%" >-->
-                  <!--<div class="title">温馨提示:</div>-->
-                  <!--<div class="name">-->
-                    <!--{{taskInfo.remind}}-->
-                  <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="body_list"  style="width: 100%" >-->
-                  <!--<div class="title">备注:</div>-->
-                  <!--<div class="name">-->
-                    <!--{{taskInfo.remarks}}-->
-                  <!--</div>-->
-                <!--</div>-->
               </div>
             </div>
-
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableDetail = false">取 消</el-button>
@@ -717,22 +695,16 @@
     text-overflow:ellipsis;
     white-space: nowrap;
   }
-
   .box_xinxi{
     background-color: #fff;
     border-radius: 4px;
-    /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
     padding: 10px;
     box-sizing: border-box;
   }
-
   .box_xinxi .title{
     color: #353535;
     font-size: 14px;
-    /*margin-bottom: 20px;*/
   }
-
-
   .box_xinxi .header{
     width: 100%;
     height: 40px;
@@ -751,8 +723,6 @@
     flex-wrap: wrap;
   }
   .box_xinxi .body_list{
-    /*display: inline-block;*/
-    /*float: left;*/
     width: 50%;
     height: auto;
     height: 50px;

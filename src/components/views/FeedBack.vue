@@ -47,12 +47,20 @@
             <el-table-column min-width="120px" prop="opinionType" label="意见类型">
             </el-table-column>
             <el-table-column min-width="250px" prop="opinionContent" label="意见内容">
+              <template slot-scope="scope">
+                <span class="yichu">{{scope.row.opinionContent}}</span>
+              </template>
             </el-table-column>
             <el-table-column min-width="200px" prop="email" label="邮箱">
             </el-table-column>
             <el-table-column min-width="100px" prop="state" label="状态">
             </el-table-column>
+            <el-table-column min-width="170px" prop="createrTime" label="创建时间" :formatter="dateFormat">
+            </el-table-column>
             <el-table-column min-width="300px" prop="remarks" label="备注">
+              <template slot-scope="scope">
+                <span class="yichu">{{scope.row.remarks}}</span>
+              </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
@@ -92,68 +100,79 @@
         </big-img>
         <el-dialog title="反馈详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo" >
-            <el-row>
-              <el-col :span="23">
-                <el-form-item label="用户ID:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true"   v-model="formtwoInfo.accountId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="vip等级:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.vipName" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="用户成长值:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.experience" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="邮箱:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.email" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item  label="意见类型:" :label-width="formLabelWidth">
-                  <el-select :disabled="true"  :style="styleObject" :label-width="formLabelWidth"  v-model="formtwoInfo.opinionType" placeholder="">
-                    <el-option label="会员相关" :value="1"></el-option>
-                    <el-option label="积分提现" :value="2"></el-option>
-                    <el-option label="信息错误" :value="3"></el-option>
-                    <el-option label="友好意见" :value="4"></el-option>
-                    <el-option label="其他" :value="5"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="创建时间:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createrTime" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="20">
-              <el-form-item  label="图片:"
-                            :label-width="formLabelWidth">
-                <div class="box_img">
-                  <div class="box_min"  v-for="(item,index) in arrImg" :key="index"  v-if="arrImg && item">
-                    <img v-if="item"  @click="clickImg(item)" :src="item" class="avatar">
+            <el-row >
+              <div class="box_xinxi_feedback">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>详情信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">用户ID:</div>
+                    <div class="name">
+                      {{formtwoInfo.accountId}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">vip等级:</div>
+                    <div class="name">
+                      {{formtwoInfo.vipName}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">用户成长值:</div>
+                    <div class="name">
+                      {{formtwoInfo.experience}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">邮箱:</div>
+                    <div class="name">
+                      {{formtwoInfo.email}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">意见类型:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.opinionType==1">会员相关</span>
+                      <span v-if="formtwoInfo.opinionType==2">积分提现</span>
+                      <span v-if="formtwoInfo.opinionType==3">信息错误</span>
+                      <span v-if="formtwoInfo.opinionType==4">友好意见</span>
+                      <span v-if="formtwoInfo.opinionType==5">其他</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">创建时间:</div>
+                    <div class="name">
+                      {{formtwoInfo.createrTime}}
+                    </div>
+                  </div>
+                  <div class="body_list dec" style="width: 100%" >
+                    <div class="title">意见内容:</div>
+                    <div class="name">
+                      <span class="dec">
+                        {{formtwoInfo.opinionContent}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list dec" style="width: 100%" >
+                    <div class="title">备注:</div>
+                    <div class="name">
+                      <span class="dec">
+                        {{formtwoInfo.remarks}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list img" style="width: 100%" >
+                    <div class="title">
+                      图片:
+                    </div>
+                    <div class="img_box">
+                      <div @click="clickImg(item.url)" v-for="(item,index) in arrImg" :key="index"  v-if="arrImg && item" class="more_img">
+                        <img  v-if="item"  @click="clickImg(item)" :src="item" class="avatar"  />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </el-form-item>
-              </el-col>
-              <el-col :span="20">
-                <el-form-item label="备注:"  :label-width="formLabelWidth">
-                  <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.remarks" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="20">
-                <el-form-item label="意见内容:" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.opinionContent" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
+              </div>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -228,6 +247,7 @@
     components: {
       'big-img': BigImg
     },
+
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
@@ -241,6 +261,7 @@
       viewImg() {
         this.showImg = false
       },
+
       queryBtns(){
         let parameterData = {
           menuId: this.menuId
@@ -452,5 +473,129 @@
     display: block;
     cursor: pointer;
   }
+
+  .yichu{
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .box_xinxi_feedback{
+    background-color: #fff;
+    border-radius: 4px;
+    /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .box_xinxi_feedback .title{
+    color: #353535;
+    font-size: 14px;
+    /*margin-bottom: 20px;*/
+  }
+
+
+  .box_xinxi_feedback .header{
+    width: 100%;
+    height: 40px;
+    background-color: #f6f8f9;
+    color: #1fa67a;
+    line-height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .wrap_da{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .box_xinxi_feedback .body_list{
+    width: 50%;
+    height: auto;
+    height: 50px;
+    color: #353535;
+    line-height: 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e7e7eb;
+    display: inline-block;
+  }
+
+  .box_xinxi_feedback .body_list.img{
+    min-height: 50px;
+    height: auto;
+    line-height: 30px;
+  }
+
+  .box_xinxi_feedback .body_list.img img{
+    max-width: 120px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+    line-height: 1px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
+  }
+
+  .box_xinxi_feedback .body_list.img .more_img{
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    margin: 10px 5px;
+    float:left;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: 1px dashed #cccccc;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    border-radius:4px;
+    cursor: pointer;
+  }
+  .box_xinxi_feedback .body_list.img .more_img img{
+    box-shadow: none;
+  }
+
+  .box_xinxi_feedback .body_list.img .title{
+    padding-top: 10px;
+    float: left;
+  }
+  .box_xinxi_feedback .body_list .title{
+    width: 150px;
+    float: left;
+    padding-right: 30px;
+    color: #a6a6a6;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  .box_xinxi_feedback .body_list.dec{
+    height: auto;
+  }
+
+  .box_xinxi_feedback .body_list .name{
+    float: left;
+    color: #606266;
+  }
+
+  .box_xinxi_feedback .body_list.img .img_box{
+    float: right;
+    width: 580px;
+    height: auto;
+    /*margin: -30px 10px 10px 10px;*/
+  }
+
+  .box_xinxi_feedback .body_list .name .dec{
+    font-size: 14px;
+    line-height: 30px;
+    width: 550px;
+    float: left;
+    padding: 10px;
+  }
+  
 
 </style>

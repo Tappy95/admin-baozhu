@@ -60,22 +60,12 @@
                 <el-option label="全部" value=""></el-option>
               </el-select>
             </el-form-item>
-
           <el-form-item style="margin-left: 20px">
              <el-button type="primary" plain @click="search">查询</el-button>
           </el-form-item>
-
           <el-form-item style="margin-left: 20px">
             <el-button type="danger" plain @click="typeTap">昨天</el-button>
           </el-form-item>
-
-          <!--<el-form-item >-->
-            <!--<el-button type="warning" plain >本周</el-button>-->
-          <!--</el-form-item>-->
-
-          <!--<el-form-item >-->
-            <!--<el-button type="success" plain >本月</el-button>-->
-          <!--</el-form-item>-->
         </el-form>
       </el-row>
      <div class="box_wrap">
@@ -152,7 +142,6 @@
               </el-popover>
             </el-col>
 
-
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
                 :placement=place
@@ -225,7 +214,6 @@
                 </div>
               </el-popover>
             </el-col>
-
 
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
@@ -433,6 +421,25 @@
                   <div class="dec">
                     <p>{{listData.jzdhAmount}}<span>元</span></p>
                     <p>兑换金猪总金额</p>
+                  </div>
+                </div>
+              </el-popover>
+            </el-col>
+
+            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-popover
+                :placement=place
+                title="参与竞猜游戏的人数"
+                width="200"
+                :offset=off
+                trigger="hover"
+                :tabindex=tabindex
+                content="时间段内参与游戏竞猜的总人数">
+                <div slot="reference" class="list grid-content">
+                  <img src="../../assets/statistics/exchange.png"/>
+                  <div class="dec">
+                    <p>{{listData.jcrAmount}}<span>人</span></p>
+                    <p>参与竞猜游戏的人数</p>
                   </div>
                 </div>
               </el-popover>
