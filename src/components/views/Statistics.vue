@@ -436,7 +436,7 @@
                 :tabindex=tabindex
                 content="时间段内参与游戏竞猜的总人数">
                 <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/exchange.png"/>
+                  <img src="../../assets/statistics/jc_game.png"/>
                   <div class="dec">
                     <p>{{listData.jcrAmount}}<span>人</span></p>
                     <p>参与竞猜游戏的人数</p>
