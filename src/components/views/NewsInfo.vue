@@ -16,12 +16,48 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" max-height="600">
+            <el-table-column fixed="left" type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand_info">
+                  <el-form-item label="发布状态：">
+                    {{props.row.isRelease}}
+                  </el-form-item>
+                  <el-form-item label="通知类型：">
+                    {{props.row.informType}}
+                  </el-form-item>
+                  <el-form-item label="通知方式：">
+                    {{props.row.pushMode}}
+                  </el-form-item>
+                  <el-form-item label="推送对象：">
+                    {{props.row.pushObject}}
+                  </el-form-item>
+                  <el-form-item label="推送时间：">
+                    {{props.row.pushTime | dateFont}}
+                  </el-form-item>
+                  <el-form-item label="创建时间：">
+                    {{props.row.createrTime | dateFont}}
+                  </el-form-item>
+                  <el-form-item label="标题：" style="width: 100%">
+                    <span>{{ props.row.informTitle }}</span>
+                  </el-form-item>
+                  <el-form-item label="内容："style="width:100%;">
+                    <span>{{ props.row.informContent }}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column  min-width="200px" fixed="left" prop="informTitle" label="通知标题">
+              <template slot-scope="scope">
+                <span class="yichu">{{scope.row.informTitle}}</span>
+              </template>
             </el-table-column>
             <el-table-column  min-width="300px" prop="informContent" label="通知内容">
+              <template slot-scope="scope">
+                <span class="yichu">{{scope.row.informContent}}</span>
+              </template>
             </el-table-column>
             <el-table-column prop="isRelease" min-width="120px" label="发布状态">
             </el-table-column>
@@ -35,10 +71,6 @@
             </el-table-column>
             <el-table-column width="200px" :formatter="dateFormat" prop="pushTime" label="推送时间">
             </el-table-column>
-
-            <el-table-column width="200px" :formatter="dateFormat" prop="pushTime" label="推送时间">
-            </el-table-column>
-
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
@@ -187,8 +219,6 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
-
               <el-col :span="22">
                 <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
                   <el-input v-model="formtwo.informTitle" auto-complete="off" clearable>
@@ -208,82 +238,75 @@
             <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
-
-        <el-dialog title="通知详情" :visible.sync="dialogTableVisibleInfo" width="800px">
+        <el-dialog :visible.sync="dialogTableVisibleInfo" width="800px">
           <el-form :model="formtwoInfo">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="推送对象" prop="pushObject"  :label-width="formLabelWidth">
-                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.pushObject" @change="toTypesTap(formtwoInfo.pushObject)" placeholder="">
-                    <el-option label="个人" :value="1"></el-option>
-                    <el-option label="所有人" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
+            <div class="box_xinxi_newsInfo">
+              <div class="wrap_da">
+                <div class="header">
+                  <span>详情信息</span>
+                  <span></span>
+                </div>
+                <div class="body_list">
+                  <div class="title">发布状态:</div>
+                  <div class="name">
+                    <span  v-if="formtwoInfo.isRelease==1">已发布</span>
+                    <span  v-if="formtwoInfo.isRelease==2">未发布</span>
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">推送时间:</div>
+                  <div class="name">{{formtwoInfo.pushTime}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">通知方式:</div>
+                    <div class="name">
+                      <span  v-if="formtwoInfo.pushMode==1">短信</span>
+                      <span  v-if="formtwoInfo.pushMode==2">推送</span>
+                    </div>
+                </div>
+              <div class="body_list">
+                <div class="title">通知类型:</div>
+                <div class="name">
+                  <span  v-if="formtwoInfo.informType==1">普通通知</span>
+                  <span  v-if="formtwoInfo.informType==2">自定义通知</span>
+                </div>
+              </div>
 
-              <el-col :span="12">
-                <el-form-item v-if="formtwoInfo.pushObject==1" label="接收人" :label-width="formLabelWidth" prop="mobile">
-                  <el-input :style="styleObject" :disabled="true" type="number" v-model="formtwoInfo.mobile"  auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+                <div class="body_list">
+                  <div class="title">推送对象:</div>
+                  <div class="name">
+                    <span  v-if="formtwoInfo.pushObject==1">个人</span>
+                    <span  v-if="formtwoInfo.pushObject==2">所有人</span>
+                  </div>
+                </div>
+                <div class="body_list" v-if="formtwoInfo.pushObject==1">
+                  <div class="title">接收人:</div>
+                  <div class="name">
+                    <span>{{formtwoInfo.mobile}}</span>
+                  </div>
+                </div>
+                <div class="body_list" style="width: 100%" >
+                  <div class="title">通知标题:</div>
+                  <div class="name">
+                    {{formtwoInfo.informTitle}}
+                  </div>
+                </div>
+              <div class="body_list dec" style="width: 100%" >
+                <div class="title">通知内容:</div>
+                <div class="name">
+                  <span class="dec" style="line-height: 30px; padding: 10px 0">  {{formtwoInfo.informContent}}</span>
+                </div>
+              </div>
 
-              <el-col :span="12">
-                <el-form-item label="通知方式" prop="pushMode" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.pushMode" placeholder="">
-                    <el-option label="短信" :value="1"></el-option>
-                    <el-option label="推送" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="通知类型" prop="informType" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.informType" placeholder="" >
-                    <el-option label="普通通知" :value="1"></el-option>
-                    <el-option label="自定义通知" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item  label="是否发布" prop="isRelease" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" :disabled="true" v-model="formtwoInfo.isRelease" placeholder="">
-                    <el-option label="是" :value="1"></el-option>
-                    <el-option label="否" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="推送时间" :label-width="formLabelWidth" prop="pushTime">
-                  <el-date-picker :disabled="true"
-                                  v-model="formtwoInfo.pushTime"
-                                  type="datetime" :style="styleObject"
-                                  placeholder="选择活动结束时间" >
-                  </el-date-picker>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="22">
-                <el-form-item label="通知标题" :label-width="formLabelWidth" prop="informTitle">
-                  <el-input :disabled="true" v-model="formtwoInfo.informTitle" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="22">
-                <el-form-item  v-if="formtwoInfo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
-                  <el-input  :disabled="true" v-model="formtwoInfo.informUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="22">
-                <el-form-item label="通知内容" prop="informContent" :label-width="formLabelWidth">
-                  <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.informContent" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </el-form>
+              <div class="body_list dec"  v-if="formtwoInfo.informType==2" style="width: 100%" >
+                <div class="title">自定义消息跳转链接:</div>
+                <div class="name">
+                  <span class="dec" style="line-height: 30px; padding: 10px 0">  {{formtwoInfo.informUrl}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisibleInfo = false">确定</el-button>
           </div>
@@ -305,6 +328,9 @@
       return {
         styleObject: {
           width: '200px',
+        },
+        showInfiW:{
+          width: '100%',
         },
         toTypes:false,
         myhttps:false,
@@ -402,6 +428,11 @@
       this.menuId=this.$route.query.id
       this.queryBtns()
       this.accountList()
+    },
+    filters: {
+      dateFont: function (date){
+        return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss');
+      },
     },
     methods: {
       changeType(types){
@@ -658,6 +689,112 @@
   }
 </script>
 <style type="text/css">
+
+
+  .yichu{
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .box_xinxi_newsInfo{
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .box_xinxi_newsInfo .title{
+    color: #353535;
+    font-size: 14px;
+  }
+
+  .box_xinxi_newsInfo .header{
+    width: 100%;
+    height: 40px;
+    background-color: #f6f8f9;
+    color: #1fa67a;
+    line-height: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .wrap_da{
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .box_xinxi_newsInfo .body_list{
+    width: 50%;
+    height: auto;
+    height: 50px;
+    color: #353535;
+    line-height: 50px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e7e7eb;
+    display: inline-block;
+  }
+
+  .box_xinxi_newsInfo .body_list.img{
+    min-height: 50px;
+    height: auto;
+    line-height: 30px;
+  }
+
+  .box_xinxi_newsInfo .body_list.img img{
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+    line-height: 1px;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
+  }
+
+  .box_xinxi_newsInfo .body_list.img .title{
+    padding-top: 10px;
+  }
+  .box_xinxi_newsInfo .body_list .title{
+    width: 160px;
+    float: left;
+    padding-right: 30px;
+    color: #a6a6a6;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  .box_xinxi_newsInfo .body_list.dec{
+    height: auto;
+  }
+  .box_xinxi_newsInfo .body_list .name{
+    float: left;
+    color: #606266;
+  }
+  .box_xinxi_newsInfo .body_list.dec .name .dec{
+    font-size: 14px;
+    width: 500px;
+    float: left;
+  }
+
+  .demo-table-expand_info {
+    width: 1200px;
+    min-width: 1200px;
+    max-width: 60%;
+  }
+  .demo-table-expand_info label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand_info .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 33%;
+  }
+  
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }

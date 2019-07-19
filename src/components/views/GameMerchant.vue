@@ -159,6 +159,9 @@
                        @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
+        <big-img v-if="showImg"
+                 @clickit="viewImg"
+                 :imgSrc="imgSrc"></big-img>
       </div>
       <div class="bannermanage-table">
         <template>
@@ -173,38 +176,31 @@
             <el-table-column fixed="left" prop="name"
                              label="名称" width="200px" >
             </el-table-column>
-
             <el-table-column width="300px"  prop="remark"
                              label="描述">
             </el-table-column>
-
             <el-table-column width="200px" label="logo">
               <template slot-scope="scope">
                 <img :src='scope.row.imageUrl'
                      style="max-width: 45px;max-height: 45px"
-                     @click="clickImg($event)">
+                     @click="clickImg(scope.row.imageUrl)">
               </template>
             </el-table-column>
-
             <el-table-column  prop="h5Type"
                               label="游戏列表类型">
             </el-table-column>
-
             <el-table-column  prop="status"
                               label="状态">
             </el-table-column>
-
             <el-table-column prop="createTime" width="200px"
                              label="创建时间" :formatter="dateFormat">
             </el-table-column>
-
             <el-table-column fixed="right"
                              label="操作"
                              v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
                 <el-button  type="info" plain size="mini" @click="getInfo(scope.row.id,1)"
                 >详情</el-button>
-
                 <el-button  type="warning" plain size="mini"
                            @click="Delete(scope.row.id)" v-if="del">删除</el-button>
                 <el-button  type="success" plain @click="getInfo(scope.row.id,2)"
@@ -213,7 +209,7 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="修改商户" width="700px"
+        <el-dialog title="修改商户" width="600px"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <el-row>
@@ -298,7 +294,7 @@
                        @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="商户详情" :visible.sync="dialog" width="800px">
+        <el-dialog title="商户详情" :visible.sync="dialog" width="600px">
           <el-form>
             <el-row>
               <el-col :span="24">
@@ -337,24 +333,17 @@
               </el-col>
 
               <el-col :span="18" style="margin-bottom: 10px">
-                <el-form-item label="logo"
+                <el-form-item label="logo:"
                               :label-width="formLabelWidth">
-                  <el-upload :disabled="true"  class="bannerAvatar-uploader"
-                              action="/api/upload"
-                              :data="uploadData"
-                              :show-file-list="false"
-                              :on-success="handleAvatarSuccess"
-                              :before-upload="beforeAvatarUpload">
                     <img v-if="imageUrl"
                          :src="imageUrl"
+                         @click="clickImg(imageUrl)"
                          class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
+                  <span v-else>暂无</span>
+                    <!--<i v-else-->
+                       <!--class="el-icon-plus bannerAvatar-uploader-icon"></i>-->
                 </el-form-item>
               </el-col>
-
-
               <el-col :span="18" style="margin-bottom: 10px">
                 <el-form-item prop="h5Type" label="游戏列表类型:" :label-width="formLabelWidth">
                   <el-select :disabled="true" v-model="formtwo.h5Type"  placeholder="">
@@ -492,9 +481,9 @@
       }
     },
     methods: {
-      clickImg(e) {
-        this.showImg = true
-        this.imgSrc = e.currentTarget.src
+      clickImg(img) {
+        this.showImg = true;
+        this.imgSrc = img;
       },
       viewImg() {
         this.showImg = false

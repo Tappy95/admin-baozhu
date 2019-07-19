@@ -135,13 +135,13 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22" v-if="form.noticeType==3">
+              <el-col :span="22" v-if="form.noticeType==3 || form.noticeType==2">
                 <el-form-item label="链接地址" :label-width="formLabelWidth" prop="linkAddress">
                   <el-input spellcheck="false" v-model="form.linkAddress" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22">
+              <el-col :span="22" v-if="form.noticeType==1 || form.noticeType==3">
                 <el-form-item label="公告内容" prop="noticeContent" :label-width="formLabelWidth">
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.noticeContent" auto-complete="off" clearable></el-input>
                 </el-form-item>
@@ -212,13 +212,13 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22" v-if="formtwo.noticeType==3">
+              <el-col :span="22" v-if="formtwo.noticeType==3 || formtwo.noticeType==2">
                 <el-form-item label="链接地址" :label-width="formLabelWidth" >
                   <el-input spellcheck="false" v-model="formtwo.linkAddress" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22">
+              <el-col :span="22" v-if="formtwo.noticeType==1 || formtwo.noticeType==3">
                 <el-form-item label="公告内容"  :label-width="formLabelWidth">
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.noticeContent" auto-complete="off" clearable></el-input>
                 </el-form-item>
@@ -312,16 +312,16 @@
                   {{formtwoInfo.noticeTitle}}
                   </div>
                 </div>
-                <div class="body_list dec" style="width: 100%" >
+                <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==1 || formtwoInfo.noticeType==3" >
                   <div class="title">公告内容:</div>
                   <div class="name">
-                    <span class="dec" style="line-height: 30px; padding: 20px 0">  {{formtwoInfo.noticeContent}}</span>
+                    <span class="dec" style="line-height: 30px; padding: 10px 10px">  {{formtwoInfo.noticeContent}}</span>
                   </div>
                 </div>
-                <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==3">
+                <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
                   <div class="title">链接地址:</div>
                   <div class="name">
-                    <span class="dec" style="line-height: 30px; padding: 20px 0">  {{formtwoInfo.linkAddress}}</span>
+                    <span class="dec" style="line-height: 30px; padding: 10px 0">  {{formtwoInfo.linkAddress}}</span>
                   </div>
                 </div>
                 <div class="body_list img" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
@@ -804,10 +804,9 @@
 
   .box_xinxi .body_list.dec .name .dec{
     font-size: 14px;
-    /*line-height: 30px;*/
-    /*padding: 30px;*/
     width: 500px;
     float: left;
+    overflow-wrap: break-word;
   }
 
 

@@ -61,7 +61,7 @@
                      @click="clickImg($event)">
               </template>
             </el-table-column>
-            <el-table-column  prop="userId"  label="用户Id">
+            <el-table-column min-width="200" prop="userId"  label="用户Id">
             </el-table-column>
             <el-table-column prop="aliasName"  label="用户别名">
             </el-table-column>
@@ -81,8 +81,8 @@
 
             <el-table-column prop="realData"  label="是否真实用户">
               <template slot-scope="scope">
-                <span v-if="scope.row.realData==1">是</span>
-                <span v-if="scope.row.realData==2">否</span>
+                <span class="green" v-if="scope.row.realData==1">是</span>
+                <span class="red" v-if="scope.row.realData==2">否</span>
               </template>
             </el-table-column>
           </el-table>
@@ -232,7 +232,9 @@
   .green{
     color: #13ce66;
   }
-
+  .red{
+    color: #ff4d51;
+  }
   .administratormanage-wrap {
     width: 100%;
   }
