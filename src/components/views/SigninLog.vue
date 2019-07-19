@@ -7,24 +7,20 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item  label="用户id:">
-            <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
+          <el-form-item  label="用户Id:">
+            <el-input v-model="formInline.accountId" placeholder="请输入用户Id" clearable></el-input>
           </el-form-item>
-          <el-form-item  label="签到天数:">
-            <el-input v-model="formInline.signDay" placeholder="请输入签到天数" clearable></el-input>
-          </el-form-item>
-            <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>
-          </el-form-item>
+          <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
       <div class="signinlog-table">
         <template>
-          <el-table :data="tableData" max-height="600">
+          <el-table :data="tableData" v-loading="loading">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column min-width="200px" fixed="left" prop="accountId" label="用户id">
+            <el-table-column min-width="200px" fixed="left" prop="accountId" label="用户Id">
             </el-table-column>
-            <el-table-column min-width="150px" prop="signDay" label="签到日期">
+            <el-table-column min-width="150px" prop="signDay" label="签到天数">
             </el-table-column>
             <el-table-column min-width="150px" prop="gameCount" label="游戏任务数量">
             </el-table-column>
@@ -58,34 +54,27 @@
         <template>
           <el-table
             :data="tableList"
-            style="width: 100%;max-height: 660px">
+            style="width: 100%; height: auto;max-height: 660px">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column prop="gameName" width="200" label="游戏名称" ></el-table-column>
-            <el-table-column prop="signinId" width="180" label="签到天数id" ></el-table-column>
-            <el-table-column prop="createTime" width="170"  label="领取任务时间">
+            <el-table-column prop="gameName"  label="游戏名称" ></el-table-column>
+            <el-table-column prop="createTime"   label="领取任务时间">
               <template slot-scope="scope">
                 <span v-if="scope.row.createTime>0">{{scope.row.createTime | dateFont}}</span>
                 <span v-else>-</span>
               </template>
             </el-table-column>
-            <el-table-column width="170"  label="完成时间">
+            <el-table-column  label="完成时间">
               <template slot-scope="scope">
                 <span v-if="scope.row.finishTime>0">{{scope.row.finishTime | dateFont}}</span>
                 <span v-else>-</span>
               </template>
             </el-table-column>
-            <el-table-column prop="reward" width="120" label="金币数"></el-table-column>
-            <el-table-column prop="status" label="状态">
+            <el-table-column prop="reward"  label="金币数"></el-table-column>
+            <el-table-column prop="status" width="120" label="状态">
               <template slot-scope="scope">
                 <span class="" v-if="scope.row.status==1">未完成</span>
                 <span v-if="scope.row.status==2">已完成</span>
-              </template>
-            </el-table-column>
-            <el-table-column width="120" prop="isHide" label="是否隐藏">
-              <template slot-scope="scope">
-                <span v-if="scope.row.isHide==2">是</span>
-                <span v-if="scope.row.isHide==1">否</span>
               </template>
             </el-table-column>
           </el-table>
@@ -95,10 +84,10 @@
           </el-pagination>
         </div>
       </el-dialog>
-      <div class="block">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
-        </el-pagination>
-      </div>
+      <!--<div class="block">-->
+        <!--<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">-->
+        <!--</el-pagination>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
@@ -112,22 +101,19 @@
         menuId:'',
         formLabelWidth: '120px',
         exportExle:false,
-        currentPage: 1,
-        pageSize: 10,
         currentPageInfo: 1,
         pageSizeInfo: 10,
-        totalCount: 0,
         totalCountinfo:0,
         formInline: {},
         tableData: [],
         dialogTable:false,
         tableList:[],
+        loading:false,
       }
     },
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
-      this.accountList();
     },
     filters: {
       dateFont: function (date){
@@ -145,7 +131,6 @@
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
-
       //修改
       getInfo(id) {
         let parameterData = {
@@ -168,16 +153,19 @@
         })
       },
       accountList() {
+        this.tableData= [];
+        if (!this.formInline.accountId){
+          this.$message({type: 'warning', message:'请输入用户Id', duration: 3000})
+          return false
+        }
+        this.loading = true;
         let parameterData = {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          accountId:this.formInline.accountId,
-          signDay:this.formInline.signDay
+          accountId:this.formInline.accountId
         }
         this.$fetch('/api/userSignin/pageList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.tableData = res.data.list
-            this.totalCount = res.data.total
+            this.tableData = res.data.list;
+            this.loading =false;
           } else {
             this.$message({
               type: 'error',
@@ -203,11 +191,8 @@
         })
       },
       search() {
-        this.currentPage = 1;
-        this.pageSize = 10;
         this.accountList();
       },
-
       handleSizeChange(val) {
         this.pageSize = val;
         this.accountList();

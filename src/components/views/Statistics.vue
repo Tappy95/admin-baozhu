@@ -339,7 +339,7 @@
                 :tabindex=tabindex
                 content="时间段内包含推荐用户、徒弟贡献、徒弟到达第四级获取等总贡献金额">
                 <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/person.png"/>
+                  <img src="../../assets/statistics/more_get.png"/>
                   <div class="dec">
                     <p>{{listData.hygxAmount}}<span>元</span></p>
                     <p>好友贡献</p>

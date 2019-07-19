@@ -7,8 +7,11 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="游戏id">
+          <el-form-item label="游戏id:">
             <el-input v-model="formInline.gameId" placeholder="请输入游戏id" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="游戏标题:">
+            <el-input v-model="formInline.gameTitle" placeholder="请输入游戏标题" clearable></el-input>
           </el-form-item>
           <el-form-item label="状态:" >
             <el-select v-model="formInline.status"   placeholder="请选择状态">
@@ -23,7 +26,7 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-form-item> <el-button type="primary" plain @click="search()">查询</el-button></el-form-item>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -140,6 +143,7 @@
             pageNum: this.currentPage,
             pageSize: this.pageSize,
             gameId:this.formInline.gameId,
+            gameTitle:this.formInline.gameTitle,
             status:this.formInline.status,
             interfaceId:this.formInline.interfaceId
           }
