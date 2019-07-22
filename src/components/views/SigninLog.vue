@@ -11,7 +11,7 @@
             <el-input v-model="formInline.accountId" placeholder="请输入用户Id" clearable></el-input>
           </el-form-item>
           <el-form-item> <el-button type="primary" plain @click="search()">查询</el-button></el-form-item>
-          <div class="sign_tip">默认无数据，请输入id查询</div>
+          <div class="sign_tip">默认无数据，请输入用户Id查询</div>
         </el-form>
       </div>
       <div class="signinlog-table">
