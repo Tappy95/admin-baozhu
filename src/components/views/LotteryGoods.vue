@@ -250,6 +250,9 @@
             </el-table-column>
             <el-table-column  prop="goodsName"
                              label="奖品名称" fixed="left" >
+              <template slot-scope="scope">
+                <span class="yichu">{{scope.row.goodsName}}</span>
+              </template>
             </el-table-column>
             <el-table-column width="150px" prop="typeName"
                              label="类型名称"  >
@@ -258,7 +261,7 @@
             <el-table-column width="170px" prop="pigCoin"
                              label="抽奖价格(金猪)"  >
               <template slot-scope="scope">
-               {{scope.row.pigCoin | currency}}
+                <span class="yellow"> {{scope.row.pigCoin | currency}}</span>
             </template>
             </el-table-column>
             <el-table-column width="150px" prop="price"
@@ -274,6 +277,9 @@
                      <!--@click="clickImg($event)">-->
               <!--</template>-->
             <!--</el-table-column>-->
+            <el-table-column prop="orders" width="120px"
+                             label="排序">
+            </el-table-column>
             <el-table-column prop="status" width="120px"
                              label="状态">
               <template slot-scope="scope">
@@ -602,13 +608,7 @@
                   <div class="body_list" v-if="formtwo.lotterySort==1">
                     <div class="title">兑换价格(金猪):</div>
                     <div class="name">
-                      {{formtwo.pigCoin}}
-                    </div>
-                  </div>
-                  <div class="body_list" v-if="formtwo.lotterySort==1">
-                    <div class="title">兑换价格(金猪):</div>
-                    <div class="name">
-                      {{formtwo.pigCoin}}
+                      {{formtwo.pigCoin | currency}}
                     </div>
                   </div>
                   <div class="body_list">
@@ -676,125 +676,10 @@
                       </div>
                     </div>
                   </div>
-
-                  <!--<div class="body_list">-->
-                    <!--<div class="title">抽奖分类:</div>-->
-                    <!--<div class="name">-->
-                      <!--<span v-if="formtwoInfo.lotterySort==1">兑换</span>-->
-                      <!--<span  v-if="formtwoInfo.lotterySort==2">抽奖</span>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list">-->
-                    <!--<div class="title">每天次数限制:</div>-->
-                    <!--<div class="name">-->
-                      <!--{{formtwoInfo.timesOneday}}-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list">-->
-                    <!--<div class="title">每天发放数量:</div>-->
-                    <!--<div class="name">{{formtwoInfo.dayNum}}</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list">-->
-                    <!--<div class="title">每次所需金猪:</div>-->
-                    <!--<div class="name">{{formtwoInfo.expendPigCoin}}</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list">-->
-                    <!--<div class="title">适用人群:</div>-->
-                    <!--<div class="name">-->
-                      <!--<span v-if="formtwoInfo.applyCrowd==1">全部</span>-->
-                      <!--<span v-else>已停用</span>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list" style="width: 100%">-->
-                    <!--<div class="title">创建时间:</div>-->
-                    <!--<div class="name">{{formtwoInfo.createTime | dateFormat}}</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list" style="width: 100%" >-->
-                    <!--<div class="title">类型名称:</div>-->
-                    <!--<div class="name">-->
-                      <!--{{formtwoInfo.typeName}}-->
-                    <!--</div>-->
-                  <!--</div>-->
-                  <!--<div class="body_list dec" style="width: 100%" >-->
-                    <!--<div class="title">类型描述:</div>-->
-                    <!--<div class="name">-->
-                      <!--<span class="dec">  {{formtwoInfo.remark}}</span>-->
-                    <!--</div>-->
-                  <!--</div>-->
                 </div>
               </div>
             </el-row>
-            <el-row style="display: none;">
-              <el-col :span="12">
-                <el-form-item label="类型名称:" :label-width="formLabelWidth" prop="typeName">
-                  <el-select :disabled="true" v-model="formtwo.typeId" placeholder="">
-                    <el-option v-for="(item,index) in lotterylist" :key="index" :label="item.typeName" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
 
-              <el-col :span="12">
-                <el-form-item label="奖品价格:" :label-width="formLabelWidth" prop="price">
-                  <el-input type="number" min="0" :disabled="true" v-model="formtwo.price" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="中奖概率(%):" :label-width="formLabelWidth" prop="rate">
-                  <el-input :disabled="true" type="number" min="0" v-model="formtwo.rate" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="是否启用:"  prop="status" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                    <el-option label="已删除" :value="3"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="创建时间:" :label-width="formLabelWidth" prop="rate">
-                  <el-input :disabled="true"  min="0" v-model="formtwo.createTime" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="24">
-                <el-form-item label="奖品名称:"
-                              prop="goodsName"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwo.goodsName"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="类型描述:" prop="remark" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="奖品图片"
-                              prop="imageUrl:"
-                              :label-width="formLabelWidth">
-                  <el-upload :disabled="true" class="bannerAvatar-uploader"
-                             action="/api/upload"
-                             :data="uploadData"
-                             :show-file-list="false"
-                             >
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
-            </el-row>
           </el-form>
         </el-dialog>
       </div>
@@ -930,7 +815,7 @@
         var dataval = parseInt(num);
         return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
         // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
-      }
+      },
       },
     methods: {
       handleClick(tab) {
