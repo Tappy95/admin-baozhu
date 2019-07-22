@@ -786,7 +786,7 @@
       queryExport() {
         this.fullscreenLoading = this.$loading({
           lock: true,
-          text: '正在导出....',
+          text: '正在导出...',
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });

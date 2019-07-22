@@ -10,7 +10,8 @@
           <el-form-item  label="用户Id:">
             <el-input v-model="formInline.accountId" placeholder="请输入用户Id" clearable></el-input>
           </el-form-item>
-          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-form-item> <el-button type="primary" plain @click="search()">查询</el-button></el-form-item>
+          <div class="sign_tip">默认无数据，请输入id查询</div>
         </el-form>
       </div>
       <div class="signinlog-table">
@@ -30,7 +31,7 @@
               <template slot-scope="scope">
                 <span v-if="scope.row.status==1">待补签</span>
                 <span v-if="scope.row.status==2">可进行</span>
-                <span v-if="scope.row.status==3">完成带领取</span>
+                <span v-if="scope.row.status==3">完成待领取</span>
                 <span v-if="scope.row.status==4">已领取</span>
               </template>
             </el-table-column>
@@ -42,9 +43,10 @@
             </el-table-column>
             <el-table-column min-width="120px" prop="createTime"  :formatter="dateFormat" label="创建时间">
             </el-table-column>
-            <el-table-column fixed="right" width="100">
+            <el-table-column fixed="right" :width="optionW" v-if="optionT">
               <template slot-scope="scope">
-                <el-button type="warning" plain  @click=getInfo(scope.row.id) size="mini" >签到任务</el-button>
+                <el-button type="warning" plain v-if="signT"  @click=getInfo(scope.row.id) size="mini" >签到任务</el-button>
+                <el-button type="success" plain v-if="upd"  @click=editTap(scope.row.id) size="mini" >修改</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -77,11 +79,37 @@
                 <span v-if="scope.row.status==2">已完成</span>
               </template>
             </el-table-column>
+
+            <el-table-column fixed="right" v-if="childel" :width="oChildW" >
+              <template slot-scope="scope">
+                <el-button type="warning" plain  @click=Delete(scope.row.id) size="mini" >删除</el-button>
+              </template>
+            </el-table-column>
+
           </el-table>
         </template>
         <div class="block list_footer" >
           <el-pagination @size-change="handleSizeChangeInfo" @current-change="handleCurrentChangeInfo" :current-page="currentPageInfo" :page-sizes="[10, 20, 50, 70]" :page-size="pageSizeInfo" layout="total, sizes, prev, pager, next, jumper" :total="totalCountInfo">
           </el-pagination>
+        </div>
+      </el-dialog>
+      <el-dialog :visible.sync="dialogEdit" width="600px">
+        <el-form v-model="formEdit">
+          <el-row>
+            <el-col :span="22" >
+              <el-form-item label="状态:":label-width="formLabelWidth">
+                <el-select v-model="formEdit.status" placeholder="">
+                  <el-option label="待补签" :value="1"></el-option>
+                  <el-option label="进行中" :value="2"></el-option>
+                  <el-option label="待领取" :value="3"></el-option>
+                  <el-option label="已领取" :value="4"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="editBtn(formEdit)">确 定</el-button>
         </div>
       </el-dialog>
       <!--<div class="block">-->
@@ -108,7 +136,19 @@
         tableData: [],
         dialogTable:false,
         tableList:[],
+        currtId:'',
         loading:false,
+        signT:false,
+        upd:false,
+        optionW:'',
+        optionT:false,
+        oChildW:'',
+        childel:false,
+        dialogEdit:false,
+        formEdit:{},
+        rules: {
+          status: [{required: true, message: '请选择状态', trigger: 'change' }],
+        },
       }
     },
     created() {
@@ -131,8 +171,70 @@
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
+      editTap(id){
+        let parameterData = {
+          id:id
+        }
+        this.$fetch('/api/userSignin/info', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.dialogEdit = true;
+            this.formEdit = res.data;
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message,
+              duration: 3000
+            })
+          }
+        })
+      },
+
       //修改
+      editBtn(formEdit) {
+            let parameterData = {
+              id:this.formEdit.id,
+              status:this.formEdit.status
+            }
+            this.$post('/api/userSignin/update',parameterData).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogEdit = false;
+                this.$message({ type: 'success', message: '添加成功！' })
+                this.accountList()
+              }else {
+                this.$message({ type: 'warning', message: res.message})
+              }
+            })
+      },
+
+      Delete(id) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消删除' })
+          })
+      },
+      delData(id) {
+        this.$fetch('/api/userSignin/deleteGame',{
+          id: id
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.$message({ type: 'success', message: '删除成功！' })
+            this.getInfo(this.currtId);
+          } else {
+            this.$message({ type: 'error', message: res.message })
+          }
+        })
+      },
+      //获取信息
       getInfo(id) {
+        this.currtId = id;
         let parameterData = {
           pageNum: this.currentPageInfo,
           pageSize: this.pageSizeInfo,
@@ -182,8 +284,24 @@
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             for(let i = res.data.length - 1; i >= 0; i--) {
-              if(res.data[i].btnCode == 'exportExle') {
-                this.exportExle =true;
+              if(res.data[i].btnCode == 'signT') {
+                this.signT =true;
+                this.optionW='100';
+                this.optionT=true
+              }
+              if(res.data[i].btnCode == 'upd') {
+                this.upd =true;
+                this.optionW='75';
+                this.optionT=true
+              }
+
+              if (this.upd && this.signT) {
+                this.optionW='175';
+              }
+
+              if(res.data[i].btnCode == 'childel') {
+                this.childel =true;
+                this.oChildW='75';
               }
             }
           } else {
@@ -245,4 +363,11 @@
   .el-table th {
     background-color: #e6e6e6;
   }
+
+  .sign_tip{
+    font-size: 14px;
+    color: #67c23a;
+    margin-bottom: 10px;
+  }
+
 </style>
