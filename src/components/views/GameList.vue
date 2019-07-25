@@ -236,18 +236,9 @@
       },
 
       update(formtwo){
-        if(!isNaN(this.formtwo.orderId)){
-        }else{
-          this.$message({ type: 'warning', message: '请输入数字值'});
-          return false
-        }
-        if((String(this.formtwo.orderId).indexOf(".") + 1)>0){
-          this.$message({ type: 'warning', message: '排序值不可以输入小数'});
-          return false
-        }
         var pattern = /^[0-9]*$/;
         if (!pattern.test(this.formtwo.orderId)) {
-          this.$message({ type: 'warning', message: '排序值可以输入负数'});
+          this.$message({ type: 'warning', message: '排序值为正整数'});
           return false
         }
         this.$refs[formtwo].validate(valid => {
