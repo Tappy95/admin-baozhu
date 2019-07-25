@@ -63,7 +63,7 @@
       </div>
 
       <el-dialog title="修改" :visible.sync="dialogTableVisible" width="600px">
-        <el-form :model="formtwo" ref="formtwo" :rules="rule">
+        <el-form :model="formtwo" ref="formtwo" :rules="rules">
           <el-row>
             <el-col :span="18">
               <el-form-item label="游戏标题:"  :label-width="formLabelWidth">
@@ -72,8 +72,13 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="排序:" prop="orderId" :label-width="formLabelWidth">
-                <el-input  v-model.number="formtwo.orderId" auto-complete="off" clearable></el-input>
-                <span class="xu-tip">排序值越大游戏越靠前</span>
+                <el-input  v-model="formtwo.orderId" auto-complete="off" clearable></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12">
+              <el-form-item >
+                <span  class="xu-tip">排序值越大,游戏越靠前</span>
               </el-form-item>
             </el-col>
           </el-row>
@@ -113,7 +118,8 @@
         formtwo:{},
         currentId:'',
         rules: {
-          orderId:[{required: true, message: '请输入排序', trigger: 'blur'},{ type: 'number', message: '请输入数字值'}],
+      // { type: 'number', message: '请输入数字值'}
+          orderId:[{required: true, message: '请输入排序', trigger: 'blur'}],
         },
       }
     },
@@ -235,15 +241,8 @@
           this.$message({ type: 'warning', message: '请输入数字值'});
           return false
         }
-
         if((String(this.formtwo.orderId).indexOf(".") + 1)>0){
           this.$message({ type: 'warning', message: '排序值不可以输入小数'});
-          return false
-        }else{
-        }
-
-        if (!this.formtwo.orderId) {
-          this.$message({ type: 'warning', message: '请输入排序值'});
           return false
         }
         this.$refs[formtwo].validate(valid => {
@@ -346,5 +345,6 @@
   .xu-tip{
     font-size: 12px;
     color: #F56C6C;
+    margin-left: 10px;
   }
 </style>
