@@ -245,6 +245,11 @@
           this.$message({ type: 'warning', message: '排序值不可以输入小数'});
           return false
         }
+        var pattern = /^[0-9]*$/;
+        if (!pattern.test(this.formtwo.orderId)) {
+          this.$message({ type: 'warning', message: '排序值可以输入负数'});
+          return false
+        }
         this.$refs[formtwo].validate(valid => {
           if (valid) {
             let parDate = {
