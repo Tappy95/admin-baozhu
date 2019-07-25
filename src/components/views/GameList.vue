@@ -32,13 +32,13 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="578">
-            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column width="170px" fixed="left" prop="gameId" label="游戏id">
             </el-table-column>
-            <el-table-column prop="gameTitle" width="200px"  label="游戏标题">
+            <el-table-column prop="gameTitle"   label="游戏标题">
             </el-table-column>
-            <el-table-column prop="gameGold" label="奖励金额(￥)">
+            <el-table-column width="200px" prop="gameGold" label="奖励金额(￥)">
             </el-table-column>
             <el-table-column prop="packageName" label="游戏包名">
             </el-table-column>
