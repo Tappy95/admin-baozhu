@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="游戏id:">
+          <el-form-item  label="游戏id:">
             <el-input v-model="formInline.gameId" placeholder="请输入游戏id" clearable></el-input>
           </el-form-item>
           <el-form-item label="游戏标题:">
@@ -32,15 +32,17 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="578">
-            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column width="170px" fixed="left" prop="gameId" label="游戏id">
             </el-table-column>
-            <el-table-column prop="gameTitle" width="200px"  label="游戏标题">
+            <el-table-column prop="gameTitle"   label="游戏标题">
             </el-table-column>
-            <el-table-column prop="gameGold" label="奖励金额(￥)">
+            <el-table-column width="200px" prop="gameGold" label="奖励金额(￥)">
             </el-table-column>
             <el-table-column prop="packageName" label="游戏包名">
+            </el-table-column>
+            <el-table-column width="150" prop="orderId" label="排序">
             </el-table-column>
             <el-table-column  width="150px" label="状态">
               <template slot-scope="scope">
@@ -48,16 +50,43 @@
                 <span class="onCX" v-if="scope.row.status==2">下架</span>
               </template>
             </el-table-column>
-            <el-table-column prop="status"  label="操作" v-if="showW" :width="optionW">
+            <el-table-column fixed="right" prop="status"  label="操作" v-if="showW" :width="optionW">
             <template slot-scope="scope">
               <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
               <el-button type="primary" plain size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status==1 && UpperShelf">下架</el-button>
               <el-button type="success" plain size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status==2 && UpperShelf">上架</el-button>
+              <el-button type="success" plain size="mini" @click="getInfo(scope.row.id)" v-if="upd">修改</el-button>
             </template>
           </el-table-column>
           </el-table>
         </template>
       </div>
+
+      <el-dialog title="修改" :visible.sync="dialogTableVisible" width="600px">
+        <el-form :model="formtwo" ref="formtwo" :rules="rules">
+          <el-row>
+            <el-col :span="18">
+              <el-form-item label="游戏标题:"  :label-width="formLabelWidth">
+                <el-input :disabled="true" v-model.number="formtwo.gameTitle" auto-complete="off" clearable></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="排序:" prop="orderId" :label-width="formLabelWidth">
+                <el-input  v-model="formtwo.orderId" auto-complete="off" clearable></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12">
+              <el-form-item >
+                <span  class="xu-tip">排序值越大,游戏越靠前</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="update('formtwo')">确 定</el-button>
+        </div>
+      </el-dialog>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
@@ -83,7 +112,15 @@
         UpperShelf:false,
         optionW:'0px',
         showW:false,
+        upd:false,
         gameList:[],
+        dialogTableVisible:false,
+        formtwo:{},
+        currentId:'',
+        rules: {
+      // { type: 'number', message: '请输入数字值'}
+          orderId:[{required: true, message: '请输入排序', trigger: 'blur'}],
+        },
       }
     },
     created() {
@@ -102,15 +139,20 @@
             for(let i = res.data.length - 1; i >= 0; i--) {
               this.showW = true;
               if(res.data[i].btnCode == 'del') {
-                this.optionW = '75px';
                 this.del=true;
               }
               if(res.data[i].btnCode == 'UpperShelf') {
-                this.optionW = '75px';
                 this.UpperShelf=true;
               }
-              if( this.del && this.UpperShelf) {
-                this.optionW = '150px';
+              if(res.data[i].btnCode == 'upd') {
+                this.upd=true;
+              }
+              if (res.data.length==1){
+                this.optionW = '75';
+              } else if (res.data.length==2){
+                this.optionW = '150';
+              }else if (res.data.length==3){
+                this.optionW = '225';
               }
             }
           } else {
@@ -163,22 +205,62 @@
       },
       getStatus(id,status){
         let parameterData = {
-            id:id,
-            status:status
+          id:id,
+          status:status
         }
         this.$post('/api/tpGame/modify', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({ type: 'success', message: res.message });
             this.accountList();
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message,
-            duration: 3000
-          })
-         }
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message,
+              duration: 3000
+            })
+          }
         })
       },
+      //点修改获取信息
+      getInfo(id){
+        this.currentId = id;
+        this.$fetch('/api/tpGame/queryOne', {
+          id: id
+        }).then(res => {
+          if ((res.statusCode + "").startsWith("2")) {
+            this.dialogTableVisible = true;
+            this.formtwo = res.data;
+          } else {
+          }
+        })
+      },
+
+      update(formtwo){
+        var pattern = /^[0-9]*$/;
+        if (!pattern.test(this.formtwo.orderId)) {
+          this.$message({ type: 'warning', message: '排序值为正整数'});
+          return false
+        }
+        this.$refs[formtwo].validate(valid => {
+          if (valid) {
+            let parDate = {
+              id:this.currentId,
+              orderId:this.formtwo.orderId
+            }
+            this.$post('/api/tpGame/modify',parDate).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogTableVisible = false;
+                this.$message({ type: 'success', message: '修改成功！' });
+                this.accountList();
+              }else {
+                this.$message({ type: 'error', message: res.message });
+              }
+            })
+          } else {
+          }
+        })
+      },
+
       Delete(id) {
         this.$confirm('此操作将永久删除游戏, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -254,5 +336,11 @@
 
   .el-table th {
     background-color: #e6e6e6;
+  }
+
+  .xu-tip{
+    font-size: 12px;
+    color: #F56C6C;
+    margin-left: 10px;
   }
 </style>
