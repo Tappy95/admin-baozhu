@@ -416,6 +416,12 @@ const routes = [
         component: resolve => require(['../components/views/SigninLog.vue'], resolve),
         meta: { title: '签到赚任务记录'}
       },
+      {
+        path: 'baozhu-callBack',
+        name: 'BaozhuCallBack',
+        component: resolve => require(['../components/views/BaozhuCallBack.vue'], resolve),
+        meta: { title: '宝猪回调'}
+      },
     ]
   }
 ]
