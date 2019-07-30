@@ -50,9 +50,7 @@
             </el-table-column>
             <el-table-column min-width="120" prop="adid" label="游戏Id">
             </el-table-column>
-            <el-table-column min-width="120" prop="adname" label="游戏名称">
-            </el-table-column>
-            <el-table-column min-width="150" prop="appid" label="开发者Id">
+            <el-table-column min-width="170" prop="adname" label="游戏名称">
             </el-table-column>
             <el-table-column min-width="170" prop="deviceid" label="设备号">
             </el-table-column>
@@ -70,7 +68,7 @@
                 <span class="green" v-if="scope.row.status==1">成功</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="170" prop="itime"  label="用户领奖时间">
+            <el-table-column min-width="170" prop="itime"   label="用户领奖时间">
             </el-table-column>
             <el-table-column fixed="right"
                              label="操作" v-show="showW" :width="optionW" >
