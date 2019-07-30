@@ -9,7 +9,7 @@
         <el-form :inline="true"
           :model="formInline"
           class="demo-form-inline">
-          <el-form-item label="标题"
+          <el-form-item label="标题:"
             prop="title">
             <el-input placeholder="请输入Banner标题"
               v-model="formInline.title"
@@ -41,7 +41,8 @@
                 <el-col :span="12">
                   <el-form-item prop="position" label="图片位置:" :label-width="formLabelWidth">
                     <el-select :style="styleObject" v-model="form.position" placeholder="">
-                      <el-option label="首页底部" :value="1"></el-option>
+                      <el-option label="宝猪抽奖" value="1"></el-option>
+                      <el-option label="首页底部" value="2"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
@@ -174,7 +175,6 @@
         <el-dialog width="800px" title="修改Banner"
           :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
-
             <el-row>
               <el-col :span="12">
                 <el-form-item label="Banner标题:"
@@ -190,7 +190,8 @@
               <el-col :span="12">
                 <el-form-item prop="position" label="图片位置:" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.position" placeholder="">
-                    <el-option label="首页底部" :value="1"></el-option>
+                    <el-option label="宝猪抽奖" :value="1"></el-option>
+                    <el-option label="首页底部" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -258,72 +259,6 @@
               </el-col>
             </el-row>
 
-
-            <!--<el-form-item label="Banner标题"-->
-                          <!--prop="title"-->
-                          <!--:label-width="formLabelWidth">-->
-              <!--<el-input v-model="formtwo.title"-->
-                        <!--auto-complete="off"-->
-                        <!--clearable-->
-                        <!--style="width: 224px;"></el-input>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="开始时间"-->
-                          <!--prop="startTime"-->
-                          <!--:label-width="formLabelWidth">-->
-              <!--<el-date-picker v-model="formtwo.startTime"-->
-                              <!--type="datetime"-->
-                              <!--placeholder="选择开始时间"-->
-              <!--&gt;-->
-              <!--</el-date-picker>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="结束时间"-->
-                          <!--prop="endTime"-->
-                          <!--:label-width="formLabelWidth">-->
-              <!--<el-date-picker v-model="formtwo.endTime"-->
-                              <!--type="datetime"-->
-                              <!--placeholder="选择结束时间"-->
-              <!--&gt;-->
-              <!--</el-date-picker>-->
-            <!--</el-form-item>-->
-
-            <!--<el-form-item prop="position" label="图片位置" :label-width="formLabelWidth">-->
-              <!--<el-select v-model="formtwo.position" placeholder="">-->
-                <!--<el-option label="首页底部" :value="1"></el-option>-->
-              <!--</el-select>-->
-            <!--</el-form-item>-->
-
-            <!--<el-form-item label="链接地址"-->
-                          <!--prop="linkUrl"-->
-                          <!--:label-width="formLabelWidth">-->
-              <!--<el-input v-model="formtwo.linkUrl"-->
-                        <!--auto-complete="off"-->
-                        <!--clearable-->
-                        <!--style="width: 300px;"></el-input>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="url地址"-->
-                          <!--prop="imageUrl"-->
-                          <!--:label-width="formLabelWidth">-->
-              <!--<el-upload class="bannerAvatar-uploader"-->
-                         <!--action="/api/upload"-->
-                         <!--:data="uploadData"-->
-                         <!--:show-file-list="false"-->
-                         <!--:on-success="handleAvatarSuccess"-->
-                         <!--:before-upload="beforeAvatarUpload">-->
-                <!--<img v-if="imageUrl"-->
-                     <!--:src="imageUrl"-->
-                     <!--class="avatar">-->
-                <!--<i v-else-->
-                   <!--class="el-icon-plus bannerAvatar-uploader-icon"></i>-->
-              <!--</el-upload>-->
-            <!--</el-form-item>-->
-
-            <!--<el-form-item label="是否启用"  prop="status" :label-width="formLabelWidth">-->
-              <!--<el-select v-model="formtwo.status" placeholder="">-->
-                <!--<el-option label="启用" :value="1"></el-option>-->
-                <!--<el-option label="停用" :value="2"></el-option>-->
-              <!--</el-select>-->
-            <!--</el-form-item>-->
-
           </el-form>
           <div slot="footer"
             class="dialog-footer">
@@ -364,8 +299,6 @@ export default {
       add:false,
       del:false,
       upd:false,
-      app: 0,
-      web: 1,
       advertisingPage: 1,
       webPage:2,
       advertising:3,
@@ -415,9 +348,9 @@ export default {
     'big-img': BigImg
   },
   created() {
-    this.menuId=this.$route.query.id
-    this.queryBtns()
-    this.accountList()
+    this.menuId=this.$route.query.id;
+    this.queryBtns();
+    this.accountList();
     this.uploadData={
       token:getSession("token")
     }
@@ -486,6 +419,8 @@ export default {
         if ((res.statusCode+"").startsWith("2")) {
         for (let i = res.data.list.length - 1; i >= 0; i--) {
              if(res.data.list[i].position ==1){
+               res.data.list[i].position ="宝猪抽奖"
+             }else if (res.data.list[i].position ==2){
                res.data.list[i].position ="首页底部"
              }
             if(res.data.list[i].status ==1){

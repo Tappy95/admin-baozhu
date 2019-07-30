@@ -268,12 +268,12 @@
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
       currency: function (num){
-        var dataval = parseInt(num);
-        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        // var dataval = parseInt(num);
+        return num.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
       currencyFixed: function (num){
-        var dataval = parseInt(num);
-        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        // var dataval = parseInt(num);
+        return num.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
     },
     methods: {
@@ -300,7 +300,7 @@
       queryExport() {
         this.fullscreenLoading = this.$loading({
           lock: true,
-          text: '正在导出....',
+          text: '正在导出...',
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
@@ -326,78 +326,29 @@
         let relation= getSession("userRelation");
 
         let url = '/api/excl/channelExclUser';
-        let data = {url,accountId,level,startTime,endTime,token,channel,relation};
-        this.doDownload(data);
-      },
-      doDownload(obj) {
-        let url = obj.url,
-          accountId=obj.accountId,
-          level=obj.level,
-          startTime=obj.startTime,
-          endTime=obj.endTime,
-          // minCoin=obj.minCoin,
-          // maxCoin=obj.maxCoin,
-          token= obj.token,
-          channel=obj.channel,
-          relation=obj.relation
+        // let data = {url,accountId,level,startTime,endTime,token,channel,relation};
+        // this.doDownload(data);
 
+        let keys=new Array("url","accountId","level","startTime","endTime","token","channel","relation");
+        let data =new Array (url,accountId,level,startTime,endTime,token,channel,relation);
+        //this.doDownload(data);
+        this.doDownload(keys,data);
+
+      },
+      doDownload(key,data){
+        let http=data[0];
+        for(let i=1;i<key.length;i++){
+          if(http==data[0]){
+            if(data[i]!=null && data[i]!=''){
+              http=http+'?'+key[i]+'='+ data[i]
+            }
+          }else{
+            if(data[i]!=null && data[i]!=''){
+              http=http+'&'+key[i]+'='+ data[i]
+            }
+          }
+        }
         let a1 = document.createElement('a');
-        let http=url;
-        if(http==url){
-           if(accountId!=null && accountId!=''){
-             http=http+'?accountId=' + accountId
-           }
-        }
-        if(http==url){
-          if(level!=null && level!=''){
-            http=http+'?level=' + level
-          }
-        }else{
-          if(level!=null && level!=''){
-            http=http+'&level=' + level
-          }
-        }
-        if(http==url){
-          if(startTime!=null && startTime!=''){
-            http=http+'?startTime=' + startTime
-          }
-        }else{
-          if(startTime!=null && startTime!=''){
-            http=http+'&startTime=' + startTime
-          }
-        }
-        if(http==url){
-          if(endTime!=null && endTime!=''){
-            http=http+'?endTime=' + endTime
-          }
-        }else{
-          if(endTime!=null && endTime!=''){
-            http=http+'&endTime=' + endTime
-          }
-        }
-        // if(http==url){
-        //   if(minCoin!=null && minCoin!=''){
-        //     http=http+'?minCoin=' + minCoin
-        //   }
-        // }else{
-        //   if(minCoin!=null && minCoin!=''){
-        //     http=http+'&minCoin=' + minCoin
-        //   }
-        // }
-        // if(http==url){
-        //   if(maxCoin!=null && maxCoin!=''){
-        //     http=http+'?maxCoin=' + maxCoin
-        //   }
-        // }else{
-        //   if(maxCoin!=null && maxCoin!=''){
-        //     http=http+'&maxCoin=' + maxCoin
-        //   }
-        // }
-        if(http==url){
-          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
-        }else{
-          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
-        }
         a1.setAttribute('href',http);
         let body = document.querySelector('body');
         body.appendChild(a1);
@@ -408,6 +359,86 @@
           this.fullscreenLoading.close();
         }, 5000);
       },
+
+      // doDownload(obj) {
+      //   let url = obj.url,
+      //     accountId=obj.accountId,
+      //     level=obj.level,
+      //     startTime=obj.startTime,
+      //     endTime=obj.endTime,
+      //     // minCoin=obj.minCoin,
+      //     // maxCoin=obj.maxCoin,
+      //     token= obj.token,
+      //     channel=obj.channel,
+      //     relation=obj.relation
+      //
+      //   let a1 = document.createElement('a');
+      //   let http=url;
+      //   if(http==url){
+      //      if(accountId!=null && accountId!=''){
+      //        http=http+'?accountId=' + accountId
+      //      }
+      //   }
+      //   if(http==url){
+      //     if(level!=null && level!=''){
+      //       http=http+'?level=' + level
+      //     }
+      //   }else{
+      //     if(level!=null && level!=''){
+      //       http=http+'&level=' + level
+      //     }
+      //   }
+      //   if(http==url){
+      //     if(startTime!=null && startTime!=''){
+      //       http=http+'?startTime=' + startTime
+      //     }
+      //   }else{
+      //     if(startTime!=null && startTime!=''){
+      //       http=http+'&startTime=' + startTime
+      //     }
+      //   }
+      //   if(http==url){
+      //     if(endTime!=null && endTime!=''){
+      //       http=http+'?endTime=' + endTime
+      //     }
+      //   }else{
+      //     if(endTime!=null && endTime!=''){
+      //       http=http+'&endTime=' + endTime
+      //     }
+      //   }
+      //   // if(http==url){
+      //   //   if(minCoin!=null && minCoin!=''){
+      //   //     http=http+'?minCoin=' + minCoin
+      //   //   }
+      //   // }else{
+      //   //   if(minCoin!=null && minCoin!=''){
+      //   //     http=http+'&minCoin=' + minCoin
+      //   //   }
+      //   // }
+      //   // if(http==url){
+      //   //   if(maxCoin!=null && maxCoin!=''){
+      //   //     http=http+'?maxCoin=' + maxCoin
+      //   //   }
+      //   // }else{
+      //   //   if(maxCoin!=null && maxCoin!=''){
+      //   //     http=http+'&maxCoin=' + maxCoin
+      //   //   }
+      //   // }
+      //   if(http==url){
+      //     http=http+'?token='+token+'&channel='+channel+'&relation='+relation
+      //   }else{
+      //     http=http+'&token='+token+'&channel='+channel+'&relation='+relation
+      //   }
+      //   a1.setAttribute('href',http);
+      //   let body = document.querySelector('body');
+      //   body.appendChild(a1);
+      //   a1.click();
+      //   a1.remove();
+      //   //关闭正在导出弹层
+      //   setTimeout(() => {
+      //     this.fullscreenLoading.close();
+      //   }, 5000);
+      // },
       timeChang(){
 
       },

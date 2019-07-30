@@ -740,7 +740,7 @@
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
       currency: function (num){
-        var dataval = parseInt(num);
+        (num);
         return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
     },

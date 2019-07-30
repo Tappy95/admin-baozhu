@@ -151,7 +151,8 @@ export default {
   }
   .i-span{
     font-size: 14px;
-    color: #21b384;
+    /*color: #c0c4cc;*/
+    color: #7c7d80;
   }
 
 .login-main {
@@ -178,7 +179,8 @@ export default {
     width: 150px;
     height: 40px;
     color: #fff;
-    border: 1px solid transparent;
+    /*border-bottom: 4px solid #6683b9;*/
+    border-bottom: 4px solid #98B3E2;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
@@ -189,14 +191,16 @@ export default {
     padding: 0;
     transition: all 0.35s;
     outline: none;
-    background: linear-gradient(to right, #84d9d2, #07cdae);
+    /*background: #6e8ec9;*/
+    background: #A3BAE4;
+    /*background: linear-gradient(to right, #84d9d2, #07cdae);*/
   }
 
   .login-btn:hover{
-    background-color:#84d9d2;
+    background-color:#A3BAE4;
     color: #fff;
     border: 1px solid transparent;
-    border-bottom:0px solid #1fa67a;
+    border-bottom:0px solid transparent;
     outline: none;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   }

@@ -144,8 +144,8 @@
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
       currency: function (num){
-        var dataval = parseInt(num);
-        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        // var dataval = parseInt(num);
+        return num.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
         // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
     },

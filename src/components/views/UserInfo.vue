@@ -567,8 +567,8 @@
         return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
       currencyFixed: function (num){
-        var dataval = parseInt(num);
-        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        // var dataval = parseInt(num);
+        return num.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
     },
     methods: {
