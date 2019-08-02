@@ -13,6 +13,9 @@
           <el-form-item  label="用户ID:" :label-width="labelWidth">
             <el-input  v-model="formInline.accountId" placeholder="请输入用户ID" clearable></el-input>
           </el-form-item>
+          <el-form-item  label="用户姓名:" :label-width="labelWidth">
+            <el-input  v-model="formInline.realName" placeholder="请输入用户姓名" clearable></el-input>
+          </el-form-item>
           <el-form-item :label-width="labelWidth"  label="提现状态:" >
             <el-select v-model="formInline.state"  placeholder="请选择提现状态">
               <el-option label="审核中" value="1"></el-option>
@@ -467,177 +470,41 @@
           this.formInline.examineEndTime ='';
         }
 
-        let outTradeNo=this.formInline.outTradeNo
-        let accountId=this.formInline.accountId;
-        let  state=this.formInline.state;
-        let  isLocking=this.formInline.isLocking;
-        let bankNum=this.formInline.bankNum;
-        let  startTime=this.formInline.startTime;
-        let  endTime=this.formInline.endTime;
-        let  examineStartTime=this.formInline.examineStartTime;
-        let  examineEndTime=this.formInline.examineEndTime;
-        let  coinMin=this.formInline.coinMin;
-        let  coinMax=this.formInline.coinMax;
-        let  channelCode=this.formInline.channelCode;
-        let  days=this.formInline.days;
-
-        let token= getSession("token");
-        let channel= getSession("channelCode")
-        let relation= getSession("userRelation");
+        this.formInline.token= getSession("token");
+        this.formInline.channel= getSession("channelCode")
+        this.formInline.relation= getSession("userRelation");
         let url = '/api/excl/exclCash';
-        let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,channelCode,days,token,channel,relation};
-        this.doDownload(data);
+        //let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,channelCode,days,token,channel,relation};
+        this.doDownload(this.formInline,url);
       },
-      doDownload(obj) {
-        let url = obj.url,
-          outTradeNo=obj.outTradeNo,
-          accountId=obj.accountId,
-          state=obj.state,
-          isLocking=obj.isLocking,
-          bankNum=obj.bankNum,
-          startTime=obj.startTime,
-          endTime=obj.endTime,
-          examineStartTime=obj.examineStartTime,
-          examineEndTime=obj.examineEndTime,
-          coinMin=obj.coinMin,
-          coinMax=obj.coinMax,
-          days=obj.days,
-          token= obj.token,
-          channel=obj.channel,
-          relation=obj.relation,
-          channelCode=obj.channelCode
-
-        let a1 = document.createElement('a');
-
+      doDownload(from,url){
+        let keys=[];
+        let data=[];
+        for (var i in from) {
+          if(from[i]!=null && from[i]!='') {
+            keys.push(i)
+            data.push(from[i])
+          }
+        }
         let http=url;
-        if(http==url){
-          if(accountId){
-            http=http+'?accountId=' + accountId
+        for(let i=0;i<keys.length;i++){
+          if(http==url){
+            // if(data[i]!=null && data[i]!=''){
+            http=http+'?'+keys[i]+'='+ data[i]
+            // }
+          }else{
+            // if(data[i]!=null && data[i]!=''){
+            http=http+'&'+keys[i]+'='+ data[i]
+            // }
           }
         }
-        if(http==url){
-          if(outTradeNo){
-            http=http+'?outTradeNo=' + outTradeNo
-          }
-        }else{
-          if(outTradeNo){
-            http=http+'&outTradeNo=' + outTradeNo
-          }
-        }
-        if(http==url){
-          if(state){
-            http=http+'?state=' + state
-          }
-        }else{
-          if(state){
-            http=http+'&state=' + state
-          }
-        }
-        if(http==url){
-          if(isLocking){
-            http=http+'?isLocking=' + isLocking
-          }
-        }else{
-          if(isLocking){
-            http=http+'&isLocking=' + isLocking
-          }
-        }
-        if(http==url){
-          if(bankNum){
-            http=http+'?bankNum=' + bankNum
-          }
-        }else{
-          if(bankNum){
-            http=http+'&bankNum=' + bankNum
-          }
-        }
-        if(http==url){
-          if(startTime){
-            http=http+'?startTime=' + startTime
-          }
-        }else{
-          if(startTime){
-            http=http+'&startTime=' + startTime
-          }
-        }
-        if(http==url){
-          if(endTime){
-            http=http+'?endTime=' + endTime
-          }
-        }else{
-          if(endTime){
-            http=http+'&endTime=' + endTime
-          }
-        }
-
-        if(http==url){
-          if(examineStartTime){
-            http=http+'?examineStartTime=' + examineStartTime
-          }
-        }else{
-          if(examineStartTime){
-            http=http+'&examineStartTime=' + examineStartTime
-          }
-        }
-        if(http==url){
-          if(examineEndTime){
-            http=http+'?examineEndTime=' + examineEndTime
-          }
-        }else{
-          if(examineEndTime){
-            http=http+'&examineEndTime=' + examineEndTime
-          }
-        }
-        if(http==url){
-          if(coinMin){
-            http=http+'?coinMin=' + coinMin
-          }
-        }else{
-          if(coinMin){
-            http=http+'&coinMin=' + coinMin
-          }
-        }
-        if(http==url){
-          if(coinMax){
-            http=http+'?coinMax=' + coinMax
-          }
-        }else{
-          if(coinMax){
-            http=http+'&coinMax=' + coinMax
-          }
-        }
-
-        if(http==url){
-          if(channelCode){
-            http=http+'?channelCode=' + channelCode
-          }
-        }else{
-          if(channelCode){
-            http=http+'&channelCode=' + channelCode
-          }
-        }
-
-        if(http==url){
-          if(days){
-            http=http+'?days=' + days
-          }
-        }else{
-          if(days){
-            http=http+'&days=' + days
-          }
-        }
-
-        if(http==url){
-          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
-        }else{
-          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
-        }
+        let a1 = document.createElement('a');
         a1.setAttribute('href',http);
         let body = document.querySelector('body');
         body.appendChild(a1);
         a1.click();
         a1.remove();
-        //关闭导出弹层
+        //关闭正在导出弹层
         setTimeout(() => {
           this.fullscreenLoading.close();
         }, 5000);
@@ -687,6 +554,7 @@
           pageSize: this.pageSize,
           outTradeNo:this.formInline.outTradeNo,
           accountId:this.formInline.accountId,
+          realName:this.formInline.realName,
           state:this.formInline.state,
           isLocking:this.formInline.isLocking,
           bankNum:this.formInline.bankNum,

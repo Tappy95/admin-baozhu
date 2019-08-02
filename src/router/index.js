@@ -422,6 +422,19 @@ const routes = [
         component: resolve => require(['../components/views/BaozhuCallBack.vue'], resolve),
         meta: { title: '宝猪回调'}
       },
+      {
+        path: 'sms-log',
+        name: 'SmsLog',
+        component: resolve => require(['../components/views/SmsLog.vue'], resolve),
+        meta: { title: '验证码记录'}
+      },
+      {
+        path: 'cash-config',
+        name: 'CashConfig',
+        component: resolve => require(['../components/views/CashConfig.vue'], resolve),
+        meta: { title: '提现规则'}
+      },
+
     ]
   }
 ]
