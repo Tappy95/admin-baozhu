@@ -29,6 +29,19 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
+
+          <el-form-item label="回调时间:">
+            <el-date-picker
+              v-model="selectTime"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              align="left">
+            </el-date-picker>
+          </el-form-item>
+
           <el-form-item >
             <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>
           </el-form-item>
@@ -73,6 +86,8 @@
                 <span class="red" v-if="scope.row.status==2">失败</span>
                 <span class="green" v-if="scope.row.status==1">成功</span>
               </template>
+            </el-table-column>
+            <el-table-column min-width="170" prop="createTime"  label="回调时间">
             </el-table-column>
             <el-table-column fixed="right"
                              label="操作" v-show="showW" :width="optionW" >
@@ -135,7 +150,35 @@
         smallMoneySum:'',
         optionW:'1px',
         rep:false,
-        showW:false
+        showW:false,
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        selectTime:''
       }
     },
     created() {
@@ -203,7 +246,9 @@
           accountId:this.formInline.accountId,
           adname:this.formInline.adname,
           status:this.formInline.status,
-          yoleid:this.formInline.yoleid
+          yoleid:this.formInline.yoleid,
+          startTime:this.formInline.startTime,
+          endTime:this.formInline.endTime
         }
         this.$fetch('/api/YoleCallback/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -242,6 +287,17 @@
         })
       },
       search() {
+        if (this.selectTime && this.selectTime[0]) {
+          this.formInline.startTime = new Date(this.selectTime[0]).getTime();
+        }else {
+          this.formInline.startTime = ''
+        }
+        //结束时间
+        if (this.selectTime && this.selectTime[1]) {
+          this.formInline.endTime =  new Date(this.selectTime[1]).getTime();
+        }else {
+          this.formInline.endTime = ''
+        }
         this.currentPage = 1;
         this.pageSize = 10;
         this.accountList();

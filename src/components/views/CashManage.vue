@@ -303,7 +303,8 @@
 
             <div class="exa_box">
               <el-radio-group v-model="messageForm.state">
-                <el-radio :label="5">提现通过</el-radio>
+                <el-radio  v-if="statusAud==4" :label="2">提现成功</el-radio>
+                <el-radio  v-else :label="5">提现通过</el-radio>
                 <el-radio :label="3">提现失败</el-radio>
               </el-radio-group>
             </div>
@@ -408,7 +409,8 @@
         lock:false,
         count:'',
         menuId:'',
-        channelCode:''
+        channelCode:'',
+        statusAud:''
       }
     },
     created() {
@@ -660,7 +662,12 @@
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.messageForm=res.data
+            this.messageForm=res.data;
+            if ( this.messageForm.state==4){
+              this.statusAud = 4;
+            }else {
+              this.statusAud = '';
+            }
           }
         })
       },
