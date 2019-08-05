@@ -434,7 +434,12 @@ const routes = [
         component: resolve => require(['../components/views/CashConfig.vue'], resolve),
         meta: { title: '提现规则'}
       },
-
+      {
+        path: 'daren-reward',
+        name: 'DarenReward',
+        component: resolve => require(['../components/views/DarenReward.vue'], resolve),
+        meta: { title: '达人奖励'}
+      },
     ]
   }
 ]
