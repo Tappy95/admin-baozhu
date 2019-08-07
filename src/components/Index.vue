@@ -248,7 +248,7 @@ export default {
 
   .box_passWord_title{
     font-size: 14px;
-    color: #31caab;
+    color: #1fa67a;
     font-weight: 600;
     letter-spacing: 2px;
   }

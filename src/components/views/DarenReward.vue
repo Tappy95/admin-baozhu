@@ -23,96 +23,116 @@
           <el-table :data="tableData" height="528">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
-
             <el-table-column min-width="120" prop="rewardType"  label="奖励类型">
               <template slot-scope="scope">
-                <span class="red" v-if="scope.row.rewardType==1">首个任务</span>
-                <span class="green" v-if="scope.row.rewardType==2">后续任务</span>
+                <span v-if="scope.row.rewardType==1">首个任务</span>
+                <span v-if="scope.row.rewardType==2">后续任务</span>
               </template>
             </el-table-column>
-
             <el-table-column prop="rewardName" label="奖励名称">
             </el-table-column>
-
             <el-table-column prop="coin" label="奖励金币数">
             </el-table-column>
-
             <el-table-column prop="orders" label="排序">
             </el-table-column>
-
             <el-table-column min-width="120" prop="state"  label="状态">
               <template slot-scope="scope">
-                <span class="red" v-if="scope.row.state==1">启用</span>
-                <span class="green" v-if="scope.row.state==2">禁用</span>
-                <span class="green" v-if="scope.row.state==3">已删除</span>
+                <span class="green" v-if="scope.row.state==1">启用中</span>
+                <span class="red" v-if="scope.row.state==2">已禁用</span>
+                <span class="zi" v-if="scope.row.state==3">已删除</span>
               </template>
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del && scope.row.state!=3">删除</el-button>
-                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd && scope.row.state!=3">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加达人奖励" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加达人奖励" :visible.sync="dialogFormVisible" width="700px">
           <el-form :model="form" :rules="rules" ref="form">
-            <el-form-item label="奖励类型:" prop="rewardType" :label-width="formLabelWidth">
-              <el-select :style="styleObject" v-model="form.rewardType" placeholder="">
-                <el-option label="首个任务" :value="1"></el-option>
-                <el-option label="后续任务" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="奖励名称" :label-width="formLabelWidth" prop="rewardName">
-              <el-input v-model="form.rewardName" auto-complete="off" style="width: 300px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="奖励金币数" prop="coin" :label-width="formLabelWidth">
-              <el-input v-model="form.coin" auto-complete="off" style="width: 300px" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="排序" prop="orders" :label-width="formLabelWidth">
-              <el-input v-model="form.orders" auto-complete="off" style="width: 300px" clearable></el-input>
-            </el-form-item>
-
-            <el-form-item label="状态:" prop="state" :label-width="formLabelWidth">
-              <el-select :style="styleObject" v-model="form.state" placeholder="">
-                <el-option label="启用" :value="1"></el-option>
-                <el-option label="禁用" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="奖励名称" :label-width="formLabelWidth" prop="rewardName">
+                  <el-input v-model="form.rewardName" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="奖励类型:" prop="rewardType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.rewardType" placeholder="">
+                    <el-option label="首个任务" :value="1"></el-option>
+                    <el-option label="后续任务" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="奖励金币数" prop="coin" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="form.coin" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item  label="排序" prop="orders" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="form.orders" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="状态:" prop="state" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.state" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="禁用" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-
-        <el-dialog title="修改提现规则" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="修改提现规则" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo" :rules="rules" ref="formtwo">
-            <el-form-item label="奖励类型:" prop="rewardType" :label-width="formLabelWidth">
-              <el-select :style="styleObject" v-model="formtwo.rewardType" placeholder="">
-                <el-option label="首个任务" :value="1"></el-option>
-                <el-option label="后续任务" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="奖励名称" :label-width="formLabelWidth" prop="rewardName">
-              <el-input v-model="formtwo.rewardName" auto-complete="off" style="width: 300px" clearable>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="奖励金币数" prop="coin" :label-width="formLabelWidth">
-              <el-input v-model="formtwo.coin" auto-complete="off" style="width: 300px" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="排序" prop="orders" :label-width="formLabelWidth">
-              <el-input v-model="formtwo.orders" auto-complete="off" style="width: 300px" clearable></el-input>
-            </el-form-item>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="奖励名称" :label-width="formLabelWidth" prop="rewardName">
+                  <el-input v-model="formtwo.rewardName" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="奖励类型:" prop="rewardType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.rewardType" placeholder="">
+                    <el-option label="首个任务" :value="1"></el-option>
+                    <el-option label="后续任务" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="奖励金币数" prop="coin" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.coin" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="排序" prop="orders" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.orders" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="状态:" prop="state" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.state" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="禁用" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-            <el-form-item label="状态:" prop="state" :label-width="formLabelWidth">
-              <el-select :style="styleObject" v-model="formtwo.state" placeholder="">
-                <el-option label="启用" :value="1"></el-option>
-                <el-option label="禁用" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+
+
+
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -146,10 +166,6 @@
           orders: '',
           isTask: '2'
         },
-        roles: {
-          id: '',
-          realname: ''
-        },
         rules: {
           rewardType: [{
             required: true,
@@ -181,7 +197,7 @@
               }
             }, trigger:'blur'}
           ],
-      state: [{
+        state: [{
             required: true,
             message: '请选择状态',
             trigger: 'change'
@@ -193,17 +209,15 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        styleObject:{
+          width:'200px'
+        }
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -247,21 +261,17 @@
         }
         this.$fetch('/api/darenReward/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
         } else {
-          this.$message({
-            type: 'error',
-            message: res.message,
-            duration: 3000
-          })
+          this.$message({type: 'error', message: res.message, duration: 3000})
         }
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
@@ -269,7 +279,6 @@
         this.dialogFormVisible = true;
       },
       addBtn(form) {
-
         this.$refs[form].validate(valid => {
         if(valid) {
           this.$post('/api/darenReward/add', this.form).then(res => {
@@ -327,17 +336,12 @@
       })
       },
       getInfo(id) {
-        this.dialogTableVisible = true
+        this.dialogTableVisible = true;
         this.$fetch('/api/darenReward/queryOne', {
           id: id
         }).then(res => {
-        if(res.data != null ){
-          if (res.data.staffType == '2') {
-            this.isShow = false
-          } else {
-            this.isShow = true
-          }
-          this.formtwo = res.data
+          if ((res.statusCode+"").startsWith("2")) {
+           this.formtwo = res.data
         }
       })
       },
@@ -365,11 +369,7 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
-
   }
 </script>
 <style type="text/css">

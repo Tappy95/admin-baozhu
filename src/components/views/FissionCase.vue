@@ -1,7 +1,7 @@
 <template>
-  <div class="bannermanage-wrap">
-    <div class="bannermanage-inner">
-      <div class="bannermanage-header">
+  <div class="fission-case-wrap">
+    <div class="fission-case-inner">
+      <div class="fission-case-header">
         <h3>第三方/裂变方案</h3>
         <hr />
       </div>
@@ -20,14 +20,14 @@
         </el-form>
       </div>
       <div>
-        <el-dialog title="添加方案" width="800px"
+        <el-dialog title="添加方案" width="900px"
                    :visible.sync="dialogFormVisible">
           <el-form :model="form"
                    :rules="rules"
                    ref="form">
             <div class="form">
               <el-row>
-                <el-col :span="23">
+                <el-col :span="22">
                   <el-form-item label="方案名称:"
                                 prop="name"
                                 :label-width="formLabelWidth">
@@ -188,7 +188,6 @@
                       </el-upload>
                     </el-form-item>
                   </el-col>
-
                 <el-col :span="24">
                       <el-form-item label="团队长奖励图:"
                                     :label-width="formLabelWidth">
@@ -202,13 +201,39 @@
                           <i class="el-icon-plus"></i>
                         </el-upload>
                       </el-form-item>
-                    </el-col>
-
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="达人奖励图:"
+                                :label-width="formLabelWidth">
+                    <el-upload
+                      action="/api/upload"
+                      list-type="picture-card"
+                      :file-list="fileList4"
+                      :on-success="handlePicture04"
+                      :on-preview="handlePictureCardPreview4"
+                      :on-remove="handleRemove04">
+                      <i class="el-icon-plus"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="邀请流程图:"
+                                :label-width="formLabelWidth">
+                    <el-upload
+                      action="/api/upload"
+                      list-type="picture-card"
+                      :file-list="fileList5"
+                      :on-success="handlePicture05"
+                      :on-preview="handlePictureCardPreview5"
+                      :on-remove="handleRemove05">
+                      <i class="el-icon-plus"></i>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
                   <el-dialog width="800px" style="z-index: 99999" :visible.sync="dialogVisible">
                     <img width="100%" :src="dialogImageUrl" alt="">
                   </el-dialog>
                 </el-col>
-
                 <el-col :span="24">
                   <el-form-item label="类型描述:" prop="remarks" :label-width="formLabelWidth">
                     <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.remarks" auto-complete="off" clearable></el-input>
@@ -225,7 +250,7 @@
           </div>
         </el-dialog>
       </div>
-      <div class="bannermanage-table">
+      <div class="fission-case-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
@@ -286,30 +311,20 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog width="800px" title="修改方案"
+        <el-dialog width="900px" title="修改方案"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="23">
-                <el-form-item label="方案名称:"
-                              prop="name"
-                              :label-width="formLabelWidth">
-                  <el-input v-model="formtwo.name"
-                            auto-complete="off"
-                            clearable></el-input>
+                <el-form-item label="方案名称:" prop="name" :label-width="formLabelWidth">
+                  <el-input v-model="formtwo.name" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
-                <el-form-item label="团队长价格:"
-                              prop="teamPrice"
-                              :label-width="formLabelWidth">
-                  <el-input type="number" :style="styleObject" v-model="formtwo.teamPrice"
-                            auto-complete="off"
-                            clearable></el-input>
+                <el-form-item label="团队长价格:" prop="teamPrice" :label-width="formLabelWidth">
+                  <el-input type="number" :style="styleObject" v-model="formtwo.teamPrice" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="续费价格:"
                               prop="renewPrice"
@@ -319,7 +334,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="一级分佣(%):"
                               prop="oneCommission"
@@ -329,8 +343,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
-
               <el-col :span="12">
                 <el-form-item label="二级分佣(%):"
                               prop="twoCommission"
@@ -340,7 +352,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="合伙人分佣(%):"
                               prop="partnerCommission"
@@ -350,7 +361,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="团队长有效天数:"
                               prop="effectiveDay"
@@ -360,7 +370,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="普通用户起提金额:"
                               prop="ordinaryExchange"
@@ -370,7 +379,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="团队长起提金额:"
                               prop="groupExchange"
@@ -380,7 +388,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="每日赠送人民币数:"
                               prop="giveMoney"
@@ -390,7 +397,6 @@
                             clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="每天赠送金币数:"
                               prop="giveCoin"
@@ -434,10 +440,8 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-
               <el-col :span="24">
-                <el-form-item label="普通用户奖励图:"
-                              :label-width="formLabelWidth">
+                <el-form-item label="普通用户奖励图:" :label-width="formLabelWidth">
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
@@ -449,10 +453,8 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-
               <el-col :span="24">
-                <el-form-item label="团队长奖励图:"
-                              :label-width="formLabelWidth">
+                <el-form-item label="团队长奖励图:" :label-width="formLabelWidth">
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
@@ -464,8 +466,33 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-
-
+              <el-col :span="24">
+                <el-form-item label="达人奖励图:" :label-width="formLabelWidth">
+                  <el-upload
+                    action="/api/upload"
+                    list-type="picture-card"
+                    :file-list="fileList4"
+                    :on-success="handlePicture04"
+                    :on-preview="handlePictureCardPreview4"
+                    :on-remove="handleRemove04">
+                    <i class="el-icon-plus"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="邀请流程图:"
+                              :label-width="formLabelWidth">
+                  <el-upload
+                    action="/api/upload"
+                    list-type="picture-card"
+                    :file-list="fileList5"
+                    :on-success="handlePicture05"
+                    :on-preview="handlePictureCardPreview5"
+                    :on-remove="handleRemove05">
+                    <i class="el-icon-plus"></i>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
               <el-col :span="24">
                 <el-form-item label="类型描述:" prop="remarks" :label-width="formLabelWidth">
                   <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remarks" auto-complete="off" clearable></el-input>
@@ -480,187 +507,172 @@
                        @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog width="800px" title="方案详情"
+        <el-dialog width="1000px" title="方案详情"
                    :visible.sync="dialogTableDetail">
           <el-form :model="formtwo">
-            <el-row>
-              <el-col :span="23">
-                <el-form-item label="方案名称:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwo.name"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="团队长价格:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" type="number" :style="styleObject" v-model="formtwo.teamPrice"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="续费价格:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.renewPrice"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="一级分佣(%):"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.oneCommission"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-
-              <el-col :span="12">
-                <el-form-item label="二级分佣(%):"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.twoCommission"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="合伙人分佣(%):"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.partnerCommission"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="团队长有效天数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.effectiveDay"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="普通用户起提金额:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.ordinaryExchange"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="团队长起提金额:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.groupExchange"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每日赠送人民币数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.giveMoney"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每天赠送金币数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.giveCoin"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="每天赠送金猪数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.givePig"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="赠送天数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" type="number" v-model="formtwo.giveDay"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="创建时间:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" v-model="formtwo.createrTime"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item  label="奖励图:"
-                               :label-width="formLabelWidth">
-                  <div class="box_img_w" style="min-height: 148px">
-                    <div  @click="clickImg(item.url)" v-if="item.url" class="box_min" v-for="(item,index) in fileList1" :key="index" >
-                      <img :src="item.url" class="avatar">
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>基本信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">方案名称:</div>
+                    <div class="name">
+                      {{formtwo.name}}
                     </div>
                   </div>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item  label="普通用户奖励图:"
-                               :label-width="formLabelWidth">
-                  <div class="box_img_w" style="min-height: 148px">
-                    <div @click="clickImg(item.url)" v-if="item.url" class="box_min"  v-for="(item,index) in fileList2" :key="index" >
-                      <img :src="item.url" class="avatar">
+                  <div class="body_list" >
+                    <div class="title">续费价格:</div>
+                    <div class="name">
+                      {{formtwo.renewPrice}}
                     </div>
                   </div>
-                </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item  label="团队长奖励图:"
-                               :label-width="formLabelWidth">
-                  <div class="box_img_w" style="min-height: 148px">
-                    <div @click="clickImg(item.url)" v-if="item.url" class="box_min"  v-for="(item,index) in fileList3" :key="index" >
-                      <img :src="item.url" class="avatar">
+                  <div class="body_list" >
+                    <div class="title">赠送天数:</div>
+                    <div class="name">
+                      {{formtwo.giveDay}}
                     </div>
                   </div>
-                </el-form-item>
-              </el-col>
-              <!--<el-col :span="24">
-                <el-form-item label="方案图:"
-                              :label-width="formLabelWidth">
-                  <el-upload :disabled="true" class="bannerAvatar-uploader"
-                             action="/api/upload"
-                             :data="uploadData"
-                             :show-file-list="false"
-                             :on-success="handleAvatarSuccess"
-                             :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-col>-->
-              <el-col :span="24">
-                <el-form-item label="类型描述:" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.remarks" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
+                  <div class="body_list" >
+                    <div class="title">普通用户起提金额:</div>
+                    <div class="name">
+                      {{formtwo.ordinaryExchange}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">创建时间:</div>
+                    <div class="name">
+                      {{formtwo.createrTime}}
+                    </div>
+                  </div>
+                  <div class="header">
+                    <span>分佣</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">一级分佣(%):</div>
+                    <div class="name">
+                      {{formtwo.oneCommission}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">二级分佣(%):</div>
+                    <div class="name">
+                      {{formtwo.twoCommission}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">合伙人分佣(%):</div>
+                    <div class="name">
+                      {{formtwo.partnerCommission}}
+                    </div>
+                  </div>
+                  <div class="header">
+                    <span>团队长</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">团队长有效天数:</div>
+                    <div class="name">
+                      {{formtwo.effectiveDay}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">团队长价格:</div>
+                    <div class="name">
+                      {{formtwo.teamPrice}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">团队长起提金额:</div>
+                    <div class="name">
+                      {{formtwo.groupExchange}}
+                    </div>
+                  </div>
+                  <div class="header">
+                    <span>每日</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">每日赠送人民币数:</div>
+                    <div class="name">
+                      {{formtwo.giveMoney}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">每天赠送金币数:</div>
+                    <div class="name">
+                      {{formtwo.giveCoin}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">每天赠送金猪数:</div>
+                    <div class="name">
+                      {{formtwo.givePig}}
+                    </div>
+                  </div>
+                  <div class="header">
+                    <span>其他</span>
+                    <span></span>
+                  </div>
+                  <div  class="body_list img" style="width: 100%" >
+                    <div class="title" style="float: left;">方案图:</div>
+                    <div class="img_box" style="width: 700px;float: left;">
+                      <div @click="clickImg(item.url)" v-if="item.url"  v-for="(item,index) in fileList1" :key="index" class="more_img">
+                        <img  :src="item.url"  />
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="body_list img" style="width: 100%" >
+                    <div class="title" style="float: left;">
+                      普通用户奖励图:
+                    </div>
+                    <div class="img_box" style="width: 700px;float: left;">
+                      <div @click="clickImg(item.url)" v-if="item.url"   v-for="(item,index) in fileList2" :key="index" class="more_img">
+                        <img  :src="item.url" />
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="body_list img" style="width: 100%" >
+                    <div class="title" style="float: left;">
+                      团队长奖励图:
+                    </div>
+                    <div class="img_box" style="width: 700px;float: left;">
+                      <div @click="clickImg(item.url)" v-if="item.url"   v-for="(item,index) in fileList3" :key="index" class="more_img">
+                        <img  :src="item.url" />
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="body_list img" style="width: 100%" >
+                    <div class="title" style="float: left;">
+                      达人奖励图:
+                    </div>
+                    <div class="img_box" style="width: 700px;float: left;">
+                      <div @click="clickImg(item.url)" v-if="item.url"   v-for="(item,index) in fileList4" :key="index" class="more_img">
+                        <img  :src="item.url" />
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="body_list img" style="width: 100%" >
+                    <div class="title" style="float: left;">
+                      邀请流程图:
+                    </div>
+                    <div class="img_box" style="width: 700px;float: left;">
+                      <div @click="clickImg(item.url)" v-if="item.url"   v-for="(item,index) in fileList5" :key="index" class="more_img">
+                        <img  :src="item.url" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="body_list dec" style="width: 100%" >
+                      <div class="title">类型描述:</div>
+                      <div class="name">
+                            <span class="dec"> {{formtwo.remarks}}</span>
+                       </div>
+                  </div>
+                </div>
+              </div>
             </el-row>
           </el-form>
         </el-dialog>
@@ -690,6 +702,8 @@
         fileList1:[],
         fileList2:[],
         fileList3:[],
+        fileList4:[],
+        fileList5:[],
         dialogImageUrl: '',
         dialogVisible: false,
         styleObject: {
@@ -784,9 +798,9 @@
       'big-img': BigImg
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
       this.uploadData={
         token:getSession("token")
       }
@@ -810,6 +824,19 @@
         fileImg.url=res.data;
         this.fileList3.push(fileImg)
       },
+
+      handlePicture04(res, file, fileList){
+        let fileImg={};
+        fileImg.url=res.data;
+        this.fileList4.push(fileImg)
+      },
+
+      handlePicture05(res, file, fileList){
+        let fileImg={};
+        fileImg.url=res.data;
+        this.fileList5.push(fileImg)
+      },
+
       handleRemove01(file, fileList1) {
         this.fileList1=fileList1;
       },
@@ -822,21 +849,31 @@
         this.fileList3=fileList3;
       },
 
+      handleRemove04(file, fileList4) {
+        this.fileList4=fileList4;
+      },
+
+      handleRemove05(file, fileList5) {
+        this.fileList5=fileList5;
+      },
+
       handlePictureCardPreview1(file,fileList) {
-        // this.dialogImageUrl = file.url;
-        // this.dialogVisible = true;
         this.showImg = true;
         this.imgSrc = file.url;
       },
       handlePictureCardPreview2(file,fileList) {
-        // this.dialogImageUrl = file.url;
-        // this.dialogVisible = true;
         this.showImg = true;
         this.imgSrc = file.url;
       },
       handlePictureCardPreview3(file,fileList) {
-        // this.dialogImageUrl = file.url;
-        // this.dialogVisible = true;
+        this.showImg = true;
+        this.imgSrc = file.url;
+      },
+      handlePictureCardPreview4(file,fileList) {
+        this.showImg = true;
+        this.imgSrc = file.url;
+      },
+      handlePictureCardPreview5(file,fileList) {
         this.showImg = true;
         this.imgSrc = file.url;
       },
@@ -899,13 +936,9 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          // goodsName: this.formInline.goodsName
         }
         this.$fetch('/api/mFissionScheme/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            // for (let i = res.data.list.length - 1; i >= 0; i--) {
-            //
-            // }
             this.tableData = res.data.list;
             this.totalCount = res.data.total;
           } else {
@@ -918,9 +951,9 @@
         })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.dialogFormVisible = true;
@@ -930,11 +963,16 @@
         this.fileList1=[];
         this.fileList2=[];
         this.fileList3=[];
+        this.fileList4=[];
+        this.fileList5=[];
       },
       addBtn(form) {
-        this.form.schemeImg='';
+        this.form.schemeImg='';//方案图
         this.form.ordinaryRewardImg=''; //普通用户奖励图
         this.form.teamRewardImg='';//团队长奖励图
+        this.form.darenRewardImg=''; //达人奖励图
+        this.form.inviteImg='';//邀请流程图
+
         let arr1 = '';
         if (this.fileList1.length>0){
           for(let i=0; i<this.fileList1.length;i++){
@@ -953,9 +991,26 @@
             arr3+= this.fileList3[i].url +','
           }
         }
+        let arr4 = '';
+        if (this.fileList4.length>0){
+          for(let i=0; i<this.fileList4.length;i++){
+            arr4+= this.fileList4[i].url +','
+          }
+        }
+
+        let arr5 = '';
+        if (this.fileList5.length>0){
+          for(let i=0; i<this.fileList5.length;i++){
+            arr5+= this.fileList5[i].url +','
+          }
+        }
+
         this.form.schemeImg=arr1.substr(0, arr1.length - 1);
         this.form.ordinaryRewardImg=arr2.substr(0, arr2.length - 1); //普通用户奖励图
         this.form.teamRewardImg=arr3.substr(0, arr3.length - 1);//团队长奖励图
+
+        this.form.darenRewardImg=arr4.substr(0, arr4.length - 1); //达人奖励图
+        this.form.inviteImg=arr5.substr(0, arr5.length - 1);//邀请流程图
         this.$refs[form].validate(valid => {
           if (valid) {
             this.$post('/api/mFissionScheme/add', this.form).then(res => {
@@ -963,15 +1018,11 @@
                 this.dialogFormVisible = false
                 this.$message({ type: 'success', message: '添加成功！' })
                 this.accountList()
+              }else {
+                this.$message({ type: 'error', message: res.message})
               }
             })
           } else {
-            // this.$message({
-            //   type: 'error',
-            //   message: res.message,
-            //   duration: 3000
-            // })
-
           }
         })
       },
@@ -1005,6 +1056,8 @@
         this.fileList1=[];
         this.fileList2=[];
         this.fileList3=[];
+        this.fileList4=[];
+        this.fileList5=[];
         this.$fetch('/api/mFissionScheme/queryOne',{
           id: id
         }).then(res => {
@@ -1015,27 +1068,46 @@
             }else {
               this.dialogTableVisible = true
             }
-            /*let ob={};*/
-          var arr1=res.data.schemeImg.split(',');
-          for(var i=0;i<arr1.length;i++){
-            let fileImg1={};
-            fileImg1.url=arr1[i];
-            this.fileList1.push(fileImg1)
-          }
-
-          var arr2=res.data.ordinaryRewardImg.split(',');
-          for(var i=0;i<arr2.length;i++){
-            let fileImg2={};
-            fileImg2.url=arr2[i];
-            this.fileList2.push(fileImg2)
-          }
-
-          var arr3=res.data.teamRewardImg.split(',');
-          for(var i=0;i<arr3.length;i++){
-            let fileImg3={};
-            fileImg3.url=arr3[i];
-            this.fileList3.push(fileImg3)
-          }
+            if (res.data.schemeImg) {
+              var arr1=res.data.schemeImg.split(',');
+              for(var i=0;i<arr1.length;i++){
+                let fileImg1={};
+                fileImg1.url=arr1[i];
+                this.fileList1.push(fileImg1)
+              }
+            }
+            if (res.data.ordinaryRewardImg) {
+              var arr2=res.data.ordinaryRewardImg.split(',');
+              for(var i=0;i<arr2.length;i++){
+                let fileImg2={};
+                fileImg2.url=arr2[i];
+                this.fileList2.push(fileImg2)
+              }
+            }
+            if (res.data.teamRewardImg){
+              var arr3=res.data.teamRewardImg.split(',');
+              for(var i=0;i<arr3.length;i++){
+                let fileImg3={};
+                fileImg3.url=arr3[i];
+                this.fileList3.push(fileImg3)
+              }
+            }
+           if (res.data.darenRewardImg){
+             var arr4=res.data.darenRewardImg.split(',');
+             for(var i=0;i<arr4.length;i++){
+               let fileImg4={};
+               fileImg4.url=arr4[i];
+               this.fileList4.push(fileImg4)
+             }
+           }
+           if (res.data.inviteImg){
+             var arr5=res.data.inviteImg.split(',');
+             for(var i=0;i<arr5.length;i++){
+               let fileImg5={};
+               fileImg5.url=arr5[i];
+               this.fileList5.push(fileImg5)
+             }
+           }
             this.formtwo = res.data;
           }
         })
@@ -1064,20 +1136,37 @@
             arr3+= this.fileList3[i].url +','
           }
         }
-        this.formtwo.schemeImg=arr1.substr(0, arr1.length - 1);
+
+        let arr4 = '';
+        if (this.fileList4.length>0){
+          for(let i=0; i<this.fileList4.length;i++){
+            arr4+= this.fileList4[i].url +','
+          }
+        }
+
+        let arr5 = '';
+        if (this.fileList5.length>0){
+          for(let i=0; i<this.fileList5.length;i++){
+            arr5+= this.fileList5[i].url +','
+          }
+        }
+
+        this.formtwo.schemeImg=arr1.substr(0, arr1.length - 1);//方案图
         this.formtwo.ordinaryRewardImg=arr2.substr(0, arr2.length - 1); //普通用户奖励图
         this.formtwo.teamRewardImg=arr3.substr(0, arr3.length - 1);//团队长奖励图
+
+        this.formtwo.darenRewardImg=arr4.substr(0, arr4.length - 1); //达人奖励图
+        this.formtwo.inviteImg=arr5.substr(0, arr5.length - 1);//邀请流程图
+
         this.formtwo.createTime = '';
         this.$put('/api/mFissionScheme/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.$message({ type: 'success', message: '修改成功！' })
-            this.dialogTableVisible = false
-            this.accountList()
+            this.$message({ type: 'success', message: '修改成功！' });
+            this.dialogTableVisible = false;
+            this.accountList();
           }
         })
       },
-
-
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()
@@ -1090,21 +1179,21 @@
   }
 </script>
 <style type="text/css">
-  .bannermanage-wrap {
+  .fission-case-wrap {
     width: 100%;
   }
-  .bannermanage-inner {
+  .fission-case-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .bannermanage-header {
+  .fission-case-header {
     margin-bottom: 20px;
   }
-  .bannermanage-header hr {
+  .fission-case-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .bannermanage-table {
+  .fission-case-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     margin-top: 20px;

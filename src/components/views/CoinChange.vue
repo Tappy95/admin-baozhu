@@ -56,10 +56,11 @@
                   <el-option label="签到赚" value="21"></el-option>
                   <el-option label="大众团队长分佣" value="22"></el-option>
                   <el-option label="快速赚任务" value="23"></el-option>
+                  <el-option label="达人首次奖励" value="24"></el-option>
+                  <el-option label="达人后续奖励" value="25"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
-
           <el-form-item>
             <el-button type="primary" plain @click="search()">查询</el-button>
           </el-form-item>
@@ -664,6 +665,12 @@
                 break;
               case 23:
                 res.data.list[i].changedType = '快速赚任务';
+                break;
+              case 24:
+                res.data.list[i].changedType = '达人首次奖励';
+                break;
+              case 25:
+                res.data.list[i].changedType = '达人后续奖励';
                 break;
               // default:
             }

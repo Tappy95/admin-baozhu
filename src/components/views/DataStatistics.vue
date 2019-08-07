@@ -34,7 +34,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" max-height="528">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="200px" fixed="left" prop="channelCode" label="渠道标识">
