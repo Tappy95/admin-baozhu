@@ -61,7 +61,7 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog title="添加vip" :visible.sync="dialogFormVisible" width="800px">
+        <el-dialog title="添加vip" :visible.sync="dialogFormVisible" width="900px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="12" style="margin-bottom: 10px">
@@ -72,21 +72,21 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="售价:" :label-width="formLabelWidth" prop="price">
-                  <el-input v-model="form.price" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.price"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <div style="width: 100%;float: left;">
                   <el-col :span="24" style="margin-bottom: 10px">
                     <el-form-item label="等级排序(值越大等级越高):" label-width="190px" prop="orderId">
-                      <el-input v-model="form.orderId" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                      <el-input v-model="form.orderId"  auto-complete="off" style="width:187px" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
               </div>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="首充奖励:" :label-width="formLabelWidth" prop="firstReward">
-                  <el-input v-model="form.firstReward" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.firstReward"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -100,7 +100,7 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="续充奖励:" :label-width="formLabelWidth" prop="continueReward">
-                  <el-input v-model="form.continueReward" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.continueReward"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -114,25 +114,25 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="游戏加成（%）:" :label-width="formLabelWidth" prop="gameAddition">
-                  <el-input v-model="form.gameAddition" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.gameAddition"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="有效期(单位/天):" :label-width="formLabelWidth" prop="useDay">
-                  <el-input v-model="form.useDay" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.useDay"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="每日活跃奖励金猪:" :label-width="formLabelWidth" prop="everydayActivePig">
-                  <el-input v-model="form.everydayActivePig" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.everydayActivePig"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="每日活跃奖励金币:" :label-width="formLabelWidth" prop="everydayActiveCoin">
-                  <el-input v-model="form.everydayActiveCoin" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.everydayActiveCoin"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -154,13 +154,13 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="每日救济金猪:" :label-width="formLabelWidth" prop="everydayReliefPig">
-                  <el-input v-model="form.everydayReliefPig" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.everydayReliefPig"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="救济金猪每日领取次数:" :label-width="formLabelWidth" prop="everydayReliefPigTimes">
-                  <el-input v-model="form.everydayReliefPigTimes" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.everydayReliefPigTimes"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -182,13 +182,13 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="单笔限额（金猪）:" :label-width="formLabelWidth" prop="onetimeLimit">
-                  <el-input v-model="form.onetimeLimit" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.onetimeLimit"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金币兑换金猪加成(%):" :label-width="formLabelWidth" prop="coinToPigAddition">
-                  <el-input v-model="form.coinToPigAddition " min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.coinToPigAddition"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -250,8 +250,8 @@
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改vip" :visible.sync="dialogTableVisible" width="800px">
-          <el-form :model="formtwo">
+        <el-dialog title="修改vip" :visible.sync="dialogTableVisible" width="900px">
+          <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
               <el-col :span="12" style="margin-bottom: 10px">
                   <el-form-item label="vip名称:" :label-width="formLabelWidth" prop="name">
@@ -261,21 +261,21 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="售价:" :label-width="formLabelWidth" prop="price">
-                  <el-input v-model="formtwo.price" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.price"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <div style="width: 100%;float: left;">
                 <el-col :span="24" style="margin-bottom: 10px">
                   <el-form-item label="等级排序(值越大等级越高):" :label-width="formLabelWidth" prop="orderId">
-                    <el-input v-model="formtwo.orderId" min="0" type="number" auto-complete="off" style="width:187px" clearable>
+                    <el-input v-model="formtwo.orderId"  auto-complete="off" style="width:187px" clearable>
                     </el-input>
                   </el-form-item>
                 </el-col>
               </div>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="首充奖励:" :label-width="formLabelWidth" prop="firstReward">
-                  <el-input v-model="formtwo.firstReward" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.firstReward"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -289,7 +289,7 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="续充奖励:" :label-width="formLabelWidth" prop="continueReward">
-                  <el-input v-model="formtwo.continueReward" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.continueReward"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -303,25 +303,25 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="游戏加成(%):" :label-width="formLabelWidth" prop="gameAddition">
-                  <el-input v-model="formtwo.gameAddition" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.gameAddition"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="有效期(单位/天):" :label-width="formLabelWidth" prop="useDay">
-                  <el-input  v-model="formtwo.useDay" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input  v-model="formtwo.useDay"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="每日活跃奖励金猪:" :label-width="formLabelWidth" prop="everydayActivePig">
-                  <el-input v-model="formtwo.everydayActivePig" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.everydayActivePig"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="每日活跃奖励金币:" :label-width="formLabelWidth" prop="everydayActiveCoin">
-                  <el-input v-model="formtwo.everydayActiveCoin" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.everydayActiveCoin"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -343,13 +343,13 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="每日救济金猪:" :label-width="formLabelWidth" prop="everydayReliefPig">
-                  <el-input v-model="formtwo.everydayReliefPig" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.everydayReliefPig"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="救济金猪每日领取次数:" :label-width="formLabelWidth" prop="everydayReliefPigTimes">
-                  <el-input v-model="formtwo.everydayReliefPigTimes" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.everydayReliefPigTimes"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -371,13 +371,13 @@
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="单笔限额(金猪):" :label-width="formLabelWidth" prop="onetimeLimit">
-                  <el-input v-model="formtwo.onetimeLimit" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="formtwo.onetimeLimit"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12" style="margin-bottom: 10px">
               <el-form-item label="金币兑换金猪加成(%):" :label-width="formLabelWidth" prop="coinToPigAddition">
-                <el-input v-model="formtwo.coinToPigAddition" type="number" min="0" auto-complete="off" style="width:187px" clearable>
+                <el-input v-model="formtwo.coinToPigAddition"  auto-complete="off" style="width:187px" clearable>
                 </el-input>
               </el-form-item>
             </el-col>
@@ -437,7 +437,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="vip详情" :visible.sync="dialogTableDetail" width="900px">
@@ -664,121 +664,110 @@
           backgroundImg:''
         },
         rules: {
-          name: [{
-            required: true,
-            message: '请输入vip名称',
-            trigger: 'blur'
-          }],
-          firstReward: [{
-            required: true,
-            message: '请输入首充奖励',
-            trigger: 'blur'
-          }],
-          firstRewardUnit: [{
-            required: true,
-            message: '请选择奖励单位',
-            trigger: 'change'
-          }],
-          continueReward: [{
-            required: true,
-            message: '请输入续充奖励',
-            trigger: 'blur'
-          }],
-          continueRewardUnit: [{
-            required: true,
-            message: '请选择续充奖励单位',
-            trigger: 'change'
-          }],
-          gameAddition: [{
-            required: true,
-            message: '请输游戏加成',
-            trigger: 'blur'
-          }],
-          useDay: [{
-            required: true,
-            message: '请输入有效天数',
-            trigger: 'blur'
-          }],
-          everydayActivePig: [{
-            required: true,
-            message: '请输入每日活跃奖励金猪',
-            trigger: 'blur'
-          }],
-          everydayActiveCoin: [{
-            required: true,
-            message: '请输入每日活跃奖励金币',
-            trigger: 'blur'
-          }],
-          onetimeLimit: [{
-            required: true,
-            message: '请输入单笔限额',
-            trigger: 'blur'
-          }],
-          auditFirst: [{
-            required: true,
-            message: '请选择兑换是否优先审核',
-            trigger: 'change'
-          }],
-          sendSms: [{
-            required: true,
-            message: '请选择是否短信提醒',
-            trigger: 'change'
-          }],
-          everydayReliefPig: [{
-            required: true,
-            message: '请输入每日救济金猪',
-            trigger: 'blur'
-          }],
-          everydayReliefPigTimes: [{
-            required: true,
-            message: '请输入救济金猪每日领取次数',
-            trigger: 'blur'
-          }],
-          oneWithdrawals: [{
-            required: true,
-            message: '请选择是否一元提现',
-            trigger: 'change'
-          }],
-          price: [{
-            required: true,
-            message: '请输入售价',
-            trigger: 'blur'
-          }],
-          status: [{
-            required: true,
-            message: '请选择是否可用',
-            trigger: 'change'
-          }],
-          logo: [{
-            required: true,
-            message: '请选择图片',
-            trigger: 'change'
-          }],
-          backgroundImg: [{
-            required: true,
-            message: '请选择背景图',
-            trigger: 'change'
-          }],
-          orderId: [{
-            required: true,
-            message: '请输入等级排序',
-            trigger: 'blur'
-          }],
-          coinToPigAddition: [{
-            required: true,
-            message: '请输入金币兑换金猪加成',
-            trigger: 'blur'
-          }],
-          isTask: [{
-            required: true,
-            message: '请选择是否需要完成任务',
-            trigger: 'change'
-          }],
-          isRenew: [{
-            required: true,
-            message: '请选择是否可以续费',
-            trigger: 'change'
-          }],
+          name: [{required: true, message: '请输入vip名称', trigger: 'blur'},],
+          firstReward: [{required: true, message: '请输入首充奖励', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+              var pattern = /^[0-9]*$/;
+              if (!pattern.test(value)) {
+                callback(new Error("请输入正整数"));
+              }else{
+                callback();
+              }
+            }, trigger:'blur'}],
+          firstRewardUnit: [{required: true, message: '请选择奖励单位', trigger: 'change'}],
+          continueReward: [{required: true, message: '请输入续充奖励', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          continueRewardUnit: [{required: true, message: '请选择续充奖励单位', trigger: 'change'}],
+          gameAddition: [{required: true, message: '请输游戏加成', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          useDay: [{required: true, message: '请输入有效天数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          everydayActivePig: [{required: true, message: '请输入每日活跃奖励金猪', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          everydayActiveCoin: [{required: true, message: '请输入每日活跃奖励金币', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          onetimeLimit: [{required: true, message: '请输入单笔限额', trigger: 'blur'}],
+          auditFirst: [{required: true, message: '请选择兑换是否优先审核', trigger: 'change'}],
+          sendSms: [{required: true, message: '请选择是否短信提醒', trigger: 'change'}],
+          everydayReliefPig: [{required: true, message: '请输入每日救济金猪', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          everydayReliefPigTimes: [{required: true, message: '请输入救济金猪每日领取次数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          oneWithdrawals: [{required: true, message: '请选择是否一元提现', trigger: 'change'}],
+
+          price: [{required: true, message: '请输入售价', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          status: [{required: true, message: '请选择是否可用', trigger: 'change'}],
+          logo: [{required: true, message: '请选择图片', trigger: 'change'}],
+          backgroundImg: [{required: true, message: '请选择背景图', trigger: 'change'}],
+          orderId: [{required: true, message: '请输入等级排序', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          coinToPigAddition: [{required: true, message: '请输入金币兑换金猪加成', trigger: 'blur'}],
+          isTask: [{required: true, message: '请选择是否需要完成任务', trigger: 'change'}],
+          isRenew: [{required: true, message: '请选择是否可以续费', trigger: 'change'}],
         },
         formLabelWidth: '190px',
         /* 分页*/
@@ -895,19 +884,11 @@
         this.dialogFormVisible = true;
       },
       addBtn(form) {
-
         this.form.imageUrl=this.imageUrl;
         this.form.logo=this.imageUrl;
-        // this.form.backgroundImg=this.backgroundImg;
         this.form.backgroundImg=this.backgroundImg;
-
-        console.log(this.form.imageUrl)
-        console.log(this.form.backgroundImg)
-
-        // return false;
         this.$refs[form].validate(valid => {
           if(valid) {
-
             if (!this.form.logo){
               this.$message({type: 'error', message: '请上传logo！'})
               return
@@ -987,22 +968,25 @@
       update(formtwo) {
         this.formtwo.logo=this.imageUrl;
         this.formtwo.backgroundImg = this.backgroundImg;
-        if (!this.formtwo.logo){
-          this.$message({type: 'error', message: '请上传logo！'})
-          return
-        }
-        if (!this.formtwo.backgroundImg){
-          this.$message({type: 'error', message: '请上传背景图！'})
-          return
-        }
-
-        this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-          this.$message({type: 'success', message: '修改成功！'})
-          this.dialogTableVisible = false;
-          this.accountList()
-        }else {
-            this.$message({type: 'error', message: res.message})
+        this.$refs[formtwo].validate(valid => {
+          if (valid) {
+            if (!this.formtwo.logo){
+              this.$message({type: 'error', message: '请上传logo！'})
+              return
+            }
+            if (!this.formtwo.backgroundImg){
+              this.$message({type: 'error', message: '请上传背景图！'})
+              return
+            }
+            this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+              this.$message({type: 'success', message: '修改成功！'})
+              this.dialogTableVisible = false;
+              this.accountList()
+            }else {
+                this.$message({type: 'error', message: res.message})
+              }
+            })
           }
         })
       },
