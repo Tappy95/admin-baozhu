@@ -128,11 +128,6 @@
                 </el-form-item>
               </el-col>
             </el-row>
-
-
-
-
-
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -354,20 +349,20 @@
                 type: 'success',
                 message: '修改成功！'
               })
-              this.dialogTableVisible = false
-              this.accountList()
+              this.dialogTableVisible = false;
+              this.accountList();
               }
             })
           }
         })
       },
       handleSizeChange(val) {
-        this.pageSize = val
-        this.accountList()
+        this.pageSize = val;
+        this.accountList();
       },
       handleCurrentChange(val) {
-        this.currentPage = val
-        this.accountList()
+        this.currentPage = val;
+        this.accountList();
       },
     },
   }

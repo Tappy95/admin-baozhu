@@ -213,7 +213,6 @@
 
             </el-row>
             <el-form-item label="logo:"
-                          prop="imageUrl"
                           :label-width="formLabelWidth">
               <el-upload class="bannerAvatar-uploader"
                          action="/api/upload"
@@ -228,6 +227,23 @@
                    class="el-icon-plus bannerAvatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
+
+            <el-form-item label="背景图:"
+                          :label-width="formLabelWidth">
+              <el-upload class="bannerAvatar-uploader"
+                         action="/api/upload"
+                         :data="uploadData"
+                         :show-file-list="false"
+                         :on-success="handleAvatarSuccessBg"
+                         :before-upload="beforeAvatarUploadBg">
+                <img v-if="backgroundImg"
+                     :src="backgroundImg"
+                     class="avatar">
+                <i v-else
+                   class="el-icon-plus bannerAvatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -382,6 +398,8 @@
                 </el-form-item>
               </el-col>
             </el-row>
+
+            <el-col :span="24">
             <el-form-item label="logo:"
                           prop="imageUrl"
                           :label-width="formLabelWidth">
@@ -398,6 +416,24 @@
                    class="el-icon-plus bannerAvatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
+            </el-col>
+            <el-col :span="24">
+            <el-form-item label="背景图:"
+                          :label-width="formLabelWidth">
+              <el-upload class="bannerAvatar-uploader"
+                         action="/api/upload"
+                         :data="uploadData"
+                         :show-file-list="false"
+                         :on-success="handleAvatarSuccessBg"
+                         :before-upload="beforeAvatarUploadBg">
+                <img v-if="backgroundImg"
+                     :src="backgroundImg"
+                     class="avatar">
+                <i v-else
+                   class="el-icon-plus bannerAvatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+            </el-col>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
@@ -561,7 +597,7 @@
                   </div>
 
                   <div class="header">
-                    <span>logo</span>
+                    <span>图片</span>
                     <span></span>
                   </div>
 
@@ -573,6 +609,16 @@
                       </div>
                     </div>
                   </div>
+
+                  <div  class="body_list img" style="width: 100%;border: none" >
+                    <div class="title" style="float: left;">背景图:</div>
+                    <div class="img_box" style="width: 600px;float: left;">
+                      <div @click="clickImg(formtwoInfo.backgroundImg)" v-if="formtwoInfo.backgroundImg"   class="more_img">
+                        <img  :src="formtwoInfo.backgroundImg"  />
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </el-row>
@@ -606,6 +652,7 @@
         del:false,
         upd:false,
         imageUrl: '',
+        backgroundImg :'',
         imgUrl:'',
         dialogTableVisible: false,
         formtwo: {},
@@ -614,6 +661,7 @@
         formtwoInfo:{},
         form: {
           logo:'',
+          backgroundImg:''
         },
         rules: {
           name: [{
@@ -701,9 +749,14 @@
             message: '请选择是否可用',
             trigger: 'change'
           }],
-          imageUrl: [{
+          logo: [{
             required: true,
             message: '请选择图片',
+            trigger: 'change'
+          }],
+          backgroundImg: [{
+            required: true,
+            message: '请选择背景图',
             trigger: 'change'
           }],
           orderId: [{
@@ -834,15 +887,35 @@
       },
       load() {
         this.form={};
+        this.form.logo='';
+        this.form.backgroundImg='';
         this.formInline = {};
         this.imageUrl='';
+        this.backgroundImg ='';
         this.dialogFormVisible = true;
       },
       addBtn(form) {
+
         this.form.imageUrl=this.imageUrl;
         this.form.logo=this.imageUrl;
+        // this.form.backgroundImg=this.backgroundImg;
+        this.form.backgroundImg=this.backgroundImg;
+
+        console.log(this.form.imageUrl)
+        console.log(this.form.backgroundImg)
+
+        // return false;
         this.$refs[form].validate(valid => {
           if(valid) {
+
+            if (!this.form.logo){
+              this.$message({type: 'error', message: '请上传logo！'})
+              return
+            }
+            if (!this.form.backgroundImg){
+              this.$message({type: 'error', message: '请上传背景图！'})
+              return
+            }
             this.$post('/api/mVipInfo/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
@@ -898,7 +971,8 @@
       })
       },
       getInfo(id) {
-        this.imageUrl=''
+        this.imageUrl='';
+        this.backgroundImg='';
         this.dialogTableVisible = true
         this.$fetch('/api/mVipInfo/queryOne', {
           id: id
@@ -906,11 +980,22 @@
             if ((res.statusCode + "").startsWith("2")) {
               this.formtwo = res.data;
               this.imageUrl=res.data.logo;
+              this.backgroundImg = res.data.backgroundImg;
             }
         })
       },
       update(formtwo) {
-        this.formtwo.logo=this.imageUrl
+        this.formtwo.logo=this.imageUrl;
+        this.formtwo.backgroundImg = this.backgroundImg;
+        if (!this.formtwo.logo){
+          this.$message({type: 'error', message: '请上传logo！'})
+          return
+        }
+        if (!this.formtwo.backgroundImg){
+          this.$message({type: 'error', message: '请上传背景图！'})
+          return
+        }
+
         this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
           this.$message({type: 'success', message: '修改成功！'})
@@ -936,8 +1021,14 @@
         this.imageUrl=res.data
       },
       beforeAvatarUpload(file) {
-
       },
+
+      handleAvatarSuccessBg(res, file) {
+        this.backgroundImg=res.data
+      },
+      beforeAvatarUploadBg(file) {
+      },
+
       handleSizeChange(val) {
         this.pageSize = val;
         this.accountList();

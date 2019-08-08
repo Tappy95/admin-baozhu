@@ -141,6 +141,8 @@ export default {
     this.role = getSession('roleName');
     this.getPower();
   },
+  mounted(){
+  },
   methods: {
     //修改密码
     editPw() {

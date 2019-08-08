@@ -10,7 +10,7 @@
           <el-form-item label="规则名称">
             <el-input v-model="formInline.ruleName" placeholder="请输入规则名称" clearable></el-input>
           </el-form-item>
-          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-button class="mytest" type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
@@ -137,9 +137,16 @@
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
+    },
+    mounted(){
+      // $(".el-table__fixed-right").css({"right":"7px"});
+      //
+      // $(".el-table__fixed-right").css({"position":"fixed"});
+      // position: absolute
+      // $(".mytest").hide();
     },
     methods: {
       queryBtns(){
@@ -183,8 +190,10 @@
         }
         this.$fetch('/api/mSignRule/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
+
+            // $(".mytest").hide();
         } else {
           this.$message({
             type: 'error',
