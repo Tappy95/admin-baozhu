@@ -1673,7 +1673,7 @@
         this.paramsList()
       },
       handleSizeChange2(val) {
-        this.pageSize2 = va2
+        this.pageSize2 = val
         this.responseParamsList()
       },
       handleCurrentChange2(val) {
