@@ -659,7 +659,7 @@
                     <div class="title">
                       奖品轮播图:
                     </div>
-                    <div class="img_box">
+                    <div class="img_box" style="margin: -30px 10px 10px 10px;">
                       <div @click="clickImg(item.url)" v-if="fileList1" v-for="item in fileList1" class="more_img">
                         <img  :src="item.url"  />
                       </div>
@@ -670,7 +670,7 @@
                     <div class="title">
                       奖品详情图:
                     </div>
-                    <div class="img_box">
+                    <div class="img_box" style="margin: -30px 10px 10px 10px;">
                       <div @click="clickImg(item.url)" v-if="fileList2" v-for="item in fileList2" class="more_img">
                         <img  :src="item.url" />
                       </div>
@@ -1271,7 +1271,6 @@
     justify-content: center;
     align-content: center;
     align-items: center;
-    border: 1px dashed #cccccc;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
     border-radius:4px;
     cursor: pointer;
@@ -1307,7 +1306,7 @@
     float: right;
     width: 800px;
     height: auto;
-    margin: -30px 10px 10px 10px;
+    /*margin: -30px 10px 10px 10px;*/
   }
 
   .box_xinxi .body_list .name .dec{
