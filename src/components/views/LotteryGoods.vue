@@ -1240,7 +1240,6 @@
     color: #353535;
     line-height: 50px;
     box-sizing: border-box;
-    border-bottom: 1px solid #e7e7eb;
     display: inline-block;
   }
 
