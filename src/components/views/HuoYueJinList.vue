@@ -28,14 +28,14 @@
             <el-button type="primary" plain  @click="search()">查询</el-button>
           </el-form-item>
         </el-form>
-        <div class="no-tip">默认初始无数据，请输入用户Id和日期进行查询进行查询即可！</div>
+        <div class="no-tip">默认初始无数据，请输入用户Id和日期进行查询即可！</div>
       </div>
       <div class="huoyuejin-table">
         <template>
           <el-table class="table-th" :data="tableData"
                     style="width: 100%"
                     v-loading="loading"
-                    height="560">
+                    max-height="560">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"
