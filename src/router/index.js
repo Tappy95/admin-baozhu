@@ -446,6 +446,14 @@ const routes = [
         component: resolve => require(['../components/views/DarenManage.vue'], resolve),
         meta: { title: '达人管理'}
       },
+      {
+        path: 'huoyuejin-List',
+        name: 'HuoYueJinList',
+        component: resolve => require(['../components/views/HuoYueJinList.vue'], resolve),
+        meta: { title: '达人管理'}
+      },
+
+
     ]
   }
 ]
