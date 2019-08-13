@@ -37,7 +37,7 @@
             </el-table-column>
             <el-table-column fixed="left" min-width="150"  prop="accountId" label="用户Id">
             </el-table-column>
-            <el-table-column width="150"  prop="aliasName" label="达人姓名">
+            <el-table-column width="150"  prop="userName" label="达人姓名">
             </el-table-column>
             <el-table-column width="170"  prop="channelCode" label="渠道">
             </el-table-column>
