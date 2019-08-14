@@ -450,10 +450,14 @@ const routes = [
         path: 'huoyuejin-List',
         name: 'HuoYueJinList',
         component: resolve => require(['../components/views/HuoYueJinList.vue'], resolve),
-        meta: { title: '达人管理'}
+        meta: { title: '活跃金任务记录'}
       },
-
-
+      {
+        path: 'yuemeng-callback',
+        name: 'YueMengCallback',
+        component: resolve => require(['../components/views/YueMengCallback.vue'], resolve),
+        meta: { title: '阅盟回调'}
+      },
     ]
   }
 ]
