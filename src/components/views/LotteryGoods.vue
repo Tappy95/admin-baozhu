@@ -242,7 +242,7 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="580">
+                    max-height="560">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -263,7 +263,17 @@
               <template slot-scope="scope">
                 <span class="yellow"> {{scope.row.pigCoin | currency}}</span>
             </template>
+              <!--goodsNumber-goodsConsumeNumber  剩余数量-->
+
             </el-table-column>
+
+            <el-table-column  width="120px"
+                             label="剩余数量">
+              <template slot-scope="scope">
+                <span class="red"> {{scope.row.goodsNumber-scope.row.goodsConsumeNumber}}</span>
+              </template>
+            </el-table-column>
+
             <el-table-column width="150px" prop="price"
                              label="奖品价格(￥)"  >
             </el-table-column>
