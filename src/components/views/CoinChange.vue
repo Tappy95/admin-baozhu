@@ -58,6 +58,7 @@
                   <el-option label="快速赚任务" value="23"></el-option>
                   <el-option label="达人首次奖励" value="24"></el-option>
                   <el-option label="达人后续奖励" value="25"></el-option>
+                  <el-option label="阅读小说" value="26"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -72,7 +73,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="539">
+          <el-table :data="tableData" max-height="518">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="100" fixed="left" prop="accountId" label="用户id">
@@ -174,6 +175,9 @@
                     <el-option label="签到赚" :value="21"></el-option>
                     <el-option label="大众团队长分佣" :value="22"></el-option>
                     <el-option label="快速赚任务" :value="23"></el-option>
+                    <el-option label="达人首次奖励" :value="24"></el-option>
+                    <el-option label="达人后续奖励" :value="25"></el-option>
+                    <el-option label="阅读小说" :value="26"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -671,6 +675,9 @@
                 break;
               case 25:
                 res.data.list[i].changedType = '达人后续奖励';
+                break;
+              case 26:
+                res.data.list[i].changedType = '阅读小说';
                 break;
               // default:
             }

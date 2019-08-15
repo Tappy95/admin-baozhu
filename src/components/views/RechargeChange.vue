@@ -58,7 +58,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="555" max-height="555">
+          <el-table :data="tableData" height="555" max-height="518">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="200" fixed="left" prop="outTradeNo" label="订单号">

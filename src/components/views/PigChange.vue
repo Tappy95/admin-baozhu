@@ -62,7 +62,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="539">
+          <el-table :data="tableData" max-height="518">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="100" fixed="left" prop="accountId" label="用户id">
