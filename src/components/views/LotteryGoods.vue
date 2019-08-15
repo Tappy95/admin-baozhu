@@ -1,7 +1,7 @@
 <template>
-  <div class="bannermanage-wrap">
-    <div class="bannermanage-inner">
-      <div class="bannermanage-header">
+  <div class="lottery-goods-wrap">
+    <div class="lottery-goods-inner">
+      <div class="lottery-goods-header">
         <h3>运营管理/奖品管理</h3>
         <hr />
       </div>
@@ -238,7 +238,7 @@
           </div>
         </el-dialog>
       </div>
-      <div class="bannermanage-table">
+      <div class="lottery-goods-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
@@ -596,99 +596,99 @@
                    :visible.sync="dialogTableDetail">
           <el-form :model="formtwo">
             <el-row >
-              <div class="box_xinxi">
-                <div class="wrap_da">
-                  <div class="header">
-                    <span>详情信息</span>
-                    <span></span>
+            <div class="box_xinxi">
+              <div class="wrap_da">
+                <div class="header">
+                  <span>详情信息</span>
+                  <span></span>
+                </div>
+                <div class="body_list">
+                  <div class="title">奖品类型:</div>
+                  <div class="name">
+                    <span v-if="formtwo.goodsType==1">虚拟</span>
+                    <span v-if="formtwo.goodsType==2">实物</span>
                   </div>
-                  <div class="body_list">
-                    <div class="title">奖品类型:</div>
-                    <div class="name">
-                      <span v-if="formtwo.goodsType==1">虚拟</span>
-                      <span v-if="formtwo.goodsType==2">实物</span>
-                    </div>
+                </div>
+                <div class="body_list" v-if="formtwo.lotterySort==1">
+                  <div class="title">排序:</div>
+                  <div class="name">
+                    {{formtwo.orders}}
                   </div>
-                  <div class="body_list" v-if="formtwo.lotterySort==1">
-                    <div class="title">排序:</div>
-                    <div class="name">
-                      {{formtwo.orders}}
-                    </div>
+                </div>
+                <div class="body_list" v-if="formtwo.lotterySort==1">
+                  <div class="title">兑换价格(金猪):</div>
+                  <div class="name">
+                    {{formtwo.pigCoin | currency}}
                   </div>
-                  <div class="body_list" v-if="formtwo.lotterySort==1">
-                    <div class="title">兑换价格(金猪):</div>
-                    <div class="name">
-                      {{formtwo.pigCoin | currency}}
-                    </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">价格:</div>
+                  <div class="name">
+                    {{formtwo.price}}
                   </div>
-                  <div class="body_list">
-                    <div class="title">价格:</div>
-                    <div class="name">
-                      {{formtwo.price}}
-                    </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">奖品数量:</div>
+                  <div class="name">
+                    {{formtwo.goodsNumber}}
                   </div>
-                  <div class="body_list">
-                    <div class="title">奖品数量:</div>
-                    <div class="name">
-                      {{formtwo.goodsNumber}}
-                    </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">是否启用:</div>
+                  <div class="name">
+                    <span v-if="formtwo.status==1">已启用</span>
+                    <span v-if="formtwo.status==2">已停用</span>
                   </div>
-                  <div class="body_list">
-                    <div class="title">是否启用:</div>
-                    <div class="name">
-                      <span v-if="formtwo.status==1">已启用</span>
-                      <span v-if="formtwo.status==2">已停用</span>
-                    </div>
+                </div>
+                <div class="body_list" v-if="formtwo.lotterySort==1" style="width: 100%">
+                  <div class="title">奖品简称:</div>
+                  <div class="name">
+                    {{formtwo.abbreviation}}
                   </div>
-                  <div class="body_list" v-if="formtwo.lotterySort==1" style="width: 100%">
-                    <div class="title">奖品简称:</div>
-                    <div class="name">
-                      {{formtwo.abbreviation}}
-                    </div>
-                  </div>
-                  <div class="body_list" style="width: 100%" >
+                </div>
+                <div class="body_list" style="width: 100%" >
                   <div class="title">奖品名称:</div>
-                    <div class="name">
-                     {{formtwo.goodsName}}
+                  <div class="name">
+                    {{formtwo.goodsName}}
+                  </div>
+                </div>
+                <div class="body_list dec" style="width: 100%" >
+                  <div class="title">类型描述:</div>
+                  <div class="name">
+                    <span class="dec">  {{formtwo.remark}}</span>
+                  </div>
+                </div>
+                <div class="body_list img" style="width: 100%" >
+                  <div class="title">
+                    <span v-if="formtwo.lotterySort==1">icon:</span>
+                    <span v-else>奖品图片</span>
+                  </div>
+                  <img @click="clickImg(formtwo.imageUrl)" :src="formtwo.imageUrl" />
+                </div>
+                <div v-if="formtwo.lotterySort==1" class="body_list img" style="width: 100%" >
+                  <div class="title">
+                    奖品轮播图:
+                  </div>
+                  <div class="img_box" style="margin: -30px 10px 10px 10px;">
+                    <div @click="clickImg(item.url)" v-if="fileList1" v-for="item in fileList1" class="more_img">
+                      <img  :src="item.url"  />
                     </div>
                   </div>
-                  <div class="body_list dec" style="width: 100%" >
-                      <div class="title">类型描述:</div>
-                      <div class="name">
-                     <span class="dec">  {{formtwo.remark}}</span>
-                   </div>
-                  </div>
-                  <div class="body_list img" style="width: 100%" >
-                    <div class="title">
-                      <span v-if="formtwo.lotterySort==1">icon:</span>
-                      <span v-else>奖品图片</span>
-                    </div>
-                    <img @click="clickImg(formtwo.imageUrl)" :src="formtwo.imageUrl" />
-                  </div>
-                  <div v-if="formtwo.lotterySort==1" class="body_list img" style="width: 100%" >
-                    <div class="title">
-                      奖品轮播图:
-                    </div>
-                    <div class="img_box" style="margin: -30px 10px 10px 10px;">
-                      <div @click="clickImg(item.url)" v-if="fileList1" v-for="item in fileList1" class="more_img">
-                        <img  :src="item.url"  />
-                      </div>
-                    </div>
-                  </div>
+                </div>
 
-                  <div v-if="formtwo.lotterySort==1" class="body_list img" style="width: 100%" >
-                    <div class="title">
-                      奖品详情图:
-                    </div>
-                    <div class="img_box" style="margin: -30px 10px 10px 10px;">
-                      <div @click="clickImg(item.url)" v-if="fileList2" v-for="item in fileList2" class="more_img">
-                        <img  :src="item.url" />
-                      </div>
+                <div v-if="formtwo.lotterySort==1" class="body_list img" style="width: 100%" >
+                  <div class="title">
+                    奖品详情图:
+                  </div>
+                  <div class="img_box" style="margin: -30px 10px 10px 10px;">
+                    <div @click="clickImg(item.url)" v-if="fileList2" v-for="item in fileList2" class="more_img">
+                      <img  :src="item.url" />
                     </div>
                   </div>
                 </div>
               </div>
-            </el-row>
+            </div>
+          </el-row>
 
           </el-form>
         </el-dialog>
@@ -1140,21 +1140,21 @@
   .zi{
     color: #d8b1ee;
   }
-  .bannermanage-wrap {
+  .lottery-goods-wrap {
     width: 100%;
   }
-  .bannermanage-inner {
+  .lottery-goods-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .bannermanage-header {
+  .lottery-goods-header {
     margin-bottom: 20px;
   }
-  .bannermanage-header hr {
+  .lottery-goods-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .bannermanage-table {
+  .lottery-goods-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -1211,118 +1211,118 @@
     white-space: nowrap;
   }
 
-  .box_xinxi{
-    background-color: #fff;
-    border-radius: 4px;
-    /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
-    padding: 10px;
-    box-sizing: border-box;
-  }
+  /*.box_xinxi{*/
+    /*background-color: #fff;*/
+    /*border-radius: 4px;*/
+    /*!*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*!*/
+    /*padding: 10px;*/
+    /*box-sizing: border-box;*/
+  /*}*/
 
-  .box_xinxi .title{
-    color: #353535;
-    font-size: 14px;
-    /*margin-bottom: 20px;*/
-  }
+  /*.box_xinxi .title{*/
+    /*color: #353535;*/
+    /*font-size: 14px;*/
+    /*!*margin-bottom: 20px;*!*/
+  /*}*/
 
 
-  .box_xinxi .header{
-    width: 100%;
-    height: 40px;
-    background-color: #f6f8f9;
-    color: #1fa67a;
-    line-height: 40px;
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
+  /*.box_xinxi .header{*/
+    /*width: 100%;*/
+    /*height: 40px;*/
+    /*background-color: #f6f8f9;*/
+    /*color: #1fa67a;*/
+    /*line-height: 40px;*/
+    /*padding: 0 10px;*/
+    /*box-sizing: border-box;*/
+  /*}*/
 
-  .wrap_da{
-    display: flex;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .box_xinxi .body_list{
-    width: 50%;
-    height: auto;
-    height: 50px;
-    color: #353535;
-    line-height: 50px;
-    box-sizing: border-box;
-    display: inline-block;
-  }
+  /*.wrap_da{*/
+    /*display: flex;*/
+    /*justify-content: flex-start;*/
+    /*align-content: flex-start;*/
+    /*align-items: center;*/
+    /*flex-wrap: wrap;*/
+  /*}*/
+  /*.box_xinxi .body_list{*/
+    /*width: 50%;*/
+    /*height: auto;*/
+    /*height: 50px;*/
+    /*color: #353535;*/
+    /*line-height: 50px;*/
+    /*box-sizing: border-box;*/
+    /*display: inline-block;*/
+  /*}*/
 
-  .box_xinxi .body_list.img{
-    min-height: 50px;
-    height: auto;
-    line-height: 30px;
-  }
+  /*.box_xinxi .body_list.img{*/
+    /*min-height: 50px;*/
+    /*height: auto;*/
+    /*line-height: 30px;*/
+  /*}*/
 
-  .box_xinxi .body_list.img img{
-    max-width: 120px;
-    max-height: 120px;
-    width: auto;
-    height: auto;
-    margin: 10px;
-    cursor: pointer;
-    line-height: 1px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
-  }
+  /*.box_xinxi .body_list.img img{*/
+    /*max-width: 120px;*/
+    /*max-height: 120px;*/
+    /*width: auto;*/
+    /*height: auto;*/
+    /*margin: 10px;*/
+    /*cursor: pointer;*/
+    /*line-height: 1px;*/
+    /*box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)*/
+  /*}*/
 
-  .box_xinxi .body_list.img .more_img{
-    width: 120px;
-    height: 120px;
-    box-sizing: border-box;
-    margin: 10px 5px;
-    float:left;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-    border-radius:4px;
-    cursor: pointer;
-  }
-  .box_xinxi .body_list.img .more_img img{
-    box-shadow: none;
-  }
+  /*.box_xinxi .body_list.img .more_img{*/
+    /*width: 120px;*/
+    /*height: 120px;*/
+    /*box-sizing: border-box;*/
+    /*margin: 10px 5px;*/
+    /*float:left;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-content: center;*/
+    /*align-items: center;*/
+    /*box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);*/
+    /*border-radius:4px;*/
+    /*cursor: pointer;*/
+  /*}*/
+  /*.box_xinxi .body_list.img .more_img img{*/
+    /*box-shadow: none;*/
+  /*}*/
 
-  .box_xinxi .body_list.img .title{
-    padding-top: 10px;
-    float: left;
-  }
-  .box_xinxi .body_list .title{
-    width: 150px;
-    float: left;
-    padding-right: 30px;
-    color: #a6a6a6;
-    box-sizing: border-box;
-    text-align: right;
-  }
+  /*.box_xinxi .body_list.img .title{*/
+    /*padding-top: 10px;*/
+    /*float: left;*/
+  /*}*/
+  /*.box_xinxi .body_list .title{*/
+    /*width: 150px;*/
+    /*float: left;*/
+    /*padding-right: 30px;*/
+    /*color: #a6a6a6;*/
+    /*box-sizing: border-box;*/
+    /*text-align: right;*/
+  /*}*/
 
-  .box_xinxi .body_list.dec{
-    height: auto;
-    /*padding: 5px 10px;*/
-  }
+  /*.box_xinxi .body_list.dec{*/
+    /*height: auto;*/
+    /*!*padding: 5px 10px;*!*/
+  /*}*/
 
-  .box_xinxi .body_list .name{
-    float: left;
-    color: #606266;
-  }
+  /*.box_xinxi .body_list .name{*/
+    /*float: left;*/
+    /*color: #606266;*/
+  /*}*/
 
-  .box_xinxi .body_list.img .img_box{
-    float: right;
-    width: 800px;
-    height: auto;
-    /*margin: -30px 10px 10px 10px;*/
-  }
+  /*.box_xinxi .body_list.img .img_box{*/
+    /*float: right;*/
+    /*width: 800px;*/
+    /*height: auto;*/
+    /*!*margin: -30px 10px 10px 10px;*!*/
+  /*}*/
 
-  .box_xinxi .body_list .name .dec{
-    font-size: 14px;
-    line-height: 30px;
-    width: 600px;
-    float: left;
-    padding: 10px;
-  }
+ /*.lottery-goods .box_xinxi .body_list .name .dec{*/
+    /*font-size: 14px;*/
+    /*line-height: 30px;*/
+    /*width: 600px;*/
+    /*float: left;*/
+    /*padding: 10px;*/
+  /*}*/
 </style>

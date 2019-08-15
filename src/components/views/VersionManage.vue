@@ -1,8 +1,8 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
-        <h3>系统配置/版本管理</h3>
+  <div class="version-manage-wrap">
+    <div class="version-manage-inner">
+      <div class="version-manage-header">
+        <h3>第三方/版本管理</h3>
         <hr />
       </div>
       <div>
@@ -15,22 +15,16 @@
           <el-button type="success" plain class="mar_bottom" @click="load()" v-if="add">添加版本</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="version-manage-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="200px" fixed="left" prop="channelCode" label="渠道标识">
             </el-table-column>
-            <el-table-column min-width="150px" prop="versionNo" label="版本号">
-            </el-table-column>
             <el-table-column min-width="100px" prop="open28" label="发布状态">
             </el-table-column>
-            <el-table-column min-width="120px" prop="needUpdate" label="是否需要更新">
-            </el-table-column>
             <el-table-column min-width="120px" prop="open28" label="开启28">
-            </el-table-column>
-            <el-table-column min-width="250px" prop="updateUrl" label="更新地址">
             </el-table-column>
             <el-table-column min-width="120px" prop="status" label="状态">
             </el-table-column>
@@ -55,15 +49,16 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="版本号:" prop="versionNo" :label-width="formLabelWidth" >
-                  <el-input :style="styleObject"  min="0" v-model="form.versionNo" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
                 <el-form-item label="是否开启28:" prop="open28" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.open28" placeholder="">
+                    <el-option label="开启" value="1"></el-option>
+                    <el-option label="关闭" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.openNoviceTask" placeholder="">
                     <el-option label="开启" value="1"></el-option>
                     <el-option label="关闭" value="2"></el-option>
                   </el-select>
@@ -77,39 +72,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="form.openNoviceTask" placeholder="">
-                    <el-option label="开启" value="1"></el-option>
-                    <el-option label="关闭" value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="form.needUpdate" placeholder="">
-                    <el-option label="需要" :value="1"></el-option>
-                    <el-option label="不需要" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="22">
-                <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
-                  <el-input spellcheck="false"  min="0" v-model="form.updateUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="22">
-                <el-form-item label="更新描述:"  :label-width="formLabelWidth" >
-                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="form.updateRemark" auto-complete="off" clearable></el-input>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -126,7 +88,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="12" v-if="formtwo.channelCode=='baozhu'">
                 <el-form-item label="版本号:" prop="versionNo" :label-width="formLabelWidth" >
                   <el-input :style="styleObject"  min="0" v-model="formtwo.versionNo" auto-complete="off"  clearable>
                   </el-input>
@@ -141,15 +103,6 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
                 <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.openNoviceTask" placeholder="">
                     <el-option label="开启" :value="1"></el-option>
@@ -157,31 +110,26 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
-                <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwo.needUpdate" placeholder="">
-                    <el-option label="需要" :value="1"></el-option>
-                    <el-option label="不需要" :value="2"></el-option>
+                <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="停用" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
-              <el-col :span="22">
+              <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
                 <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
                   <el-input spellcheck="false"   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-
-
-              <el-col :span="22">
+              <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
                 <el-form-item label="更新描述:"  :label-width="formLabelWidth" >
                   <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwo.updateRemark" auto-complete="off" clearable></el-input>
                   </el-input>
                 </el-form-item>
               </el-col>
-
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -189,75 +137,75 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="版本详情" :visible.sync="dialogTableDetail" width="800px">
+        <el-dialog title="版本详情" :visible.sync="dialogTableDetail" width="1000px">
           <el-form :model="formtwoInfo">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.channelCode" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="版本号:" prop="versionNo" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" :style="styleObject"  min="0" v-model="formtwoInfo.versionNo" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="是否开启28:" prop="open28" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.open28" placeholder="">
-                    <el-option label="开启" :value="1"></el-option>
-                    <el-option label="关闭" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>详情信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">渠道标识:</div>
+                    <div class="name">
+                      {{formtwoInfo.channelCode}}
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="formtwoInfo.channelCode=='baozhu'">
+                    <div class="title">版本号:</div>
+                    <div class="name">
+                      {{formtwoInfo.versionNo}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">是否开启28:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.open28==1">已开启</span>
+                      <span v-if="formtwoInfo.open28==2">已关闭</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">开启新手引导:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.openNoviceTask==1">已开启</span>
+                      <span v-if="formtwoInfo.openNoviceTask==2">已关闭</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">状态:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.status==1">已启用</span>
+                      <span v-if="formtwoInfo.status==2">已停用</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">创建时间:</div>
+                    <div class="name">
+                      {{formtwoInfo.createTime}}
+                    </div>
+                  </div>
 
-              <el-col :span="12">
-                <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.openNoviceTask" placeholder="">
-                    <el-option label="开启" :value="1"></el-option>
-                    <el-option label="关闭" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="创建时间:" prop="status" :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject"  min="0" v-model="formtwoInfo.createTime" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="是否需要更新:" prop="needUpdate" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.needUpdate" placeholder="">
-                    <el-option label="需要" :value="1"></el-option>
-                    <el-option label="不需要" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="22">
-                <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
-                  <el-input :disabled="true" min="0" v-model="formtwoInfo.updateUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="22">
-                <el-form-item  label="更新描述:"  :label-width="formLabelWidth" >
-                  <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwoInfo.updateRemark" auto-complete="off" clearable></el-input>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
+                  <div v-if="formtwoInfo.channelCode=='baozhu'">
+                      <div class="header">
+                        <span>更新</span>
+                        <span></span>
+                      </div>
+                      <div class="body_list dec"  style="width: 100%" >
+                        <div class="title">更新地址:</div>
+                        <div class="name">
+                          <span class="dec">{{formtwoInfo.updateUrl}}</span>
+                        </div>
+                      </div>
+                      <div class="body_list dec"  style="width: 100%" >
+                        <div class="title">更新描述:</div>
+                        <div class="name">
+                          <span class="dec">{{formtwoInfo.updateRemark}}</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -274,7 +222,6 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
-
   export default {
     name: 'VersionManage',
     data() {
@@ -335,17 +282,13 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -547,25 +490,25 @@
   .mar_bottom{
     margin-bottom: 20px;
   }
-  .administratormanage-wrap {
+  .version-manage-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .version-manage-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .version-manage-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .version-manage-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .version-manage-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

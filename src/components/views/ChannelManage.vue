@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="channel-manage-wrap">
+    <div class="channel-manage-inner">
+      <div class="channel-manage-header">
         <h3>第三方/渠道管理</h3>
         <hr />
       </div>
@@ -17,35 +17,23 @@
           <el-button type="primary" @click="loadChannel()" v-if="addChannelName">添加渠道名称</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="channel-manage-table">
         <template>
-          <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
+          <el-table :data="tableData" max-height="518">
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
-            <el-table-column  prop="channelCode" label="渠道标识">
+            <el-table-column fixed="left" width="200"  prop="channelCode" label="渠道标识">
             </el-table-column>
-
-            <el-table-column  prop="channelName"  label="渠道名称">
+            <el-table-column width="300"  prop="channelName"  label="渠道名称">
             </el-table-column>
-
-            <el-table-column width="200px" prop="channelPosition" label="渠道推广位置">
-            </el-table-column>
-
-            <el-table-column width="150px" prop="channelPushType" label="推广方式">
-            </el-table-column>
-            <el-table-column width="250px" prop="content" label="banner/投放文字">
-              <template slot-scope="scope">
-                <img v-if="scope.row.channelPushType=='banner+链接'" :src='scope.row.content'
-                     style="max-width: 100px;max-height: 50px"
-                     @click="clickImg($event)">
-                <span v-else>{{scope.row.content}}</span>
-              </template>
+            <el-table-column min-width="500" prop="content" label="注册地址">
             </el-table-column>
             <el-table-column width="150px" prop="status" label="状态">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.status==1">已启用</span>
+                <span class="red" v-if="scope.row.status==2">已停用</span>
+              </template>
             </el-table-column>
-            <el-table-column width="250px" prop="downloadUrl" label="下载链接">
-            </el-table-column>
-
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
@@ -88,52 +76,6 @@
                   <el-select  :style="styleObject" v-model="form.channelId" placeholder="">
                     <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.id"></el-option>
                   </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="渠道推广位置:" prop="channelPosition" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model="form.channelPosition" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="推广方式:" prop="channelPushType" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="form.channelPushType" placeholder="">
-                    <el-option label="banner+链接" value="1"></el-option>
-                    <el-option label="文字+链接" value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="20" v-if="form.channelPushType==1">
-                  <el-form-item label="banner:"
-                                :label-width="formLabelWidth">
-                    <el-upload class="bannerAvatar-uploader"
-                                            action="/api/upload"
-                                            :data="uploadData"
-                                            :show-file-list="false"
-                                            :on-success="handleAvatarSuccess"
-                                            :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-                  </el-form-item>
-              </el-col>
-
-              <el-col :span="23" v-if="form.channelPushType==2">
-                <el-form-item label="投放文字:"  :label-width="formLabelWidth" >
-                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.content" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="23">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
-                  <el-input  spellcheck="false" v-model="form.downloadUrl" auto-complete="off"  clearable>
-                  </el-input>
                 </el-form-item>
               </el-col>
 
@@ -228,52 +170,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="渠道推广位置:" prop="channelPosition" :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model="formtwo.channelPosition" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="推广方式:"  :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.channelPushType" placeholder="">
-                    <el-option label="banner+链接" :value="1"></el-option>
-                    <el-option label="文字+链接" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="20" v-if="formtwo.channelPushType==1">
-                <el-form-item label="banner:"
-                              :label-width="formLabelWidth">
-                  <el-upload class="bannerAvatar-uploader"
-                             action="/api/upload"
-                             :data="uploadData"
-                             :show-file-list="false"
-                             :on-success="handleAvatarSuccess"
-                             :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="20" v-if="formtwo.channelPushType==2">
-                <el-form-item label="投放文字:"  :label-width="formLabelWidth" >
-                  <el-input  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.content" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="20">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" prop="downloadUrl">
-                  <el-input  v-model="formtwo.downloadUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
               <el-col :span="12" v-if="payEdit">
                 <el-form-item label="开启微信支付:" prop="openWx" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.openWx" placeholder="">
@@ -348,143 +244,108 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="渠道详情" :visible.sync="dialogTableDetail" width="800px">
+        <el-dialog title="渠道详情" :visible.sync="dialogTableDetail" width="1000px">
           <el-form :model="formtwoInfo">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.channelCode" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="渠道名称:" :label-width="formLabelWidth" prop="channelId">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.channelId" placeholder="">
-                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.id"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="渠道推广位置:" prop="channelPosition" :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.channelPosition" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="推广方式:"  :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.channelPushType" placeholder="">
-                    <el-option label="banner+链接" :value="1"></el-option>
-                    <el-option label="文字+链接" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="20" v-if="formtwoInfo.channelPushType==1">
-                <el-form-item label="banner:"
-                              :label-width="formLabelWidth">
-                  <el-upload :disabled="true" class="bannerAvatar-uploader"
-                             action="/api/upload"
-                             :data="uploadData"
-                             :show-file-list="false"
-                             :on-success="handleAvatarSuccess"
-                             :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         class="avatar">
-                    <i v-else
-                       class="el-icon-plus bannerAvatar-uploader-icon"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-col>
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>详情信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">渠道标识:</div>
+                    <div class="name">
+                      {{formtwoInfo.channelCode}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">渠道名称:</div>
+                    <div class="name">
+                      <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.channelId" placeholder="">
+                        <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelName" :value="item.id"></el-option>
+                      </el-select>
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="payEdit">
+                    <div class="title">开启微信支付:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.openWx==1">开启中</span>
+                      <span v-if="formtwoInfo.openWx==2">已关闭</span>
+                    </div>
+                  </div>
+                  <div class="body_list" v-if="payEdit">
+                    <div class="title">开启支付宝支付:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.openAli==1">开启中</span>
+                      <span v-if="formtwoInfo.openAli==2">已关闭</span>
+                    </div>
+                  </div>
 
-              <el-col :span="23" v-if="formtwoInfo.channelPushType==2">
-                <el-form-item label="投放文字:"  :label-width="formLabelWidth" >
-                  <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.content" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+                  <div class="body_list">
+                    <div class="title">状态:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.status==1">启用中</span>
+                      <span v-if="formtwoInfo.status==2">已停用</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">创建时间:</div>
+                    <div class="name">
+                      {{formtwoInfo.createTime}}
+                    </div>
+                  </div>
 
-              <el-col :span="23">
-                <el-form-item label="下载链接:" :label-width="formLabelWidth" >
-                  <el-input :disabled="true"  v-model="formtwoInfo.downloadUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+                  <div class="header" v-if="formtwoInfo.openWx==1 && payEdit">
+                    <span>微信支付</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list dec" v-if="formtwoInfo.openWx==1 && payEdit" style="width: 100%" >
+                    <div class="title">微信支付appId:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwoInfo.wxAppId}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list dec" v-if="formtwoInfo.openWx==1 && payEdit" style="width: 100%" >
+                    <div class="title">微信支付mchId:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwoInfo.mchId}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list dec" v-if="formtwoInfo.openWx==1 && payEdit" style="width: 100%" >
+                    <div class="title">微信支付apiKey:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwoInfo.apiKey}}</span>
+                    </div>
+                  </div>
 
-              <el-col :span="12" v-if="payEdit">
-                <el-form-item label="开启微信支付:"  :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.openWx" placeholder="">
-                    <el-option label="开启" :value="1"></el-option>
-                    <el-option label="关闭" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12" v-if="payEdit">
-                <el-form-item :disabled="true" label="开启支付宝支付:"  :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.openAli" placeholder="">
-                    <el-option label="开启" :value="1"></el-option>
-                    <el-option label="关闭" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
+                  <div class="header" v-if="formtwoInfo.openAli==1 && payEdit">
+                    <span>支付宝</span>
+                    <span></span>
+                  </div>
 
-                <el-col :span="12" v-if="formtwoInfo.openWx==1 && payEdit">
-                  <el-form-item label="微信支付appId:" :label-width="formLabelWidth">
-                    <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.wxAppId" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
+                  <div class="body_list dec" v-if="formtwoInfo.openAli==1 && payEdit" style="width: 100%" >
+                    <div class="title">支付宝appId:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwoInfo.aliAppId}}</span>
+                    </div>
+                  </div>
 
-                <el-col :span="12" v-if="formtwoInfo.openWx==1 && payEdit">
-                  <el-form-item label="微信支付mchId:" :label-width="formLabelWidth">
-                    <el-input :disabled="true" :style="styleObject" v-model="formtwoInfo.mchId" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
+                  <div class="body_list dec" v-if="formtwoInfo.openAli==1 && payEdit" style="width: 100%" >
+                    <div class="title">支付宝私钥:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwoInfo.aliPrivateKey}}</span>
+                    </div>
+                  </div>
 
-                <el-col :span="23" v-if="formtwoInfo.openWx==1 && payEdit">
-                  <el-form-item label="微信支付apiKey:"  :label-width="formLabelWidth" >
-                    <el-input :disabled="true"  spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwoInfo.apiKey" auto-complete="off"  clearable>
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-
-              <el-col :span="23" v-if="formtwoInfo.openAli==1 && payEdit">
-                <el-form-item label="支付宝appId:"  :label-width="formLabelWidth" >
-                  <el-input  spellcheck="false" :disabled="true" v-model="formtwoInfo.aliAppId" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="23" v-if="formtwoInfo.openAli==1 && payEdit">
-                <el-form-item label="支付宝私钥:"  :label-width="formLabelWidth" >
-                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows:6}"  v-model="formtwoInfo.aliPrivateKey" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="23" v-if="formtwoInfo.openAli==1 && payEdit">
-                <el-form-item label="支付宝公钥:"  :label-width="formLabelWidth" >
-                  <el-input :disabled="true" spellcheck="false" type="textarea" :autosize="{ minRows:4, maxRows: 6}" v-model="formtwoInfo.aliPublicKey" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="创建时间:" :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject"  v-model="formtwoInfo.createTime" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
+                  <div class="body_list dec" v-if="formtwoInfo.openAli==1 && payEdit" style="width: 100%" >
+                    <div class="title">支付宝公钥:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwoInfo.aliPublicKey}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -690,20 +551,8 @@
         }
         this.$fetch('/api/mChannelInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            for(let i = res.data.list.length - 1; i >= 0; i--) {
-              if(res.data.list[i].status == '1') {
-                res.data.list[i].status = '启用'
-              } else {
-                res.data.list[i].status = '停用'
-              }
-              if(res.data.list[i].channelPushType == '1') {
-                res.data.list[i].channelPushType = 'banner+链接'
-              } else {
-                res.data.list[i].channelPushType = '文字+链接'
-              }
-            }
-            this.tableData = res.data.list
-            this.totalCount = res.data.total
+            this.tableData = res.data.list;
+            this.totalCount = res.data.total;
           } else {
             this.$message({
               type: 'error',
@@ -904,25 +753,25 @@
   }
 </script>
 <style type="text/css">
-  .administratormanage-wrap {
+  .channel-manage-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .channel-manage-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .channel-manage-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .channel-manage-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .channel-manage-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }
@@ -931,6 +780,9 @@
     background-color: #e6e6e6;
   }
 
+  .channel-manage-wrap .box_xinxi .body_list.dec .name {
+    width: 750px;
+  }
 
   .bannerAvatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
