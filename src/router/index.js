@@ -458,9 +458,19 @@ const routes = [
         component: resolve => require(['../components/views/YueMengCallback.vue'], resolve),
         meta: { title: '阅盟回调'}
       },
+      {
+        path: 'da-ren-rank',
+        name: 'DaRenRank',
+        component: resolve => require(['../components/views/DaRenRank.vue'], resolve),
+        meta: { title: '达人排名'}
+      },
+      {
+        path: 'da-ren-rank-config',
+        name: 'DaRenRankConfig',
+        component: resolve => require(['../components/views/DaRenRankConfig.vue'], resolve),
+        meta: { title: '达人排名配置'}
+      },
     ]
-
-
   }
 ]
 
