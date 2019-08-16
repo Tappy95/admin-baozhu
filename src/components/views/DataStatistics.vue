@@ -70,7 +70,7 @@
   import { getSession } from '../../utils/cookie'
 
   export default {
-    name: 'VersionManage',
+    name: 'DataStatistics',
     data() {
       return {
         channelNameList:[],
