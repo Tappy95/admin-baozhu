@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="rank-config-wrap">
+    <div class="rank-config-inner">
+      <div class="rank-config-header">
         <h3>运营管理/排行榜</h3>
         <hr />
       </div>
@@ -26,7 +26,7 @@
           <el-button type="success" v-if="add" plain @click="load()">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="rank-config-table">
         <template>
           <el-table :data="tableData" height="578">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -494,25 +494,25 @@
   }
 
 
-  .administratormanage-wrap {
+  .rank-config-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .rank-config-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .rank-config-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .rank-config-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .rank-config-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }
@@ -522,7 +522,7 @@
   }
 
 
-  .box_xinxi{
+  .rank-config .box_xinxi{
     background-color: #fff;
     border-radius: 4px;
     /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
@@ -530,14 +530,14 @@
     box-sizing: border-box;
   }
 
-  .box_xinxi .title{
+  .rank-config .box_xinxi .title{
     color: #353535;
     font-size: 14px;
     /*margin-bottom: 20px;*/
   }
 
 
-  .box_xinxi .header{
+  .rank-config .box_xinxi .header{
     width: 100%;
     height: 40px;
     background-color: #f6f8f9;
@@ -554,7 +554,7 @@
     align-items: center;
     flex-wrap: wrap;
   }
-  .box_xinxi .body_list{
+  .rank-config .box_xinxi .body_list{
     /*display: inline-block;*/
     /*float: left;*/
     width: 50%;
@@ -567,13 +567,13 @@
     display: inline-block;
   }
 
-  .box_xinxi .body_list.img{
+  .rank-config .box_xinxi .body_list.img{
     min-height: 50px;
     height: auto;
     line-height: 30px;
   }
 
-  .box_xinxi .body_list.img img{
+  .rank-config .box_xinxi .body_list.img img{
     max-width: 100px;
     max-height: 100px;
     width: auto;
@@ -584,10 +584,10 @@
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
   }
 
-  .box_xinxi .body_list.img .title{
+  .rank-config .box_xinxi .body_list.img .title{
     padding-top: 10px;
   }
-  .box_xinxi .body_list .title{
+  .rank-config .box_xinxi .body_list .title{
     width: 150px;
     float: left;
     padding-right: 30px;
@@ -596,17 +596,17 @@
     text-align: right;
   }
 
-  .box_xinxi .body_list.dec{
+  .rank-config .box_xinxi .body_list.dec{
     height: auto;
     /*padding: 5px 10px;*/
   }
 
-  .box_xinxi .body_list .name{
+  .rank-config .box_xinxi .body_list .name{
     float: left;
     color: #606266;
   }
 
-  .box_xinxi .body_list .name .dec{
+  .rank-config .box_xinxi .body_list .name .dec{
     font-size: 14px;
     line-height: 30px;
     width: 500px;
