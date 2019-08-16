@@ -36,7 +36,7 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加排名配置" :visible.sync="dialogFormVisible" width="700px">
+        <el-dialog title="添加配置" :visible.sync="dialogFormVisible" width="700px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="24">
@@ -64,7 +64,7 @@
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改排名配置" :visible.sync="dialogTableVisible" width="700px">
+        <el-dialog title="修改配置" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
               <el-col :span="24">
