@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item :label-width="labelWidth"  label="是否完成任务:" >
+          <el-form-item label="是否完成任务:" >
             <el-select v-model="formInline.rewardType"  placeholder="请选择状态">
               <el-option label="首个任务" value="1"></el-option>
               <el-option label="后续任务" value="2"></el-option>

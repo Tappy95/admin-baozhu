@@ -12,10 +12,33 @@
                       placeholder="请输入用户ID"
                       clearable></el-input>
           </el-form-item>
+          <el-form-item label="徒弟数量:">
+            <el-input v-model="formInline.apprenticeCount"
+                      placeholder="请输入徒弟数量"
+                      clearable></el-input>
+          </el-form-item>
+          <el-form-item label="排名:">
+            <el-input v-model="formInline.rank"
+                      placeholder="请输入排名"
+                      clearable></el-input>
+          </el-form-item>
+          <el-form-item   label="排行周期:" >
+            <el-select v-model="formInline.rankCycle"  placeholder="请选择排行周期">
+              <el-option v-for="(item,index ) in rankList" :label="item.rankCycle " :value="item.rankCycle" :key="index"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item   label="结算:" >
+            <el-select v-model="formInline.status"  placeholder="请选择结算">
+              <el-option label="未结算" value="1"></el-option>
+              <el-option label="已结算" value="2"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item >
             <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>
           </el-form-item>
-
         </el-form>
       </div>
       <div class="daren-rank-table">
@@ -37,6 +60,12 @@
             <el-table-column min-width="120px" prop="reward" label="奖励金币">
               <template slot-scope="scope">
                 <span class="green" >{{scope.row.reward | currencyCion}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column min-width="120px" prop="status" label="结算">
+              <template slot-scope="scope">
+                <span class="red" v-if="scope.row.status==1">未结算</span>
+                <span class="green" v-if="scope.row.status==2">已结算</span>
               </template>
             </el-table-column>
             <el-table-column width="170px" prop="createDate"  label="排名时间">
@@ -66,7 +95,8 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-             }
+        rankList:[]
+       }
     },
     filters: {
       //每隔三位数字以逗号隔开
@@ -77,7 +107,8 @@
     },
     created() {
       this.menuId=this.$route.query.id;
-      // this.channelList();
+      //排行周期
+      this.rankCycleList();
       this.accountList();
     },
     methods: {
@@ -95,7 +126,11 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          accountId:this.formInline.accountId
+          accountId:this.formInline.accountId,
+          apprenticeCount:this.formInline.apprenticeCount,
+          rank:this.formInline.rank,
+          status:this.formInline.status,
+          rankCycle:this.formInline.rankCycle
         }
         this.$fetch('/api/rankDarenWeek/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -111,11 +146,30 @@
         })
       },
       search() {
+        var pattern = /^[0-9]*$/;
+        if(this.formInline.apprenticeCount){
+          if (!pattern.test(this.formInline.apprenticeCount)) {
+            this.$message({type: 'warning', message: '徒弟数量为正整数', duration: 3000})
+            return false
+          }
+        }
+        if(this.formInline.rank){
+          if (!pattern.test(this.formInline.rank)) {
+            this.$message({type: 'warning', message: '排序为正整数', duration: 3000})
+            return false
+          }
+        }
         this.currentPage = 1;
         this.pageSize = 10;
         this.accountList();
       },
-
+      rankCycleList(){
+        this.$fetch('/api/rankDarenWeek/cycle').then(res => {
+          if ((res.statusCode + "").startsWith("2")) {
+            this.rankList = res.data;
+          }
+        })
+      },
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()
