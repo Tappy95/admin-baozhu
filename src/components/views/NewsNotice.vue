@@ -314,13 +314,13 @@
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==1 || formtwoInfo.noticeType==3" >
                   <div class="title">公告内容:</div>
-                  <div class="name">
+                  <div class="name"  style="width:550px;">
                     <span class="dec" style="line-height: 30px; padding: 10px 10px">  {{formtwoInfo.noticeContent}}</span>
                   </div>
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
                   <div class="title">链接地址:</div>
-                  <div class="name">
+                  <div class="name"  style="width:550px;">
                     <span class="dec" style="line-height: 30px; padding: 10px 0">  {{formtwoInfo.linkAddress}}</span>
                   </div>
                 </div>
@@ -694,89 +694,6 @@
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
-  }
-  .box_xinxi{
-    background-color: #fff;
-    border-radius: 4px;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  .box_xinxi .title{
-    color: #353535;
-    font-size: 14px;
-  }
-  .box_xinxi .header{
-    width: 100%;
-    height: 40px;
-    background-color: #f6f8f9;
-    color: #1fa67a;
-    line-height: 40px;
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
-
-  .wrap_da{
-    display: flex;
-    justify-content: flex-start;
-    align-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .box_xinxi .body_list{
-    width: 50%;
-    height: auto;
-    height: 50px;
-    color: #353535;
-    line-height: 50px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #e7e7eb;
-    display: inline-block;
-  }
-
-  .box_xinxi .body_list.img{
-    min-height: 50px;
-    height: auto;
-    line-height: 30px;
-  }
-
-  .box_xinxi .body_list.img img{
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-    margin: 10px;
-    cursor: pointer;
-    line-height: 1px;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
-  }
-
-  .box_xinxi .body_list.img .title{
-    padding-top: 10px;
-  }
-  .box_xinxi .body_list .title{
-    width: 150px;
-    float: left;
-    padding-right: 30px;
-    color: #a6a6a6;
-    box-sizing: border-box;
-    text-align: right;
-  }
-
-  .box_xinxi .body_list.dec{
-    height: auto;
-    /*padding: 5px 10px;*/
-  }
-
-  .box_xinxi .body_list .name{
-    float: left;
-    color: #606266;
-  }
-
-  .box_xinxi .body_list.dec .name .dec{
-    font-size: 14px;
-    width: 500px;
-    float: left;
-    overflow-wrap: break-word;
   }
 
 
