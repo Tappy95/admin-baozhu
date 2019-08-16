@@ -306,10 +306,10 @@
                   <div class="title">失效时间:</div>
                   <div class="name">{{formtwoInfo.cancelTime | dateFont }}</div>
                 </div>
-                <div class="body_list" style="width: 100%" >
+                <div class="body_list dec" style="width: 100%" >
                 <div class="title">公告标题:</div>
-                  <div class="name">
-                  {{formtwoInfo.noticeTitle}}
+                  <div class="name"  style="width:600px;">
+                    <span class="dec" style="line-height: 30px; padding: 10px 10px">   {{formtwoInfo.noticeTitle}}</span>
                   </div>
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==1 || formtwoInfo.noticeType==3" >
