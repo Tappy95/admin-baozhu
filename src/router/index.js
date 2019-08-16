@@ -468,7 +468,7 @@ const routes = [
         path: 'da-ren-rank-config',
         name: 'DaRenRankConfig',
         component: resolve => require(['../components/views/DaRenRankConfig.vue'], resolve),
-        meta: { title: '达人排名配置'}
+        meta: { title: '奖金池配置'}
       },
     ]
   }

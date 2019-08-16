@@ -2,7 +2,7 @@
   <div class="da-ren-rank-config-wrap">
     <div class="da-ren-rank-config-inner">
       <div class="da-ren-rank-config-header">
-        <h3>运营管理/达人排名配置</h3>
+        <h3>运营管理/奖金池配置</h3>
         <hr />
       </div>
       <div style="margin-bottom: 20px">
