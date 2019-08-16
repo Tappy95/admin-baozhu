@@ -314,13 +314,13 @@
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==1 || formtwoInfo.noticeType==3" >
                   <div class="title">公告内容:</div>
-                  <div class="name"  style="width:550px;">
+                  <div class="name"  style="width:600px;">
                     <span class="dec" style="line-height: 30px; padding: 10px 10px">  {{formtwoInfo.noticeContent}}</span>
                   </div>
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
                   <div class="title">链接地址:</div>
-                  <div class="name"  style="width:550px;">
+                  <div class="name"  style="width:600px;">
                     <span class="dec" style="line-height: 30px; padding: 10px 0">  {{formtwoInfo.linkAddress}}</span>
                   </div>
                 </div>

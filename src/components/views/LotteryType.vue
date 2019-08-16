@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="lotter-type-wrap">
+    <div class="lotter-type-inner">
+      <div class="lotter-type-header">
         <h3>运营管理/抽奖类型</h3>
         <hr />
       </div>
@@ -14,7 +14,7 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="lotter-type-table">
         <template>
           <el-table :data="tableData" height="580">
             <el-table-column fixed="left" type="expand">
@@ -537,7 +537,7 @@
     white-space: nowrap;
   }
 
-  .box_xinxi{
+  .lotter-type .box_xinxi{
     background-color: #fff;
     border-radius: 4px;
     /*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*/
@@ -545,14 +545,14 @@
     box-sizing: border-box;
   }
 
-  .box_xinxi .title{
+  .lotter-type .box_xinxi .title{
     color: #353535;
     font-size: 14px;
     /*margin-bottom: 20px;*/
   }
 
 
-  .box_xinxi .header{
+  .lotter-type .box_xinxi .header{
     width: 100%;
     height: 40px;
     background-color: #f6f8f9;
@@ -569,7 +569,7 @@
     align-items: center;
     flex-wrap: wrap;
   }
-  .box_xinxi .body_list{
+  .lotter-type .box_xinxi .body_list{
     /*display: inline-block;*/
     /*float: left;*/
     width: 50%;
@@ -582,13 +582,13 @@
     display: inline-block;
   }
 
-  .box_xinxi .body_list.img{
+  .lotter-type .box_xinxi .body_list.img{
     min-height: 50px;
     height: auto;
     line-height: 30px;
   }
 
-  .box_xinxi .body_list.img img{
+  .lotter-type .box_xinxi .body_list.img img{
     max-width: 100px;
     max-height: 100px;
     width: auto;
@@ -599,10 +599,10 @@
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
   }
 
-  .box_xinxi .body_list.img .title{
+  .lotter-type .box_xinxi .body_list.img .title{
     padding-top: 10px;
   }
-  .box_xinxi .body_list .title{
+  .lotter-type .box_xinxi .body_list .title{
     width: 150px;
     float: left;
     padding-right: 30px;
@@ -611,17 +611,17 @@
     text-align: right;
   }
 
-  .box_xinxi .body_list.dec{
+  .lotter-type .box_xinxi .body_list.dec{
     height: auto;
     /*padding: 5px 10px;*/
   }
 
-  .box_xinxi .body_list .name{
+  .lotter-type  .box_xinxi .body_list .name{
     float: left;
     color: #606266;
   }
 
-  .box_xinxi .body_list .name .dec{
+  .lotter-type  .box_xinxi .body_list .name .dec{
     font-size: 14px;
     line-height: 30px;
     width: 500px;
@@ -659,29 +659,29 @@
   .blue{
     color: #409EFF;
   }
-  .administratormanage-wrap {
+  .lotter-type-wrap {
     width: 100%;
   }
 
-  .administratormanage-wrap {
+  .lotter-type-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .lotter-type-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .lotter-type-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .lotter-type-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .lotter-type-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

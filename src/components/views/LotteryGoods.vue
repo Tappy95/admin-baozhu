@@ -669,7 +669,7 @@
                   <div class="title">
                     奖品轮播图:
                   </div>
-                  <div class="img_box" style="margin: -30px 10px 10px 10px;">
+                  <div class="img_box" style="width: 730px;float: left">
                     <div @click="clickImg(item.url)" v-if="fileList1" v-for="item in fileList1" class="more_img">
                       <img  :src="item.url"  />
                     </div>
@@ -680,7 +680,7 @@
                   <div class="title">
                     奖品详情图:
                   </div>
-                  <div class="img_box" style="margin: -30px 10px 10px 10px;">
+                  <div class="img_box" style="width: 730px;float: left">
                     <div @click="clickImg(item.url)" v-if="fileList2" v-for="item in fileList2" class="more_img">
                       <img  :src="item.url" />
                     </div>
@@ -1211,118 +1211,5 @@
     white-space: nowrap;
   }
 
-  /*.box_xinxi{*/
-    /*background-color: #fff;*/
-    /*border-radius: 4px;*/
-    /*!*box-shadow: 0 1px 7px rgba(150,150,150,0.3);*!*/
-    /*padding: 10px;*/
-    /*box-sizing: border-box;*/
-  /*}*/
 
-  /*.box_xinxi .title{*/
-    /*color: #353535;*/
-    /*font-size: 14px;*/
-    /*!*margin-bottom: 20px;*!*/
-  /*}*/
-
-
-  /*.box_xinxi .header{*/
-    /*width: 100%;*/
-    /*height: 40px;*/
-    /*background-color: #f6f8f9;*/
-    /*color: #1fa67a;*/
-    /*line-height: 40px;*/
-    /*padding: 0 10px;*/
-    /*box-sizing: border-box;*/
-  /*}*/
-
-  /*.wrap_da{*/
-    /*display: flex;*/
-    /*justify-content: flex-start;*/
-    /*align-content: flex-start;*/
-    /*align-items: center;*/
-    /*flex-wrap: wrap;*/
-  /*}*/
-  /*.box_xinxi .body_list{*/
-    /*width: 50%;*/
-    /*height: auto;*/
-    /*height: 50px;*/
-    /*color: #353535;*/
-    /*line-height: 50px;*/
-    /*box-sizing: border-box;*/
-    /*display: inline-block;*/
-  /*}*/
-
-  /*.box_xinxi .body_list.img{*/
-    /*min-height: 50px;*/
-    /*height: auto;*/
-    /*line-height: 30px;*/
-  /*}*/
-
-  /*.box_xinxi .body_list.img img{*/
-    /*max-width: 120px;*/
-    /*max-height: 120px;*/
-    /*width: auto;*/
-    /*height: auto;*/
-    /*margin: 10px;*/
-    /*cursor: pointer;*/
-    /*line-height: 1px;*/
-    /*box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)*/
-  /*}*/
-
-  /*.box_xinxi .body_list.img .more_img{*/
-    /*width: 120px;*/
-    /*height: 120px;*/
-    /*box-sizing: border-box;*/
-    /*margin: 10px 5px;*/
-    /*float:left;*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-content: center;*/
-    /*align-items: center;*/
-    /*box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);*/
-    /*border-radius:4px;*/
-    /*cursor: pointer;*/
-  /*}*/
-  /*.box_xinxi .body_list.img .more_img img{*/
-    /*box-shadow: none;*/
-  /*}*/
-
-  /*.box_xinxi .body_list.img .title{*/
-    /*padding-top: 10px;*/
-    /*float: left;*/
-  /*}*/
-  /*.box_xinxi .body_list .title{*/
-    /*width: 150px;*/
-    /*float: left;*/
-    /*padding-right: 30px;*/
-    /*color: #a6a6a6;*/
-    /*box-sizing: border-box;*/
-    /*text-align: right;*/
-  /*}*/
-
-  /*.box_xinxi .body_list.dec{*/
-    /*height: auto;*/
-    /*!*padding: 5px 10px;*!*/
-  /*}*/
-
-  /*.box_xinxi .body_list .name{*/
-    /*float: left;*/
-    /*color: #606266;*/
-  /*}*/
-
-  /*.box_xinxi .body_list.img .img_box{*/
-    /*float: right;*/
-    /*width: 800px;*/
-    /*height: auto;*/
-    /*!*margin: -30px 10px 10px 10px;*!*/
-  /*}*/
-
- /*.lottery-goods .box_xinxi .body_list .name .dec{*/
-    /*font-size: 14px;*/
-    /*line-height: 30px;*/
-    /*width: 600px;*/
-    /*float: left;*/
-    /*padding: 10px;*/
-  /*}*/
 </style>
