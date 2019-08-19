@@ -31,7 +31,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="578">
+          <el-table :data="tableData" height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column width="170px" fixed="left" prop="gameId" label="游戏id">
@@ -53,15 +53,25 @@
             <el-table-column fixed="right" prop="status"  label="操作" v-if="showW" :width="optionW">
             <template slot-scope="scope">
               <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-              <el-button type="primary" plain size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status==1 && UpperShelf">下架</el-button>
+              <el-button type="danger" plain size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status==1 && UpperShelf">下架</el-button>
               <el-button type="success" plain size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status==2 && UpperShelf">上架</el-button>
               <el-button type="success" plain size="mini" @click="getInfo(scope.row.id)" v-if="upd">修改</el-button>
+              <el-button type="primary" plain size="mini" @click="tagsTap(scope.row.id)" v-if="tags">标签</el-button>
             </template>
           </el-table-column>
           </el-table>
         </template>
       </div>
-
+      <el-dialog title="设置标签" :visible.sync="dialogTableTags" width="700px">
+        <el-row>
+          <el-checkbox-group text-color="#1fa67a" fill="#1fa67a" v-model="checkList">
+            <el-checkbox v-for="item in lableList" :key="item.index" :label="item.id">{{item.typeName}}</el-checkbox>
+          </el-checkbox-group>
+        </el-row>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" size="small" @click="tagSet()">确 定</el-button>
+        </div>
+      </el-dialog>
       <el-dialog title="修改" :visible.sync="dialogTableVisible" width="600px">
         <el-form :model="formtwo" ref="formtwo" :rules="rules">
           <el-row>
@@ -110,13 +120,17 @@
         menuId:'',
         del:false,
         UpperShelf:false,
-        optionW:'0px',
+        optionW:'0',
         showW:false,
         upd:false,
+        tags:false,
         gameList:[],
+        lableList:[],
         dialogTableVisible:false,
+        dialogTableTags:false,
         formtwo:{},
         currentId:'',
+        checkList:'',
         rules: {
       // { type: 'number', message: '请输入数字值'}
           orderId:[{required: true, message: '请输入排序', trigger: 'blur'}],
@@ -128,6 +142,7 @@
       this.queryBtns();
       this.gameData();
       this.accountList();
+      this.gameTags();
     },
     methods: {
       queryBtns(){
@@ -141,6 +156,9 @@
               if(res.data[i].btnCode == 'del') {
                 this.del=true;
               }
+              if(res.data[i].btnCode == 'tags') {
+                this.tags=true;
+              }
               if(res.data[i].btnCode == 'UpperShelf') {
                 this.UpperShelf=true;
               }
@@ -153,11 +171,13 @@
                 this.optionW = '150';
               }else if (res.data.length==3){
                 this.optionW = '225';
+              }else if (res.data.length==4){
+                this.optionW = '295';
               }
             }
           } else {
             this.showW = false;
-            this.optionW = '1px';
+            // this.optionW = '1px';
           }
         })
       },
@@ -179,6 +199,50 @@
           }
         })
       },
+
+      //游戏标签
+      gameTags(){
+        this.$fetch('/api/tpGameType/optionList', {
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.lableList= res.data;
+          }
+        })
+      },
+      tagsTap(id) {
+        this.currentId = id;
+        this.dialogTableTags = true;
+        // /infoLabel/gameInfoList 参数 gameId
+        this.$fetch('/api/gameRelationType/listType', {
+          gameId:id
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.checkList= res.data;
+          }
+        })
+      },
+
+      //设置标签
+      tagSet(){
+        let labels = '';
+        if (this.checkList){
+          labels = this.checkList.join(',');
+        }
+        let parameterData = {
+          gameId:this.currentId,
+          labelIds: labels
+        }
+        this.$post('/api/gameRelationType/update', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.dialogTableTags = false;
+            this.accountList();
+            this.$message({type: 'success', message: '设置标签成功'})
+          }else {
+            this.$message({type: 'error', message: res.message})
+          }
+        })
+      },
+
       //列表
       accountList() {
         let parameterData = {
