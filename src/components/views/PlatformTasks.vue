@@ -40,27 +40,17 @@
           <el-table :data="tableData"
                     style="width: 100%"
                     height="580">
-            <el-table-column label="序号"
-                             type="index"
-                             :index="indexMethod"
-                             width='80' fixed="left">
+            <el-table-column label="序号" type="index" :index="indexMethod" width='80' fixed="left">
             </el-table-column>
-
-            <el-table-column prop="name"
-                             min-width="200"
-                             label="任务名称" fixed="left" >
+            <el-table-column prop="name" min-width="200" label="任务名称" fixed="left" >
             </el-table-column>
-
-            <el-table-column
-                             min-width="120"
-                             label="任务logo">
+            <el-table-column min-width="120" label="任务logo">
               <template slot-scope="scope">
                 <img :src='scope.row.logo'
                      style="max-width: 50px;max-height: 45px;cursor: pointer;"
-                     @click="clickImg($event)">
+                     @click="clickImg(scope.row.logo)">
               </template>
             </el-table-column>
-
             <el-table-column min-width="150"
                              label="任务类型" >
               <template slot-scope="scope">
@@ -77,8 +67,11 @@
                 <span class="span_label" v-for="(item,index) in scope.row.label">{{item}}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="100" prop="reward"
-                             label="奖励(￥)"  >
+            <el-table-column min-width="150" prop="reward"
+                             label="用户奖励(￥)"  >
+            </el-table-column>
+            <el-table-column min-width="150" prop="drReward"
+                             label="达人奖励(￥)"  >
             </el-table-column>
             <el-table-column min-width="150" prop="channelTaskNumber"
                              label="渠道任务数"  >
@@ -100,17 +93,11 @@
                 <span class="blue" v-if="scope.row.isSignin==2">否</span>
               </template>
             </el-table-column>
-            <el-table-column prop="taskChannel"
-                             min-width="120"
-                             label="任务渠道"  >
+            <el-table-column prop="taskChannel" min-width="120" label="任务渠道"  >
             </el-table-column>
-            <el-table-column prop="createTime"
-                             :formatter="dateFormat"
-                             min-width="170"
-                             label="创建时间"  >
+            <el-table-column prop="createTime" :formatter="dateFormat" min-width="170" label="创建时间"  >
             </el-table-column>
-            <el-table-column fixed="right"
-                             label="操作" :width="optionW" >
+            <el-table-column fixed="right" label="操作" :width="optionW" >
               <template slot-scope="scope">
                 <el-button type="info" plain size="mini"
                            @click="getInfo(scope.row.id,1)">详情</el-button>
@@ -123,139 +110,127 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog width="800px" title="任务详情"
+        <el-dialog width="1000px" title="任务详情"
                    :visible.sync="dialogTableDetail">
           <el-form :model="formtwo">
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="任务标签:"
-                              :label-width="formLabelWidth">
-                  <el-tag
-                    :key="tag"
-                    v-for="tag in dynamicTags"
-                    closable
-                    :disable-transitions="false">
-                    {{tag}}
-                  </el-tag>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item v-if="channelCode=='baozhu'" label="是否上架:"
-                              prop="isUpper"
-                              :label-width="formLabelWidth">
-                  <el-switch :disabled="true"
-                             v-model="formtwo.isUpper"
-                             active-color="#13ce66"
-                             inactive-color="#ccc"
-                             :active-text="formtwo.isUpper==1?'是':'否'"
-                             inactive-text=""
-                             :active-value="1"
-                             :inactive-value="2">
-                  </el-switch>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="是否签到赚任务:"
-                              prop="isSignin"
-                              :label-width="formLabelWidth">
-                  <el-switch :disabled="true"
-                             v-model="formtwo.isSignin"
-                             active-color="#13ce66"
-                             inactive-color="#ccc"
-                             :active-text="formtwo.isSignin==1?'是':'否'"
-                             inactive-text=""
-                             :active-value="1"
-                             :inactive-value="2">
-                  </el-switch>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="任务渠道:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true"  :style="styleObject" v-model="formtwo.taskChannel"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="渠道任务数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true"  :style="styleObject" v-model="formtwo.channelTaskNumber"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="剩余渠道任务数:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" :style="styleObject" v-model="formtwo.surplusChannelTaskNumber"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="任务类型:"  prop="typeId" :label-width="formLabelWidth">
-                  <el-select :disabled="true" :style="styleObject" v-model="formtwo.typeId" clearable placeholder="请选择任务类型">
-                    <el-option label="高额收益" :value="1"></el-option>
-                    <el-option label="下载注册" :value="2"></el-option>
-                    <el-option label="实名认证" :value="3"></el-option>
-                    <el-option label="其他" :value="4"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="奖励(￥):"
-                              prop="reward"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" type="number" min="0" :style="styleObject" v-model="formtwo.reward"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="创建时间:"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true"  :style="styleObject" v-model="formtwo.createTime"
-                            auto-complete="off"
-                            clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="24"></el-col>
-              <el-col :span="21">
-                <el-form-item label="任务名称:" :label-width="formLabelWidth" prop="name">
-                  <el-input :disabled="true" v-model="formtwo.name" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="24">
-                <el-form-item label="任务名称:" :label-width="formLabelWidth" prop="name">
-                    <el-card class="card-box" :body-style="{ padding: '0px' }">
-                      <img  src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="card-img">
-                    </el-card>
-                </el-form-item>
-
-                <!--<el-form-item label="任务logo:"-->
-                              <!--prop="imageUrl"-->
-                              <!--:label-width="formLabelWidth">-->
-                  <!--<el-upload class="bannerAvatar-uploader"-->
-                             <!--:disabled="true"-->
-                             <!--action="/api/upload"-->
-                             <!--:data="uploadData"-->
-                             <!--:show-file-list="false"-->
-                             <!--:on-success="handleAvatarSuccess"-->
-                             <!--:before-upload="beforeAvatarUpload">-->
-                    <!--<img v-if="imageUrl"-->
-                         <!--:src="imageUrl"-->
-                         <!--class="avatar">-->
-                    <!--<i v-else-->
-                       <!--class="el-icon-plus bannerAvatar-uploader-icon"></i>-->
-                  <!--</el-upload>-->
-                <!--</el-form-item>-->
-              </el-col>
-
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>详情信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" style="width: 100%" >
+                    <div class="title">任务名称:</div>
+                    <div class="name">
+                      <span>{{formtwo.name}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">任务标签:</div>
+                    <div class="name">
+                      <el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false">{{tag}}
+                      </el-tag>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">是否上架:</div>
+                    <div class="name">
+                      <el-switch :disabled="true"
+                                 v-model="formtwo.isUpper"
+                                 active-color="#13ce66"
+                                 inactive-color="#ccc"
+                                 :active-text="formtwo.isUpper==1?'是':'否'"
+                                 inactive-text=""
+                                 :active-value="1"
+                                 :inactive-value="2">
+                      </el-switch>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">是否签到赚任务:</div>
+                    <div class="name">
+                      <el-switch :disabled="true"
+                      v-model="formtwo.isSignin"
+                      active-color="#13ce66"
+                      inactive-color="#ccc"
+                      :active-text="formtwo.isSignin==1?'是':'否'"
+                      inactive-text=""
+                      :active-value="1"
+                      :inactive-value="2">
+                      </el-switch>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">任务渠道:</div>
+                    <div class="name">
+                      {{formtwo.taskChannel}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">渠道任务数:</div>
+                    <div class="name">
+                      {{formtwo.channelTaskNumber}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">剩余渠道任务数:</div>
+                    <div class="name">
+                      {{formtwo.surplusChannelTaskNumber}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                     <div class="title">任务类型:</div>
+                      <div class="name">
+                        <span v-if="formtwo.typeId==1">高额收益</span>
+                        <span v-if="formtwo.typeId==2">下载注册</span>
+                        <span v-if="formtwo.typeId==3">实名认证</span>
+                        <span v-if="formtwo.typeId==4">其他</span>
+                      </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">用户奖励(￥):</div>
+                    <div class="name">
+                      {{formtwo.reward}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">达人奖励(￥):</div>
+                    <div class="name">
+                      {{formtwo.drReward}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">创建时间:</div>
+                    <div class="name">
+                      {{formtwo.createTime}}
+                    </div>
+                  </div>
+                  <div class="body_list img" style="width: 100%" >
+                    <div class="title">
+                      任务logo:
+                    </div>
+                    <div class="img_box" style="width: 730px;float: left">
+                      <div @click="clickImg(formtwo.logo)"  class="more_img">
+                        <img  :src="formtwo.logo"  />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </el-row>
+
+            <!--<el-row>-->
+              <!--<el-col :span="24">-->
+                <!--<el-form-item label="任务logo:" :label-width="formLabelWidth" prop="name">-->
+                    <!--<el-card class="card-box" :body-style="{ padding: '0px' }">-->
+                      <!--<img  src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="card-img">-->
+                    <!--</el-card>-->
+                <!--</el-form-item>-->
+
+
+              <!--</el-col>-->
+            <!--</el-row>-->
           </el-form>
         </el-dialog>
         <el-dialog width="600px" title="修改任务"
@@ -390,9 +365,9 @@
           }
         })
       },
-      clickImg(e) {
+      clickImg(img) {
         this.showImg = true
-        this.imgSrc = e.currentTarget.src;
+        this.imgSrc = img;
       },
       viewImg() {
         this.showImg = false
@@ -438,8 +413,8 @@
                     res.data.list[i].label = res.data.list[i].label.split(',')
                   }
             }
-            this.tableData = res.data.list
-            this.totalCount = res.data.total
+            this.tableData = res.data.list;
+            this.totalCount = res.data.total;
           } else {
             this.$message({
               type: 'error',
@@ -478,15 +453,26 @@
 
       //获取任务
       taskGetTap(){
-        this.$fetch('/api/tpTaskInfo/getTasks',{
-        }).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            this.$message({ type: 'success', message:'任务获取成功'})
-            this.accountList();
-          } else {
-            this.$message({ type: 'success', message: res.message })
-          }
+        this.$confirm('此操作将获取任务, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
         })
+          .then(() => {
+            this.$fetch('/api/tpTaskInfo/getTasks',{
+            }).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({ type: 'success', message:'任务获取成功'})
+                this.accountList();
+              } else {
+                this.$message({ type: 'success', message: res.message })
+              }
+            })
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消获取任务操作' })
+          })
       },
 
       //点击修改获取信息
