@@ -237,7 +237,22 @@
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <el-row>
-              <el-col :span="12">
+
+              <el-col :span="24">
+                <el-form-item label="是否是签到赚任务:"
+                              prop="isSignin">
+                  <el-switch
+                    v-model="formtwo.isSignin"
+                    active-color="#13ce66"
+                    inactive-color="#ccc"
+                    :active-text="formtwo.isSignin==1?'是':'否'"
+                    inactive-text=""
+                    :active-value="1"
+                    :inactive-value="2">
+                  </el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
                 <el-form-item label="是否上架:"
                               prop="isUpper"
                               :label-width="formLabelWidth">
@@ -252,20 +267,14 @@
                   </el-switch>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="是否是签到赚任务:"
-                              prop="isSignin">
-                  <el-switch
-                    v-model="formtwo.isSignin"
-                    active-color="#13ce66"
-                    inactive-color="#ccc"
-                    :active-text="formtwo.isSignin==1?'是':'否'"
-                    inactive-text=""
-                    :active-value="1"
-                    :inactive-value="2">
-                  </el-switch>
+
+              <el-col :span="18">
+                <el-form-item label="达人奖励(￥):" :label-width="formLabelWidth" >
+                  <el-input v-model="formtwo.drReward" auto-complete="off"  clearable>
+                  </el-input>
                 </el-form-item>
               </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer"
@@ -498,6 +507,11 @@
 
       //修改的确定按钮
       update(formtwo) {
+        var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+        if (!pattern.test(this.formtwo.drReward)) {
+          this.$message({ type: 'warning', message: '达人奖励为正数' })
+          return
+        }
         this.$put('/api/tpTaskInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({ type: 'success', message: '修改成功！' })
@@ -506,8 +520,6 @@
           }
         })
       },
-
-
     }
   }
 </script>
