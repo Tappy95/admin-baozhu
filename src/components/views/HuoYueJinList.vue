@@ -2,16 +2,16 @@
   <div class="huoyuejin-wrap">
     <div class="huoyuejin-inner">
       <div class="huoyuejin-header">
-        <h3>运营管理/活跃金任务记录</h3>
+        <h3>运营管理/每日任务记录</h3>
         <hr />
       </div>
       <div>
         <el-form :inline="true"
                  :model="formInline"
                  class="demo-form-inline">
-          <el-form-item label="用户id:">
+          <el-form-item label="用户Id:">
             <el-input v-model="formInline.accountId"
-                      placeholder="请输入用户id"
+                      placeholder="请输入用户Id"
                       clearable></el-input>
           </el-form-item>
 
@@ -58,6 +58,7 @@
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.taskType==1">活跃金</span>
                 <span class="zi" v-if="scope.row.taskType==2">提现</span>
+                <span class="red" v-if="scope.row.taskType==3">每日红包</span>
               </template>
             </el-table-column>
             <el-table-column min-width="120"  label="状态">

@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="game-types-wrap">
+    <div class="game-types-inner">
+      <div class="game-types-header">
         <h3>第三方/游戏类型</h3>
         <hr />
       </div>
@@ -10,20 +10,24 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="game-types-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column prop="typeName" label="游戏名称">
             </el-table-column>
-            <el-table-column prop="createTime" :formatter="dateFormat" label="创建时间">
-            </el-table-column>
             <el-table-column prop="status" label="是否启用">
+              <template slot-scope="scope">
+                     <span class="green" v-if="scope.row.status==1">已启用</span>
+                     <span class="red" v-if="scope.row.status==2">未启用</span>
+              </template>
+            </el-table-column>
+            <el-table-column width="170" prop="createTime" :formatter="dateFormat" label="创建时间">
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button  type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>
+                <!--<el-button  type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button>-->
                 <el-button  type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
                 <el-button  type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
               </template>
@@ -46,7 +50,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改游戏" :visible.sync="dialogTableVisible" width="600px">
@@ -106,7 +110,7 @@
     data() {
       return {
         powerTrue:false,
-        optionW:'75px',
+        optionW:'0',
         menuId:'',
         add:false,
         del:false,
@@ -116,16 +120,7 @@
         dialogFormVisible: false,
         dialogTableDetail:false,
         formtwoInfo:{},
-        form: {
-          noticeTitle: '',
-          noticeContent: '',
-          password: '',
-          isRelease: '1'
-        },
-        roles: {
-          id: '',
-          realname: ''
-        },
+        form: {},
         rules: {
           typeName: [{
             required: true,
@@ -144,17 +139,13 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        isSubmit:false,
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -170,17 +161,17 @@
             if(res.data[i].btnCode == 'upd') {
               this.upd=true;
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '75'
             }
             if(res.data[i].btnCode == 'del') {
               this.del=true;
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '75'
             }
 
             if (this.upd && this.del) {
               this.powerTrue =true;
-              this.optionW = '230px'
+              this.optionW = '150'
             }
           }
         } else {
@@ -205,15 +196,8 @@
         }
         this.$fetch('/api/tpGameType/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].status == '1') {
-              res.data.list[i].status = '已启用'
-            } else {
-              res.data.list[i].status = '未启用'
-            }
-          }
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
         } else {
           this.$message({
             type: 'error',
@@ -224,30 +208,29 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
-        this.form={}
+        this.form={};
         this.dialogFormVisible = true;
+        this.isSubmit=false
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/tpGameType/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-              this.dialogFormVisible = false
-              this.$message({
-                type: 'success',
-                message: '添加成功！'
-              })
-              this.accountList()
+              this.dialogFormVisible = false;
+              this.$message({type: 'success', message: '添加成功！'});
+              this.accountList();
             } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
+              this.$message({type: 'error', message: res.message});
+                this.isSubmit=false;
             }
           })
           } else {}
@@ -338,25 +321,25 @@
   }
 </script>
 <style type="text/css">
-  .administratormanage-wrap {
+  .game-types-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .game-types-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .game-types-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .game-types-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .game-types-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

@@ -72,7 +72,6 @@
                              ></el-input>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="12">
                   <el-form-item label="卡券类型:"
                                 prop="passbookType"
@@ -84,30 +83,27 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="12">
                   <el-form-item label="有效期(天):"
                                 prop="useDay"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" min="0" type="number" v-model="form.useDay"
+                    <el-input :style="styleObject"  v-model="form.useDay"
                               auto-complete="off"
                               clearable
                              ></el-input>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="12">
                   <el-form-item label="折扣值:"
                                 prop="passbookValue"
                                 :label-width="formLabelWidth">
-                    <el-input style="width: 180px" min="0" type="number" v-model="form.passbookValue"
+                    <el-input style="width: 180px"  v-model="form.passbookValue"
                               auto-complete="off"
                               clearable
                              ></el-input>
                     {{persent}}
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="12">
                   <el-form-item label="是否发放:"
                                 prop="regSend"
@@ -118,7 +114,6 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="24">
                   <el-form-item label="描述:"
                                 prop="remark"
@@ -129,16 +124,11 @@
                               ></el-input>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="12">
                 </el-col>
               </el-row>
-
-              <el-form-item label="适用任务类型:"
-                            prop=""
-                            :label-width="formLabelWidth">
+              <el-form-item label="适用任务类型:" prop="" :label-width="formLabelWidth">
               </el-form-item>
-
               <el-form-item label="">
                 <el-checkbox-group style="margin-top: -30px;"
                   v-model="taskTypeName">
@@ -151,8 +141,7 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -160,7 +149,7 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="528">
+                    max-height="556">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -231,7 +220,6 @@
                   ></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="卡券类型:"
                               prop="passbookType"
@@ -243,30 +231,27 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="有效期(天):"
                               prop="useDay"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" min="0" type="number" v-model="formtwo.useDay"
+                  <el-input :style="styleObject"  v-model="formtwo.useDay"
                             auto-complete="off"
                             clearable
                   ></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="折扣值:"
                               prop="passbookValue"
                               :label-width="formLabelWidth">
-                  <el-input style="width: 180px" min="0" type="number" v-model="formtwo.passbookValue"
+                  <el-input style="width: 180px"  v-model="formtwo.passbookValue"
                             auto-complete="off"
                             clearable
                   ></el-input>
                   {{persent}}
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="是否发放:"
                               prop="regSend"
@@ -277,7 +262,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="24">
                 <el-form-item label="描述:"
                               prop="remark"
@@ -288,17 +272,13 @@
                   ></el-input>
                 </el-form-item>
               </el-col>
-
             </el-row>
-
             <el-form-item label="适用任务类型:"
               prop=""
               :label-width="formLabelWidth">
             </el-form-item>
-
             <el-form-item label=""
-              prop="taskTypeName"
-              >
+              prop="taskTypeName">
               <el-checkbox-group style="margin-top: -30px;margin-left: 20px"
               v-model="taskTypes">
                <el-checkbox  v-for="(item,index) in cities" :label="item.id"  :key="item.id">{{item.typeName}}</el-checkbox>
@@ -443,8 +423,6 @@
         del:false,
         upd:false,
         send:false,
-        app: 0,
-        web: 1,
         advertisingPage: 1,
         webPage: 2,
         advertising: 3,
@@ -458,25 +436,36 @@
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        form: {
-          level: '',
-          experience: '',
-          image: '',
-          orderId:''
-        },
+        form: {},
         rules: {
           passbookName: [
             {required: true, message: '请输入卡券名称', trigger: 'blur'}
           ],
           passbookType: [{required: true, message: '请选择卡券类型', trigger: 'change'}],
           useDay: [
-            {required: true, message: '请输入有效期', trigger: 'blur'}
+            {required: true, message: '请输入有效期', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           mobiles: [
             {required: true, message: '请输入接收人', trigger: 'blur'}
           ],
           passbookValue: [
-            {required: true, message: '请输入折扣值', trigger: 'blur'}
+            {required: true, message: '请输入折扣值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           taskTypes: [{required: true, message: '请选择卡券类型', trigger: 'change'}],
           regSend: [{required: true, message: '请选择是否发放', trigger: 'change'}],
@@ -491,16 +480,17 @@
         showImg: false,
         imgSrc: '',
         formInline: {},
-        tableData: []
+        tableData: [],
+        isSubmit:false
       }
     },
     components: {
       'big-img': BigImg
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       sendTap(id,name){
@@ -528,7 +518,6 @@
           }
         })
       },
-
       typeChange(typeVale){
         if (typeVale==1){
           this.persent ='倍'
@@ -567,33 +556,24 @@
             }
             if(res.data[i].btnCode == 'upd') {
               this.upd=true;
-              // this.powerTrue =true;
               this.optionW = '160px'
             }
             if(res.data[i].btnCode == 'del') {
               this.del=true;
-              // this.powerTrue =true;
               this.optionW = '160px'
             }
-
             if(res.data[i].btnCode == 'send') {
               this.send=true;
-              // this.powerTrue =true;
               this.optionW = '160px'
             }
-
             if (this.upd && this.del || this.upd && this.send || this.del && this.send) {
-              // this.powerTrue =true;
               this.optionW = '250px'
             }
-
             if (this.upd && this.del && this.send) {
-              // this.powerTrue =true;
               this.optionW = '290px'
             }
           }
         } else {
-            // this.powerTrue =false;
         }
       })
       },
@@ -649,22 +629,22 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.persent='';
-        this.dialogFormVisible = true
-        this.form = {}
-        this.imageUrl=''
+        this.dialogFormVisible = true;
+        this.form = {};
+        this.imageUrl='';
         this.taskTypeName = [];
         this.taskTypes='';
         this.queryTaskType();
          this.formInline = {};
+         this.isSubmit =false;
       },
       addBtn(form) {
-
         var selecType = ''
         for (let i=0; i<this.taskTypeName.length;i++){
           if(selecType!=''){
@@ -675,12 +655,18 @@
        this.form.taskTypes = selecType
         this.$refs.form.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mPassbook/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
               this.$message({ type: 'success', message: '添加成功！' })
               this.accountList()
-            }
+            }else {
+                this.$message({ type: 'error', message: res.message })
+                this.isSubmit=false;
+              }
           })
           } else {
           }
@@ -727,13 +713,10 @@
           }else{
           this.persent = '%'
         }
-
           this.formtwo = res.data.mPassbook //基本信息
-
         if (this.dialog){
           this.formtwo.createTime = formatDate(new Date(res.data.mPassbook.createTime), 'yyyy-MM-dd hh:mm:sss')
         }
-
         for(let i=0;i<res.data.rsPassbookTasks.length;i++){
            this.taskTypes.push(res.data.rsPassbookTasks[i].taskTypeId)
         }

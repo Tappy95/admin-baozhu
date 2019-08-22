@@ -210,7 +210,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
             </el-row>
             <el-form-item label="logo:"
                           :label-width="formLabelWidth">
@@ -247,7 +246,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改vip" :visible.sync="dialogTableVisible" width="900px">
@@ -776,6 +775,7 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
+        isSubmit:false,
       }
     },
     components: {
@@ -882,6 +882,7 @@
         this.imageUrl='';
         this.backgroundImg ='';
         this.dialogFormVisible = true;
+        this.isSubmit =false;
       },
       addBtn(form) {
         this.form.imageUrl=this.imageUrl;
@@ -897,6 +898,9 @@
               this.$message({type: 'error', message: '请上传背景图！'})
               return
             }
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mVipInfo/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
@@ -910,6 +914,7 @@
                 type: 'error',
                 message: res.message
               })
+                this.isSubmit=false;
             }
           })
           } else {}

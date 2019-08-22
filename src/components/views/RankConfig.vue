@@ -28,7 +28,7 @@
       </div>
       <div class="rank-config-table">
         <template>
-          <el-table :data="tableData" height="578">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column min-width="120" prop="rankType" label="排行榜类型">
@@ -91,17 +91,17 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item prop="rangeMin" label="随机范围(min):"  :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model.number="form.rangeMin" auto-complete="off" clearable></el-input>
+                  <el-input :style="styleObject"  v-model="form.rangeMin" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item prop="rangeMax" label="随机范围(max):"  :label-width="formLabelWidth">
-                  <el-input :style="styleObject"  v-model.number="form.rangeMax" auto-complete="off" clearable></el-input>
+                  <el-input :style="styleObject"  v-model="form.rangeMax" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label="真实用户上榜数:"  prop="upNum" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" v-model.number="form.upNum" auto-complete="off" clearable></el-input>
+                  <el-input :style="styleObject" v-model="form.upNum" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
@@ -116,7 +116,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改排行榜" :visible.sync="dialogTableVisible" width="800px">
@@ -275,20 +275,42 @@
           ],
           rangeMin: [
             { required: true, message: '请输入随机范围(min)', trigger: 'blur' },
-            { type: 'number', message: '请输入数字值'}
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           rangeMax: [
             { required: true, message: '请输入随机范围(max)', trigger: 'blur' },
-            { type: 'number', message: '请输入数字值'}
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           upNum: [
             { required: true, message: '真实用户上榜数', trigger: 'blur' },
-            { type: 'number', message: '请输入数字值'}
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
         },
         styleObject:{
           width:'200px'
-        }
+        },
+        isSubmit:false,
       }
     },
     filters: {
@@ -370,10 +392,14 @@
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/rankConfig/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -387,6 +413,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}

@@ -13,7 +13,7 @@
       </div>
       <div class="da-ren-rank-config-table">
         <template>
-          <el-table :data="tableData" height="551">
+          <el-table :data="tableData" max-height="551">
             <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column  prop="darenLevel"  label="奖励等级">
@@ -61,7 +61,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit"  @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改配置" :visible.sync="dialogTableVisible" width="700px">
@@ -155,7 +155,8 @@
         tableData: [],
         styleObject:{
           width:'350px'
-        }
+        },
+        isSubmit:false
       }
     },
     filters: {
@@ -228,10 +229,14 @@
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/rankDarenConfig/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -245,6 +250,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}

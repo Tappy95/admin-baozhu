@@ -16,7 +16,7 @@
       </div>
       <div class="lotter-type-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -27,7 +27,7 @@
                     <span>{{ props.row.timesOneday }}</span>
                   </el-form-item>
                   <el-form-item label="每次所需金猪：">
-                    <span>{{ props.row.expendPigCoin }}</span>
+                    <span>{{ props.row.expendPigCoin | currencyNum}}</span>
                   </el-form-item>
                   <el-form-item label="适用人群：">
                     <span v-if="props.row.applyCrowd==1">全部</span>
@@ -62,6 +62,9 @@
             <el-table-column width="120px" prop="timesOneday" label="每天次数限制">
             </el-table-column>
             <el-table-column width="120px" prop="expendPigCoin" label="每次所需金猪">
+              <template slot-scope="scope">
+                <span>{{scope.row.expendPigCoin | currencyNum}}</span>
+              </template>
             </el-table-column>
             <el-table-column width="300px" prop="remark" label="类型描述">
               <template slot-scope="scope">
@@ -160,7 +163,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改抽奖类型" :visible.sync="dialogTableVisible" width="800px">
@@ -258,7 +261,7 @@
                 </div>
                 <div class="body_list">
                   <div class="title">每次所需金猪:</div>
-                  <div class="name">{{formtwoInfo.expendPigCoin}}</div>
+                  <div class="name">{{formtwoInfo.expendPigCoin | currencyNum}}</div>
                 </div>
                 <div class="body_list">
                   <div class="title">适用人群:</div>
@@ -321,17 +324,38 @@
             typeName: [{required: true, message: '请输入类型名称', trigger: 'blur'}],
             timesOneday: [
               {required: true, message: '请输入每天次数限制', trigger: 'blur'},
-              { type: 'number', message: '请输入数字值'}],
+              {validator:(rule,value,callback)=>{
+                  var pattern = /^[0-9]*$/;
+                  if (!pattern.test(value)) {
+                    callback(new Error("请输入正整数"));
+                  }else{
+                    callback();
+                  }
+                }, trigger:'blur'}],
             expendPigCoin: [
               {required: true, message: '请输入每次所需金猪', trigger: 'blur'},
-              { type: 'number', message: '请输入数字值'}],
+              {validator:(rule,value,callback)=>{
+                  var pattern = /^[0-9]*$/;
+                  if (!pattern.test(value)) {
+                    callback(new Error("请输入正整数"));
+                  }else{
+                    callback();
+                  }
+                }, trigger:'blur'}],
             remark: [{required: true, message: '请输入类型描述', trigger: 'blur'}],
             status: [{required: true, message: '请选择类型状态', trigger: 'change'}],
             applyCrowd: [{required: true, message: '请选择适用人群', trigger: 'change'}],
             lotterySort: [{required: true, message: '请选择抽奖分类', trigger: 'change'}],
             dayNum: [
                     {required: true, message: '请输入每天发放数量', trigger: 'blur'},
-                    { type: 'number', message: '请输入数字值'}],
+                    {validator:(rule,value,callback)=>{
+                    var pattern = /^[0-9]*$/;
+                    if (!pattern.test(value)) {
+                      callback(new Error("请输入正整数"));
+                    }else{
+                      callback();
+                    }
+                  }, trigger:'blur'}]
           },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -341,17 +365,23 @@
         tableData: [],
         styleObject:{
           width:'200px'
-        }
+        },
+        isSubmit:false,
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     filters: {
       dateFont: function (date){
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss');
+      },
+      currencyNum: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
       },
     },
     methods: {
@@ -423,10 +453,14 @@
         this.formInline = {};
         this.form={};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mLotteryType/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -440,6 +474,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit =false
               }
             })
           } else {}
@@ -522,9 +557,7 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
+
     },
   }
 </script>

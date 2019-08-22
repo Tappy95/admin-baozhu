@@ -1,22 +1,22 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="sms-config-wrap">
+    <div class="sms-config-inner">
+      <div class="sms-config-header">
         <h3>系统配置 / 短信配置</h3>
         <hr />
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="配置名称">
+          <el-form-item label="配置名称:">
             <el-input v-model="formInline.name" placeholder="请输入配置名称" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" v-if="add" plain @click="load()">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="sms-config-table">
         <template>
-          <el-table :data="tableData" height="578">
+          <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="300" prop="name" label="配置名称">
@@ -37,7 +37,7 @@
         <el-dialog title="添加短信配置" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item prop="maxValue" label="值:"  :label-width="formLabelWidth">
-              <el-input  style="width: 200px"  type="number" v-model="form.maxValue" auto-complete="off" clearable></el-input>
+              <el-input  style="width: 200px"   v-model="form.maxValue" auto-complete="off" clearable></el-input>
             </el-form-item>
             <el-form-item label="配置名称:" prop="name" :label-width="formLabelWidth">
               <el-input v-model="form.name" auto-complete="off" style="" clearable></el-input>
@@ -48,13 +48,13 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改短信配置" :visible.sync="dialogTableVisible" width="600px">
           <el-form :model="formtwo">
             <el-form-item label="值:"  :label-width="formLabelWidth">
-              <el-input style="width: 200px" type="number" v-model="formtwo.maxValue" auto-complete="off" clearable></el-input>
+              <el-input style="width: 200px" v-model="formtwo.maxValue" auto-complete="off" clearable></el-input>
             </el-form-item>
             <el-form-item label="配置名称:" :label-width="formLabelWidth">
             <el-input v-model="formtwo.name" auto-complete="off" style="" clearable></el-input>
@@ -100,17 +100,20 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
+        isSubmit:false,
         rules: {
-          name: [{
-            required: true,
-            message: '请输入配置名称',
-            trigger: 'blur'
-          }],
-          maxValue: [{
-            required: true,
-            message: '请输入值',
-            trigger: 'blur'
-          }],
+          name: [{required: true, message: '请输入配置名称', trigger: 'blur'}],
+          maxValue: [
+            {required: true, message: '请输入值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+            ],
         },
       }
     },
@@ -170,18 +173,22 @@
         })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit =false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/push/smsParamConf/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -195,6 +202,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}
@@ -234,25 +242,25 @@
   }
 </script>
 <style type="text/css">
-  .administratormanage-wrap {
+  .sms-config-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .sms-config-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .sms-config-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .sms-config-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .sms-config-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

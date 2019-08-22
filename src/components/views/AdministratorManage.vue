@@ -16,7 +16,7 @@
 			</div>
 			<div class="administratormanage-table">
 				<template>
-					<el-table :data="tableData" height="580">
+					<el-table :data="tableData" max-height="556">
 						<el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
 						</el-table-column>
 						<el-table-column fixed="left" min-width="150px" prop="realname" label="管理员名称">
@@ -30,6 +30,11 @@
 						<el-table-column min-width="150px" prop="createTime" :formatter="dateFormat" label="创建时间">
 						</el-table-column>
 						<el-table-column prop="status" label="状态">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.status==1">正常</span>
+                <span class="red" v-if="scope.row.status==2">冻结</span>
+                <span class="zi" v-if="scope.row.status==0">已删除</span>
+              </template>
 						</el-table-column>
 						<el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
 							<template slot-scope="scope">
@@ -39,7 +44,7 @@
 						</el-table-column>
 					</el-table>
 				</template>
-				<el-dialog title="修改管理员管理" :visible.sync="dialogTableVisible" width="600px">
+				<el-dialog title="修改管理员管理" :visible.sync="dialogTableVisible" width="700px">
 					<el-form :model="formtwo" :rules="rules">
             <el-row>
               <el-col :span="24">
@@ -79,7 +84,7 @@
               </el-col>
 
 
-              <el-col :span="12">
+              <el-col :span="24">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select v-model="formtwo.channelCode" placeholder="" >
                     <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelCode" :value="item.channelCode"></el-option>
@@ -104,7 +109,7 @@
 					</div>
 				</el-dialog>
 
-        <el-dialog title="添加管理员" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加管理员" :visible.sync="dialogFormVisible" width="700px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="24">
@@ -144,7 +149,7 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
+              <el-col :span="24">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
                   <el-select v-model="form.channelCode" placeholder="" >
                     <el-option :key="index" v-for="(item,index) in channelCodeList" :label="item.channelCode" :value="item.channelCode"></el-option>
@@ -166,7 +171,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -259,13 +264,9 @@
 				totalCount: 0,
 				formInline: {},
 				tableData: [],
-				isShow: false,
-				selectDept: [],
-				selectData: [],
-				staff: 1,
-         company: 2,
         tempPassword:'',
         channelCodeList:[],//渠道列表
+        isSubmit:false,
 			}
 		},
 		created() {
@@ -326,17 +327,8 @@
 				}
 				this.$fetch('/api/pAdmin/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-						for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].status == '0') {
-              res.data.list[i].status = '已删除'
-            }else if(res.data.list[i].status == '1') {
-              res.data.list[i].status = '正常'
-            } else {
-              res.data.list[i].status = '冻结'
-            }
-          }
-						this.tableData = res.data.list
-						this.totalCount = res.data.total
+						this.tableData = res.data.list;
+						this.totalCount = res.data.total;
 
 					} else {
 						this.$message({
@@ -348,14 +340,15 @@
 				})
 			},
 			search() {
-				this.currentPage = 1
-				this.pageSize = 10
-				this.accountList()
+				this.currentPage = 1;
+				this.pageSize = 10;
+				this.accountList();
 			},
 			load() {
 				this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit =false;
 			},
 			addBtn(form) {
         // let regs = /^((13[0-9])|(17[0-1,6-8])|(15[^4,\\D])|(18[0-9]))\d{8}$/;
@@ -371,6 +364,9 @@
         this.form.password = md5(this.form.password)
 				this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
 						this.$post('/api/pAdmin/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
 								this.dialogFormVisible = false
@@ -384,6 +380,7 @@
 									type: 'error',
 									message: res.message
 								})
+              this.isSubmit=false;
 							}
 						})
 					} else {}

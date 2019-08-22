@@ -34,7 +34,7 @@
               <el-form-item  label="变更类型:" >
                 <el-select v-model="formInline.changedType"  placeholder="请选择变更类型">
                   <el-option label="答题" value="1"></el-option>
-                  <el-option label="来访礼" value="2"></el-option>
+                  <el-option label="每日红包" value="2"></el-option>
                   <el-option label="提现" value="3"></el-option>
                   <el-option label="推荐用户" value="4"></el-option>
                   <el-option label="徒弟贡献" value="5"></el-option>
@@ -59,6 +59,9 @@
                   <el-option label="达人首次奖励" value="24"></el-option>
                   <el-option label="达人后续奖励" value="25"></el-option>
                   <el-option label="阅读小说" value="26"></el-option>
+                  <el-option label="达人邀请周榜奖励" value="27"></el-option>
+                  <el-option label="高额赚提成" value="28"></el-option>
+                  <el-option label="每日红包任务" value="29"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -178,6 +181,9 @@
                     <el-option label="达人首次奖励" :value="24"></el-option>
                     <el-option label="达人后续奖励" :value="25"></el-option>
                     <el-option label="阅读小说" :value="26"></el-option>
+                    <el-option label="达人邀请周榜奖励" :value="27"></el-option>
+                    <el-option label="高额赚提成" value="28"></el-option>
+                    <el-option label="每日红包任务" value="29"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -605,7 +611,7 @@
                 res.data.list[i].changedType = '答题';
                 break;
               case 2:
-                res.data.list[i].changedType = '来访礼';
+                res.data.list[i].changedType = '每日红包';
                 break;
               case 3:
                 res.data.list[i].changedType = '提现';
@@ -678,6 +684,15 @@
                 break;
               case 26:
                 res.data.list[i].changedType = '阅读小说';
+                break;
+              case 27:
+                res.data.list[i].changedType = '达人邀请周榜奖励';
+                break;
+              case 28:
+                res.data.list[i].changedType = '高额赚提成';
+                break;
+              case 29:
+                res.data.list[i].changedType = '每日红包任务';
                 break;
               // default:
             }

@@ -2,7 +2,7 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>来访礼/来访礼记录</h3>
+        <h3>每日红包/每日红包记录</h3>
         <hr />
       </div>
       <div>
@@ -15,7 +15,7 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="170px" fixed="left" prop="userName" label="姓名">

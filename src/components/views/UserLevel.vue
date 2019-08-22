@@ -1,7 +1,7 @@
 <template>
-  <div class="bannermanage-wrap">
-    <div class="bannermanage-inner">
-      <div class="bannermanage-header">
+  <div class="user-level-wrap">
+    <div class="user-level-inner">
+      <div class="user-level-header">
         <h3>用户管理/用户等级</h3>
         <hr />
       </div>
@@ -37,7 +37,7 @@
               <el-form-item label="所需经验值"
                             prop="experience"
                             :label-width="formLabelWidth">
-                <el-input min="0" type="number" v-model="form.experience"
+                <el-input  v-model="form.experience"
                           auto-complete="off"
                           clearable
                           style="width: 300px;"></el-input>
@@ -45,7 +45,7 @@
               <el-form-item label="等级排序"
                             prop="orderId"
                             :label-width="formLabelWidth">
-                <el-input min="0" type="number" v-model="form.orderId"
+                <el-input  v-model="form.orderId"
                           auto-complete="off"
                           clearable
                           style="width: 300px;"></el-input>
@@ -53,7 +53,7 @@
               <el-form-item label="金猪加成比例(%)"
                             prop="addition"
                             :label-width="formLabelWidth">
-                <el-input min="0" type="number" v-model="form.addition"
+                <el-input  v-model="form.addition"
                           auto-complete="off"
                           clearable
                           style="width: 300px;"></el-input>
@@ -63,16 +63,15 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn(form)">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn(form)">确 定</el-button>
           </div>
         </el-dialog>
       </div>
-      <div class="bannermanage-table">
+      <div class="user-level-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="578">
+                    max-height="556">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -81,8 +80,10 @@
             <el-table-column prop="level"
                              label="等级名称">
             </el-table-column>
-            <el-table-column prop="experience"
-                             label="所需经验值">
+            <el-table-column prop="experience" label="所需经验值">
+              <template slot-scope="scope">
+                <span>{{scope.row.experience | currenNum}}</span>
+              </template>
             </el-table-column>
             <el-table-column prop="orderId"
                              label="等级排序">
@@ -117,21 +118,21 @@
             </el-form-item>
             <el-form-item label="所需经验值"
                           :label-width="formLabelWidth">
-              <el-input type="number" min="0" v-model="formtwo.experience"
+              <el-input v-model="formtwo.experience"
                         auto-complete="off"
                         style=""
                         clearable></el-input>
             </el-form-item>
             <el-form-item label="等级排序"
                           :label-width="formLabelWidth">
-              <el-input type="number" min="0" v-model="formtwo.orderId"
+              <el-input  v-model="formtwo.orderId"
                         auto-complete="off"
                         style=""
                         clearable></el-input>
             </el-form-item>
             <el-form-item label="金猪加成比例(%)"
                           :label-width="formLabelWidth">
-              <el-input type="number" min="0" v-model="formtwo.addition"
+              <el-input  v-model="formtwo.addition"
                         auto-complete="off"
                         style=""
                         clearable></el-input>
@@ -198,13 +199,37 @@
             {required: true, message: '请输入等级名称', trigger: 'blur'}
           ],
           experience: [
-            {required: true, message: '请输入所需经验值', trigger: 'blur'}
+            {required: true, message: '请输入所需经验值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           orderId: [
-            {required: true, message: '请输入等级排序', trigger: 'blur'}
+            {required: true, message: '请输入等级排序', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           addition: [
-            {required: true, message: '请输入金猪加成比例', trigger: 'blur'}
+            {required: true, message: '请输入金猪加成比例', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           imgUrl: [{required: true, message: '请选择图片', trigger: 'change'}]
         },
@@ -215,16 +240,24 @@
         showImg: false,
         imgSrc: '',
         formInline: {},
-        tableData: []
+        tableData: [],
+        isSubmit:false,
       }
     },
     components: {
       'big-img': BigImg
     },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currenNum: function (num){
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      },
+    },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
       this.uploadData={
         token:getSession("token")
       }
@@ -294,25 +327,35 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.dialogFormVisible = true;
         this.form = {};
         this.formInline = {};
         this.imageUrl='';
+        this.isSubmit =false;
       },
       addBtn(form) {
         this.$refs.form.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/pLevel/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
               this.$message({ type: 'success', message: '添加成功！' })
               this.accountList()
-            }
+            }else {
+                this.$message({
+                  type: 'error',
+                  message: res.message
+                })
+                this.isSubmit=false;
+              }
           })
           } else {
           }
@@ -377,21 +420,21 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .bannermanage-wrap {
+  .user-level-wrap {
     width: 100%;
   }
-  .bannermanage-inner {
+  .user-level-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .bannermanage-header {
+  .user-level-header {
     margin-bottom: 20px;
   }
-  .bannermanage-header hr {
+  .user-level-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .bannermanage-table {
+  .user-level-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     margin-top: 20px;

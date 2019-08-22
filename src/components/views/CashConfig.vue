@@ -20,22 +20,19 @@
       </div>
       <div class="administratormanage-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column prop="price" label="提现金额(￥)">
             </el-table-column>
-
             <el-table-column prop="orders" label="排序">
             </el-table-column>
-
             <el-table-column min-width="120" prop="isTask"  label="是否完成任务">
               <template slot-scope="scope">
-                <span class="red" v-if="scope.row.isTask==1">是</span>
-                <span class="green" v-if="scope.row.isTask==2">否</span>
+                <span class="green" v-if="scope.row.isTask==1">是</span>
+                <span class="red" v-if="scope.row.isTask==2">否</span>
               </template>
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
@@ -53,7 +50,6 @@
             <el-form-item label="排序" prop="orders" :label-width="formLabelWidth">
               <el-input v-model="form.orders" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
-
             <el-form-item label="是否完成任务:" prop="isTask" :label-width="formLabelWidth">
               <el-select :style="styleObject" v-model="form.isTask" placeholder="">
                 <el-option label="是" :value="1"></el-option>
@@ -63,7 +59,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
 
@@ -116,10 +112,6 @@
           orders: '',
           isTask: '2'
         },
-        roles: {
-          id: '',
-          realname: ''
-        },
         rules: {
           price: [{required: true, message: '请输入提现金额', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
@@ -153,17 +145,16 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        isSubmit:false,
+        styleObject:{
+          width:'200px'
+        }
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -219,32 +210,30 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
-
         this.$refs[form].validate(valid => {
         if(valid) {
+          this.$nextTick(function () {
+            this.isSubmit=true;
+          })
           this.$post('/api/cashPriceConfig/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-            this.dialogFormVisible = false
-            this.$message({
-              type: 'success',
-              message: '添加成功！'
-            })
-            this.accountList()
+            this.dialogFormVisible = false;
+            this.$message({type: 'success', message: '添加成功！'});
+            this.accountList();
           } else {
-            this.$message({
-              type: 'error',
-              message: res.message
-            })
+            this.$message({type: 'error', message: res.message});
+              this.isSubmit = false;
           }
         })
         } else {}

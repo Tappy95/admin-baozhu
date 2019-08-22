@@ -91,16 +91,16 @@
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
                 :placement=place
-                title="来访人数"
+                title="领取每日红包人数"
                 width="200"
                 :offset=off
                 trigger="hover"
-                content="时间段内参加每日来访的人数">
+                content="时间段内参加每日领取每日红包的人数">
                   <div slot="reference" class="list grid-content">
                     <img src="../../assets/statistics/sign_num.png"/>
                     <div class="dec">
                       <p>{{listData.signCount}}<span>人</span></p>
-                      <p>来访人数</p>
+                      <p>领取每日红包人数</p>
                     </div>
                   </div>
               </el-popover>
@@ -318,7 +318,7 @@
                 :offset=off
                 trigger="hover"
                 :tabindex=tabindex
-                content="时间段内参加答题、来访、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">
+                content="时间段内参加答题、领取每日红包、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">
                 <div slot="reference" class="list grid-content">
                   <img src="../../assets/statistics/flag.png"/>
                   <div class="dec">

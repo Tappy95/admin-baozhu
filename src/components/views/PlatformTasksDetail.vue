@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="platform-tasks-detail-wrap">
+    <div class="platform-tasks-detail-inner">
+      <div class="platform-tasks-detail-header">
         <h3>财务流水/平台任务明细</h3>
         <hr />
       </div>
@@ -26,9 +26,9 @@
           <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="platform-tasks-detail-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column fixed="left" min-width="180" prop="orderNum"  label="订单号">
@@ -178,25 +178,25 @@
     color: #376eca;
   }
 
-  .administratormanage-wrap {
+  .platform-tasks-detail-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .platform-tasks-detail-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .platform-tasks-detail-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .platform-tasks-detail-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .platform-tasks-detail-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

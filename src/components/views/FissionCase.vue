@@ -41,7 +41,7 @@
                   <el-form-item label="团队长价格:"
                                 prop="teamPrice"
                                 :label-width="formLabelWidth">
-                    <el-input type="number" :style="styleObject" v-model="form.teamPrice"
+                    <el-input  :style="styleObject" v-model="form.teamPrice"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -51,7 +51,7 @@
                   <el-form-item label="续费价格:"
                                 prop="renewPrice"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.renewPrice"
+                    <el-input :style="styleObject"  v-model="form.renewPrice"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -61,7 +61,7 @@
                   <el-form-item label="一级分佣(%):"
                                 prop="oneCommission"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.oneCommission"
+                    <el-input :style="styleObject"  v-model="form.oneCommission"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -72,7 +72,7 @@
                   <el-form-item label="二级分佣(%):"
                                 prop="twoCommission"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.twoCommission"
+                    <el-input :style="styleObject"  v-model="form.twoCommission"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -83,7 +83,7 @@
                   <el-form-item label="合伙人分佣(%):"
                                 prop="partnerCommission"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.partnerCommission"
+                    <el-input :style="styleObject"  v-model="form.partnerCommission"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -93,7 +93,7 @@
                   <el-form-item label="团队长有效天数:"
                                 prop="effectiveDay"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.effectiveDay"
+                    <el-input :style="styleObject"  v-model="form.effectiveDay"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -103,7 +103,7 @@
                   <el-form-item label="普通用户起提金额:"
                                 prop="ordinaryExchange"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.ordinaryExchange"
+                    <el-input :style="styleObject"  v-model="form.ordinaryExchange"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -113,7 +113,7 @@
                   <el-form-item label="团队长起提金额:"
                                 prop="groupExchange"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.groupExchange"
+                    <el-input :style="styleObject"  v-model="form.groupExchange"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -123,7 +123,7 @@
                   <el-form-item label="每日赠送人民币数:"
                                 prop="giveMoney"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.giveMoney"
+                    <el-input :style="styleObject"  v-model="form.giveMoney"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -133,7 +133,7 @@
                   <el-form-item label="每天赠送金币数:"
                                 prop="giveCoin"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.giveCoin"
+                    <el-input :style="styleObject"  v-model="form.giveCoin"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -143,7 +143,7 @@
                   <el-form-item label="每天赠送金猪数:"
                                 prop="givePig"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.givePig"
+                    <el-input :style="styleObject"  v-model="form.givePig"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -152,7 +152,7 @@
                   <el-form-item label="赠送天数:"
                                 prop="giveDay"
                                 :label-width="formLabelWidth">
-                    <el-input :style="styleObject" type="number" v-model="form.giveDay"
+                    <el-input :style="styleObject"  v-model="form.giveDay"
                               auto-complete="off"
                               clearable></el-input>
                   </el-form-item>
@@ -245,8 +245,7 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -254,7 +253,7 @@
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="528">
+                    max-height="556">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -313,7 +312,7 @@
                  :imgSrc="imgSrc"></big-img>
         <el-dialog width="900px" title="修改方案"
                    :visible.sync="dialogTableVisible">
-          <el-form :model="formtwo">
+          <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
               <el-col :span="23">
                 <el-form-item label="方案名称:" prop="name" :label-width="formLabelWidth">
@@ -322,14 +321,14 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="团队长价格:" prop="teamPrice" :label-width="formLabelWidth">
-                  <el-input type="number" :style="styleObject" v-model="formtwo.teamPrice" auto-complete="off" clearable></el-input>
+                  <el-input :style="styleObject" v-model="formtwo.teamPrice" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="续费价格:"
                               prop="renewPrice"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.renewPrice"
+                  <el-input :style="styleObject"  v-model="formtwo.renewPrice"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -338,7 +337,7 @@
                 <el-form-item label="一级分佣(%):"
                               prop="oneCommission"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.oneCommission"
+                  <el-input :style="styleObject"  v-model="formtwo.oneCommission"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -347,7 +346,7 @@
                 <el-form-item label="二级分佣(%):"
                               prop="twoCommission"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.twoCommission"
+                  <el-input :style="styleObject"  v-model="formtwo.twoCommission"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -356,7 +355,7 @@
                 <el-form-item label="合伙人分佣(%):"
                               prop="partnerCommission"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.partnerCommission"
+                  <el-input :style="styleObject"  v-model="formtwo.partnerCommission"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -365,7 +364,7 @@
                 <el-form-item label="团队长有效天数:"
                               prop="effectiveDay"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.effectiveDay"
+                  <el-input :style="styleObject"  v-model="formtwo.effectiveDay"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -374,7 +373,7 @@
                 <el-form-item label="普通用户起提金额:"
                               prop="ordinaryExchange"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.ordinaryExchange"
+                  <el-input :style="styleObject"  v-model="formtwo.ordinaryExchange"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -383,7 +382,7 @@
                 <el-form-item label="团队长起提金额:"
                               prop="groupExchange"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.groupExchange"
+                  <el-input :style="styleObject"  v-model="formtwo.groupExchange"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -392,7 +391,7 @@
                 <el-form-item label="每日赠送人民币数:"
                               prop="giveMoney"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.giveMoney"
+                  <el-input :style="styleObject"  v-model="formtwo.giveMoney"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -401,7 +400,7 @@
                 <el-form-item label="每天赠送金币数:"
                               prop="giveCoin"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.giveCoin"
+                  <el-input :style="styleObject"  v-model="formtwo.giveCoin"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -411,7 +410,7 @@
                 <el-form-item label="每天赠送金猪数:"
                               prop="givePig"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.givePig"
+                  <el-input :style="styleObject"  v-model="formtwo.givePig"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -420,7 +419,7 @@
                 <el-form-item label="赠送天数:"
                               prop="giveDay"
                               :label-width="formLabelWidth">
-                  <el-input :style="styleObject" type="number" v-model="formtwo.giveDay"
+                  <el-input :style="styleObject"  v-model="formtwo.giveDay"
                             auto-complete="off"
                             clearable></el-input>
                 </el-form-item>
@@ -503,8 +502,7 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="update(formtwo)">确 定</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog width="1000px" title="方案详情"
@@ -716,8 +714,6 @@
         add:false,
         del:false,
         upd:false,
-        app: 0,
-        web: 1,
         advertisingPage: 1,
         webPage:2,
         advertising:3,
@@ -738,40 +734,136 @@
             { required: true, message: '请输入方案名称', trigger: 'blur' }
           ],
           teamPrice: [
-            { required: true, message: '请输入团队长价格', trigger: 'blur' }
+            { required: true, message: '请输入团队长价格', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入active-manage"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           renewPrice: [
-            { required: true, message: '请输入续费价格', trigger: 'blur' }
+            { required: true, message: '请输入续费价格', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           oneCommission: [
-            { required: true, message: '请输入一级分佣', trigger: 'blur' }
+            { required: true, message: '请输入一级分佣', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           twoCommission: [
-            { required: true, message: '请输入二级分佣', trigger: 'blur' }
+            { required: true, message: '请输入二级分佣', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           partnerCommission: [
-            { required: true, message: '请输入合伙人分佣', trigger: 'blur' }
+            { required: true, message: '请输入合伙人分佣', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           effectiveDay: [
-            { required: true, message: '请输入团队长有效天数', trigger: 'blur' }
+            { required: true, message: '请输入团队长有效天数', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           ordinaryExchange: [
-            { required: true, message: '请输入普通用户起提金额', trigger: 'blur' }
+            { required: true, message: '请输入普通用户起提金额', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           groupExchange: [
-            { required: true, message: '请输入团队长起提金额', trigger: 'blur' }
+            { required: true, message: '请输入团队长起提金额', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           giveMoney: [
-            { required: true, message: '请输入每日赠送人民币数', trigger: 'blur' }
+            { required: true, message: '请输入每日赠送人民币数', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           giveCoin: [
-            { required: true, message: '请输入每天赠送金币数', trigger: 'blur' }
+            { required: true, message: '请输入每天赠送金币数', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           givePig: [
-            { required: true, message: '请输入每天赠送金猪数', trigger: 'blur' }
+            { required: true, message: '请输入每天赠送金猪数', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           giveDay: [
-            { required: true, message: '请输入赠送天数', trigger: 'blur' }
+            { required: true, message: '请输入赠送天数', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           schemeImg: [{ required: true, message: '请选择方案图', trigger: 'change' }],
           remarks: [
@@ -791,7 +883,8 @@
         tableData: [],
         dialogTableDetail:false,
         ordinaryRewardImg:'',
-        teamRewardImg:''
+        teamRewardImg:'',
+        isSubmit:false
       }
     },
     components: {
@@ -965,6 +1058,7 @@
         this.fileList3=[];
         this.fileList4=[];
         this.fileList5=[];
+        this.isSubmit=false
       },
       addBtn(form) {
         this.form.schemeImg='';//方案图
@@ -1013,6 +1107,9 @@
         this.form.inviteImg=arr5.substr(0, arr5.length - 1);//邀请流程图
         this.$refs[form].validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mFissionScheme/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -1020,6 +1117,7 @@
                 this.accountList()
               }else {
                 this.$message({ type: 'error', message: res.message})
+                this.isSubmit=false;
               }
             })
           } else {
@@ -1157,13 +1255,16 @@
 
         this.formtwo.darenRewardImg=arr4.substr(0, arr4.length - 1); //达人奖励图
         this.formtwo.inviteImg=arr5.substr(0, arr5.length - 1);//邀请流程图
-
         this.formtwo.createTime = '';
-        this.$put('/api/mFissionScheme/modify', this.formtwo).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            this.$message({ type: 'success', message: '修改成功！' });
-            this.dialogTableVisible = false;
-            this.accountList();
+        this.$refs[formtwo].validate(valid => {
+          if (valid) {
+            this.$put('/api/mFissionScheme/modify', this.formtwo).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({ type: 'success', message: '修改成功！' });
+                this.dialogTableVisible = false;
+                this.accountList();
+              }
+            })
           }
         })
       },

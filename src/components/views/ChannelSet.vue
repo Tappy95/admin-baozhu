@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="channel-set-wrap">
+    <div class="channel-set-inner">
+      <div class="channel-set-header">
         <h3>第三方/渠道设置</h3>
         <hr />
       </div>
@@ -17,9 +17,9 @@
           <!--<el-button @click="loadChannel()" v-if="addChannelName">添加渠道名称</el-button>-->
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="channel-set-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
             <el-table-column  prop="channelCode" label="渠道标识">
@@ -101,7 +101,7 @@
               </el-col>
 
               <p>普通用户无权限功能:</p>
-              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid">
+              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
               <el-col :span="24">
                   <el-form-item label="28模块:"  :label-width="formLabelWidth">
                     <el-checkbox v-model="form.game28" label="游戏28" ></el-checkbox>
@@ -122,7 +122,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改渠道配置" :visible.sync="dialogTableVisible" width="800px">
@@ -162,7 +162,7 @@
               </el-col>
 
               <p>普通用户无权限功能</p>
-              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid">
+              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
                 <el-col :span="24">
                   <el-form-item label="28模块:"  :label-width="formLabelWidth">
                     <el-checkbox v-model="formtwo.game28" label="游戏28" ></el-checkbox>
@@ -251,7 +251,7 @@
 
         <el-dialog title="用户奖励" :visible.sync="dialogChannel" width="800px">
           <el-button style="margin-bottom: 30px" type="primary" plain @click="loadUser()" v-if="addUAward">添加用户奖励</el-button>
-          <el-table :data="tablereward" height="580">
+          <el-table :data="tablereward" max-height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
             <el-table-column  prop="configId" label="渠道配置id">
@@ -262,15 +262,15 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionWUser">
               <template slot-scope="scope">
-                <el-button size="mini" @click="Delete(scope.row.id,2)" v-if="delUAward">删除</el-button>
-                <el-button @click="getEditAward(scope.row.id,1)" size="mini" v-if="updUAward">修改</el-button>
-                <el-button @click="getEditAward(scope.row.id,2)" size="mini">详情</el-button>
+                <el-button size="mini" type="warning" plain @click="Delete(scope.row.id,2)" v-if="delUAward">删除</el-button>
+                <el-button type="success" plain @click="getEditAward(scope.row.id,1)" size="mini" v-if="updUAward">修改</el-button>
+                <el-button type="info" plain @click="getEditAward(scope.row.id,2)" size="mini">详情</el-button>
                 <!--<el-button @click="loadChannel(scope.row.id)" v-if="award" size="mini">签到奖励</el-button>-->
               </template>
             </el-table-column>
           </el-table>
 
-          <div class="block">
+          <div class="block" style="margin-top: 20px">
             <el-pagination @size-change="handleSizeChange1" @current-change="handleCurrentChange1" :current-page="currentPage1" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize1" layout="total, sizes, prev, pager, next, jumper" :total="totalCount1">
             </el-pagination>
           </div>
@@ -297,26 +297,26 @@
 
               <el-col :span="12">
                 <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="formUser.referrerAddition" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"   v-model="formUser.referrerAddition" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
                 <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="formUser.recommendCoin" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"     v-model="formUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
                 <el-form-item label="累计连续签到7天奖励金币:" prop="sign7" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="formUser.sign7" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"   v-model="formUser.sign7" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="20">
                 <el-form-item label="累计连续签到15天奖励金币:" prop="sign15" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="formUser.sign15" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"   v-model="formUser.sign15" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -342,8 +342,7 @@
                   <div class="item"><el-input   v-model="formUser.vip1188" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input   v-model="formUser.vip1688" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input   v-model="formUser.vip1888" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"> <el-input   v-model="formUser.vip3188" auto-complete="off"  clearable> </el-input></div>
-
+                  <div class="item"><el-input   v-model="formUser.vip3188" auto-complete="off"  clearable> </el-input></div>
                 </div>
               </div>
 
@@ -371,7 +370,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
           <el-button @click="dialogloadUser = false">取 消</el-button>
-          <el-button type="primary" @click="addUserAward('formUser')">确 定</el-button>
+          <el-button type="primary" :disabled="isSubmit" @click="addUserAward('formUser')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改用户奖励" :visible.sync="dialogEditUser" width="800px">
@@ -396,26 +395,26 @@
 
               <el-col :span="12">
                 <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="fromEditUser.referrerAddition" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="fromEditUser.referrerAddition" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
                 <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="fromEditUser.recommendCoin" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="fromEditUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
                 <el-form-item label="累计连续签到7天奖励金币:" prop="sign7" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="fromEditUser.sign7" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"   v-model="fromEditUser.sign7" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="20">
                 <el-form-item label="累计连续签到15天奖励金币:" prop="sign15" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number"   v-model="fromEditUser.sign15" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  v-model="fromEditUser.sign15" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -500,7 +499,7 @@
               </el-col>
               <el-col :span="20">
                 <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
-                  <el-input :disabled="true" :style="styleObject"  type="number"   v-model="fromInfoUser.recommendCoin" auto-complete="off"  clearable>
+                  <el-input :disabled="true" :style="styleObject"     v-model="fromInfoUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -689,12 +688,16 @@
             message: '请输入徒弟游戏试玩加成',
             trigger: 'blur'
           }],
-          recommendCoin:[{
-            required: true,
-            message: '请输入推荐有效好友奖励金币数',
-            trigger: 'blur'
-          }],
-    },
+          recommendCoin:[{required: true, message: '请输入推荐有效好友奖励金币数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+        },
         formLabelWidth01:'188px',
         formLabelWidth: '150px',
         currentPage: 1,
@@ -720,6 +723,7 @@
         taskType28:[],
         fissionList:[],
         tablereward:[],
+        isSubmit:false,
       }
     },
     components: {
@@ -885,19 +889,21 @@
         })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       //渠道
       load() {
         this.taskTypeName =[];
         this.dialogFormVisible = true;
         this.channelList();
+        this.isSubmit =false
       },
       //渠道名称
       rewarTap(id) {
         this.awardId = id;
+        console.log(this.awardId);
         // this.formChannel = {};
         this.dialogChannel = true;
         this.rewardList(id)
@@ -962,6 +968,9 @@
         
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mChannelConfig/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false;
@@ -975,6 +984,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}
@@ -1032,7 +1042,7 @@
               type: 'success',
               message: '删除成功！'
             })
-            this.rewardList(this.EditAwardId)
+            this.rewardList(this.awardId)
           } else {
             this.$message({
               type: 'error',
@@ -1149,12 +1159,17 @@
 
       loadUser(){
         this.dialogloadUser = true;
-      },
+        this.isSubmit=false;
+        this.formUser={}
+        },
 
       addUserAward(formUser) {
-        this.formUser.configId = this.awardId
+        this.formUser.configId = this.awardId;
         this.$refs[formUser].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/channelConfigUser/add', this.formUser).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogloadUser = false;
@@ -1169,6 +1184,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}
@@ -1306,25 +1322,25 @@
   }
 
 
-  .administratormanage-wrap {
+  .channel-set-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .channel-set-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .channel-set-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .channel-set-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .channel-set-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

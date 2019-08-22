@@ -1,7 +1,7 @@
 <template>
-  <div class="bannermanage-wrap">
-    <div class="bannermanage-inner">
-      <div class="bannermanage-header">
+  <div class="game-merchant-wrap">
+    <div class="game-merchant-inner">
+      <div class="game-merchant-header">
         <h3>第三方/商户列表</h3>
         <hr />
       </div>
@@ -72,7 +72,7 @@
                        @click="methodBtn('formMethod')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="添加商户" width="600px"
+        <el-dialog title="添加商户" width="800px"
                    :visible.sync="dialogFormVisible">
           <el-form :model="form"
                    :rules="rules"
@@ -80,40 +80,20 @@
             <div class="form">
               <el-row>
                  <el-col :span="24">
-                   <el-form-item label="商户名称:"
-                                 prop="name"
-                                 :label-width="formLabelWidth">
-                     <el-input v-model="form.name"
-                               auto-complete="off"
-                               clearable
-                               style="width: 400px"></el-input>
+                   <el-form-item label="商户名称:" prop="name" :label-width="formLabelWidth">
+                     <el-input v-model="form.name" auto-complete="off" clearable></el-input>
                    </el-form-item>
                  </el-col>
-
                 <el-col :span="24">
-                  <el-form-item label="公司简称:"
-                                prop="name"
-                                :label-width="formLabelWidth">
-                    <el-input v-model="form.shortName"
-                              auto-complete="off"
-                              clearable
-                              style="width: 400px"></el-input>
+                  <el-form-item label="公司简称:" prop="name" :label-width="formLabelWidth">
+                    <el-input v-model="form.shortName" auto-complete="off" clearable></el-input>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="24">
-                  <el-form-item label="商户描述:"
-                                prop="remark"
-                                :label-width="formLabelWidth">
-                    <el-input  type="textarea"
-                               :autosize="{ minRows: 6, maxRows:12}"
-                               v-model="form.remark"
-                               auto-complete="off"
-                               clearable
-                               style="width: 400px"></el-input>
+                  <el-form-item label="商户描述:" prop="remark" :label-width="formLabelWidth">
+                    <el-input  type="textarea" :autosize="{ minRows: 6, maxRows:12}" v-model="form.remark" auto-complete="off" clearable></el-input>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="24">
                 <el-form-item label="logo"
                               :label-width="formLabelWidth">
@@ -131,7 +111,6 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-
                 <el-col :span="18" style="margin-bottom: 10px">
                   <el-form-item prop="h5Type" label="游戏列表类型:" :label-width="formLabelWidth">
                     <el-select v-model="form.h5Type"  placeholder="">
@@ -140,7 +119,6 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
-
                 <el-col :span="18" style="margin-bottom: 10px">
                   <el-form-item prop="status" label="状态:" :label-width="formLabelWidth">
                     <el-select v-model="form.status"  placeholder="">
@@ -155,19 +133,18 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
       </div>
-      <div class="bannermanage-table">
+      <div class="game-merchant-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="580">
+                    max-height="580">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -209,45 +186,25 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="修改商户" width="600px"
+        <el-dialog title="修改商户" width="800px"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="24">
-                <el-form-item label="商户名称:"
-                              prop="name"
-                              :label-width="formLabelWidth">
-                  <el-input v-model="formtwo.name"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px"></el-input>
+                <el-form-item label="商户名称:" prop="name" :label-width="formLabelWidth">
+                  <el-input v-model="formtwo.name" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="24">
-                <el-form-item label="公司简称:"
-                              prop="name"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwo.shortName"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px"></el-input>
+                <el-form-item label="公司简称:" prop="name" :label-width="formLabelWidth">
+                  <el-input :disabled="true" v-model="formtwo.shortName" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="24">
-                <el-form-item label="商户名称:"
-                              prop="remark"
-                              :label-width="formLabelWidth">
-                  <el-input  type="textarea"
-                             :autosize="{ minRows: 6, maxRows:12}"
-                             v-model="formtwo.remark"
-                             auto-complete="off"
-                             clearable
-                             style="width: 400px"></el-input>
+                <el-form-item label="商户名称:" prop="remark" :label-width="formLabelWidth">
+                  <el-input type="textarea" :autosize="{ minRows: 6, maxRows:12}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="18" style="margin-bottom: 10px">
                 <el-form-item label="logo"
                               :label-width="formLabelWidth">
@@ -265,7 +222,6 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
-
               <el-col :span="18" style="margin-bottom: 10px">
                 <el-form-item prop="h5Type" label="游戏列表类型:" :label-width="formLabelWidth">
                   <el-select v-model="formtwo.h5Type"  placeholder="">
@@ -274,7 +230,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="18" style="margin-bottom: 10px">
                 <el-form-item prop="status" label="状态:" :label-width="formLabelWidth">
                   <el-select v-model="formtwo.status"  placeholder="">
@@ -283,8 +238,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-
             </el-row>
           </el-form>
           <div slot="footer"
@@ -294,75 +247,64 @@
                        @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="商户详情" :visible.sync="dialog" width="600px">
+        <el-dialog title="商户详情" :visible.sync="dialog" width="1000px">
           <el-form>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="商户名称:"
-                              prop="name"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwo.name"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px"></el-input>
-                </el-form-item>
-              </el-col>
 
-              <el-col :span="24">
-                <el-form-item label="公司简称:"
-                              prop="name"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwo.shortName"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px"></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="24">
-                <el-form-item label="商户名称:"
-                              prop="remark"
-                              :label-width="formLabelWidth">
-                  <el-input :disabled="true"  type="textarea"
-                             :autosize="{ minRows: 6, maxRows:12}"
-                             v-model="formtwo.remark"
-                             auto-complete="off"
-                             clearable
-                             style="width: 400px"></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="18" style="margin-bottom: 10px">
-                <el-form-item label="logo:"
-                              :label-width="formLabelWidth">
-                    <img v-if="imageUrl"
-                         :src="imageUrl"
-                         @click="clickImg(imageUrl)"
-                         class="avatar">
-                  <span v-else>暂无</span>
-                    <!--<i v-else-->
-                       <!--class="el-icon-plus bannerAvatar-uploader-icon"></i>-->
-                </el-form-item>
-              </el-col>
-              <el-col :span="18" style="margin-bottom: 10px">
-                <el-form-item prop="h5Type" label="游戏列表类型:" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwo.h5Type"  placeholder="">
-                    <el-option label="我方列表" :value="1"></el-option>
-                    <el-option label="他方列表" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="18" style="margin-bottom: 10px">
-                <el-form-item prop="status" label="状态:" :label-width="formLabelWidth">
-                  <el-select :disabled="true" v-model="formtwo.status"  placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>基本信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">商户名称:</div>
+                    <div class="name">
+                      {{formtwo.name}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%" >
+                    <div class="title">公司简称:</div>
+                    <div class="name">
+                      {{formtwo.shortName}}
+                    </div>
+                  </div>
+                  <div class="body_list dec" style="width: 100%" >
+                    <div class="title">描述:</div>
+                    <div class="name">
+                      <span class="dec">{{formtwo.remark}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">游戏列表类型:</div>
+                    <div class="name">
+                      <span v-if="formtwo.h5Type==1">我方列表</span>
+                      <span v-if="formtwo.h5Type==2">他方列表</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">状态:</div>
+                    <div class="name">
+                      <span v-if="formtwo.status==1">已启用</span>
+                      <span v-if="formtwo.status==2">已停用</span>
+                    </div>
+                  </div>
+                  <div class="header">
+                    <span>图片</span>
+                    <span></span>
+                  </div>
+                  <div  v-if="imageUrl" class="body_list img" style="width: 100%;border: none" >
+                    <div class="title" style="float: left;">logo:</div>
+                    <div class="img_box" style="width: 600px;float: left;">
+                      <div @click="clickImg(imageUrl)" v-if="imageUrl"   class="more_img">
+                        <img  :src="imageUrl"  />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </el-row>
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialog = false">取 消</el-button>
@@ -393,7 +335,7 @@
         uploadData:{},
         ruleForm:{
         options:[],
-      },
+        },
         company:[],
         batchSendName:'',
         formsendPhone:'',
@@ -466,16 +408,17 @@
             showImg: false,
             imgSrc: '',
             formInline: {},
-            tableData: []
+            tableData: [],
+            isSubmit:false
        }
     },
     components: {
       'big-img': BigImg
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
       this.uploadData={
         token:getSession("token")
       }
@@ -513,7 +456,6 @@
             }
           })
      },
-
       addMethod(){
          this.formMethod ={};
          this.dialogMethod = true;
@@ -538,7 +480,6 @@
           }
         })
       },
-
       sendTap(id,name){
         this.dialogSend =true;
         this.formsend.id = id;
@@ -600,47 +541,49 @@
             } else if(res.data.list[i].h5Type == '2') {
               res.data.list[i].h5Type = '他方列表'
             }
-
             if(res.data.list[i].status == '1') {
               res.data.list[i].status = '已启用'
             } else if(res.data.list[i].status == '2') {
               res.data.list[i].status = '已停用'
             }
           }
-
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
         } else {
-          this.$message({
-            type: 'error',
-            message: res.message,
-            duration: 3000
+          this.$message({type: 'error', message: res.message, duration: 3000
           })
         }
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.formInline ={};
-        this.dialogFormVisible = true
-        this.form = {}
-        this.imageUrl =''
+        this.dialogFormVisible = true;
+        this.form = {};
+        this.imageUrl ='';
+        this.isSubmit =false;
       },
       addBtn(form) {
         // console.log(this.imageUrl)
         this.form.imageUrl=this.imageUrl
         this.$refs.form.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/tpCompany/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
               this.$message({ type: 'success', message: '添加成功！' })
               this.accountList()
-            }
+            }else {
+                this.$message({type: 'error', message: res.message})
+                this.isSubmit=false;
+              }
           })
           } else {
           }
@@ -709,21 +652,21 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .bannermanage-wrap {
+  .game-merchant-wrap {
     width: 100%;
   }
-  .bannermanage-inner {
+  .game-merchant-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .bannermanage-header {
+  .game-merchant-header {
     margin-bottom: 20px;
   }
-  .bannermanage-header hr {
+  .game-merchant-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .bannermanage-table {
+  .game-merchant-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     margin-top: 20px;

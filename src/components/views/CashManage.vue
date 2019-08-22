@@ -182,10 +182,10 @@
             </el-table-column>
             <el-table-column fixed="right" v-if="powerTrue" :width="optionW" label="操作" >
               <template slot-scope="scope">
-                <el-button type="warning" plain v-if="lock && (scope.row.state==1 || scope.row.state==4) && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>锁定</el-button>
-                <el-button type="primary"  plain v-if="lock && (scope.row.state==1 || scope.row.state==4) && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>解锁</el-button>
-                <el-button type="success" plain v-if="exa && (scope.row.state==1 || scope.row.state==4) && scope.row.isLocking==1 && scope.row.locking==2"  @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>处理</el-button>
-                <span style="text-align: center" class="pla-span amountred" v-if="(scope.row.state==1 || scope.row.state==4) && scope.row.isLocking==1 && scope.row.locking!=2">已被{{scope.row.admin}}锁定<span v-if="optionW='150px'"></span></span>
+                <el-button type="warning" plain v-if="lock && scope.row.state==1 && scope.row.isLocking==2 && scope.row.locking!=2"  @click="lockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>锁定</el-button>
+                <el-button type="primary"  plain v-if="lock && scope.row.state==1  && scope.row.isLocking==1 && scope.row.locking==2" @click="unlockTap(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>解锁</el-button>
+                <el-button type="success" plain v-if="exa && scope.row.state==1  && scope.row.isLocking==1 && scope.row.locking==2"  @click="getAuditingInfo(scope.row.id)" size="mini" ><span v-if="optionW='150px'"></span>处理</el-button>
+                <span style="text-align: center" class="pla-span amountred" v-if="scope.row.state==1 && scope.row.isLocking==1 && scope.row.locking!=2">已被{{scope.row.admin}}锁定<span v-if="optionW='150px'"></span></span>
               </template>
             </el-table-column>
           </el-table>

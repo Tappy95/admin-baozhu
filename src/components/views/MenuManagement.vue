@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="menu-mangement-wrap">
+    <div class="menu-mangement-inner">
+      <div class="menu-mangement-header">
         <h3>系统管理/菜单管理</h3>
         <hr />
       </div>
@@ -12,36 +12,33 @@
             </el-form-item>
             <el-button type="primary" plain @click="search()">查询</el-button>
             <el-button type="success" plain @click="load()">添加</el-button>
-
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="menu-mangement-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="120px" prop="icon" label="小图标">
             </el-table-column>
             <el-table-column min-width="150px" prop="menuName" label="菜单名称">
             </el-table-column>
-
             <el-table-column min-width="170px"  prop="menuUrl" label="菜单访问地址">
             </el-table-column>
-
             <el-table-column min-width="170px" prop="fileName" label="文件名">
             </el-table-column>
-
             <el-table-column min-width="150px" prop="parentName" label="父级名称">
             </el-table-column>
-
             <el-table-column min-width="120px" prop="orderId" label="排序">
             </el-table-column>
-
             <el-table-column prop="createTime" width="200px" label="创建时间" :formatter="dateFormat">
             </el-table-column>
             <el-table-column prop="status" label="状态">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.status==1">已启用</span>
+                <span class="red" v-if="scope.row.status==2">已停用</span>
+              </template>
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" width="245">
               <template slot-scope="scope">
                 <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)">删除</el-button>
@@ -51,10 +48,10 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="按钮列表" :visible.sync="dialogFormVisibleBtn" width="600px">
-          <el-button class="but" @click="butLoad()">添加</el-button>
+        <el-dialog title="按钮列表" :visible.sync="dialogFormVisibleBtn" width="700px">
+          <el-button class="but" type="success" plain  @click="butLoad()">添加</el-button>
           <template>
-            <el-table :data="tableData1" height="500" :visible.sync="dialogFormVisibleBtn">
+            <el-table :data="tableData1" max-height="556" :visible.sync="dialogFormVisibleBtn">
               <el-table-column label="序号" type="index" :index="indexMethod" width='100'>
               </el-table-column>
               <el-table-column prop="btnName" label="按钮名称">
@@ -63,17 +60,17 @@
               </el-table-column>
               <el-table-column fixed="right" label="操作" width="75px">
                 <template slot-scope="scope">
-                  <el-button  size="mini" @click="butDelete(scope.row.id)">删除</el-button>
+                  <el-button type="warning" plain size="mini" @click="butDelete(scope.row.id)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </template>
-          <div class="block">
+          <div class="block" style="margin-top: 20px">
             <el-pagination @size-change="handleSizeChange1" @current-change="handleCurrentChange1" :current-page="currentPage1" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize1" layout="total, sizes, prev, pager, next, jumper" :total="totalCount1">
             </el-pagination>
           </div>
         </el-dialog>
-        <el-dialog title="添加菜单" :visible.sync="dialogFormVisible" width="600px">
+        <el-dialog title="添加菜单" :visible.sync="dialogFormVisible" width="700px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="小图标:" :label-width="formLabelWidth"  width="217px">
               <el-input v-model="form.icon"  auto-complete="off"  clearable>
@@ -92,7 +89,7 @@
               </el-input>
             </el-form-item>
             <el-form-item label="排序:" :label-width="formLabelWidth"  width="217px" prop="orderId">
-              <el-input min="0" type="number" v-model="form.orderId" auto-complete="off"  clearable>
+              <el-input  v-model="form.orderId" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
            <el-form-item label="父级:" :label-width="formLabelWidth" prop="parentId">
@@ -109,11 +106,10 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-
-        <el-dialog title="修改菜单" :visible.sync="dialogTableVisible" width="600px">
+        <el-dialog title="修改菜单" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo">
             <el-form-item label="小图标:" :label-width="formLabelWidth">
               <el-input v-model="formtwo.icon" auto-complete="off" style="" clearable></el-input>
@@ -148,21 +144,20 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-
-        <el-dialog title="添加菜单" :visible.sync="dialogFormVisibleaddBut" width="600px">
+        <el-dialog title="添加按钮" :visible.sync="dialogFormVisibleaddBut" width="600px">
           <el-form :model="formBut" :rules="rules" ref="form">
             <el-form-item label="按钮名称:" :label-width="formLabelWidth"  width="217px" prop="btnName">
-              <el-input v-model="formBut.btnName" style="width: 217px" auto-complete="off"  clearable>
+              <el-input v-model="formBut.btnName" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
             <el-form-item label="按钮代码:" :label-width="formLabelWidth"  width="217px" prop="btnCode">
-              <el-input v-model="formBut.btnCode" style="width: 217px" auto-complete="off"  clearable>
+              <el-input v-model="formBut.btnCode"  auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisibleaddBut = false">取 消</el-button>
-            <el-button type="primary" @click="addBtnList('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtnList('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -187,9 +182,7 @@
         form: {
           status: '1'
         },
-        formBut:{
-
-        },
+        formBut:{},
         parentsList:[],
         rules: {
           menuName: [{
@@ -202,11 +195,16 @@
             message: '请输入菜单url',
             trigger: 'blur'
           }],
-          orderId: [{
-            required: true,
-            message: '请输入排序值',
-            trigger: 'blur'
-          }],
+          orderId: [{required: true, message: '请输入排序值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
           fileName:[{
             required: true,
             message: '请输入文件名',
@@ -243,7 +241,8 @@
         pageSize1: 10,
         totalCount1: 0,
         tableData1: [],
-        mId:''
+        mId:'',
+        isSubmit:false,
       }
     },
     created() {
@@ -260,15 +259,18 @@
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
-
       butLoad(){
         this.formBut={}
         this.dialogFormVisibleaddBut = true;
+        this.isSubmit=false;
       },
       addBtnList(form){
-        this.formBut.menuId=this.mId
+        this.formBut.menuId=this.mId;
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/pMenuBtn/add', this.formBut).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
@@ -283,6 +285,7 @@
                 type: 'error',
                 message: res.message
               })
+                this.isSubmit=false;
             }
           })
           } else {}
@@ -300,10 +303,8 @@
         }
         this.$fetch('/api/pMenuBtn/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-
-            this.tableData1 = res.data.list
-            this.totalCount1 = res.data.total
-
+            this.tableData1 = res.data.list;
+            this.totalCount1 = res.data.total;
           } else {
             this.$message({
               type: 'error',
@@ -357,17 +358,8 @@
         }
         this.$fetch('/api/pMenu/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].status == '1') {
-              res.data.list[i].status = '启用'
-            }else {
-              res.data.list[i].status = '停用'
-            }
-
-          }
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
-
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
         } else {
           this.$message({
             type: 'error',
@@ -378,19 +370,23 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
         this.getParents();
+        this.isSubmit = false
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
         if(valid) {
+          this.$nextTick(function () {
+            this.isSubmit=true;
+          })
           this.$post('/api/pMenu/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
             this.dialogFormVisible = false
@@ -404,6 +400,7 @@
               type: 'error',
               message: res.message
             })
+              this.isSubmit = false;
           }
         })
         } else {}
@@ -477,20 +474,20 @@
       })
       },
       handleSizeChange(val) {
-        this.pageSize = val
-        this.accountList()
+        this.pageSize = val;
+        this.accountList();
       },
       handleCurrentChange(val) {
-        this.currentPage = val
-        this.accountList()
+        this.currentPage = val;
+        this.accountList();
       },
       handleSizeChange1(val) {
-        this.pageSize1 = val
-        this.butList(0)
+        this.pageSize1 = val;
+        this.butList(0);
       },
       handleCurrentChange1(val) {
-        this.currentPage1 = val
-        this.butList(0)
+        this.currentPage1 = val;
+        this.butList(0);
       }
     },
   }
@@ -523,25 +520,25 @@
   .text_area{
     padding-right: 30px;
   }
-  .administratormanage-wrap {
+  .menu-mangement-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .menu-mangement-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .menu-mangement-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .menu-mangement-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .menu-mangement-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

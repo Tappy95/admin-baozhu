@@ -15,7 +15,7 @@
             <!--<i class="fa fa-user-circle-o" aria-hidden="true"></i>-->
 						<!--<i><img src="../assets/user.png"></i>-->
 						<el-input  v-model="ruleForm.mobile"
-						    placeholder="请输入手机号码"
+						    placeholder="请输入用户名"
 						    style="width:70%;margin-left: 10px;">
               <i slot="prefix" class="el-input__icon fa fa-user-o"></i>
             </el-input>
@@ -54,7 +54,7 @@ export default {
       },
       rules: {
         mobile: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         password: [{ required: true, message: '请输密码', trigger: 'blur' }]
       }

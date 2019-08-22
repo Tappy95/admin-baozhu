@@ -76,7 +76,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改版本" :visible.sync="dialogTableVisible" width="800px">
@@ -282,7 +282,7 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-
+        isSubmit:false
       }
     },
     created() {
@@ -311,7 +311,6 @@
                 this.powerTrue =true;
                 this.optionW = '150px'
               }
-
               if (this.upd && this.del) {
                 this.powerTrue =true;
                 this.optionW = '220px'
@@ -377,10 +376,14 @@
         this.form.needUpdate = 2;
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/pVersion/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -394,6 +397,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}

@@ -53,7 +53,7 @@ const routes = [
         path: 'attendance-rules',
         name: 'AttendanceRules',
         component: resolve => require(['../components/views/AttendanceRules.vue'], resolve),
-        meta: { title: '来访礼规则'}
+        meta: { title: '每日红包规则'}
       },
       {
         path: 'news-notice',
@@ -102,7 +102,7 @@ const routes = [
         path: 'sign-list',
         name: 'SignList',
         component: resolve => require(['../components/views/SignList.vue'], resolve),
-        meta: { title: '来访礼记录'}
+        meta: { title: '每日红包记录'}
       },
       {
         path: 'fighting-info',
@@ -204,7 +204,7 @@ const routes = [
         path: 'game-task',
         name: 'GameTask',
         component: resolve => require(['../components/views/GameTask.vue'], resolve),
-        meta: { title: '入款记录'}
+        meta: { title: '任务管理'}
       },
       {
         path: 'game-list',

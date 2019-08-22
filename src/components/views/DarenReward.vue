@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="daren-reward-wrap">
+    <div class="daren-reward-inner">
+      <div class="daren-reward-header">
         <h3>运营管理/达人奖励</h3>
         <hr />
       </div>
@@ -18,9 +18,9 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="daren-reward-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="120" prop="rewardType"  label="奖励类型">
@@ -32,6 +32,9 @@
             <el-table-column prop="rewardName" label="奖励名称">
             </el-table-column>
             <el-table-column prop="coin" label="奖励金币数">
+              <template slot-scope="scope">
+                <span>{{scope.row.coin | currencyNum}}</span>
+              </template>
             </el-table-column>
             <el-table-column prop="orders" label="排序">
             </el-table-column>
@@ -89,7 +92,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改提现规则" :visible.sync="dialogTableVisible" width="700px">
@@ -156,11 +159,7 @@
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        form: {
-          price: '',
-          orders: '',
-          isTask: '2'
-        },
+        form: {},
         rules: {
           rewardType: [{
             required: true,
@@ -172,7 +171,7 @@
             message: '请输入奖励名称',
             trigger: 'blur'
           }],
-          coin: [{required: true, message: '请输入提现金额', trigger: 'blur'},
+          coin: [{required: true, message: '请输入奖励金币数', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
               var pattern = /^[0-9]*$/;
               if (!pattern.test(value)) {
@@ -206,9 +205,18 @@
         tableData: [],
         styleObject:{
           width:'200px'
-        }
+        },
+        isSubmit:false,
       }
     },
+    filters: {
+      //每隔三位数字以逗号隔开，保留小数点后两位
+      currencyNum: function (num) {
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      }
+      },
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
@@ -272,23 +280,29 @@
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit =false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
         if(valid) {
+          this.$nextTick(function () {
+             this.isSubmit=true;
+            })
           this.$post('/api/darenReward/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-            this.dialogFormVisible = false
+            this.dialogFormVisible = false;
             this.$message({
               type: 'success',
               message: '添加成功！'
             })
-            this.accountList()
+              this.accountList()
+
           } else {
             this.$message({
               type: 'error',
               message: res.message
             })
+              this.isSubmit=false;
           }
         })
         } else {}
@@ -373,25 +387,25 @@
     padding-right: 0;
   }
 
-  .administratormanage-wrap {
+  .daren-reward-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .daren-reward-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .daren-reward-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .daren-reward-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .daren-reward-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

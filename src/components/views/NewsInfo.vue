@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="news-info-wrap">
+    <div class="news-info-inner">
+      <div class="news-info-header">
         <h3>消息管理/通知</h3>
         <hr />
       </div>
@@ -14,7 +14,7 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="news-info-table">
         <template>
           <el-table :data="tableData" max-height="600">
             <el-table-column fixed="left" type="expand">
@@ -93,7 +93,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item v-if="toTypes" label="接收人"  :label-width="formLabelWidth" prop="mobile">
-                  <el-input :style="styleObject" type="number" placeholder="请输入接收人的手机号码" v-model="form.mobile" auto-complete="off"  clearable>
+                  <el-input :style="styleObject"  placeholder="请输入接收人的手机号码" v-model="form.mobile" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -158,7 +158,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改通知" :visible.sync="dialogTableVisible" width="800px">
@@ -397,17 +397,17 @@
               message: '请输入选择推送时间',
               trigger: 'change'
             }],
-           mobile: [{
-              required: true,
-              message: '请输入手机号',
-              trigger: 'blur'
-            },
-            {
-              min: 11,
-              max: 11,
-              message: '请输入11位手机号',
-              trigger: 'blur'
-            }
+           mobile: [{required: true, message: '请输入手机号', trigger: 'blur'},
+             {min: 11, max: 11, message: '请输入11位手机号', trigger: 'blur'},
+             {validator:(rule,value,callback)=>{
+                 var pattern = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+                 if (!pattern.test(value)) {
+                   callback(new Error("请输入正确的手机号"));
+                 }else{
+                   callback();
+                 }
+               }, trigger:'blur'}
+             // let pattern = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
           ],
         },
         formLabelWidth: '160px',
@@ -417,11 +417,7 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        isSubmit:false,
       }
     },
     created() {
@@ -546,6 +542,7 @@
         this.myhttps=false;
         this.toTypes=false;
         this.dialogFormVisible = true;
+        this.isSubmit = false;
       },
       addBtn(form) {
         if(this.form.informType==1){
@@ -553,6 +550,9 @@
         }
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.form.pushTime = new Date(this.form.pushTime).getTime();
             this.$post('/api/appInform/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
@@ -571,10 +571,10 @@
                 }else {
                   this.$message({
                     type: 'error',
-                    type: 'error',
                     message: res.message
                   })
                 }
+                this.isSubmit=true;
             }
           })
           } else {}
@@ -681,9 +681,6 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
 
   }
@@ -799,25 +796,25 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .administratormanage-wrap {
+  .news-info-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .news-info-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .news-info-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .news-info-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .news-info-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

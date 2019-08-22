@@ -104,8 +104,7 @@
            <div v-show="activeName==2" slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
           <el-form v-show="activeName==1" :model="formShop"
                    :rules="rules"
@@ -233,8 +232,7 @@
           <div v-show="activeName==1" slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addformShop('formShop')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addformShop('formShop')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -257,23 +255,18 @@
             <el-table-column width="150px" prop="typeName"
                              label="类型名称"  >
             </el-table-column>
-
             <el-table-column width="170px" prop="pigCoin"
                              label="抽奖价格(金猪)"  >
               <template slot-scope="scope">
                 <span class="yellow"> {{scope.row.pigCoin | currency}}</span>
             </template>
-              <!--goodsNumber-goodsConsumeNumber  剩余数量-->
-
             </el-table-column>
-
             <el-table-column  width="120px"
                              label="剩余数量">
               <template slot-scope="scope">
                 <span class="red"> {{scope.row.goodsNumber-scope.row.goodsConsumeNumber}}</span>
               </template>
             </el-table-column>
-
             <el-table-column width="150px" prop="price"
                              label="奖品价格(￥)"  >
             </el-table-column>
@@ -655,7 +648,7 @@
                 <div class="body_list dec" style="width: 100%" >
                   <div class="title">类型描述:</div>
                   <div class="name">
-                    <span class="dec">  {{formtwo.remark}}</span>
+                    <span class="dec">{{formtwo.remark}}</span>
                   </div>
                 </div>
                 <div class="body_list img" style="width: 100%" >
@@ -742,8 +735,7 @@
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        form: {
-        },
+        form: {},
         lotterylist:[],
         rules: {
           goodsName: [
@@ -772,20 +764,40 @@
             ],
             orders: [
               { required: true, message: '请输入排序', trigger: 'blur' },
-              { type: 'number', message: '请输入数字值'}
+              {validator:(rule,value,callback)=>{
+                  var pattern = /^[0-9]*$/;
+                  if (!pattern.test(value)) {
+                    callback(new Error("请输入正整数"));
+                  }else{
+                    callback();
+                  }
+                }, trigger:'blur'}
             ],
             goodsNumber: [
               { required: true, message: '请输入剩余份数', trigger: 'blur' },
-              { type: 'number', message: '请输入数字值'}
+              {validator:(rule,value,callback)=>{
+                  var pattern = /^[0-9]*$/;
+                  if (!pattern.test(value)) {
+                    callback(new Error("请输入正整数"));
+                  }else{
+                    callback();
+                  }
+                }, trigger:'blur'}
             ],
           pigCoin: [
               { required: true, message: '请输入兑换价格(金猪)', trigger: 'blur' },
-              { type: 'number', message: '请输入数字值'}
-            ],
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
           price: [
             { required: true, message: '请输入价格', trigger: 'blur' },
             { type: 'number', message: '请输入数字值'}
-          ],
+           ],
           carouselImg: [{required: true, message: '请输入奖品轮播图', trigger: 'change' }],
           infoImg : [{required: true, message: '请输入奖品详情图', trigger: 'change' }],
         },
@@ -804,7 +816,8 @@
         activeId:'',
         imageUrlIcon:'',
         fileList1:[],
-        fileList2:[]
+        fileList2:[],
+        isSubmit:false,
       }
     },
     components: {
@@ -825,7 +838,7 @@
         var dataval = parseInt(num);
         return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
         // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
-      },
+        },
       },
     methods: {
       handleClick(tab) {
@@ -905,9 +918,9 @@
         })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.dialogFormVisible = true;
@@ -917,21 +930,27 @@
         this.lotteryType();
         this.fileList1=[];
         this.fileList2=[];
+        this.formShop={};
         this.formShop.carouselImg='';
         this.formShop.infoImg='';
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.form.imageUrl=this.imageUrl;
         this.form.typeId =this.activeId;
         this.$refs[form].validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mLotteryGoods/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-                this.dialogFormVisible = false
-                this.$message({ type: 'success', message: '添加成功！' })
-                this.accountList()
+                this.dialogFormVisible = false;
+                this.$message({ type: 'success', message: '添加成功！' });
+                this.accountList();
               }else {
-                this.$message({ type: 'warning', message: res.message})
+                this.$message({ type: 'warning', message: res.message});
+                this.isSubmit=false;
               }
             })
           } else {
@@ -961,13 +980,17 @@
         this.formShop.rate=100;
         this.$refs[formShop].validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mLotteryGoods/add', this.formShop).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-                this.dialogFormVisible = false
-                this.$message({ type: 'success', message: '添加成功！' })
-                this.accountList()
+                this.dialogFormVisible = false;
+                this.$message({ type: 'success', message: '添加成功！' });
+                this.accountList();
               }else {
-                this.$message({ type: 'warning', message: res.message})
+                this.$message({ type: 'warning', message: res.message});
+                this.isSubmit=false;
               }
             })
           } else {

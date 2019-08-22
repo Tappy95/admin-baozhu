@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="news-notice-wrap">
+    <div class="news-notice-inner">
+      <div class="news-notice-header">
         <h3>消息管理/公告</h3>
         <hr />
       </div>
@@ -14,9 +14,9 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="news-notice-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" height="556">
             <el-table-column fixed="left" type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -48,7 +48,7 @@
                   <el-form-item label="标题：" style="width: 100%">
                     <span>{{ props.row.noticeTitle }}</span>
                   </el-form-item>
-                  <el-form-item label="内容："style="width:60%;">
+                  <el-form-item label="内容："style="width:80%;">
                     <span>{{ props.row.noticeContent }}</span>
                   </el-form-item>
                 </el-form>
@@ -183,7 +183,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改公告" :visible.sync="dialogTableVisible" width="800px">
@@ -433,7 +433,8 @@
           }]
         },
         selectTime: [],
-        showImg:false
+        showImg:false,
+        isSubmit:false,
       }
     },
     components: {
@@ -454,9 +455,8 @@
     },
     methods: {
       clickImg(img) {
-        console.log(img)
-        this.showImg = true
-        this.imgSrc = img
+        this.showImg = true;
+        this.imgSrc = img;
       },
       viewImg() {
         this.showImg = false
@@ -516,13 +516,6 @@
         }
         this.$fetch('/api/appNotice/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          // for(let i = res.data.list.length - 1; i >= 0; i--) {
-          //   if(res.data.list[i].isRelease == '1') {
-          //     res.data.list[i].isRelease = '已发布'
-          //   } else {
-          //     res.data.list[i].isRelease = '未发布'
-          //   }
-          // }
           this.tableData = res.data.list
           this.totalCount = res.data.total
         } else {
@@ -535,15 +528,17 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
-        this.imageUrl = ""
+        this.imageUrl = "";
+        this.selectTime=[];
+        this.isSubmit=false;
       },
       addBtn(form) {
         if (this.selectTime && this.selectTime[0]) {
@@ -559,6 +554,9 @@
         this.form.imgUrl = this.imageUrl;
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/appNotice/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false;
@@ -572,6 +570,7 @@
                 type: 'error',
                 message: res.message
               })
+                this.isSubmit=false;
             }
           })
           } else {}
@@ -695,8 +694,6 @@
     text-overflow:ellipsis;
     white-space: nowrap;
   }
-
-
   .red{
     color: #ff4d51;
   }
@@ -706,25 +703,25 @@
   .blue{
     color: #409EFF;
   }
-  .administratormanage-wrap {
+  .news-notice-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .news-notice-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .news-notice-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .news-notice-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .news-notice-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

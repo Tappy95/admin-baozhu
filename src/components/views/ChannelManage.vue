@@ -19,7 +19,7 @@
       </div>
       <div class="channel-manage-table">
         <template>
-          <el-table :data="tableData" max-height="518">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
             <el-table-column fixed="left" width="200"  prop="channelCode" label="渠道标识">
@@ -59,7 +59,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogChannel = false">取 消</el-button>
-            <el-button type="primary" @click="addChannel('formChannel')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addChannel('formChannel')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="添加渠道" :visible.sync="dialogFormVisible" width="800px">
@@ -151,7 +151,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改渠道" :visible.sync="dialogTableVisible" width="800px">
@@ -464,6 +464,7 @@
         isShow: false,
         channelNameList:[],
         showImg:false,
+        isSubmit:false,
       }
     },
     components: {
@@ -563,20 +564,22 @@
         })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       //渠道
       load() {
         this.form={};
         this.dialogFormVisible = true;
         this.imageUrl = "";
+        this.isSubmit=false;
       },
       //渠道名称
       loadChannel() {
         this.formChannel = {};
         this.dialogChannel = true;
+        this.isSubmit=false;
       },
       //调取名称列表
       channelList(){
@@ -591,6 +594,9 @@
       addChannel(formChannel) {
         this.$refs[formChannel].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mChannel/add', this.formChannel).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogChannel = false
@@ -604,6 +610,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}
@@ -611,13 +618,11 @@
       },
       //添加渠道
       addBtn(form) {
-
           //无修改支付权限时
         if (!this.payEdit){
           this.form.openAli =2;
           this.form.openWx =2;
         }
-
         //将加号替换为%2B
         if (this.form.aliPublicKey && this.form.aliPublicKey.indexOf('+')!=-1){
           this.form.aliPublicKey = this.form.aliPublicKey.replace(/\+/g,"%2B");
@@ -626,12 +631,14 @@
         if (this.form.aliPrivateKey && this.form.aliPrivateKey.indexOf('+')!=-1){
           this.form.aliPrivateKey = this.form.aliPrivateKey.replace(/\+/g,"%2B");
         }
-
         if (this.form.channelPushType==1) {
           this.form.content = this.imageUrl
         }
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mChannelInfo/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
@@ -645,6 +652,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}

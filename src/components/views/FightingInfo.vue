@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="fighting-info-wrap">
+    <div class="fighting-info-inner">
+      <div class="fighting-info-header">
         <h3>答题对战/对战记录</h3>
         <hr />
       </div>
@@ -19,9 +19,9 @@
           <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="fighting-info-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" height="506">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column fixed="left" min-width="150px" prop="initiatorName" label="发起人">
@@ -142,25 +142,25 @@
   }
 </script>
 <style type="text/css">
-  .administratormanage-wrap {
+  .fighting-info-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .fighting-info-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .fighting-info-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .fighting-info-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .fighting-info-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

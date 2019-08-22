@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="balance-change-wrap">
+    <div class="balance-change-inner">
+      <div class="balance-change-header">
         <h3>财务流水/交易记录</h3>
         <hr />
       </div>
@@ -13,9 +13,9 @@
           <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="balance-change-table">
         <template>
-          <el-table :data="tableData" height="580">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column fixed="left" prop="mobile"  label="电话">
@@ -404,25 +404,25 @@
   }
 </script>
 <style type="text/css">
-  .administratormanage-wrap {
+  .balance-change-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .balance-change-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .balance-change-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .balance-change-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .balance-change-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

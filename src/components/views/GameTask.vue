@@ -1,8 +1,8 @@
 <template>
-  <div class="bannermanage-wrap">
-    <div class="bannermanage-inner">
-      <div class="bannermanage-header">
-        <h3>运营管理/任务</h3>
+  <div class="game-task-wrap">
+    <div class="game-task-inner">
+      <div class="game-task-header">
+        <h3>运营管理/任务管理</h3>
         <hr />
       </div>
       <div>
@@ -57,9 +57,9 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                  <el-form-item label="排序:"
+                  <el-form-item label="排序:" prop="sort"
                                 :label-width="formLabelWidth">
-                    <el-input min="0" type="number" v-model="form.sort"
+                    <el-input  v-model="form.sort"
                               auto-complete="off"
                               clearable
                               :style="styleObject"></el-input>
@@ -69,7 +69,7 @@
                   <el-form-item label="奖励数量:"
                                 prop="reward"
                                 :label-width="formLabelWidth">
-                    <el-input min="0" type="number" v-model="form.reward"
+                    <el-input  v-model="form.reward"
                               auto-complete="off"
                               clearable
                               :style="styleObject"></el-input>
@@ -170,16 +170,15 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
-      <div class="bannermanage-table">
+      <div class="game-task-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="580">
+                    height="556">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -255,7 +254,7 @@
               <el-col :span="12">
                 <el-form-item label="排序:"
                               :label-width="formLabelWidth">
-                  <el-input min="0" type="number" v-model="formtwo.sort"
+                  <el-input  v-model="formtwo.sort"
                             auto-complete="off"
                             clearable
                             :style="styleObject"></el-input>
@@ -265,7 +264,7 @@
                 <el-form-item label="奖励数量:"
                               prop="reward"
                               :label-width="formLabelWidth">
-                  <el-input min="0" type="number" v-model="formtwo.reward"
+                  <el-input  v-model="formtwo.reward"
                             auto-complete="off"
                             clearable
                             :style="styleObject"></el-input>
@@ -568,20 +567,37 @@
         show: 0,
         activePage: 1,
         detailsPage: 2,
-        imageUrl: '',
         imgUrl:'',
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        form: {
-        },
+        form: {},
         rules: {
           taskName: [
             {required: true, message: '请输入任务名称', trigger: 'blur'}
           ],
           taskType: [{required: true, message: '请选择任务类型', trigger: 'change'}],
           reward: [
-            {required: true, message: '请输入奖励数量', trigger: 'blur'}
+            {required: true, message: '请输入奖励数量', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
+          sort: [
+            {required: true, message: '请输入排序值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           rewardUnit: [{required: true, message: '请选择奖励单位', trigger: 'change'}],
           status: [{required: true, message: '请选择状态', trigger: 'change'}],
@@ -596,7 +612,8 @@
         showImg: false,
         imgSrc: '',
         formInline: {},
-        tableData: []
+        tableData: [],
+        isSubmit:false
       }
     },
     components: {
@@ -806,18 +823,25 @@
         this.taskTypeName = [];
         this.taskTypes='';
         this.queryTaskType();
+        this.isSubmit=false;
       },
       addBtn(form) {
          this.form.taskImg = this.imageUrl;
         this.form.fulfilTaskImg = this.fulfilTaskImg;
         this.$refs.form.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mTaskInfo/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false;
               this.$message({ type: 'success', message: '添加成功！' });
               this.accountList();
-            }
+            }else {
+                this.$message({ type: 'error', message: res.message });
+                this.isSubmit=false;
+              }
           })
           } else {
           }
@@ -895,21 +919,21 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .bannermanage-wrap {
+  .game-task-wrap {
     width: 100%;
   }
-  .bannermanage-inner {
+  .game-task-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .bannermanage-header {
+  .game-task-header {
     margin-bottom: 20px;
   }
-  .bannermanage-header hr {
+  .game-task-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .bannermanage-table {
+  .game-task-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     margin-top: 20px;

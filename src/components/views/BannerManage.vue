@@ -43,6 +43,7 @@
                     <el-select :style="styleObject" v-model="form.position" placeholder="">
                       <el-option label="宝猪抽奖" value="1"></el-option>
                       <el-option label="首页底部" value="2"></el-option>
+                      <el-option label="游戏列表头部" value="3"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
@@ -114,8 +115,7 @@
           <div slot="footer"
             class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-              @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -123,7 +123,7 @@
         <template>
           <el-table :data="tableData"
             style="width: 100%"
-            height="528">
+            max-height="556">
             <el-table-column label="序号"
               type="index"
               :index="indexMethod"
@@ -192,6 +192,7 @@
                   <el-select :style="styleObject" v-model="formtwo.position" placeholder="">
                     <el-option label="宝猪抽奖" :value="1"></el-option>
                     <el-option label="首页底部" :value="2"></el-option>
+                    <el-option label="游戏列表头部" :value="3"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -341,7 +342,8 @@ export default {
       showImg: false,
       imgSrc: '',
       formInline: {},
-      tableData: []
+      tableData: [],
+      isSubmit:false
     }
   },
   components: {
@@ -387,8 +389,8 @@ export default {
     })
     },
     clickImg(e) {
-      this.showImg = true
-      this.imgSrc = e.currentTarget.src
+      this.showImg = true;
+      this.imgSrc = e.currentTarget.src;
     },
     viewImg() {
       this.showImg = false
@@ -422,6 +424,8 @@ export default {
                res.data.list[i].position ="宝猪抽奖"
              }else if (res.data.list[i].position ==2){
                res.data.list[i].position ="首页底部"
+             } else if (res.data.list[i].position ==3){
+               res.data.list[i].position ="游戏列表头部"
              }
             if(res.data.list[i].status ==1){
                res.data.list[i].status ="已启用"
@@ -442,32 +446,41 @@ export default {
       })
     },
     search() {
-      this.currentPage = 1
-      this.pageSize = 10
-      this.accountList()
+      this.currentPage = 1;
+      this.pageSize = 10;
+      this.accountList();
     },
     load() {
       this.dialogFormVisible = true;
       this.form ={};
       this.formInline = {};
       this.imageUrl='';
+      this.isSubmit = false;
     },
     addBtn(form) {
       this.form.imageUrl=this.imageUrl
       if (this.form.startTime) {
         this.form.startTime = new Date(this.form.startTime).getTime();
       }
-
       if (this.form.endTime) {
         this.form.endTime = new Date(this.form.endTime).getTime();
       }
       this.$refs[form].validate(valid => {
         if (valid) {
+          this.$nextTick(function () {
+            this.isSubmit=true;
+          })
           this.$post('/api/pBanner/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
             this.dialogFormVisible = false
               this.$message({ type: 'success', message: '添加成功！' })
               this.accountList()
+            }else {
+              this.$message({
+                type: 'error',
+                message: res.message
+              })
+              this.isSubmit=false;
             }
           })
         } else {

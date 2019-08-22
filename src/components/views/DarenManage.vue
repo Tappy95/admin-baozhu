@@ -97,7 +97,7 @@
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="详情" :visible.sync="dialogTableDetail" width="1200px">
@@ -261,7 +261,8 @@
         fullscreenLoading:false,
         formDetail:{},
         selectTimeDetail:'',
-        rewardSum:''
+        rewardSum:'',
+        isSubmit:false
       }
     },
     filters: {
@@ -376,6 +377,7 @@
         this.dialogFormVisible = true;
       },
       addTap(id) {
+        this.isSubmit =false;
         this.dialogTableVisible = true;
       },
       getOne(userId){
@@ -413,7 +415,7 @@
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: '已取消操作'
             })
           })
       },
@@ -425,7 +427,7 @@
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
               type: 'success',
-              message: '操作成功！'
+              message: '取消达人身份成功！'
             })
             this.accountList()
           } else {
@@ -439,6 +441,9 @@
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/userInfo/setDR', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogTableVisible = false
@@ -452,6 +457,7 @@
                   type: 'error',
                   message: res.message
                 })
+                this.isSubmit=false;
               }
             })
           } else {}

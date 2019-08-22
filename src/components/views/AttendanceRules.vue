@@ -1,8 +1,8 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
-        <h3>来访礼/来访礼规则</h3>
+  <div class="attendance-rules-wrap">
+    <div class="attendance-rules-inner">
+      <div class="attendance-rules-header">
+        <h3>每日红包/每日红包规则</h3>
         <hr />
       </div>
       <div>
@@ -14,17 +14,15 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="attendance-rules-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column prop="ruleName" label="规则名称">
             </el-table-column>
-
             <el-table-column prop="stickTime" label="连续签到天数">
             </el-table-column>
-
             <el-table-column prop="score" label="奖励金币">
             </el-table-column>
             <el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
@@ -42,16 +40,16 @@
               </el-input>
             </el-form-item>
             <el-form-item label="连续签到天数" prop="stickTime" :label-width="formLabelWidth">
-              <el-input type="number" min="0" v-model="form.stickTime" auto-complete="off" style="width: 300px" clearable></el-input>
+              <el-input  v-model="form.stickTime" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
 
             <el-form-item label="奖励金币" prop="score" :label-width="formLabelWidth">
-              <el-input  type="number" min="0" v-model="form.score" auto-complete="off" style="width: 300px" clearable></el-input>
+              <el-input  v-model="form.score" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
 
@@ -62,11 +60,11 @@
             </el-form-item>
 
             <el-form-item label="连续签到天数" :label-width="formLabelWidth">
-              <el-input type="number" min="0" v-model="formtwo.stickTime" auto-complete="off" style="width: 300px" clearable></el-input>
+              <el-input  v-model="formtwo.stickTime" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
 
             <el-form-item label="奖励金币" :label-width="formLabelWidth">
-              <el-input type="number" min="0" v-model="formtwo.score" auto-complete="off" style="width: 300px" clearable></el-input>
+              <el-input  v-model="formtwo.score" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -96,32 +94,31 @@
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        form: {
-          realname: '',
-          mobile: '',
-          password: '',
-          status: '1'
-        },
-        roles: {
-          id: '',
-          realname: ''
-        },
+        form: {},
         rules: {
           ruleName: [{
             required: true,
             message: '请输入规则名',
             trigger: 'blur'
           }],
-          stickTime: [{
-            required: true,
-            message: '请输入连续签到天数',
-            trigger: 'blur'
-          }],
-          score: [{
-            required: true,
-            message: '请输入奖励金币',
-            trigger: 'change'
-          }]
+          stickTime: [{required: true, message: '请输入连续签到天数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
+          score: [{required: true, message: '请输入奖励金币', trigger: 'change'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}]
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -129,11 +126,7 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        isSubmit:false,
       }
     },
     created() {
@@ -212,10 +205,14 @@
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit = false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
         if(valid) {
+          this.$nextTick(function () {
+            this.isSubmit=true;
+          })
           this.$post('/api/mSignRule/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
             this.dialogFormVisible = false
@@ -229,6 +226,7 @@
               type: 'error',
               message: res.message
             })
+           this.isSubmit=false;
           }
         })
         } else {}
@@ -318,25 +316,25 @@
     padding-right: 0;
   }
 
-  .administratormanage-wrap {
+  .attendance-rules-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .attendance-rules-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .attendance-rules-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .attendance-rules-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .attendance-rules-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

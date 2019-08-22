@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="fighting-rules-wrap">
+    <div class="fighting-rules-inner">
+      <div class="fighting-rules-header">
         <h3>答题对战/答题规则</h3>
         <hr />
       </div>
@@ -14,9 +14,9 @@
           <el-button  type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="fighting-rules-table">
         <template>
-          <el-table :data="tableData" height="528">
+          <el-table :data="tableData" height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column fixed="left" min-width="150" prop="typeName" label="类型名称">
@@ -72,7 +72,7 @@
 
               <el-col :span="12">
                 <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
-                  <el-input :style="styleObject" v-model="form.questionNum" min="0" type="number" auto-complete="off"  clearable>
+                  <el-input :style="styleObject" v-model="form.questionNum"  auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -86,7 +86,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改规则" :visible.sync="dialogTableVisible" width="800px">
@@ -100,14 +100,13 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="奖励类型" :label-width="formLabelWidth" prop="rewardType">
-                  <el-select :style="styleObject" v-model="formtwo.rewardType" placeholder="">
+                <el-form-item label="奖励类型" :label-width="formLabelWidth">
+                  <el-select  :style="styleObject" v-model="formtwo.rewardType" placeholder="">
                     <el-option label="人民币" :value="0"></el-option>
                     <el-option label="金币" :value="1"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="是否废弃" :label-width="formLabelWidth" prop="isDisable">
                   <el-select :style="styleObject" v-model="formtwo.isDisable" placeholder="">
@@ -119,7 +118,7 @@
 
               <el-col :span="12">
                 <el-form-item label="需完成问题数" :label-width="formLabelWidth" prop="questionNum">
-                  <el-input :style="styleObject" v-model="formtwo.questionNum" min="0" type="number" auto-complete="off"  clearable>
+                  <el-input :style="styleObject" v-model="formtwo.questionNum" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -225,16 +224,7 @@
         dialogFormVisible: false,
         dialogTableDetail:false,
         formtwoInfo:{},
-        form: {
-          noticeTitle: '',
-          noticeContent: '',
-          password: '',
-          isRelease: '1'
-        },
-        roles: {
-          id: '',
-          realname: ''
-        },
+        form: {},
         rules: {
           typeName: [{
             required: true,
@@ -246,11 +236,16 @@
             message: '请输入对战规则',
             trigger: 'blur'
           }],
-          questionNum: [{
-            required: true,
-            message: '请输入需完成问题数',
-            trigger: 'blur'
-          }],
+          questionNum: [{required: true, message: '请输入需完成问题数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
           isDisable: [{
             required: true,
             message: '请选择是否废弃',
@@ -268,17 +263,13 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        isSubmit:false,//阻止重复提交表单
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -354,31 +345,33 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true
+            })
             this.$post('/api/mFightingType/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-              this.dialogFormVisible = false
-              this.$message({
-                type: 'success',
-                message: '添加成功！'
-              })
-              this.accountList()
+                this.dialogFormVisible = false
+                this.$message({type: 'success', message: '添加成功！'})
+                this.accountList();
             } else {
               this.$message({
                 type: 'error',
                 message: res.message
               })
+             this.isSubmit=false
             }
           })
           } else {}
@@ -426,9 +419,9 @@
           typeId: id
         }).then(res => {
         if ((res.statusCode+"").startsWith("2")) {
-          if(res.data.rewardType==0){
-            res.data.rewardType=-1
-          }
+          // if(res.data.rewardType==0){
+          //   res.data.rewardType=-1
+          // }
           this.formtwo = res.data
         }
       })
@@ -465,9 +458,6 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
   }
 </script>
@@ -475,25 +465,25 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .administratormanage-wrap {
+  .fighting-rules-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .fighting-rules-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .fighting-rules-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .fighting-rules-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .fighting-rules-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

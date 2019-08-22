@@ -1,7 +1,7 @@
 <template>
-  <div class="userloanInformation-wrap">
-    <div class="userloanInformation-inner">
-      <div class="userloanInformation-header">
+  <div class="active-manage-wrap">
+    <div class="active-manage-inner">
+      <div class="active-manage-header">
         <h3>系统配置/活动管理</h3>
         <hr />
       </div>
@@ -9,7 +9,7 @@
         <el-form :inline="true"
                  :model="formInline"
                  class="demo-form-inline">
-          <el-form-item label="活动名称">
+          <el-form-item label="活动名称:">
             <el-input v-model="formInline.activityName"
                       placeholder="请输入活动名称"
                       clearable></el-input>
@@ -20,11 +20,11 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="userloanInformation-table">
+      <div class="active-manage-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="528">
+                    max-height="528">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"
@@ -33,15 +33,12 @@
             <el-table-column width="150" prop="activityName" fixed="left"
                              label="活动名称">
             </el-table-column>
-
             <el-table-column prop="activityType"
                              label="活动类型">
             </el-table-column>
-
             <el-table-column prop="startTime"
                              label="打卡开始时间"
-                             width="150px"
-            >
+                             width="150px">
             </el-table-column>
 
             <el-table-column prop="stopTime"
@@ -49,12 +46,10 @@
                              width="150px"
                             >
             </el-table-column>
-
             <el-table-column prop="isCycle"
                              label="是否循环"
                              >
             </el-table-column>
-
             <el-table-column prop="periodic"
                              label="循环周期值"
                              width="100px"
@@ -65,35 +60,25 @@
                              label="活动开始时间"
                              width="170px">
             </el-table-column>
-
             <el-table-column :formatter="dateFormat" prop="endTime"
                              label="活动结束时间"
                              width="170px">
             </el-table-column>
-
             <el-table-column  prop="settlementTime"
                               label="结算时间"
                               width="150px">
           </el-table-column>
-
             <el-table-column  prop="baseAllocationTmount"
                               label="瓜分金额初始值"
                               width="150px">
             </el-table-column>
-
             <el-table-column fixed="right"
                              label="操作"
                              :width="optionW">
               <template slot-scope="scope">
-                <el-button  type="info" plain
-                           size="mini"
-                           @click="getInfo(scope.row.actId,1)">详情</el-button>
-                <el-button  type="warning" plain
-                           size="mini"
-                           @click="Delete(scope.row.actId)" v-if="del">删除</el-button>
-                <el-button  type="success" plain
-                           size="mini"
-                           @click="getInfo(scope.row.actId,2)" v-if="upd">修改</el-button>
+                <el-button type="info" plain size="mini" @click="getInfo(scope.row.actId,1)">详情</el-button>
+                <el-button  type="warning" plain size="mini" @click="Delete(scope.row.actId)" v-if="del">删除</el-button>
+                <el-button  type="success" plain size="mini" @click="getInfo(scope.row.actId,2)" v-if="upd">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -106,29 +91,24 @@
                   <el-input :value="message.activityName" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="活动类型:"  :label-width="formLabelWidth">
                   <el-select v-model="message.activityType" :disabled="true" placeholder="" >
                     <el-option label="打卡" :value="1"></el-option>
                     <el-option label="其他" :value="2"></el-option>
                   </el-select>
-
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="打卡开始时间:"  :label-width="formLabelWidth">
                   <el-input :value="message.startTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="打卡结束时间:" :label-width="formLabelWidth">
                   <el-input :value="message.stopTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="是否循环:" :label-width="formLabelWidth">
                   <el-select v-model="message.isCycle":disabled="true" placeholder=""   style="width: 170px">
@@ -137,43 +117,36 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col v-if="loopChangeshow" :span="10" style="margin-bottom: 10px">
                 <el-form-item label="循环周期:" :label-width="formLabelWidth">
                   <el-input :value="message.periodicUnit" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="活动开始时间:" :label-width="formLabelWidth">
                   <el-input :value="message.begainTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="活动结束时间:" :label-width="formLabelWidth">
                   <el-input :value="message.endTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="结算时间:" :label-width="formLabelWidth">
                   <el-input :value="message.settlementTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="10" style="margin-bottom: 10px">
                 <el-form-item label="瓜分金额初始值(￥):" label-width="150px">
                   <el-input :value="message.baseAllocationTmount" :disabled="true" auto-complete="off" style="" clearable></el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="24" style="margin-bottom: 10px">
                 <el-form-item  label="活动规则描述" prop="memo" :label-width="formLabelWidth">
                   <el-input style="width: 500px" type="textarea" :span="18" :disabled="true"  :autosize="{ minRows: 4, maxRows: 12}" v-model="message.memo" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -185,13 +158,13 @@
           <el-form :model="formtwo" :rules="rules" ref="formtwo" :label-position="labelPosition" label-width="140px">
             <el-row>
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="活动名称" :label-width="formLabelWidth" prop="activityName">
+                <el-form-item label="活动名称:" :label-width="formLabelWidth" prop="activityName">
                   <el-input  v-model="formtwo.activityName" auto-complete="off" style="width: 220px"  clearable></el-input>
                 </el-form-item>
               </el-col>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="活动类型" :label-width="formLabelWidth" prop="activityType">
+                <el-form-item label="活动类型:" :label-width="formLabelWidth" prop="activityType">
                   <el-select v-model="formtwo.activityType" placeholder="" style="width: 220px">
                     <el-option label="打卡" :value="1"></el-option>
                     <el-option label="其他" :value="2"></el-option>
@@ -200,7 +173,7 @@
               </el-col>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="打卡开始时间" :label-width="formLabelWidth" prop="startTime">
+                <el-form-item label="打卡开始时间:" :label-width="formLabelWidth" prop="startTime">
                   <el-time-picker
                     v-model="formtwo.startTime"
                     :picker-options="{
@@ -212,7 +185,7 @@
               </el-col>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="打卡结束时间" :label-width="formLabelWidth" prop="stopTime">
+                <el-form-item label="打卡结束时间:" :label-width="formLabelWidth" prop="stopTime">
                   <el-time-picker
                     v-model="formtwo.stopTime"
                     ::picker-options="{
@@ -225,7 +198,7 @@
 
               <div style="width: 100%;float: left">
                 <el-col :span="10" style="margin-bottom: 10px">
-                  <el-form-item label="是否循环" :label-width="formLabelWidth" prop="isCycle">
+                  <el-form-item label="是否循环:" :label-width="formLabelWidth" prop="isCycle">
                     <el-select v-model="formtwo.isCycle" placeholder=""  @change="loopChange(formtwo.isCycle)" style="width: 220px">
                       <el-option label="是" :value="1"></el-option>
                       <el-option label="否" :value="2"></el-option>
@@ -236,13 +209,13 @@
 
               <div v-if="loopChangeTrue">
                 <el-col :span="11" style="margin-bottom: 10px">
-                  <el-form-item label="循环周期值" :label-width="formLabelWidth" prop="periodic">
-                    <el-input min="0" type="number" v-model="formtwo.periodic" auto-complete="off" style="width: 220px" clearable>
+                  <el-form-item label="循环周期值:" :label-width="formLabelWidth" prop="periodic">
+                    <el-input v-model="formtwo.periodic" auto-complete="off" style="width: 220px" clearable>
                     </el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="11" style="margin-bottom: 10px">
-                  <el-form-item label="循环周期单位" :label-width="formLabelWidth" prop="periodicUnit">
+                  <el-form-item label="循环周期单位:" :label-width="formLabelWidth" prop="periodicUnit">
                     <el-select v-model="formtwo.periodicUnit" placeholder="" style="width: 220px">
                       <el-option label="天" :value="1"></el-option>
                       <el-option label="周" :value="2"></el-option>
@@ -254,7 +227,7 @@
               </div>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="活动开始时间" :label-width="formLabelWidth" prop="begainTime">
+                <el-form-item label="活动开始时间:" :label-width="formLabelWidth" prop="begainTime">
                   <el-date-picker
                     v-model="formtwo.begainTime"
                     type="datetime"
@@ -264,7 +237,7 @@
               </el-col>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="活动结束时间" :label-width="formLabelWidth" prop="endTime">
+                <el-form-item label="活动结束时间:" :label-width="formLabelWidth" prop="endTime">
                   <el-date-picker
                     v-model="formtwo.endTime"
                     type="datetime"
@@ -274,7 +247,7 @@
               </el-col>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="结算时间" :label-width="formLabelWidth" prop="settlementTime">
+                <el-form-item label="结算时间:" :label-width="formLabelWidth" prop="settlementTime">
                   <el-time-picker
                     v-model="formtwo.settlementTime"
                     :picker-options="{
@@ -287,15 +260,15 @@
 
               <div style="width: 100%;float: left">
                 <el-col :span="11" style="margin-bottom: 10px">
-                  <el-form-item label="瓜分金额初始值(￥)" label-width="150px" prop="baseAllocationTmount">
-                    <el-input min="0" type="number" v-model="formtwo.baseAllocationTmount" auto-complete="off" style="width: 220px" clearable>
+                  <el-form-item label="瓜分金额初始值(￥):" label-width="150px" prop="baseAllocationTmount">
+                    <el-input  v-model="formtwo.baseAllocationTmount" auto-complete="off" style="width: 210px" clearable>
                     </el-input>
                   </el-form-item>
                 </el-col>
               </div>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="是否启用" :label-width="formLabelWidth" prop="isDisable">
+                <el-form-item label="是否启用:" :label-width="formLabelWidth" prop="isDisable">
                   <el-select v-model="formtwo.isDisable" placeholder=""  style="width: 220px">
                     <el-option label="启用" :value="1"></el-option>
                     <el-option label="禁用" :value="2"></el-option>
@@ -304,7 +277,7 @@
               </el-col>
 
               <el-col :span="24" style="margin-bottom: 10px">
-                <el-form-item  label="活动规则描述" prop="memo" :label-width="formLabelWidth">
+                <el-form-item  label="活动规则描述:" prop="memo" :label-width="formLabelWidth">
                   <el-input style="width: 500px" type="textarea" :span="18" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwo.memo" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
@@ -321,13 +294,13 @@
           <el-form :model="form" :rules="rules" ref="form" :label-position="labelPosition" label-width="140px">
             <el-row>
                   <el-col :span="11" style="margin-bottom: 10px">
-                     <el-form-item label="活动名称" :label-width="formLabelWidth" prop="activityName">
+                     <el-form-item label="活动名称:" :label-width="formLabelWidth" prop="activityName">
                         <el-input  v-model="form.activityName" auto-complete="off" style="width: 220px"  clearable></el-input>
                    </el-form-item>
                   </el-col>
 
                    <el-col :span="11" style="margin-bottom: 10px">
-                     <el-form-item label="活动类型" :label-width="formLabelWidth" prop="activityType">
+                     <el-form-item label="活动类型:" :label-width="formLabelWidth" prop="activityType">
                        <el-select v-model="form.activityType" placeholder="" style="width: 220px">
                          <el-option label="打卡" value="1"></el-option>
                          <el-option label="其他" value="2"></el-option>
@@ -336,7 +309,7 @@
                    </el-col>
 
                     <el-col :span="11" style="margin-bottom: 10px">
-                      <el-form-item label="打卡开始时间" :label-width="formLabelWidth" prop="startTime">
+                      <el-form-item label="打卡开始时间:" :label-width="formLabelWidth" prop="startTime">
                         <el-time-picker
                           v-model="form.startTime"
                           :picker-options="{
@@ -348,7 +321,7 @@
                     </el-col>
 
                     <el-col :span="11" style="margin-bottom: 10px">
-                      <el-form-item label="打卡结束时间" :label-width="formLabelWidth" prop="stopTime">
+                      <el-form-item label="打卡结束时间:" :label-width="formLabelWidth" prop="stopTime">
                         <el-time-picker
                           v-model="form.stopTime"
                           ::picker-options="{
@@ -361,8 +334,7 @@
 
                     <div style="width: 100%;float: left">
                         <el-col :span="10" style="margin-bottom: 10px">
-                          <el-form-item label="是否循环" :label-width="formLabelWidth" prop="isCycle">
-
+                          <el-form-item label="是否循环:" :label-width="formLabelWidth" prop="isCycle">
                             <el-select v-model="form.isCycle" placeholder=""  @change="loopChange(form.isCycle)" style="width: 220px">
                               <el-option label="是" value="1"></el-option>
                               <el-option label="否" value="2"></el-option>
@@ -373,14 +345,14 @@
 
               <div v-if="loopChangeTrue">
                     <el-col :span="11" style="margin-bottom: 10px">
-                      <el-form-item label="循环周期值" :label-width="formLabelWidth" prop="periodic">
-                        <el-input min="0" type="number" v-model="form.periodic" auto-complete="off" style="width: 220px" clearable>
+                      <el-form-item label="循环周期值:" :label-width="formLabelWidth" prop="periodic">
+                        <el-input v-model="form.periodic" auto-complete="off" style="width: 220px" clearable>
                         </el-input>
                       </el-form-item>
                     </el-col>
                     <el-col :span="11" style="margin-bottom: 10px">
                       <!--1-天 2-周 3-月  4-年)-->
-                      <el-form-item label="循环周期单位" :label-width="formLabelWidth" prop="periodicUnit">
+                      <el-form-item label="循环周期单位:" :label-width="formLabelWidth" prop="periodicUnit">
                         <el-select v-model="form.periodicUnit" placeholder="" style="width: 220px">
                           <el-option label="天" value="1"></el-option>
                           <el-option label="周" value="2"></el-option>
@@ -392,7 +364,7 @@
               </div>
 
                     <el-col :span="11" style="margin-bottom: 10px">
-                      <el-form-item label="活动开始时间" :label-width="formLabelWidth" prop="begainTime">
+                      <el-form-item label="活动开始时间:" :label-width="formLabelWidth" prop="begainTime">
                         <el-date-picker
                           v-model="form.begainTime"
                           type="datetime"
@@ -402,7 +374,7 @@
                     </el-col>
 
                   <el-col :span="11" style="margin-bottom: 10px">
-                    <el-form-item label="活动结束时间" :label-width="formLabelWidth" prop="endTime">
+                    <el-form-item label="活动结束时间:" :label-width="formLabelWidth" prop="endTime">
                       <el-date-picker
                         v-model="form.endTime"
                         type="datetime"
@@ -412,7 +384,7 @@
                   </el-col>
 
                   <el-col :span="11" style="margin-bottom: 10px">
-                    <el-form-item label="结算时间" :label-width="formLabelWidth" prop="settlementTime">
+                    <el-form-item label="结算时间:" :label-width="formLabelWidth" prop="settlementTime">
                       <el-time-picker
                         v-model="form.settlementTime"
                         :picker-options="{
@@ -425,15 +397,15 @@
 
               <div style="width: 100%;float: left">
                   <el-col :span="11" style="margin-bottom: 10px">
-                    <el-form-item label="瓜分金额初始值(￥)" label-width="150px" prop="baseAllocationTmount">
-                      <el-input min="0" type="number" v-model="form.baseAllocationTmount" auto-complete="off" style="width: 220px" clearable>
+                    <el-form-item label="瓜分金额初始值(￥):" label-width="150px" prop="baseAllocationTmount">
+                      <el-input v-model="form.baseAllocationTmount" auto-complete="off" style="width: 210px" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
               </div>
 
               <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="是否启用" :label-width="formLabelWidth" prop="isDisable">
+                <el-form-item label="是否启用:" :label-width="formLabelWidth" prop="isDisable">
                   <el-select v-model="form.isDisable" placeholder=""  style="width: 220px">
                     <el-option label="启用" value="1"></el-option>
                     <el-option label="禁用" value="2"></el-option>
@@ -442,7 +414,7 @@
               </el-col>
 
               <el-col :span="24" style="margin-bottom: 10px">
-                <el-form-item  label="活动规则描述" prop="memo" :label-width="formLabelWidth">
+                <el-form-item  label="活动规则描述:" prop="memo" :label-width="formLabelWidth">
                   <el-input style="width: 500px" type="textarea" :span="18" :autosize="{ minRows: 4, maxRows: 12}" v-model="form.memo" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
@@ -451,7 +423,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         </el-dialog>
@@ -516,11 +488,17 @@
             message: '请选择是否循环',
             trigger: 'change'
           }],
-          periodic: [{
-            required: true,
-            message: '请输入循环周期值',
-            trigger: 'blur'
-          }],
+          periodic: [
+            {required: true, message: '请输入循环周期值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
           periodicUnit: [{
             required: true,
             message: '请选择循环周期单位',
@@ -551,11 +529,17 @@
             message: '请选择是否启用',
             trigger: 'change'
           }],
-          baseAllocationTmount: [{
-            required: true,
-            message: '请输入瓜分金额初始值',
-            trigger: 'blur'
-          }],
+          baseAllocationTmount: [
+            {required: true, message: '请输入瓜分金额初始值', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
         },
         form: {
           isAuditing: '',
@@ -573,7 +557,8 @@
         totalCount: 0,
         formInline: {},
         tableData:[],
-        isInfo: true
+        isInfo: true,
+        isSubmit:false,
       }
     },
     created() {
@@ -613,14 +598,15 @@
       },
 
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.dialogFormVisible = true;
         this.formInline={};
+        this.isSubmit=false;
       },
       indexMethod(index) {
         return index * 1 + 1
@@ -632,9 +618,7 @@
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
-      toggle: function() {
-        this.isShow = !this.isShow
-      },
+
       Delete(id) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -701,6 +685,9 @@
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.form.begainTime = new Date(this.form.begainTime).getTime();
             this.form.endTime = new Date(this.form.endTime).getTime();
             this.$post('/api/mActivityInfo/add', this.form).then(res => {
@@ -716,6 +703,7 @@
                 type: 'error',
                 message: res.message
               })
+                this.isSubmit=false;
             }
           })
           } else {}
@@ -802,21 +790,21 @@
   .el-form-item .el-form-item {
     margin-bottom: 10px;
   }
-  .userloanInformation-wrap {
+  .active-manage-wrap {
     width: 100%;
   }
-  .userloanInformation-inner {
+  .active-manage-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .userloanInformation-header {
+  .active-manage-header {
     margin-bottom: 20px;
   }
-  .userloanInformation-header hr {
+  .active-manage-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .userloanInformation-table {
+  .active-manage-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

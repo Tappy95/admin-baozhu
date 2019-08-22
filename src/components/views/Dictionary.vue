@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="dictionary-wrap">
+    <div class="dictionary-inner">
+      <div class="dictionary-header">
         <h3>系统配置/字典管理</h3>
         <hr />
       </div>
@@ -14,54 +14,53 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="dictionary-table">
         <template>
-          <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+          <el-table :data="tableData" max-height="556">
+            <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column prop="dicName" label="字典名称">
+            <el-table-column min-width="150" prop="dicName" label="字典名称">
             </el-table-column>
-            <el-table-column prop="dicValue" label="字典值">
+            <el-table-column min-width="150" prop="dicValue" label="字典值">
             </el-table-column>
-
-            <el-table-column prop="dicRemark" label="字典描述">
+            <el-table-column min-width="150" prop="dicRemark" label="字典描述">
             </el-table-column>
-
-            <el-table-column prop="valueType" label="字典类型">
+            <el-table-column min-width="120" prop="valueType" label="字典类型">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.valueType==1">文本</span>
+                <span class="red" v-if="scope.row.valueType==2">图片</span>
+              </template>
             </el-table-column>
-
-            <el-table-column prop="modifyTime" label="修改时间" :formatter="dateFormat">
+            <el-table-column width="120" prop="status" label="状态">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.status==1">正常</span>
+                <span class="red" v-if="scope.row.status==2">已禁用</span>
+                <span class="zi" v-if="scope.row.status==3">已删除</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态">
+            <el-table-column width="170" prop="modifyTime" label="修改时间" :formatter="dateFormat">
             </el-table-column>
-
             <el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW" >
               <template slot-scope="scope">
-                <el-button type="warning" plain v-if="scope.row.status!='已删除' && del" size="mini" @click="Delete(scope.row.id)">删除</el-button>
+                <el-button type="warning" plain v-if="scope.row.status!=3 && del" size="mini" @click="Delete(scope.row.id)">删除</el-button>
                 <el-button type="success" plain @click="getInfo(scope.row.id)" v-if="upd" size="mini">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
         </template>
-
         <el-dialog title="添加字典" :visible.sync="dialogFormVisible" width="600px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="字典名称:" :label-width="formLabelWidth"  prop="dicName">
               <el-input v-model="form.dicName" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
-
             <el-form-item v-if="typeText" label="字典值:" prop="dicValue" :label-width="formLabelWidth">
               <el-input v-model="form.dicValue"  auto-complete="off" clearable></el-input>
             </el-form-item>
-
             <el-form-item label="字典描述" prop="dicRemark" :label-width="formLabelWidth">
               <el-input  :autosize="{ minRows: 4, maxRows: 6}" class="text_area" type="textarea"   v-model="form.dicRemark" auto-complete="off" clearable></el-input>
             </el-form-item>
-
-            <el-form-item v-if="typeImg" label="url地址"
-                                         prop="imageUrl"
-                                         :label-width="formLabelWidth">
+            <el-form-item v-if="typeImg" label="url地址" prop="imageUrl" :label-width="formLabelWidth">
             <el-upload class="bannerAvatar-uploader"
                        action="/api/upload"
                        :data="uploadData"
@@ -75,14 +74,12 @@
                  class="el-icon-plus bannerAvatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
-
             <el-form-item label="字典类型:" :label-width="formLabelWidth" prop="valueType">
               <el-select v-model="form.valueType" placeholder="" @change="typeChange(form.valueType)">
                 <el-option label="文本" value="1"></el-option>
                 <el-option label="图片" value="2"></el-option>
               </el-select>
             </el-form-item>
-
             <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
               <el-select v-model="form.status" placeholder="" >
                 <el-option label="启用" value="1"></el-option>
@@ -92,7 +89,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改字典" :visible.sync="dialogTableVisible" width="600px">
@@ -174,9 +171,6 @@
         formtwo: {},
         dialogFormVisible: false,
         form: {
-          realname: '',
-          mobile: '',
-          password: '',
           status: '1'
         },
         rules: {
@@ -217,18 +211,14 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
-        aa:''
+        aa:'',
+        isSubmit:false,
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
       this.uploadData={
         token:getSession("token")
       }
@@ -268,7 +258,6 @@
         this.imageUrl=res.data
       },
       beforeAvatarUpload(file) {
-
       },
       indexMethod(index) {
         return index * 1 + 1
@@ -282,11 +271,11 @@
       },
       typeChange(types){
         if(types==1){
-          this.typeText=true
-          this.typeImg=false
+          this.typeText=true;
+          this.typeImg=false;
         }else{
-          this.typeText=false
-          this.typeImg=true
+          this.typeText=false;
+          this.typeImg=true;
         }
       },
       accountList() {
@@ -295,25 +284,10 @@
           pageSize: this.pageSize,
           dicName: this.formInline.dicName
         }
-
         this.$fetch('/api/pDictionary/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].status == '2') {
-              res.data.list[i].status = '禁用'
-            }else if(res.data.list[i].status == '1') {
-              res.data.list[i].status = '正常'
-            }else {
-              res.data.list[i].status = '已删除'
-            }
-            if(res.data.list[i].valueType == '1'){
-              res.data.list[i].valueType="文本"
-            }else{
-              res.data.list[i].valueType="图片"
-            }
-          }
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
+          this.tableData = res.data.list;
+          this.totalCount = res.data.total;
 
         } else {
           this.$message({
@@ -325,9 +299,9 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.typeImg=false;
@@ -336,17 +310,21 @@
         this.imageUrl = '';
         this.dialogFormVisible = true;
         this.formInline = {};
+        this.isSubmit= false;
       },
       addBtn(form) {
         if(this.form.valueType==2){
-          this.form.dicValue=this.imageUrl
-          this.form.imageUrl=this.imageUrl
+          this.form.dicValue=this.imageUrl;
+          this.form.imageUrl=this.imageUrl;
         }
         this.$refs[form].validate(valid => {
         if(valid) {
+          this.$nextTick(function () {
+            this.isSubmit=true;
+          })
           this.$post('/api/pDictionary/add', this.form).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-            this.dialogFormVisible = false
+            this.dialogFormVisible = false;
             this.$message({
               type: 'success',
               message: '添加成功！'
@@ -357,6 +335,7 @@
               type: 'error',
               message: res.message
             })
+              this.isSubmit=false;
           }
         })
         } else {}
@@ -477,25 +456,25 @@
   .text_area{
     padding-right: 30px;
   }
-  .administratormanage-wrap {
+  .dictionary-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .dictionary-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .dictionary-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .dictionary-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .dictionary-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

@@ -24,23 +24,23 @@
         <template>
           <el-table :data="tableData"
             style="width: 100%"
-            height="528">
+            max-height="556">
             <el-table-column prop="id"
               label="序号"
               type="index"
               :index="indexMethod"
               width='100'>
             </el-table-column>
-            <el-table-column prop="roleName"
+            <el-table-column min-width="150" prop="roleName"
               label="角色名称">
             </el-table-column>
-            <el-table-column prop="remark"
+            <el-table-column min-width="200" prop="remark"
               label="角色说明">
             </el-table-column>
-            <el-table-column prop="createTime"
+            <el-table-column width="170" prop="createTime"
               label="创建时间" :formatter="dateFormat">
             </el-table-column>
-            <el-table-column prop="status"
+            <el-table-column prop="status" width="120"
               label="状态">
             </el-table-column>
             <el-table-column fixed="right"
@@ -56,39 +56,32 @@
         </template>
         <el-dialog width="700px" title="修改权限管理"
           :visible.sync="dialogTableVisible">
-          <el-form :inline="true"
-            :model="updateForm"
-            :rules="rules"
-            ref="formtwo"
-            class="demo-form-inline">
+          <el-form label-position="right"  :model="updateForm" :rules="rules" ref="formtwo">
             <el-row>
-              <el-col :span="12" style="margin-bottom: 10px">
+              <el-col :span="24" >
                 <el-form-item label="角色名称"
-                              prop="roleName">
+                              prop="roleName" label-width="150px">
                   <el-input v-model="updateForm.roleName"
                             auto-complete="off"
-                            clearable
-                            style="width: 180px">
+                            clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
+              <el-col :span="24" >
                 <el-form-item label="角色说明"
-                              prop="remark">
+                              prop="remark" label-width="150px">
                   <el-input v-model="updateForm.remark"
                             auto-complete="off"
-                            clearable
-                            style="width: 180px">
+                            clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
+              <el-col :span="12" >
                 <el-form-item label="状态"
                               style=""
-                              prop="status">
+                              prop="status" label-width="150px">
                   <el-select v-model="updateForm.status"
-                             placeholder=""
-                             style="width: 180px;margin-left: 30px"">
+                             placeholder="">
                     <el-option label="删除"
                                :value="0">
                     </el-option>
@@ -104,7 +97,7 @@
             </el-row>
             <el-form-item label="权限"
               style=""
-              prop="status">
+              prop="status" label-width="150px">
               <el-input v-model="updateForm.rights"
                 auto-complete="off"
                 style="display: none;	">
@@ -131,36 +124,31 @@
         </el-dialog>
         <el-dialog title="添加角色管理"
                    :visible.sync="dialogFormVisible" width="700px">
-          <el-form :model="form"
-                   :rules="rules"
-                   ref="form" label-position="left">
+          <el-form label-position="right" :model="form" :rules="rules" ref="form" >
             <el-row>
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="角色名称"
+              <el-col :span="24">
+                <el-form-item label="角色名称:" label-width="150px"
                               prop="roleName">
                   <el-input v-model="form.roleName"
                             auto-complete="off"
-                            clearable
-                            style="width: 180px"></el-input>
+                            clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="11" style="margin-bottom: 10px">
-                <el-form-item label="角色说明"
+              <el-col :span="24" >
+                <el-form-item label="角色说明:" label-width="150px"
                               prop="remark">
                   <el-input v-model="form.remark"
                             auto-complete="off"
-                            clearable
-                            style="width: 180px"></el-input>
+                            clearable></el-input>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="10" style="margin-bottom: 10px">
+              <el-col :span="12">
                 <el-form-item label="状态"
                               style=""
-                              prop="status">
+                              prop="status" label-width="150px">
                   <el-select  v-model="form.status"
-                             placeholder=""
-                             style="width: 180px;margin-left: 30px">
+                             placeholder="">
                     <el-option label="正常"
                                value="1"></el-option>
                     <el-option label="禁用"
@@ -169,8 +157,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item label="权限"
-                          style="margin-top:20px"
+            <el-form-item label="权限" label-width="150px"
                           prop="status">
               <el-input v-model="form.rights"
                         auto-complete="off"
@@ -192,8 +179,7 @@
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -285,14 +271,15 @@ export default {
         children: 'rightCollections',
         label: 'name'
       },
-      count: 1
+      count: 1,
+      isSubmit:false,
     }
   },
   created() {
-    this.menuId=this.$route.query.id
-    this.queryBtns()
-    this.accountList()
-    this.queryRightCollection()
+    this.menuId=this.$route.query.id;
+    this.queryBtns();
+    this.accountList();
+    this.queryRightCollection();
   },
   methods: {
     queryBtns(){
@@ -337,6 +324,7 @@ export default {
       this.form.remark = '';
       this.form.id = null;
       this.formInline = {};
+      this.isSubmit= false;
     },
     indexMethod(index) {
       return index * 1 + 1
@@ -368,9 +356,9 @@ export default {
       })
     },
     search() {
-      this.currentPage = 1
-      this.pageSize = 10
-      this.accountList()
+      this.currentPage = 1;
+      this.pageSize = 10;
+      this.accountList();
     },
     queryRightCollection() {
       this.$fetch('/api/pMenu/queryRightCollection', this.form).then(res => {
@@ -382,6 +370,9 @@ export default {
     addBtn(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
+          this.$nextTick(function () {
+            this.isSubmit=true;
+          })
           let menuIds=''
           let btnIds=''
           this.$refs.tree.getCheckedNodes().forEach(element => {
@@ -397,8 +388,8 @@ export default {
               btnIds+= element.id
             }
           })
-          this.form.menuIds = menuIds
-          this.form.btnIds = btnIds
+          this.form.menuIds = menuIds;
+          this.form.btnIds = btnIds;
           this.$post('/api/pRole/add', this.form).then(res => {
             if (res.statusCode == 2000) {
               this.$message({ type: 'success', message: res.message })
@@ -406,6 +397,7 @@ export default {
               this.accountList()
             } else {
               this.$message({ type: 'success', message: res.message })
+              this.isSubmit=false;
             }
           })
         }

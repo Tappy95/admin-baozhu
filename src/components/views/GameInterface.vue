@@ -1,7 +1,7 @@
 <template>
-  <div class="bannermanage-wrap">
-    <div class="bannermanage-inner">
-      <div class="bannermanage-header">
+  <div class="game-interface-wrap">
+    <div class="game-interface-inner">
+      <div class="game-interface-header">
         <h3>第三方/接口列表</h3>
         <hr />
       </div>
@@ -13,128 +13,109 @@
         </el-form>
       </div>
       <div>
-        <el-dialog title="添加接口" width="700px"
+        <el-dialog title="添加接口" width="800px"
                    :visible.sync="dialogMethod">
           <el-form :model="formMethod"
                    :rules="rules"
                    ref="formsend">
             <div class="form">
-              <el-form-item label="商户名称:"
-                            label-width="140px" prop="name">
-                <el-select style="width: 200px" v-model="formMethod.companyId" @change="changeLocationValue"  placeholder="" >
-                  <el-option v-for="(item,index) in company" :key="index" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-
-              </el-form-item>
-              <el-form-item label="接口名称:"
-                            label-width="140px" prop="interfaceName">
-                <el-input v-model="formMethod.interfaceName"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label="接口代码:"
-                            label-width="140px" prop="interfaceCode">
-                <el-input v-model="formMethod.interfaceCode"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label="基础地址:"
-                            label-width="140px" prop="baseUrl">
-                <el-input v-model="formMethod.baseUrl"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label="定时顺序:"
-                            label-width="140px" prop="weight">
-                <el-input min="0" type="number" v-model="formMethod.weight"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="预计获取金币:"  prop="coins">
-                <el-input type="number" min="0" v-model="formMethod.coins"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="游戏类型:"  prop="game_type">
-                <el-select style="width: 200px" v-model="formMethod.game_type" placeholder="" >
-                  <el-option :key="index" v-for="(item,index) in gameList" :label="item.typeName" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="请求类型:" prop="reqType">
-                <el-select style="width: 200px" v-model="formMethod.reqType" placeholder="" >
-                  <el-option label="get" value="1"></el-option>
-                  <el-option label="post" value="2"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="是否循环:"  prop="isCycle">
-                <el-select style="width: 200px" v-model="formMethod.isCycle" placeholder="" >
-                  <el-option label="是" value="1"></el-option>
-                  <el-option label="否" value="2"></el-option>
-                </el-select>
-              </el-form-item>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="商户名称:"
+                                label-width="140px" prop="name">
+                    <el-select style="width: 200px" v-model="formMethod.companyId" @change="changeLocationValue"  placeholder="" >
+                      <el-option v-for="(item,index) in company" :key="index" :label="item.name" :value="item.id"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="140px" label="游戏类型:"  prop="game_type">
+                    <el-select style="width: 200px" v-model="formMethod.game_type" placeholder="" >
+                      <el-option :key="index" v-for="(item,index) in gameList" :label="item.typeName" :value="item.id"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="140px" label="请求类型:" prop="reqType">
+                    <el-select style="width: 200px" v-model="formMethod.reqType" placeholder="" >
+                      <el-option label="get" value="1"></el-option>
+                      <el-option label="post" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="140px" label="是否循环:"  prop="isCycle">
+                    <el-select style="width: 200px" v-model="formMethod.isCycle" placeholder="" >
+                      <el-option label="是" value="1"></el-option>
+                      <el-option label="否" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="接口名称:"
+                                label-width="140px" prop="interfaceName">
+                    <el-input v-model="formMethod.interfaceName"
+                              auto-complete="off"
+                              clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="接口代码:"
+                                label-width="140px" prop="interfaceCode">
+                    <el-input v-model="formMethod.interfaceCode"
+                              auto-complete="off"
+                              clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="基础地址:"
+                                label-width="140px" prop="baseUrl">
+                    <el-input v-model="formMethod.baseUrl" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="定时顺序:"
+                                label-width="140px" prop="weight">
+                    <el-input v-model="formMethod.weight" auto-complete="off" clearable ></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label-width="140px" label="预计获取金币:"  prop="coins">
+                    <el-input  v-model="formMethod.coins" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </div>
           </el-form>
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogMethod = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="methodBtn('formMethod')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="methodBtn('formMethod')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
-      <div class="bannermanage-table">
+      <div class="game-interface-table">
         <template>
           <el-table :data="tableData"
                     style="width: 100%"
-                    height="580">
-            <el-table-column label="序号"
-                             type="index"
-                             :index="indexMethod"
-                             width='80' fixed="left">
+                    max-height="580">
+            <el-table-column label="序号" type="index" :index="indexMethod" width='80' fixed="left">
             </el-table-column>
-            <el-table-column fixed="left" prop="name"
-                             label="所属公司名称" width="200px" >
+            <el-table-column fixed="left" prop="name" label="所属公司名称" width="200px" >
             </el-table-column>
-
-            <el-table-column width="200px"  prop="interfaceName"
-                              label="接口名称">
+            <el-table-column width="200px"  prop="interfaceName" label="接口名称">
             </el-table-column>
-
-            <el-table-column width="300px"  prop="interfaceCode"
-                              label="接口代码">
+            <el-table-column width="300px"  prop="interfaceCode" label="接口代码">
             </el-table-column>
-
-            <el-table-column width="300px"   prop="baseUrl"
-                              label="基础地址">
+            <el-table-column width="300px"   prop="baseUrl" label="基础地址">
             </el-table-column>
-
-            <el-table-column width="100px"  prop="reqType"
-                              label="请求类型">
+            <el-table-column width="100px"  prop="reqType" label="请求类型">
             </el-table-column>
-
-            <el-table-column width="100px" prop="isCycle"
-                              label="是否循环">
+            <el-table-column width="100px" prop="isCycle" label="是否循环">
             </el-table-column>
-
-            <el-table-column prop="createTime" width="200px"
-                             label="创建时间" :formatter="dateFormat">
+            <el-table-column prop="createTime" width="200px" label="创建时间" :formatter="dateFormat">
             </el-table-column>
-
-            <el-table-column fixed="right"
-                             label="操作"
-                             :width="optionW">
+            <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain size="mini" @click="getInfo(scope.row.id,1)">详情</el-button>
                 <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
@@ -146,153 +127,158 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="修改接口" width="700px"
+        <el-dialog title="修改接口" width="800px"
                    :visible.sync="dialogTableVisible">
           <el-form :model="formtwo">
             <div class="form">
-              <el-form-item label="商户名称:"
-                            label-width="140px" prop="name">
-                <el-select style="width: 200px" v-model="formtwo.companyId" @change="changeLocationValue"  placeholder="" >
-                  <el-option v-for="(item,index) in company" :key="index" :label="item.name" :value="item.id"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label="接口名称:"
-                            label-width="140px" prop="interfaceName">
-                <el-input v-model="formtwo.interfaceName"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label="接口代码:"
-                            label-width="140px" prop="interfaceCode">
-                <el-input v-model="formtwo.interfaceCode"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label="基础地址:"
-                            label-width="140px" prop="baseUrl">
-                <el-input v-model="formtwo.baseUrl"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label="定时顺序:"
-                            label-width="140px" prop="weight">
-                <el-input type="number" min="0" v-model="formtwo.weight"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="预计获取金币:"  prop="coins">
-                <el-input type="number" min="0" v-model="formtwo.coins"
-                          auto-complete="off"
-                          clearable
-                          style="width: 400px;"></el-input>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="游戏类型:"  prop="game_type">
-                <el-select style="width: 200px" v-model="formtwo.game_type" placeholder="" >
-                  <el-option :key="index" v-for="(item,index) in gameList" :label="item.typeName" :value="item.game_type"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="请求类型:" prop="reqType">
-                <el-select style="width: 200px" v-model="formtwo.reqType" placeholder="" >
-                  <el-option label="get" :value="1"></el-option>
-                  <el-option label="post" :value="2"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label-width="140px" label="是否循环:"  prop="isCycle">
-                <el-select style="width: 200px" v-model="formtwo.isCycle" placeholder="" >
-                  <el-option label="是" :value="1"></el-option>
-                  <el-option label="否" :value="2"></el-option>
-                </el-select>
-              </el-form-item>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="商户名称:"
+                                label-width="140px" prop="name">
+                    <el-select style="width: 200px" v-model="formtwo.companyId" @change="changeLocationValue"  placeholder="" >
+                      <el-option v-for="(item,index) in company" :key="index" :label="item.name" :value="item.id"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="140px" label="游戏类型:"  prop="game_type">
+                    <el-select style="width: 200px" v-model="formtwo.game_type" placeholder="" >
+                      <el-option :key="index" v-for="(item,index) in gameList" :label="item.typeName" :value="item.game_type"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="140px" label="请求类型:" prop="reqType">
+                    <el-select style="width: 200px" v-model="formtwo.reqType" placeholder="" >
+                      <el-option label="get" :value="1"></el-option>
+                      <el-option label="post" :value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="140px" label="是否循环:"  prop="isCycle">
+                    <el-select style="width: 200px" v-model="formtwo.isCycle" placeholder="" >
+                      <el-option label="是" :value="1"></el-option>
+                      <el-option label="否" :value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="接口名称:"
+                                label-width="140px" prop="interfaceName">
+                    <el-input v-model="formtwo.interfaceName" auto-complete="off" clearable ></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="接口代码:" label-width="140px" prop="interfaceCode">
+                    <el-input v-model="formtwo.interfaceCode" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="基础地址:"
+                                label-width="140px" prop="baseUrl">
+                    <el-input v-model="formtwo.baseUrl" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="定时顺序:"
+                                label-width="140px" prop="weight">
+                    <el-input  v-model="formtwo.weight" auto-complete="off" clearable></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label-width="140px" label="预计获取金币:"  prop="coins">
+                    <el-input  v-model="formtwo.coins"
+                              auto-complete="off"
+                              clearable
+                              ></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </div>
           </el-form>
           <div slot="footer"
                class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary"
-                       @click="update(formtwo)">确 定</el-button>
+            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="接口详情" :visible.sync="dialog" width="800px">
           <el-form>
             <el-row>
               <div class="form">
-                <el-form-item label="商户名称:"
-                              label-width="140px" prop="name">
-                  <el-select :disabled="true" style="width: 200px" v-model="formtwo.companyId" @change="changeLocationValue"  placeholder="" >
-                    <el-option v-for="(item,index) in company" :key="index" :label="item.name" :value="item.id"></el-option>
-                  </el-select>
-
-                </el-form-item>
-                <el-form-item label="接口名称:"
-                              label-width="140px" prop="interfaceName">
-                  <el-input :disabled="true" v-model="formtwo.interfaceName"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px;"></el-input>
-                </el-form-item>
-
-                <el-form-item label="接口代码:"
-                              label-width="140px" prop="interfaceCode">
-                  <el-input :disabled="true" v-model="formtwo.interfaceCode"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px;"></el-input>
-                </el-form-item>
-
-                <el-form-item label="基础地址:"
-                              label-width="140px" prop="baseUrl">
-                  <el-input :disabled="true" v-model="formtwo.baseUrl"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px;"></el-input>
-                </el-form-item>
-
-                <el-form-item label-width="140px" label="预计获取金币:"  prop="coins">
-                  <el-input :disabled="true" type="number" v-model="formtwo.coins"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px;"></el-input>
-                </el-form-item>
-
-                <el-form-item label-width="140px" label="游戏类型:"  prop="game_type">
-                  <el-select :disabled="true" style="width: 200px" v-model="formtwo.game_type" placeholder="" >
-                    <el-option :key="index" v-for="(item,index) in gameList" :label="item.typeName" :value="item.game_type"></el-option>
-                  </el-select>
-                </el-form-item>
-
-                <el-form-item label="定时顺序:"
-                              label-width="140px" prop="weight">
-                  <el-input :disabled="true" v-model="formtwo.weight"
-                            auto-complete="off"
-                            clearable
-                            style="width: 400px;"></el-input>
-                </el-form-item>
-
-                <el-form-item label-width="140px" label="请求类型:" prop="reqType">
-                  <el-select :disabled="true" style="width: 200px" v-model="formtwo.reqType" placeholder="" >
-                    <el-option label="get" :value="1"></el-option>
-                    <el-option label="post" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-
-                <el-form-item label-width="140px" label="是否循环:"  prop="isCycle">
-                  <el-select :disabled="true" style="width: 200px" v-model="formtwo.isCycle" placeholder="" >
-                    <el-option label="是" :value="1"></el-option>
-                    <el-option label="否" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
+                <el-row>
+                  <el-col :span="12">
+                    <el-form-item label="商户名称:"
+                                  label-width="140px" prop="name">
+                      <el-select :disabled="true" style="width: 200px" v-model="formtwo.companyId" @change="changeLocationValue"  placeholder="" >
+                        <el-option v-for="(item,index) in company" :key="index" :label="item.name" :value="item.id"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label-width="140px" label="游戏类型:"  prop="game_type">
+                      <el-select :disabled="true" style="width: 200px" v-model="formtwo.game_type" placeholder="" >
+                        <el-option :key="index" v-for="(item,index) in gameList" :label="item.typeName" :value="item.game_type"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label-width="140px" label="请求类型:" prop="reqType">
+                      <el-select :disabled="true" style="width: 200px" v-model="formtwo.reqType" placeholder="" >
+                        <el-option label="get" :value="1"></el-option>
+                        <el-option label="post" :value="2"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-form-item label-width="140px" label="是否循环:"  prop="isCycle">
+                      <el-select :disabled="true" style="width: 200px" v-model="formtwo.isCycle" placeholder="" >
+                        <el-option label="是" :value="1"></el-option>
+                        <el-option label="否" :value="2"></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24">
+                    <el-form-item label="接口名称:"
+                                  label-width="140px" prop="interfaceName">
+                      <el-input :disabled="true" v-model="formtwo.interfaceName"
+                                auto-complete="off"
+                                clearable></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24">
+                    <el-form-item label="接口代码:"
+                                  label-width="140px" prop="interfaceCode">
+                      <el-input :disabled="true" v-model="formtwo.interfaceCode"
+                                auto-complete="off"
+                                clearable></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24">
+                    <el-form-item label="基础地址:"
+                                  label-width="140px" prop="baseUrl">
+                      <el-input :disabled="true" v-model="formtwo.baseUrl"
+                                auto-complete="off"
+                                clearable></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24">
+                    <el-form-item label-width="140px" label="预计获取金币:"  prop="coins">
+                      <el-input :disabled="true" type="number" v-model="formtwo.coins"
+                                auto-complete="off"
+                                clearable></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="24">
+                    <el-form-item label="定时顺序:"
+                                  label-width="140px" prop="weight">
+                      <el-input :disabled="true" v-model="formtwo.weight"
+                                auto-complete="off"
+                                clearable></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
               </div>
             </el-row>
           </el-form>
@@ -300,14 +286,13 @@
             <el-button @click="dialog = false">取 消</el-button>
           </div>
         </el-dialog>
-
         <el-dialog title="查看参数" width="1200px"
                    :visible.sync="dialogParams">
-          <el-button style="margin-bottom: 30px" @click="addParamsDia" >添加参数</el-button>
+          <el-button style="margin-bottom: 30px" type="success" plain @click="addParamsDia" >添加参数</el-button>
           <template>
             <el-table :data="paramsData"
                       style="width: 100%"
-                      height="580">
+                      max-height="580">
               <el-table-column label="序号"
                                type="index"
                                :index="indexMethod"
@@ -350,7 +335,7 @@
                                label="是否必须">
               </el-table-column>
 
-              <el-table-column width="100px" prop="encryptNeed"
+              <el-table-column min-width="150px" prop="encryptNeed"
                                label="是否加密所需字段">
               </el-table-column>
 
@@ -364,14 +349,14 @@
 
               <el-table-column fixed="right" label="操作" v-if="powerTrue" width="230px">
                 <template slot-scope="scope">
-                  <el-button size="mini" @click="getPaInfo(scope.row.id)">详情</el-button>
-                  <el-button size="mini" @click="DeleteParams(scope.row.id)" v-if="del">删除</el-button>
-                  <el-button @click="getParamsInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
+                  <el-button size="mini" type="info" plain @click="getPaInfo(scope.row.id)">详情</el-button>
+                  <el-button size="mini" type="warning" plain @click="DeleteParams(scope.row.id)" v-if="del">删除</el-button>
+                  <el-button type="success" plain @click="getParamsInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </template>
-          <div class="block">
+          <div class="block" style="margin-top: 30px">
             <el-pagination @size-change="handleSizeChange1"
                            @current-change="handleCurrentChange1"
                            :current-page="currentPage1"
@@ -382,7 +367,6 @@
             </el-pagination>
           </div>
         </el-dialog>
-
         <el-form :model="formParams">
           <div class="form">
             <el-dialog title="添加参数" width="900px"
@@ -461,7 +445,6 @@
                        </el-form-item>
                      </el-col>
                  </div>
-
                     <el-col :span="12" v-show="isEncryptShow">
                       <el-form-item label-width="170px" label="加密分隔符:"  prop="encryptSeparator">
                         <el-input v-model="formParams.encryptSeparator"
@@ -470,7 +453,6 @@
                                   style="width: 214px;"></el-input>
                       </el-form-item>
                     </el-col>
-
                       <el-col :span="12" >
                         <el-form-item label-width="170px" label="是否加密列表所需字段:" prop="encryptNeed">
                           <el-select style="width: 214px" v-model="formParams.encryptNeed" placeholder="" >
@@ -479,7 +461,6 @@
                           </el-select>
                         </el-form-item>
                       </el-col>
-
                     <el-col :span="12">
                       <el-form-item label-width="170px" label="是否必须:" prop="isNeed">
                         <el-select style="width: 214px" v-model="formParams.isNeed" placeholder="" >
@@ -488,7 +469,6 @@
                         </el-select>
                       </el-form-item>
                     </el-col>
-
                     <el-col :span="12">
                       <el-form-item label-width="170px" label="是否替换:" prop="isReplace">
                         <el-select @change="isReplaceTap(formParams.isReplace)" style="width: 214px" v-model="formParams.isReplace" placeholder="" >
@@ -497,13 +477,11 @@
                         </el-select>
                       </el-form-item>
                     </el-col>
-
                     <el-col :span="12" v-show="isReplaceCode">
                       <el-form-item label-width="170px" label="用户传值:" prop="replaceCode">
                         <el-input v-model="formParams.replaceCode" auto-complete="off" clearable style="width: 214px;"></el-input>
                       </el-form-item>
                     </el-col>
-
                     <el-col :span="12" >
                       <el-form-item label-width="170px" label="是否详情加密所需字段:" prop="infoEncryptNeed">
                         <el-select  style="width: 214px" v-model="formParams.infoEncryptNeed" placeholder="" >
@@ -512,7 +490,6 @@
                         </el-select>
                       </el-form-item>
                     </el-col>
-
                     <div style="width: 100%;display: inline-block;">
                       <el-col :span="12">
                           <el-form-item label-width="160px" label="排序:"  prop="orderId">
@@ -526,17 +503,13 @@
                   </el-row>
                 </div>
               </el-form>
-              <div slot="footer"
-                   class="dialog-footer">
+              <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogList = false">取 消</el-button>
-                <el-button type="primary"
-                @click="addParams('formParams')">确 定</el-button>
+                <el-button type="primary" :disabled="isSubmit" @click="addParams('formParams')">确 定</el-button>
               </div>
             </el-dialog>
           </div>
         </el-form>
-
-
           <div class="form">
             <el-dialog title="修改参数" width="900px"
                        :visible.sync="dialogListUpdate">
@@ -687,7 +660,6 @@
               </div>
             </el-dialog>
           </div>
-
         <div class="form">
           <el-dialog title="参数详情" width="900px"
                      :visible.sync="dialogListinfo">
@@ -836,16 +808,14 @@
             </div>
           </el-dialog>
         </div>
-
       </div>
-
       <el-dialog title="响应参数" width="1200px"
                  :visible.sync="dialogResponseParams">
-        <el-button style="margin-bottom: 30px" @click="addResponseParamsBtn" >添加响应参数</el-button>
+        <el-button style="margin-bottom: 30px" type="success" plain @click="addResponseParamsBtn" >添加响应参数</el-button>
         <template>
           <el-table :data="responseParamsData"
                     style="width: 100%"
-                    height="580">
+                    max-height="580">
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
@@ -854,20 +824,19 @@
             <el-table-column prop="field"
                              label="field" width="200px" >
             </el-table-column>
-
             <el-table-column  prop="key"
                              label="key">
             </el-table-column>
             <el-table-column fixed="right" label="操作" v-if="powerTrue" width="230px">
               <template slot-scope="scope">
-                <el-button size="mini" @click="getResponsePaInfo(scope.row.id)">详情</el-button>
-                <el-button size="mini" @click="DeleteResponseParams(scope.row.id)" v-if="del">删除</el-button>
-                <el-button @click="getResponseParamsUpdate(scope.row.id)" size="mini" v-if="upd">修改</el-button>
+                <el-button size="mini" type="info" plain @click="getResponsePaInfo(scope.row.id)">详情</el-button>
+                <el-button size="mini" type="warning" plain @click="DeleteResponseParams(scope.row.id)" v-if="del">删除</el-button>
+                <el-button type="success" plain @click="getResponseParamsUpdate(scope.row.id)" size="mini" v-if="upd">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
         </template>
-        <div class="block">
+        <div class="block" style="margin-top: 30px">
           <el-pagination @size-change="handleSizeChange2"
                          @current-change="handleCurrentChange2"
                          :current-page="currentPage2"
@@ -878,7 +847,6 @@
           </el-pagination>
         </div>
       </el-dialog>
-
       <el-form :model="formResponseParams">
         <div class="form">
           <el-dialog title="添加响应参数" width="500px"
@@ -913,13 +881,11 @@
             <div slot="footer"
                  class="dialog-footer">
               <el-button @click="addResponseParams = false">取 消</el-button>
-              <el-button type="primary"
-                         @click="addResponseParamsSum('formResponseParams')">确 定</el-button>
+              <el-button type="primary" :disabled="isSubmit" @click="addResponseParamsSum('formResponseParams')">确 定</el-button>
             </div>
           </el-dialog>
         </div>
       </el-form>
-
       <el-form :model="formResponseInfoParams">
         <div class="form">
           <el-dialog title="响应参数详情" width="500px"
@@ -1036,10 +1002,8 @@
         batchSendName:'',
         formsendPhone:'',
         batchSend:'',
-        formMethod:{
-        },
-        formParamsUpdate:{
-        },
+        formMethod:{},
+        formParamsUpdate:{},
         formParamsInfo:{},
         dialogMethod:false,
         dialog:false,
@@ -1057,8 +1021,6 @@
         seePar:false,
         resparse:false,
         game:false,
-        app: 0,
-        web: 1,
         advertisingPage: 1,
         webPage: 2,
         advertising: 3,
@@ -1111,10 +1073,26 @@
             { required: true, message: '请选择是否必须', trigger: 'change' }
           ],
           orderId: [
-            { required: true, message: '请输入排序值', trigger: 'blur' }
+            { required: true, message: '请输入排序值', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           weight:[
-            { required: true, message: '请输入定时顺序', trigger: 'blur' }
+            { required: true, message: '请输入定时顺序', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
           ],
           isReplace:[
             { required: true, message: '请选择是否替换', trigger: 'change' }
@@ -1126,7 +1104,15 @@
             { required: true, message: '请输入key', trigger: 'blur' }
           ],
           coins:[
-             { required: true, message: '请输入预计获取金币', trigger: 'blur' }
+             { required: true, message: '请输入预计获取金币', trigger: 'blur' },
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
            ],
           game_type:[
             { required: true, message: '请选择游戏类型', trigger: 'change' }
@@ -1152,8 +1138,8 @@
         pageSize2: 10,
         totalCount2: 0,
         responseParamsData:[],
-        addResponseParams:false
-
+        addResponseParams:false,
+        isSubmit:false,
       }
     },
     components: {
@@ -1200,12 +1186,16 @@
 
       addResponseParamsBtn(){
         this.formResponseParams={}
-        this.addResponseParams=true
+        this.addResponseParams=true;
+        this.isSubmit= false
       },
       addResponseParamsSum(formResponseParams){
         this.formResponseParams.interfaceId=this.paramsId
         this.$refs.formResponseParams.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/tpResp/add', this.formResponseParams).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.addResponseParams = false
@@ -1217,6 +1207,7 @@
                 message: res.message,
                 duration: 3000
               })
+                this.isSubmit= false
             }
           })
           } else {
@@ -1360,10 +1351,14 @@
         this.formMethod ={};
         this.dialogMethod = true;
         this.companyList();
+        this.isSubmit=false;
       },
       methodBtn(formMethod) {
         this.$refs.formsend.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/tpInterface/add', this.formMethod).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogMethod = false
@@ -1375,6 +1370,7 @@
                 message: res.message,
                 duration: 3000
               })
+                this.isSubmit=false;
             }
           })
           } else {
@@ -1388,22 +1384,23 @@
         this.formParams={}
         this.formParams.interfaceName =this.interfaceNameBelone;
         this.formParams.interfaceId = this.paramsId;
+        this.isSubmit= false;
       },
 
       addParams(formParams){
         this.$refs.formParams.validate(valid => {
           if (valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/tpParams/add', this.formParams).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogList = false
               this.$message({ type: 'success', message: '添加成功！' })
               this.paramsList();
             }else{
-              this.$message({
-                type: 'error',
-                message: res.message,
-                duration: 3000
-              })
+              this.$message({type: 'error', message: res.message, duration: 3000})
+                this.isSubmit=false;
             }
           })
           } else {
@@ -1437,14 +1434,27 @@
        })
       },
       getCame(id){
-        let parameterData = {
-          id: id
-        }
-        this.$put('/api/tpInterface/getGames', parameterData).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-          this.$message({type: 'success', message: '获取成功！'})
-         }
+        this.$confirm('此操作将获取游戏, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
         })
+          .then(() => {
+            let parameterData = {
+              id: id
+            }
+            this.$put('/api/tpInterface/getGames', parameterData).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({type: 'success', message: res.message})
+              }else {
+                this.$message({type: 'warning', message: res.message})
+              }
+            })
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消获取游戏操作' })
+          })
       },
       getPaInfo(id){
         this.isEncryptShow=false
@@ -1691,21 +1701,21 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .bannermanage-wrap {
+  .game-interface-wrap {
     width: 100%;
   }
-  .bannermanage-inner {
+  .game-interface-inner {
     margin: auto;
     padding: 0 20px;
   }
-  .bannermanage-header {
+  .game-interface-header {
     margin-bottom: 20px;
   }
-  .bannermanage-header hr {
+  .game-interface-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
-  .bannermanage-table {
+  .game-interface-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     margin-top: 20px;

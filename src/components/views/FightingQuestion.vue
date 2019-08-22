@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="fighting-question-wrap">
+    <div class="fighting-question-inner">
+      <div class="fighting-question-header">
         <h3>答题对战/题目管理</h3>
         <hr />
       </div>
@@ -23,9 +23,9 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="fighting-question-table">
         <template>
-          <el-table :data="tableData" height="596">
+          <el-table :data="tableData" height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column fixed="left" prop="questionTypeName" min-width="200px" label="问题类型">
@@ -64,12 +64,12 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="题目总分" prop="score" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" min="0" type="number"   v-model="form.score" auto-complete="off" clearable></el-input>
+                  <el-input :style="styleObject"  v-model="form.score" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="答题时间(秒)" prop="countTime" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" min="0" type="number"   v-model="form.countTime" auto-complete="off" clearable></el-input>
+                  <el-input :style="styleObject"  v-model="form.countTime" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
@@ -107,7 +107,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="题目审核" :visible.sync="dialogTableVisible" width="700px">
@@ -431,23 +431,16 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
-        formInline: {
-
-        },
+        formInline: {},
         tableData: [],
-        isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
-        audit:''
-
+        audit:'',
+        isSubmit:false
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -555,13 +548,17 @@
         this.formInline = {};
         this.dialogFormVisible = true;
         this.questionType();
+        this.isSubmit=false;
       },
       addBtn(form) {
         let answers='[{"answer":'+'"'+this.form.answer1+'"'+',"isCorrect":1},{"answer":'+'"'+this.form.answer2+'"'+',"isCorrect":2},{"answer":'+'"'+this.form.answer3+'"'+',"isCorrect":2},{"answer":'+'"'+this.form.answer4+'"'+',"isCorrect":2}]'
 
-        this.form.answers=answers
+        this.form.answers=answers;
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/api/mFightingQuestion/add',this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
@@ -575,6 +572,7 @@
                 type: 'error',
                 message: res.message
               })
+                this.isSubmit=false;
             }
           })
           } else {}
@@ -741,9 +739,6 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
 
   }
@@ -752,25 +747,25 @@
   .el-input--suffix .el-input__inner{
     padding-right: 0;
   }
-  .administratormanage-wrap {
+  .fighting-question-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .fighting-question-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .fighting-question-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .fighting-question-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .fighting-question-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }
