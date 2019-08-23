@@ -368,6 +368,7 @@
       },
       //点修改获取信息
       getInfo(id){
+        this.dynamicTags = [];
         this.currentId = id;
         this.$fetch('/api/tpGame/queryOne', {
           id: id
