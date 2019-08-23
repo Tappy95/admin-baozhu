@@ -285,10 +285,10 @@
                     <span>{{formtwoInfo.mobile}}</span>
                   </div>
                 </div>
-                <div class="body_list" style="width: 100%" >
+                <div class="body_list dec" style="width: 100%" >
                   <div class="title">通知标题:</div>
                   <div class="name">
-                    {{formtwoInfo.informTitle}}
+                    <span class="dec" style="line-height: 30px; padding: 10px 0">{{formtwoInfo.informTitle}}</span>
                   </div>
                 </div>
               <div class="body_list dec" style="width: 100%" >
