@@ -470,6 +470,12 @@ const routes = [
         component: resolve => require(['../components/views/DaRenRankConfig.vue'], resolve),
         meta: { title: '奖金池配置'}
       },
+      {
+        path: 'news-remind',
+        name: 'NewsRemind',
+        component: resolve => require(['../components/views/NewsRemind.vue'], resolve),
+        meta: { title: '消息提醒'}
+      },
     ]
   }
 ]
