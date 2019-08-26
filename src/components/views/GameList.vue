@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="game-list-wrap">
+    <div class="game-list-inner">
+      <div class="game-list-header">
         <h3>第三方/游戏列表</h3>
         <hr />
       </div>
@@ -28,7 +28,13 @@
                 <el-option label="全部" value=""></el-option>
               </el-select>
           </el-form-item>
-
+          <el-form-item label="是否设置类型:" >
+            <el-select v-model="formInline.isSetType"  placeholder="请选择是否设置类型">
+              <el-option label="是" value="1"></el-option>
+              <el-option label="否" value="2"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="游戏方名称:" >
             <el-select v-model="formInline.interfaceId"   placeholder="请选择游戏方名称">
               <el-option :key="item.id" v-for="item in gameList" :label="item.name" :value="item.id"></el-option>
@@ -38,7 +44,7 @@
           <el-form-item> <el-button type="primary" plain @click="search()">查询</el-button></el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="game-list-table">
         <template>
           <el-table :data="tableData" height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -73,11 +79,13 @@
                 <span class="onCX" v-if="scope.row.status==2">下架</span>
               </template>
             </el-table-column>
+            <el-table-column width="150" prop="gameLabelName" label="游戏类型">
+            </el-table-column>
             <el-table-column fixed="right" prop="status"  label="操作" v-if="showW" :width="optionW">
             <template slot-scope="scope">
-              <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
-              <el-button type="danger" plain size="mini" @click="getStatus(scope.row.id,2)" v-if="scope.row.status==1 && UpperShelf">下架</el-button>
-              <el-button type="success" plain size="mini" @click="getStatus(scope.row.id,1)" v-if="scope.row.status==2 && UpperShelf">上架</el-button>
+              <el-button type="warning" plain size="mini" @click="Delete(scope.row.id,scope.row.gameTitle)" v-if="del">删除</el-button>
+              <el-button type="danger" plain size="mini" @click="getStatus(scope.row.id,2,scope.row.gameTitle)" v-if="scope.row.status==1 && UpperShelf">下架</el-button>
+              <el-button type="success" plain size="mini" @click="getStatus(scope.row.id,1,scope.row.gameTitle)" v-if="scope.row.status==2 && UpperShelf">上架</el-button>
               <el-button type="success" plain size="mini" @click="getInfo(scope.row.id)" v-if="upd">修改</el-button>
               <el-button type="primary" plain size="mini" @click="tagsTap(scope.row.id)" v-if="tags">类型</el-button>
             </template>
@@ -100,7 +108,7 @@
           <el-row>
             <el-col :span="22">
               <el-form-item label="游戏标题:"  :label-width="formLabelWidth">
-                <el-input :disabled="true" v-model.number="formtwo.gameTitle" auto-complete="off" clearable></el-input>
+                <el-input :readonly="true" v-model.number="formtwo.gameTitle" auto-complete="off" clearable></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="22">
@@ -159,7 +167,7 @@
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
   export default {
-    name: 'SignList',
+    name: 'GameList',
     data() {
       return {
         formLabelWidth: '120px',
@@ -328,7 +336,8 @@
             gameTitle:this.formInline.gameTitle,
             status:this.formInline.status,
             ptype:this.formInline.ptype,
-            interfaceId:this.formInline.interfaceId
+            interfaceId:this.formInline.interfaceId,
+            isSetType:this.formInline.isSetType
           }
 
           this.$fetch('/api/tpGame/queryBList', parameterData).then(res => {
@@ -349,23 +358,39 @@
         }
       })
       },
-      getStatus(id,status){
-        let parameterData = {
-          id:id,
-          status:status
-        }
-        this.$post('/api/tpGame/modify', parameterData).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            this.$message({ type: 'success', message: res.message });
-            this.accountList();
-          } else {
-            this.$message({
-              type: 'error',
-              message: res.message,
-              duration: 3000
-            })
-          }
+
+
+      getStatus(id,status,name){
+        let types = status==1?'上架':'下架'
+        this.$confirm('此操作将'+types+'该游戏, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
         })
+          .then(() => {
+            let parameterData = {
+              id:id,
+              status:status
+            }
+            this.$post('/api/tpGame/modify', parameterData).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({ type: 'success',  message: name+'游戏'+types+'成功'});
+                this.accountList();
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message,
+                  duration: 3000
+                })
+              }
+            })
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消操作' })
+          })
+
+
       },
       //点修改获取信息
       getInfo(id){
@@ -414,26 +439,26 @@
         })
       },
 
-      Delete(id) {
-        this.$confirm('此操作将永久删除游戏, 是否继续?', '提示', {
+      Delete(id,name) {
+        this.$confirm('此操作将永久删除'+name+'游戏, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           center: true
         })
           .then(() => {
-            this.delData(id)
+            this.delData(id,name)
           })
           .catch(() => {
             this.$message({ type: 'info', message: '已取消删除' })
           })
       },
-      delData(id) {
+      delData(id,name) {
         this.$fetch('/api/tpGame/remove', {
           id: id
         }).then(res => {
           if ((res.statusCode + "").startsWith("2")) {
-            this.$message({type: 'success', message: '删除成功！'})
+            this.$message({type: 'success', message: name+'游戏删除成功！'})
             this.accountList()
           } else {
           }
@@ -464,25 +489,25 @@
     color: #f56c6c;
   }
 
-  .administratormanage-wrap {
+  .game-list-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .game-list-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .game-list-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .game-list-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .game-list-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }
