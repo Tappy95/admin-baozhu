@@ -45,7 +45,7 @@
             </el-table-column>
             <el-table-column width="170px" fixed="left" prop="gameId" label="游戏id">
             </el-table-column>
-            <el-table-column  min-width="150 prop="gameTitle"   label="游戏标题">
+            <el-table-column  min-width="150" prop="gameTitle"   label="游戏标题">
             </el-table-column>
             <el-table-column width="200px" prop="gameGold" label="奖励金额(￥)">
             </el-table-column>
@@ -88,7 +88,7 @@
       <el-dialog title="设置类型" :visible.sync="dialogTableTags" width="700px">
         <el-row>
           <el-checkbox-group text-color="#1fa67a" fill="#1fa67a" v-model="checkList">
-            <el-checkbox v-for="item in lableList" :key="item.index" :label="item.id">{{item.typeName}}</el-checkbox>
+            <el-checkbox style="margin-bottom: 10px" v-for="item in lableList" :key="item.index" :label="item.id">{{item.typeName}}</el-checkbox>
           </el-checkbox-group>
         </el-row>
         <div slot="footer" class="dialog-footer">
@@ -285,6 +285,7 @@
         })
       },
       tagsTap(id) {
+        this.checkList =[];
         this.currentId = id;
         this.dialogTableTags = true;
         // /infoLabel/gameInfoList 参数 gameId
