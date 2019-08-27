@@ -110,7 +110,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="24">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
                     <el-option label="启用" :value="1"></el-option>
@@ -119,8 +119,14 @@
                 </el-form-item>
               </el-col>
               <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
-                <el-form-item  label="更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                <el-form-item  label="安卓更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
                   <el-input spellcheck="false"   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
+                <el-form-item  label="ios更新地址:" prop="iosUpdateUrl" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false"   min="0" v-model="formtwo.iosUpdateUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -192,15 +198,21 @@
                         <span></span>
                       </div>
                       <div class="body_list dec"  style="width: 100%" >
-                        <div class="title">更新地址:</div>
+                        <div class="title">安卓更新地址:</div>
                         <div class="name">
                           <span class="dec">{{formtwoInfo.updateUrl}}</span>
                         </div>
                       </div>
-                      <div class="body_list dec"  style="width: 100%" >
+                    <div class="body_list dec"  style="width: 100%" >
+                      <div class="title">ios更新地址:</div>
+                      <div class="name">
+                        <span class="dec">{{formtwoInfo.iosUpdateUrl}}</span>
+                      </div>
+                    </div>
+                    <div class="body_list dec"  style="width: 100%" >
                         <div class="title">更新描述:</div>
                         <div class="name">
-                          <span class="dec">{{formtwoInfo.updateRemark}}</span>
+                          <span class="dec" v-html="formtwoInfo.updateRemark"></span>
                         </div>
                       </div>
                   </div>
@@ -471,8 +483,11 @@
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            res.data.createTime =  formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss')
-            this.formtwoInfo = res.data
+            res.data.createTime =  formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss');
+            if (res.data.updateRemark){
+              res.data.updateRemark = res.data.updateRemark.replace(/\n/g,'<br/>')
+            }
+            this.formtwoInfo = res.data;
           }
         })
       },

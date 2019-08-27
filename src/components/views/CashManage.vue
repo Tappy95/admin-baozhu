@@ -171,13 +171,19 @@
                 <span class="amountgreen" v-if="scope.row.state==2">提现成功</span>
                 <span class="amountred" v-if="scope.row.state==3">提现失败</span>
                 <span class="amountred" v-if="scope.row.state==4">提现异常</span>
-                <span class="amoungreen" v-if="scope.row.state==5">提现通过</span>
+                <span class="amountgreen" v-if="scope.row.state==5">提现通过</span>
+              </template>
+            </el-table-column>
+            <el-table-column  min-width="120px" label="是否任务提现">
+              <template slot-scope="scope">
+                <i  class="amountgreen el-icon-check" v-if="scope.row.cashType==2" aria-hidden="true"></i>
+                <i  class="amountred  el-icon-close" v-if="scope.row.cashType==1" aria-hidden="true"></i>
               </template>
             </el-table-column>
             <el-table-column  min-width="120px" label="是否锁定">
               <template slot-scope="scope">
-                <span v-if="scope.row.isLocking==1">是</span>
-                <span v-if="scope.row.isLocking==2">否</span>
+                <i  class="amountgreen el-icon-check" v-if="scope.row.isLocking==1" aria-hidden="true"></i>
+                <i  class="amountred  el-icon-close" v-if="scope.row.isLocking==2" aria-hidden="true"></i>
               </template>
             </el-table-column>
             <el-table-column fixed="right" v-if="powerTrue" :width="optionW" label="操作" >

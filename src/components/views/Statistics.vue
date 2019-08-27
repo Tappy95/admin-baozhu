@@ -142,23 +142,23 @@
               </el-popover>
             </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="首次购买VIP人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                content="时间段内第一次购买VIP的人数">
-                <div slot="reference" class="list grid-content">
-                <img src="../../assets/statistics/first_vip.png"/>
-                <div class="dec">
-                  <p>{{listData.firstVip}}<span>人</span></p>
-                  <p>首次购买VIP人数</p>
-                </div>
-              </div>
-              </el-popover>
-            </el-col>
+            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
+              <!--<el-popover-->
+                <!--:placement=place-->
+                <!--title="首次购买VIP人数"-->
+                <!--width="200"-->
+                <!--:offset=off-->
+                <!--trigger="hover"-->
+                <!--content="时间段内第一次购买VIP的人数">-->
+                <!--<div slot="reference" class="list grid-content">-->
+                <!--<img src="../../assets/statistics/first_vip.png"/>-->
+                <!--<div class="dec">-->
+                  <!--<p>{{listData.firstVip}}<span>人</span></p>-->
+                  <!--<p>首次购买VIP人数</p>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--</el-popover>-->
+            <!--</el-col>-->
 
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
@@ -272,62 +272,62 @@
               </el-popover>
             </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="礼品等价总金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内所有兑换礼品相应价值的总金额">
-                <div slot="reference" class="list grid-content">
-                    <img src="../../assets/statistics/gift.png"/>
-                    <div class="dec">
-                      <p>{{listData.lpdjAmount}}<span>元</span></p>
-                      <p>礼品等价总金额</p>
-                    </div>
-                 </div>
-              </el-popover>
-            </el-col>
+            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
+              <!--<el-popover-->
+                <!--:placement=place-->
+                <!--title="礼品等价总金额"-->
+                <!--width="200"-->
+                <!--:offset=off-->
+                <!--trigger="hover"-->
+                <!--:tabindex=tabindex-->
+                <!--content="时间段内所有兑换礼品相应价值的总金额">-->
+                <!--<div slot="reference" class="list grid-content">-->
+                    <!--<img src="../../assets/statistics/gift.png"/>-->
+                    <!--<div class="dec">-->
+                      <!--<p>{{listData.lpdjAmount}}<span>元</span></p>-->
+                      <!--<p>礼品等价总金额</p>-->
+                    <!--</div>-->
+                 <!--</div>-->
+              <!--</el-popover>-->
+            <!--</el-col>-->
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="升级运营总监总金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内所有渠道用户升级为运营总监所付费金额（含首次和续费金额）">
-                <div slot="reference" class="list grid-content">
-                    <img src="../../assets/statistics/upgrade.png"/>
-                    <div class="dec">
-                      <p>{{listData.tdzAmount}}<span>元</span></p>
-                      <p>升级运营总监总金额</p>
-                    </div>
-                </div>
-              </el-popover>
-            </el-col>
+            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
+              <!--<el-popover-->
+                <!--:placement=place-->
+                <!--title="升级运营总监总金额"-->
+                <!--width="200"-->
+                <!--:offset=off-->
+                <!--trigger="hover"-->
+                <!--:tabindex=tabindex-->
+                <!--content="时间段内所有渠道用户升级为运营总监所付费金额（含首次和续费金额）">-->
+                <!--<div slot="reference" class="list grid-content">-->
+                    <!--<img src="../../assets/statistics/upgrade.png"/>-->
+                    <!--<div class="dec">-->
+                      <!--<p>{{listData.tdzAmount}}<span>元</span></p>-->
+                      <!--<p>升级运营总监总金额</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+              <!--</el-popover>-->
+            <!--</el-col>-->
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="活动奖励"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内参加答题、领取每日红包、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/flag.png"/>
-                  <div class="dec">
-                    <p>{{listData.hdjlAmount}}<span>元</span></p>
-                    <p>活动奖励</p>
-                  </div>
-              </div>
-              </el-popover>
-            </el-col>
+            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
+              <!--<el-popover-->
+                <!--:placement=place-->
+                <!--title="活动奖励"-->
+                <!--width="200"-->
+                <!--:offset=off-->
+                <!--trigger="hover"-->
+                <!--:tabindex=tabindex-->
+                <!--content="时间段内参加答题、领取每日红包、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">-->
+                <!--<div slot="reference" class="list grid-content">-->
+                  <!--<img src="../../assets/statistics/flag.png"/>-->
+                  <!--<div class="dec">-->
+                    <!--<p>{{listData.hdjlAmount}}<span>元</span></p>-->
+                    <!--<p>活动奖励</p>-->
+                  <!--</div>-->
+              <!--</div>-->
+              <!--</el-popover>-->
+            <!--</el-col>-->
 
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover
@@ -407,24 +407,24 @@
             </el-col>
           </el-row>
           <el-row style="padding-bottom: 30px">
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="兑换金猪总金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内用户进行VIP充值、金币兑换、参加活动、升级运营总监等赠送金猪的总金额">
-                <div slot="reference" class="list grid-content">
-                    <img src="../../assets/statistics/exchange.png"/>
-                  <div class="dec">
-                    <p>{{listData.jzdhAmount}}<span>元</span></p>
-                    <p>兑换金猪总金额</p>
-                  </div>
-                </div>
-              </el-popover>
-            </el-col>
+            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
+              <!--<el-popover-->
+                <!--:placement=place-->
+                <!--title="兑换金猪总金额"-->
+                <!--width="200"-->
+                <!--:offset=off-->
+                <!--trigger="hover"-->
+                <!--:tabindex=tabindex-->
+                <!--content="时间段内用户进行VIP充值、金币兑换、参加活动、升级运营总监等赠送金猪的总金额">-->
+                <!--<div slot="reference" class="list grid-content">-->
+                    <!--<img src="../../assets/statistics/exchange.png"/>-->
+                  <!--<div class="dec">-->
+                    <!--<p>{{listData.jzdhAmount}}<span>元</span></p>-->
+                    <!--<p>兑换金猪总金额</p>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</el-popover>-->
+            <!--</el-col>-->
 
             <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
               <el-popover

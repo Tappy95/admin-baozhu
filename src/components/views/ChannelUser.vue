@@ -526,7 +526,7 @@
   }
 </script>
 <style type="text/css">
-  .table-th th{
+  .userloanInformation-table .table-th th{
     padding: 0;
   }
   .no-tip{

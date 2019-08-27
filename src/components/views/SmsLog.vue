@@ -16,14 +16,8 @@
             <el-button type="primary" plain class="mar_bottom" @click="search()">查询</el-button>
           </el-form-item>
         </el-form>
+        <div style="margin-bottom: 10px" class="no-tip red f-size">默认无数据，请输入手机号查询</div>
       </div>
-
-      <el-row>
-        <el-col>
-          <p class="red f-size">默认无数据，请输入手机号查询</p>
-        </el-col>
-      </el-row>
-
       <div class="sms-log-table">
         <template>
           <el-table  :data="tableData" max-height="600">

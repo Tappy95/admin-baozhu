@@ -166,8 +166,8 @@
                       图片:
                     </div>
                     <div class="img_box">
-                      <div @click="clickImg(item.url)" v-for="(item,index) in arrImg" :key="index"  v-if="arrImg && item" class="more_img">
-                        <img  v-if="item"  @click="clickImg(item)" :src="item" class="avatar"  />
+                      <div @click="clickImg(item)" v-for="(item,index) in arrImg" :key="index"  v-if="arrImg && item" class="more_img">
+                        <img  v-if="item"  :src="item" class="avatar"  />
                       </div>
                     </div>
                   </div>
