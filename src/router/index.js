@@ -476,6 +476,12 @@ const routes = [
         component: resolve => require(['../components/views/NewsRemind.vue'], resolve),
         meta: { title: '消息提醒'}
       },
+      {
+        path: 'cash-discount-statistics',
+        name: 'CashDiscountStatistics',
+        component: resolve => require(['../components/views/CashDiscountStatistics.vue'], resolve),
+        meta: { title: '提现统计'}
+      },
     ]
   }
 ]

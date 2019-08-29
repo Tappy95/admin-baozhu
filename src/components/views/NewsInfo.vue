@@ -255,7 +255,7 @@
                 </div>
                 <div class="body_list">
                   <div class="title">推送时间:</div>
-                  <div class="name">{{formtwoInfo.pushTime}}</div>
+                  <div class="name">{{formtwoInfo.pushTime | dateFont}}</div>
                 </div>
                 <div class="body_list">
                   <div class="title">通知方式:</div>

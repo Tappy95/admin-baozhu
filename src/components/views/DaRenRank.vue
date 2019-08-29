@@ -149,7 +149,7 @@
         var pattern = /^[0-9]*$/;
         if(this.formInline.apprenticeCount){
           if (!pattern.test(this.formInline.apprenticeCount)) {
-            this.$message({type: 'warning', message: '徒弟数量为正整数', duration: 3000})
+            this.$message({type: 'warning', message: '徒弟数量为正game-list', duration: 3000})
             return false
           }
         }
