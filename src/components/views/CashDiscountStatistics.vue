@@ -20,7 +20,7 @@
           </el-input>
         </el-form-item>
         <el-form-item label="距离注册时间的天数:">
-          <el-input v-model="formInline.days" placeholder="请输入距离注册时间的天数" auto-complete="off"  clearable>
+          <el-input v-model="days" placeholder="请输入距离注册时间的天数" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
         <el-form-item >
@@ -86,7 +86,8 @@
           days:'',
         },
         tableData: [],
-        channelCode:''
+        channelCode:'',
+        days:''
       }
     },
     filters: {
@@ -152,6 +153,11 @@
         })
       },
       search() {
+
+        if (this.days && this.days==0){
+          this.formInline.days = -1;
+        }
+
         this.currentPage = 1;
         this.pageSize = 10;
         this.accountList()
