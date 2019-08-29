@@ -156,6 +156,8 @@
 
         if (this.days && this.days==0){
           this.formInline.days = -1;
+        }else {
+          this.formInline.days = this.days;
         }
 
         this.currentPage = 1;
