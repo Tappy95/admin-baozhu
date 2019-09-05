@@ -15,13 +15,32 @@
           <el-input v-model="formInline.channelCode" placeholder="请输入渠道标识" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
-        <el-form-item label="提现次数:">
+        <el-form-item label="第几次提现:">
           <el-input v-model="formInline.cashNum" placeholder="请输入提现次数" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
+        <!--minDays 最小天数-->
+        <!--maxDays 最大天数-->
         <el-form-item label="距离注册时间的天数:">
-          <el-input v-model="days" placeholder="请输入距离注册时间的天数" auto-complete="off"  clearable>
+          <el-input v-model="minDays" style="width: 150px" placeholder="请输入最小天数" auto-complete="off"  clearable>
           </el-input>
+        </el-form-item>
+        <el-form-item label="至:">
+          <el-input v-model="maxDays" style="width: 150px" placeholder="请输入最大天数" auto-complete="off"  clearable>
+          </el-input>
+        </el-form-item>
+
+
+        <el-form-item label="注册时间:">
+          <el-date-picker
+            v-model="selectTime"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="至"
+            start-placeholder="起始注册时间"
+            end-placeholder="结束注册时间"
+            align="left">
+          </el-date-picker>
         </el-form-item>
         <el-form-item >
           <el-button type="primary" plain @click="search" >查询</el-button>
@@ -48,7 +67,7 @@
               <span>{{scope.row.cashCoin | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  width="150px" prop="cashNum" label="提现次数">
+          <el-table-column  width="150px" prop="cashNum" label="第几次提现">
           </el-table-column>
           <el-table-column width="170px" prop="createDate" label="注册时间">
           </el-table-column>
@@ -83,11 +102,44 @@
           accountId:'',
           channelCode:'',
           cashNum:'',
-          days:'',
+          minDays:'',
+          maxDays:'',
+          minCreateDate:'',
+          maxCreateDate:''
         },
         tableData: [],
         channelCode:'',
-        days:''
+        days:'',
+        minDays:'',
+        maxDays:'',
+        selectTime: '',
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
       }
     },
     filters: {
@@ -137,7 +189,10 @@
           accountId:this.formInline.accountId,
           channelCode :this.formInline.channelCode,
           cashNum :this.formInline.cashNum,
-          days:this.formInline.days,
+          minDays:this.formInline.minDays,
+          maxDays:this.formInline.maxDays,
+          minCreateDate:this.formInline.minCreateDate,
+          maxCreateDate:this.formInline.maxCreateDate
         }
         this.$fetch('/api/userCashLog/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -153,11 +208,27 @@
         })
       },
       search() {
-
-        if (this.days && this.days==0){
-          this.formInline.days = -1;
+        if (this.minDays && this.minDays==0){
+          this.formInline.minDays = -1;
         }else {
-          this.formInline.days = this.days;
+          this.formInline.minDays = this.minDays;
+        }
+        if (this.maxDays && this.maxDays==0){
+          this.formInline.maxDays = -1;
+        }else {
+          this.formInline.maxDays = this.maxDays;
+        }
+        //起始注册时间
+        if (this.selectTime && this.selectTime[0]) {
+          this.formInline.minCreateDate = new Date(this.selectTime[0]).getTime();
+        }else {
+          this.formInline.minCreateDate = ''
+        }
+        //结束注册时间
+        if (this.selectTime && this.selectTime[1]) {
+          this.formInline.maxCreateDate = new Date(this.selectTime[1]).getTime();
+        }else {
+          this.formInline.maxCreateDate = ''
         }
 
         this.currentPage = 1;

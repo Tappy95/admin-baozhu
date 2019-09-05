@@ -17,6 +17,8 @@
             </el-table-column>
             <el-table-column prop="typeName" label="游戏名称">
             </el-table-column>
+            <el-table-column prop="orders" label="排序">
+            </el-table-column>
             <el-table-column prop="status" label="是否启用">
               <template slot-scope="scope">
                      <span class="green" v-if="scope.row.status==1">已启用</span>
@@ -41,8 +43,12 @@
               <el-input v-model="form.typeName" auto-complete="off" clearable>
               </el-input>
             </el-form-item>
-            <el-form-item label="是否启用" prop="status" :label-width="formLabelWidth">
-              <el-select v-model="form.status" placeholder="">
+            <el-form-item label="排序：" :label-width="formLabelWidth" prop="orders">
+              <el-input :style="styleObject" v-model="form.orders" auto-complete="off" clearable>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="是否启用：" prop="status" :label-width="formLabelWidth">
+              <el-select :style="styleObject" v-model="form.status" placeholder="">
                 <el-option label="是" value="1"></el-option>
                 <el-option label="否" value="2"></el-option>
               </el-select>
@@ -54,12 +60,16 @@
           </div>
         </el-dialog>
         <el-dialog title="修改游戏" :visible.sync="dialogTableVisible" width="600px">
-          <el-form :model="formtwo">
+          <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-form-item label="游戏名称：" :label-width="formLabelWidth" prop="typeName">
               <el-input v-model="formtwo.typeName" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
-            <el-form-item label="是否启用" prop="status" :label-width="formLabelWidth">
+            <el-form-item label="排序：" :label-width="formLabelWidth" prop="orders">
+              <el-input :style="styleObject" v-model="formtwo.orders" auto-complete="off" clearable>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="是否启用：" prop="status" :label-width="formLabelWidth">
               <el-select v-model="formtwo.status" placeholder="">
                 <el-option label="是" :value="1"></el-option>
                 <el-option label="否" :value="2"></el-option>
@@ -69,7 +79,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="游戏详情" :visible.sync="dialogTableDetail" width="600px">
@@ -109,6 +119,9 @@
     name: 'GameTypes',
     data() {
       return {
+        styleObject:{
+          width:'200px'
+        },
         powerTrue:false,
         optionW:'0',
         menuId:'',
@@ -122,16 +135,19 @@
         formtwoInfo:{},
         form: {},
         rules: {
-          typeName: [{
-            required: true,
-            message: '请输入游戏名称',
-            trigger: 'blur'
-          }],
-          status: [{
-            required: true,
-            message: '请选择是否启用',
-            trigger: 'change'
-          }]
+          typeName: [{required: true, message: '请输入游戏名称', trigger: 'blur'}],
+          status: [{required: true, message: '请选择是否启用', trigger: 'change'}],
+          orders: [
+            {required: true, message: '请选择是否启用', trigger: 'change'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+              ],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -283,16 +299,20 @@
       })
       },
       update(formtwo) {
-        this.$put('/api/tpGameType/modify', this.formtwo).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-          this.$message({
-            type: 'success',
-            message: '修改成功！'
-          })
-          this.dialogTableVisible = false
-          this.accountList()
-        }
-      })
+        this.$refs[formtwo].validate(valid => {
+          if(valid) {
+            this.$put('/api/tpGameType/modify', this.formtwo).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({
+                  type: 'success',
+                  message: '修改成功！'
+                })
+                this.dialogTableVisible = false
+                this.accountList()
+              }
+            })
+          }
+        })
       },
       getOne(id){
         this.dialogTableDetail = true
@@ -313,11 +333,7 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
-
   }
 </script>
 <style type="text/css">

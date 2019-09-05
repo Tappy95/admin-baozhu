@@ -2,7 +2,7 @@
   <div class="lottery-goods-wrap">
     <div class="lottery-goods-inner">
       <div class="lottery-goods-header">
-        <h3>运营管理/奖品管理</h3>
+        <h3>金猪商城/奖品管理</h3>
         <hr />
       </div>
       <div>

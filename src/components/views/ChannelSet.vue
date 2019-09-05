@@ -64,7 +64,7 @@
             <el-button type="primary" @click="addChannel('formChannel')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="添加渠道配置" :visible.sync="dialogFormVisible" width="800px">
+        <el-dialog title="添加渠道配置" :visible.sync="dialogFormVisible" width="900px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="12">
@@ -100,9 +100,19 @@
                 </el-form-item>
               </el-col>
 
-              <p>普通用户无权限功能:</p>
-              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
               <el-col :span="24">
+                <el-form-item label="是否需要完成高额赚任务:" prop="chargeMode" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.applyTask" placeholder="">
+                    <el-option label="需要" value="1"></el-option>
+                    <el-option label="不需要" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+
+              <p>普通用户无权限功能:</p>
+              <div style="width: 95%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
+              <el-col :span="24" style="margin-top: 10px">
                   <el-form-item label="28模块:"  :label-width="formLabelWidth">
                     <el-checkbox v-model="form.game28" label="游戏28" ></el-checkbox>
                     <el-checkbox v-model="form.pcdd28" label="蛋蛋28" ></el-checkbox>
@@ -125,7 +135,7 @@
             <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改渠道配置" :visible.sync="dialogTableVisible" width="800px">
+        <el-dialog title="修改渠道配置" :visible.sync="dialogTableVisible" width="900px">
           <el-form :model="formtwo" >
             <el-row>
               <el-col :span="12">
@@ -161,9 +171,18 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="24">
+                <el-form-item label="是否需要完成高额赚任务:" prop="chargeMode" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.applyTask" placeholder="">
+                    <el-option label="需要" :value="1"></el-option>
+                    <el-option label="不需要" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <p>普通用户无权限功能</p>
-              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
-                <el-col :span="24">
+              <div style="width: 95%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
+                <el-col :span="24" style="margin-top: 10px">
                   <el-form-item label="28模块:"  :label-width="formLabelWidth">
                     <el-checkbox v-model="formtwo.game28" label="游戏28" ></el-checkbox>
                     <el-checkbox v-model="formtwo.pcdd28" label="蛋蛋28" ></el-checkbox>
@@ -187,7 +206,7 @@
             <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="渠道配置详情" :visible.sync="dialogTableDetail" width="800px">
+        <el-dialog title="渠道配置详情" :visible.sync="dialogTableDetail" width="900px">
           <el-form :model="formtwoInfo" >
             <el-row>
               <el-col :span="12">
@@ -222,9 +241,17 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+              <el-col :span="24">
+                <el-form-item label="是否需要完成高额赚任务:" prop="chargeMode" :label-width="formLabelWidth">
+                  <el-select :disabled="true" :style="styleObject" v-model="formtwoInfo.applyTask" placeholder="">
+                    <el-option label="需要" :value="1"></el-option>
+                    <el-option label="不需要" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
               <p>普通用户无权限功能</p>
-              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc solid">
+              <div style="width: 100%; display: inline-block; height: auto;border: 1px #ccc ;border-radius: 4px">
                 <el-col :span="24">
                   <el-form-item label="28模块:"  :label-width="formLabelWidth">
                     <el-checkbox :disabled="true" v-model="formtwoInfo.game28" label="游戏28" ></el-checkbox>
@@ -539,14 +566,11 @@
                   <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip1688" auto-complete="off"  clearable></el-input></div>
                   <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip1888" auto-complete="off"  clearable></el-input></div>
                   <div class="item"> <el-input :disabled="true"  v-model="fromInfoUser.vip3188" auto-complete="off"  clearable> </el-input></div>
-
                 </div>
               </div>
-
               <el-col :span="18" >
                 <p>好友到达一定成长等级可获得相应奖励:</p>
               </el-col>
-
               <div class="my-coltable small">
                 <div class="list">
                   <div class="item">成长值等级</div>
@@ -570,7 +594,6 @@
             <!--<el-button type="primary" @click="InfoUserAward('fromEditUser')">确 定</el-button>-->
           </div>
         </el-dialog>
-
       </div>
       <div class="block">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
@@ -619,18 +642,8 @@
         formUser:{},
         awardId:'',
         EditAwardId:'',
-        form:{
-          // game28:false,
-          // pcdd28:false,
-          // jnd28:false,
-          // channelCode:'',
-          // fromfissionId:'',
-          // fromchargeMode:'',
-          // fromeffectiveObject:''
-          // channelName:''
-        },
-        formChannel:{
-        },
+        form:{},
+        formChannel:{},
         imageUrl: '',
         rules: {
           openGame: [{
@@ -638,21 +651,6 @@
             message: '请选择第三方游戏',
             trigger: 'change'
           }],
-          // game28: [{
-          //   required: true,
-          //   message: '请选择是否打开游戏28',
-          //   trigger: 'change'
-          // }],
-          // pcdd28: [{
-          //   required: true,
-          //   message: '请选择是否打开蛋蛋28',
-          //   trigger: 'change'
-          // }],
-          // jnd28: [{
-          //   required: true,
-          //   message: '请选择是否打开加拿大28',
-          //   trigger: 'change'
-          // }],
           channelCode: [{
             required: true,
             message: '请选择渠道标识',
@@ -699,7 +697,7 @@
               }, trigger:'blur'}],
         },
         formLabelWidth01:'188px',
-        formLabelWidth: '150px',
+        formLabelWidth: '190px',
         currentPage: 1,
         pageSize: 10,
         currentPage1: 1,

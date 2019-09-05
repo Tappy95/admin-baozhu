@@ -183,7 +183,7 @@
               this.loading = false
             }
           }else {
-            this.$message({type: 'error', message: 'res.message', duration: 3000})
+            this.$message({type: 'error', message: res.message, duration: 3000})
             this.loading = false;
           }
         })

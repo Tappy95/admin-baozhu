@@ -2,7 +2,7 @@
   <div class="daren-manage-wrap">
     <div class="daren-manage-inner">
       <div class="daren-manage-header">
-        <h3>运营管理/达人管理</h3>
+        <h3>达人管理/达人管理</h3>
         <hr />
       </div>
       <div>

@@ -2,7 +2,7 @@
   <div class="lotter-type-wrap">
     <div class="lotter-type-inner">
       <div class="lotter-type-header">
-        <h3>运营管理/抽奖类型</h3>
+        <h3>金猪商城/抽奖类型</h3>
         <hr />
       </div>
       <div>

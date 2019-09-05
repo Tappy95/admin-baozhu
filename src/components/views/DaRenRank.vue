@@ -2,7 +2,7 @@
   <div class="daren-rank-wrap">
     <div class="daren-rank-inner">
       <div class="daren-rank-header">
-        <h3>运营管理/达人排名</h3>
+        <h3>达人管理/达人排名</h3>
         <hr />
       </div>
       <div>

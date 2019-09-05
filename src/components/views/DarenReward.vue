@@ -2,7 +2,7 @@
   <div class="daren-reward-wrap">
     <div class="daren-reward-inner">
       <div class="daren-reward-header">
-        <h3>运营管理/达人奖励</h3>
+        <h3>达人管理/达人奖励</h3>
         <hr />
       </div>
       <div>
