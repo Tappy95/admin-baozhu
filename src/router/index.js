@@ -482,6 +482,12 @@ const routes = [
         component: resolve => require(['../components/views/CashDiscountStatistics.vue'], resolve),
         meta: { title: '提现统计'}
       },
+      {
+        path: 'sys-task-log',
+        name: 'SysTaskLog',
+        component: resolve => require(['../components/views/SysTaskLog.vue'], resolve),
+        meta: { title: '系统任务记录'}
+      },
     ]
   }
 ]
