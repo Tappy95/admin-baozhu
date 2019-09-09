@@ -275,6 +275,16 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="18">
+                <el-form-item label="排序:" :label-width="formLabelWidth" >
+                  <el-input placeholder="值越大越靠前" v-model="formtwo.orders" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <p class="sign_p">值越大越靠前</p>
+               </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer"
@@ -512,6 +522,13 @@
           this.$message({ type: 'warning', message: '达人奖励为正数' })
           return
         }
+
+        var patternorder = /^[0-9]*$/;
+        if (!patternorder.test(this.formtwo.orders)) {
+          this.$message({type: 'warning', message: '排序为正整数'})
+          return
+        }
+
         this.$put('/api/tpTaskInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({ type: 'success', message: '修改成功！' })
@@ -524,6 +541,12 @@
   }
 </script>
 <style type="text/css">
+  .sign_p{
+    font-size: 12px;
+    color: #ff4d51;
+    margin-left: 10px;
+  }
+
   .point{
     cursor: pointer;
   }
