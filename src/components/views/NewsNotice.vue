@@ -24,15 +24,15 @@
                     <span>{{ props.row.createrTime }}</span>
                   </el-form-item>
                   <el-form-item label="生效时间：">
-                    <span>{{ props.row.releaserTime }}</span>
+                    <span>{{ props.row.releaserTime | dateFont}}</span>
                   </el-form-item>
                   <el-form-item label="失效时间：">
-                    <span>{{ props.row.cancelTime }}</span>
+                    <span>{{ props.row.cancelTime | dateFont}}</span>
                   </el-form-item>
                   <el-form-item label="公告类型：">
                       <span v-if="props.row.noticeType==1">文字公告</span>
                       <span v-if="props.row.noticeType==2">首页活动</span>
-                      <span v-if="props.row.noticeType=3">消息活动</span>
+                      <span v-if="props.row.noticeType==3">消息活动</span>
                   </el-form-item>
                   <el-form-item label="创建人：">
                     <span>{{ props.row.createrName }}</span>
@@ -43,7 +43,7 @@
                   <el-form-item label="状态：">
                     <span class="green" v-if="props.row.isRelease==1">已发布</span>
                     <span class="blue" v-if="props.row.isRelease==2">未发布</span>
-                    <span class="red" v-if="props.row.isRelease=3">已失效</span>
+                    <span class="red" v-if="props.row.isRelease==3">已失效</span>
                   </el-form-item>
                   <el-form-item label="标题：" style="width: 100%">
                     <span>{{ props.row.noticeTitle }}</span>
@@ -80,7 +80,7 @@
               <template slot-scope="scope">
                 <span v-if="scope.row.noticeType==1">文字公告</span>
                 <span v-if="scope.row.noticeType==2">首页活动</span>
-                <span v-if="scope.row.noticeType=3">消息活动</span>
+                <span v-if="scope.row.noticeType==3">消息活动</span>
               </template>
             </el-table-column>
             <el-table-column prop="createrName" label="创建人">
