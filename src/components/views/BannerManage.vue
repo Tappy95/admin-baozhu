@@ -44,6 +44,7 @@
                       <el-option label="宝猪抽奖" value="1"></el-option>
                       <el-option label="首页底部" value="2"></el-option>
                       <el-option label="游戏列表头部" value="3"></el-option>
+                      <el-option label="金猪乐园轮播" value="4"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
@@ -193,6 +194,7 @@
                     <el-option label="宝猪抽奖" :value="1"></el-option>
                     <el-option label="首页底部" :value="2"></el-option>
                     <el-option label="游戏列表头部" :value="3"></el-option>
+                    <el-option label="金猪乐园轮播" :value="4"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -426,6 +428,8 @@ export default {
                res.data.list[i].position ="首页底部"
              } else if (res.data.list[i].position ==3){
                res.data.list[i].position ="游戏列表头部"
+             }else if (res.data.list[i].position ==4){
+               res.data.list[i].position ="金猪乐园轮播"
              }
             if(res.data.list[i].status ==1){
                res.data.list[i].status ="已启用"

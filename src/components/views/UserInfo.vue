@@ -206,131 +206,151 @@
           </el-table>
         </template>
         <el-dialog title="用户信息详情" :visible.sync="dialogTableVisible" width="800px">
-          <el-form>
-            <el-row>
-              <el-col :span="22" style="margin-bottom: 10px">
-                <el-form-item label="用户id:" :label-width="formLabelWidth">
-                  <el-input :value="message.accountId" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="支付宝账户:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.aliNum" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
+          <el-form v-model="message">
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>基本信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">用户id:</div>
+                    <div class="name">
+                      {{message.accountId}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">支付宝账户:</div>
+                    <div class="name">
+                      {{message.aliNum}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">真实姓名:</div>
+                    <div class="name">
+                      {{message.userName}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">上级代理:</div>
+                    <div class="name">
+                      {{message.referrer}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">昵称:</div>
+                    <div class="name">
+                      {{message.aliasName}}
+                    </div>
+                  </div>
 
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="真实姓名:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.userName" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
+                  <div class="body_list" >
+                    <div class="title">手机号:</div>
+                    <div class="name">
+                      {{message.mobile}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">QQ号:</div>
+                    <div class="name">
+                      {{message.qqNum}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">会员等级:</div>
+                    <div class="name">
+                      {{message.vipName}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">成长等级:</div>
+                    <div class="name">
+                    {{message.level}}
+                    </div>
+                  </div>
 
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="上级代理:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.referrer" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="昵称:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.aliasName" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="手机号:" :label-width="formLabelWidth">
-                 <el-input :style="styleObject" :value="message.mobile" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                 </el-form-item>
-              </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="会员等级:"  :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.vipName" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="成长等级:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.level" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="直属下级人数:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.apprentice" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="渠道:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.channelCode" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="渠道关系:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.channelRelation" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="身份标识:" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" :disabled="true" v-model="message.roleType" placeholder="">
-                    <el-option label="小猪猪" :value="1"></el-option>
-                    <el-option label="团队长" :value="2"></el-option>
-                    <el-option label="超级合伙人" :value="3"></el-option>
-                  </el-select>
-
-                  <!--<el-input :value="message.roleType" :disabled="true" auto-complete="off" style="" clearable></el-input>-->
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="金币余额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.coin | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="金猪余额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.pigCoin | currency" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="人民币余额￥:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.balance | currencyFixed" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="vip充值总额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.vipAmount | currencyFixed" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="提现金额:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.txAmount | currencyFixed" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="提现次数:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.txCount" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="兑换奖品次数:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.djCount" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12" style="margin-bottom: 10px">
-                <el-form-item label="注册时间:" :label-width="formLabelWidth">
-                  <el-input :style="styleObject" :value="message.createTime" :disabled="true" auto-complete="off" style="" clearable></el-input>
-                </el-form-item>
-              </el-col>
+                  <div class="body_list" >
+                    <div class="title">直属下级人数:</div>
+                    <div class="name">
+                      {{message.apprentice}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">渠道:</div>
+                    <div class="name">
+                      <span v-if="message.channelCode">{{message.channelCode}}</span>
+                      <span v-else>{{message.parentChannelCode}}</span>
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">渠道关系:</div>
+                    <div class="name">
+                      {{message.channelRelation}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">身份标识:</div>
+                    <div class="name">
+                      <span v-if="message.roleType==1">小猪猪</span>
+                      <span v-if="message.roleType==2">团队长</span>
+                      <span v-if="message.roleType==3">超级合伙人</span>
+                    </div>
+                  </div>
+                  <div class="header">
+                    <span>其他信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">金币余额:</div>
+                    <div class="name">
+                      {{message.coin | currency}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">金猪余额:</div>
+                    <div class="name">
+                      {{message.pigCoin | currency}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">人民币余额￥:</div>
+                    <div class="name">
+                      {{message.balance | currencyFixed}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">vip充值总额:</div>
+                    <div class="name">
+                     {{message.vipAmount | currencyFixed}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">提现金额:</div>
+                    <div class="name">
+                     {{message.txAmount | currencyFixed}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">提现次数:</div>
+                    <div class="name">
+                      {{message.txCount}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">兑换奖品次数:</div>
+                    <div class="name">
+                     {{message.djCount}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">注册时间:</div>
+                    <div class="name">
+                     {{message.createTime}}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -465,7 +485,6 @@
                      @click="setBtn('formSet')">确 定</el-button>
         </div>
       </el-dialog>
-
     </div>
   </div>
 </template>
