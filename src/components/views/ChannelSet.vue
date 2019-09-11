@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column  label="裂变收费">
               <template slot-scope="scope">
-                 <span v-if="scope.row.chargeMode==1">平台支付</span>
+                <span v-if="scope.row.chargeMode==1">平台支付</span>
                 <span v-if="scope.row.chargeMode==2">渠道方支付</span>
               </template>
             </el-table-column>
@@ -112,21 +112,21 @@
 
               <p>普通用户无权限功能:</p>
               <div style="width: 95%; display: inline-block; height: auto;border: 1px #ccc solid;border-radius: 4px;">
-              <el-col :span="24" style="margin-top: 10px">
+                <el-col :span="24" style="margin-top: 10px">
                   <el-form-item label="28模块:"  :label-width="formLabelWidth">
                     <el-checkbox v-model="form.game28" label="游戏28" ></el-checkbox>
                     <el-checkbox v-model="form.pcdd28" label="蛋蛋28" ></el-checkbox>
                     <el-checkbox v-model="form.jnd28" label="加拿大28" ></el-checkbox>
                   </el-form-item>
-              </el-col>
-              <el-col :span="24">
-                <el-form-item label="第三方游戏:"  :label-width="formLabelWidth">
-                  <el-checkbox-group
-                    v-model="taskTypeName">
-                    <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="index">{{item.tpName}}</el-checkbox>
-                  </el-checkbox-group>
-                </el-form-item>
-              </el-col>
+                </el-col>
+                <el-col :span="24">
+                  <el-form-item label="第三方游戏:"  :label-width="formLabelWidth">
+                    <el-checkbox-group
+                      v-model="taskTypeName">
+                      <el-checkbox v-for="(item,index) in cities" :label="item.id" :key="index">{{item.tpName}}</el-checkbox>
+                    </el-checkbox-group>
+                  </el-form-item>
+                </el-col>
               </div>
             </el-row>
           </el-form>
@@ -307,11 +307,11 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="用户类型:" prop="userType" :label-width="formLabelWidth01">
-                    <el-select :style="styleObject" v-model="formUser.userType" placeholder="">
-                      <el-option label="普通用户" value="1"></el-option>
-                      <el-option label="团队长" value="2"></el-option>
-                    </el-select>
-                  </el-form-item>
+                  <el-select :style="styleObject" v-model="formUser.userType" placeholder="">
+                    <el-option label="普通用户" value="1"></el-option>
+                    <el-option label="团队长" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth01">
@@ -348,7 +348,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="18">
-                 <p>好友累计购买VIP权益达到一定等级，可获得相应奖励:</p>
+                <p>好友累计购买VIP权益达到一定等级，可获得相应奖励:</p>
               </el-col>
               <div class="my-coltable big">
                 <div class="list">
@@ -396,8 +396,8 @@
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogloadUser = false">取 消</el-button>
-          <el-button type="primary" :disabled="isSubmit" @click="addUserAward('formUser')">确 定</el-button>
+            <el-button @click="dialogloadUser = false">取 消</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addUserAward('formUser')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="修改用户奖励" :visible.sync="dialogEditUser" width="800px">
@@ -596,9 +596,9 @@
         </el-dialog>
       </div>
       <div class="block">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
-      </el-pagination>
-    </div>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -642,7 +642,17 @@
         formUser:{},
         awardId:'',
         EditAwardId:'',
-        form:{},
+        form:{
+          game28:false,
+          pcdd28:false,
+          jnd28:false,
+          channelCode:'',
+          fissionId:'',
+          chargeMode:'',
+          effectiveObject:'',
+          openGame:'',
+          applyTask:''
+        },
         formChannel:{},
         imageUrl: '',
         rules: {
@@ -741,10 +751,10 @@
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
-      currency: function (num){
-        (num);
-        return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
-      },
+      // currency: function (num){
+      //   (num);
+      //   return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      // },
     },
     methods: {
       //游戏商户
@@ -893,6 +903,17 @@
       },
       //渠道
       load() {
+        this.form.game28 = false;
+        this.form.pcdd28 = false;
+        this.form.jnd28 = false;
+
+        this.form.channelCode = '';
+        this.form.fissionId = '';
+        this.form.chargeMode = '';
+        this.form.effectiveObject = '';
+        this.form.openGame = '';
+        this.form.applyTask = '';
+
         this.taskTypeName =[];
         this.dialogFormVisible = true;
         this.channelList();
@@ -947,23 +968,23 @@
           selecType+= this.taskTypeName[i]
         }
         this.form.openGame = selecType;
-        if (this.form.game28) {
-          this.form.game28 = 1
-        }else {
-          this.form.game28 = 2
-        }
-        if (this.form.pcdd28) {
-          this.form.pcdd28 = 1
-        }else {
-          this.form.pcdd28 = 2
-        }
+        // if (this.form.game28) {
+        //   this.form.game28 = 1
+        // }else {
+        //   this.form.game28 = 2
+        // }
+        // if (this.form.pcdd28) {
+        //   this.form.pcdd28 = 1
+        // }else {
+        //   this.form.pcdd28 = 2
+        // }
+        //
+        // if (this.form.jnd28) {
+        //   this.form.jnd28 = 1
+        // }else {
+        //   this.form.jnd28 = 2
+        // }
 
-        if (this.form.jnd28) {
-          this.form.jnd28 = 1
-        }else {
-          this.form.jnd28 = 2
-        }
-        
         this.$refs[form].validate(valid => {
           if(valid) {
             this.$nextTick(function () {
@@ -1085,22 +1106,22 @@
         })
       },
       update(formtwo) {
-        if (this.formtwo.game28) {
-          this.formtwo.game28 = 1
-        }else {
-          this.formtwo.game28 = 2
-        }
-        if (this.formtwo.pcdd28) {
-          this.formtwo.pcdd28 = 1
-        }else {
-          this.formtwo.pcdd28 = 2
-        }
-
-        if (this.formtwo.jnd28) {
-          this.formtwo.jnd28 = 1
-        }else {
-          this.formtwo.jnd28 = 2
-        }
+        // if (this.formtwo.game28) {
+        //   this.formtwo.game28 = 1
+        // }else {
+        //   this.formtwo.game28 = 2
+        // }
+        // if (this.formtwo.pcdd28) {
+        //   this.formtwo.pcdd28 = 1
+        // }else {
+        //   this.formtwo.pcdd28 = 2
+        // }
+        //
+        // if (this.formtwo.jnd28) {
+        //   this.formtwo.jnd28 = 1
+        // }else {
+        //   this.formtwo.jnd28 = 2
+        // }
         this.formtwo.openGame=this.taskTypes.join(",");
         this.$put('/api/mChannelConfig/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -1114,13 +1135,13 @@
         })
       },
       getOne(id){
-          this.taskTypes=[];
-          //修改前查询基本信息
-          this.dialogTableDetail = true;
-          this.$fetch('/api/mChannelConfig/queryOne', {
-            id: id
-          }).then(res => {
-            if ((res.statusCode+"").startsWith("2")) {
+        this.taskTypes=[];
+        //修改前查询基本信息
+        this.dialogTableDetail = true;
+        this.$fetch('/api/mChannelConfig/queryOne', {
+          id: id
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
             this.formtwoInfo = res.data;
 
             if (res.data.game28==1) {
@@ -1159,7 +1180,7 @@
         this.dialogloadUser = true;
         this.isSubmit=false;
         this.formUser={}
-        },
+      },
 
       addUserAward(formUser) {
         this.formUser.configId = this.awardId;
