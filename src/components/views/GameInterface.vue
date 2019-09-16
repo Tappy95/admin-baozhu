@@ -122,7 +122,7 @@
                 <el-button type="success" plain @click="getInfo(scope.row.id,2)" size="mini" v-if="upd">修改</el-button>
                 <el-button type="primary" plain v-if="seePar" @click="paramsTap(scope.row.id,scope.row.interfaceName)" size="mini" >请求参数</el-button>
                 <el-button type="success" plain  @click="responseParamsTap(scope.row.id)" v-if="resparse" size="mini" >响应参数</el-button>
-                <el-button type="danger" plain @click="getCame(scope.row.id)" v-if="game" size="mini" >获取游戏</el-button>
+                <el-button type="danger" plain :disabled="getgame" @click="getCame(scope.row.id)" v-if="game" size="mini" >获取游戏</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -1140,6 +1140,7 @@
         responseParamsData:[],
         addResponseParams:false,
         isSubmit:false,
+        getgame:false
       }
     },
     components: {
@@ -1441,6 +1442,15 @@
           center: true
         })
           .then(() => {
+            this.$nextTick(function () {
+              this.getgame=true;
+            })
+            setTimeout(()=>{
+              this.$nextTick(function () {
+                this.getgame=false;
+              })
+            },5000)
+
             let parameterData = {
               id: id
             }
