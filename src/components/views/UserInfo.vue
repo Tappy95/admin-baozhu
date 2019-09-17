@@ -59,127 +59,77 @@
                     style="width: 100%"
                     v-loading="loading"
                     height="640">
-            <el-table-column fixed="left" label="序号"
-                             type="index"
-                             :index="indexMethod"
-                             width='80'>
+            <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column min-width="140px" prop="accountId" fixed="left"
-                             label="用户ID">
+            <el-table-column min-width="140px" prop="accountId" fixed="left" label="用户ID">
             </el-table-column>
-
-            <el-table-column min-width="140px" prop="referrer" fixed="left"
-                             label="上级代理">
+            <el-table-column min-width="140px" prop="referrer" fixed="left" label="上级代理">
             </el-table-column>
-
-            <el-table-column min-width="150px" prop="aliasName"
-                             label="昵称">
+            <el-table-column min-width="150px" prop="aliasName" label="昵称">
             </el-table-column>
-            <el-table-column  min-width="120px" prop="mobile"
-                             label="手机号">
+            <el-table-column  min-width="120px" prop="mobile" label="手机号">
             </el-table-column>
-
-            <el-table-column prop="vipName"
-                             label="会员等级"
-                             min-width="200px">
+            <el-table-column label="登陆设备" min-width="120px">
+              <template slot-scope="scope">
+                <span v-if="scope.row.equipmentType==1">安卓</span>
+                <span v-if="scope.row.equipmentType==2">ios</span>
+              </template>
             </el-table-column>
-
-            <el-table-column prop="level"
-                             label="成长等级"
-                             min-width="110px">
+            <el-table-column prop="vipName" label="会员等级" min-width="200px">
             </el-table-column>
-            <el-table-column prop="apprentice"
-                             label="直属下级人数"
-                             min-width="110px">
+            <el-table-column prop="level" label="成长等级" min-width="110px">
             </el-table-column>
-
-            <el-table-column
-                             label="渠道"
-                             min-width="100px">
+            <el-table-column prop="apprentice" label="直属下级人数" min-width="110px">
+            </el-table-column>
+            <el-table-column label="渠道" min-width="100px">
               <template slot-scope="scope">
                 <span v-if="scope.row.channelCode">{{scope.row.channelCode}}</span>
                 <span v-else>{{scope.row.parentChannelCode}}</span>
               </template>
-
             </el-table-column>
-            <el-table-column prop="channelRelation"
-                             label="渠道关系"
-                             min-width="100px">
+            <el-table-column prop="channelRelation" label="渠道关系" min-width="100px">
             </el-table-column>
-
-            <el-table-column label="身份标识"
-                             min-width="100px">
+            <el-table-column label="身份标识" min-width="100px">
               <template slot-scope="scope">
                 <span v-if="scope.row.roleType==1">小猪猪</span>
                 <span v-if="scope.row.roleType==2">团队长</span>
                 <span v-if="scope.row.roleType==3">超级合伙人</span>
               </template>
             </el-table-column>
-
-            <el-table-column
-                             label="金币余额"
-                             min-width="150px">
+            <el-table-column label="金币余额" min-width="150px">
               <template slot-scope="scope">
                 <span class="amountgreen">{{scope.row.coin | currency}}</span>
               </template>
-
             </el-table-column>
-
-            <el-table-column
-                             label="金猪余额"
-                             min-width="150px">
+            <el-table-column label="金猪余额" min-width="150px">
               <template slot-scope="scope">
                 <span class="amountblue">{{scope.row.pigCoin | currency}}</span>
               </template>
             </el-table-column>
-
-            <el-table-column
-                             label="人民币余额"
-                             min-width="150px">
+            <el-table-column label="人民币余额" min-width="150px">
               <template slot-scope="scope">
                 <span class="amountyellow">{{scope.row.balance | currencyFixed}}</span>
               </template>
             </el-table-column>
-
-            <el-table-column
-                             label="vip充值总额"
-                             min-width="100px">
+            <el-table-column label="vip充值总额" min-width="100px">
               <template slot-scope="scope">
                 <span>{{scope.row.vipAmount | currencyFixed}}</span>
               </template>
             </el-table-column>
-
-            <el-table-column prop="vipCount"
-                             label="VIP充值次数"
-                             min-width="100px">
+            <el-table-column prop="vipCount" label="VIP充值次数" min-width="100px">
             </el-table-column>
-
-            <el-table-column
-                             label="提现金额"
-                             min-width="150px">
+            <el-table-column label="提现金额" min-width="150px">
               <template slot-scope="scope">
                 <span class="amountred">{{scope.row.txAmount | currencyFixed}}</span>
               </template>
-
             </el-table-column>
-
-            <el-table-column prop="txCount"
-                             label="提现次数"
-                             min-width="100px">
+            <el-table-column prop="txCount" label="提现次数" min-width="100px">
             </el-table-column>
-
-            <el-table-column prop="djCount"
-                             label="兑换奖品次数"
-                             min-width="110px">
+            <el-table-column prop="djCount" label="兑换奖品次数" min-width="110px">
             </el-table-column>
-
-            <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
-                             label="注册时间"
-                            >
+            <el-table-column  width="170px" :formatter="dateFormat" prop="createTime" label="注册时间">
             </el-table-column>
-            <el-table-column fixed="right"
-                             label="操作"
-                             :width="optionW">
+            <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="info" plain  style="margin-bottom: 8px"
                            size="mini"
@@ -194,10 +144,7 @@
                            type="danger" plain
                            size="mini" style="margin-bottom: 8px"
                            @click="setSuper(scope.row.userId,scope.row.status,scope.row.remark,1)">冻结账户</el-button>
-
                 <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1 && setSuperMan" size="mini"><span v-if="optionW='305px'"></span>设置超级合伙人</el-button>
-
-
                 <!--<el-button type="" v-if="setSuperMan"-->
                            <!--size="mini" style="margin-bottom: 8px"-->
                            <!--@click="reward(scope.row.userId)">设置超级合伙人</el-button>-->
@@ -251,6 +198,16 @@
                       {{message.mobile}}
                     </div>
                   </div>
+                  <!--equipment_type 登陆设备（1-安卓 2-ios）-->
+                  <div class="body_list" >
+                    <div class="title">登陆设备:</div>
+                    <div class="name">
+                      <span v-if="message.equipmentType==1">安卓</span>
+                      <span v-if="message.equipmentType==2">ios</span>
+
+                    </div>
+                  </div>
+
                   <div class="body_list">
                     <div class="title">QQ号:</div>
                     <div class="name">

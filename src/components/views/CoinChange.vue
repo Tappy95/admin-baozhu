@@ -81,6 +81,12 @@
             </el-table-column>
             <el-table-column min-width="100" fixed="left" prop="accountId" label="用户id">
             </el-table-column>
+            <el-table-column label="登陆设备" min-width="120px">
+              <template slot-scope="scope">
+                <span v-if="scope.row.equipmentType==1">安卓</span>
+                <span v-if="scope.row.equipmentType==2">ios</span>
+              </template>
+            </el-table-column>
             <el-table-column min-width="120" prop="userName" label="姓名">
             </el-table-column>
             <el-table-column min-width="120" sortable coinBalance prop="level" label="成长等级">

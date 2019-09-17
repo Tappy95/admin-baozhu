@@ -20,19 +20,6 @@
                       placeholder="请输入用户等级"
                       clearable></el-input>
           </el-form-item>
-
-          <!--<el-form-item label="累计赚取金币数:">-->
-            <!--<el-input v-model="formInline.minCoin"-->
-                      <!--placeholder="请输入最小值"-->
-                      <!--clearable></el-input>-->
-          <!--</el-form-item>-->
-
-          <!--<el-form-item>-->
-            <!--<el-input v-model="formInline.maxCoin"-->
-                    <!--placeholder="请输入最大值"-->
-                    <!--clearable></el-input>-->
-          <!--</el-form-item>-->
-
           <el-form-item label="注册时间:">
               <el-date-picker
                 @change="timeChang"
@@ -59,10 +46,10 @@
       </div>
       <div class="userloanInformation-table">
         <template>
-          <el-table class="table-th" :data="tableData"
+          <el-table class="table-th" :class="tableData.length>0?'paa':''" :data="tableData"
                     style="width: 100%"
                     v-loading="loading"
-                    height="560">
+                    height="520">
             <el-table-column fixed="left" label="序号"
                              type="index"
                              :index="indexMethod"
@@ -74,8 +61,13 @@
             <el-table-column min-width="140px"  prop="mobile"
                              label="手机">
             </el-table-column>
-            <el-table-column min-width="150px" prop="channelCode"
-                             label="渠道标识">
+            <el-table-column label="登陆设备" min-width="120px">
+              <template slot-scope="scope">
+                <span v-if="scope.row.equipmentType==1">安卓</span>
+                <span v-if="scope.row.equipmentType==2">ios</span>
+              </template>
+            </el-table-column>
+            <el-table-column min-width="150px" prop="channelCode" label="渠道标识">
             </el-table-column>
             <el-table-column min-width="120"  label="渠道关系">
               <template slot-scope="scope">
@@ -83,7 +75,6 @@
                 <!--<span :class="scope.row.channelRelation=='直属用户'?'amountyellow':'amountred'">{{scope.row.channelRelation}}</span>-->
               </template>
             </el-table-column>
-
             <el-table-column min-width="120"  label="身份标识">
               <template slot-scope="scope">
                 <span v-if="scope.row.roleType==1">小猪猪</span>
@@ -91,44 +82,34 @@
                 <span v-if="scope.row.roleType==3">超级合伙人</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="150px" prop="level"
-                             label="用户等级">
+            <el-table-column min-width="150px" prop="level" label="用户等级">
             </el-table-column>
-            <el-table-column min-width="150px"
-                             label="累计充值(￥)">
+            <el-table-column min-width="150px" label="累计充值(￥)">
               <template slot-scope="scope">
                 <span class="amountblue">{{scope.row.sumRecharge | currencyFixed}}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="150px"
-                             label="累计提现(￥)">
+            <el-table-column min-width="150px" label="累计提现(￥)">
               <template slot-scope="scope">
                 <span class="amountyellow">{{scope.row.sumCash | currencyFixed}}</span>
               </template>
             </el-table-column>
-            <el-table-column  width="200px"
-                              label="累计赚取金币数">
+            <el-table-column  width="200px" label="累计赚取金币数">
               <template slot-scope="scope">
                 <span class="amountgreen">{{scope.row.sumCoin | currency}}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="200px"
-                             label="剩余金币"
-                             >
+            <el-table-column min-width="200px" label="剩余金币">
               <template slot-scope="scope">
                 <span class="amountred">{{scope.row.coin | currency}}</span>
               </template>
             </el-table-column>
-            <el-table-column min-width="300px"
-                             label="剩余金猪"
-                             >
+            <el-table-column min-width="300px" label="剩余金猪">
               <template slot-scope="scope">
                 <span class="amountrzi">{{scope.row.pigCoin | currency}}</span>
               </template>
             </el-table-column>
-            <el-table-column  width="170px" :formatter="dateFormat" prop="createTime"
-                              label="注册时间"
-            >
+            <el-table-column  width="170px" :formatter="dateFormat" prop="createTime" label="注册时间">
             </el-table-column>
             <el-table-column fixed="right" label="操作" v-if="setSuperMan" :width="qxW">
               <template slot-scope="scope">
@@ -136,11 +117,8 @@
               </template>
             </el-table-column>
           </el-table>
-          <el-dialog title="设置超级合伙人" width="800px"
-                     :visible.sync="dialogFormVisible">
-            <el-form :model="form"
-                     :rules="rules"
-                     ref="form">
+          <el-dialog title="设置超级合伙人" width="800px" :visible.sync="dialogFormVisible">
+            <el-form :model="form" :rules="rules" ref="form">
               <div class="form">
                 <el-row>
                   <el-col :span="12">
@@ -360,85 +338,7 @@
         }, 5000);
       },
 
-      // doDownload(obj) {
-      //   let url = obj.url,
-      //     accountId=obj.accountId,
-      //     level=obj.level,
-      //     startTime=obj.startTime,
-      //     endTime=obj.endTime,
-      //     // minCoin=obj.minCoin,
-      //     // maxCoin=obj.maxCoin,
-      //     token= obj.token,
-      //     channel=obj.channel,
-      //     relation=obj.relation
-      //
-      //   let a1 = document.createElement('a');
-      //   let http=url;
-      //   if(http==url){
-      //      if(accountId!=null && accountId!=''){
-      //        http=http+'?accountId=' + accountId
-      //      }
-      //   }
-      //   if(http==url){
-      //     if(level!=null && level!=''){
-      //       http=http+'?level=' + level
-      //     }
-      //   }else{
-      //     if(level!=null && level!=''){
-      //       http=http+'&level=' + level
-      //     }
-      //   }
-      //   if(http==url){
-      //     if(startTime!=null && startTime!=''){
-      //       http=http+'?startTime=' + startTime
-      //     }
-      //   }else{
-      //     if(startTime!=null && startTime!=''){
-      //       http=http+'&startTime=' + startTime
-      //     }
-      //   }
-      //   if(http==url){
-      //     if(endTime!=null && endTime!=''){
-      //       http=http+'?endTime=' + endTime
-      //     }
-      //   }else{
-      //     if(endTime!=null && endTime!=''){
-      //       http=http+'&endTime=' + endTime
-      //     }
-      //   }
-      //   // if(http==url){
-      //   //   if(minCoin!=null && minCoin!=''){
-      //   //     http=http+'?minCoin=' + minCoin
-      //   //   }
-      //   // }else{
-      //   //   if(minCoin!=null && minCoin!=''){
-      //   //     http=http+'&minCoin=' + minCoin
-      //   //   }
-      //   // }
-      //   // if(http==url){
-      //   //   if(maxCoin!=null && maxCoin!=''){
-      //   //     http=http+'?maxCoin=' + maxCoin
-      //   //   }
-      //   // }else{
-      //   //   if(maxCoin!=null && maxCoin!=''){
-      //   //     http=http+'&maxCoin=' + maxCoin
-      //   //   }
-      //   // }
-      //   if(http==url){
-      //     http=http+'?token='+token+'&channel='+channel+'&relation='+relation
-      //   }else{
-      //     http=http+'&token='+token+'&channel='+channel+'&relation='+relation
-      //   }
-      //   a1.setAttribute('href',http);
-      //   let body = document.querySelector('body');
-      //   body.appendChild(a1);
-      //   a1.click();
-      //   a1.remove();
-      //   //关闭正在导出弹层
-      //   setTimeout(() => {
-      //     this.fullscreenLoading.close();
-      //   }, 5000);
-      // },
+
       timeChang(){
 
       },
@@ -529,6 +429,11 @@
   .userloanInformation-table .table-th th{
     padding: 0;
   }
+
+  .userloanInformation-table .table-th.paa th{
+    padding: 12px 0;
+  }
+
   .no-tip{
     margin-bottom: 10px;
     font-size: 14px;

@@ -58,6 +58,12 @@
           </el-table-column>
           <el-table-column fixed="left" min-width="100px" prop="accountId" label="用户id">
           </el-table-column>
+          <el-table-column label="登陆设备" min-width="120px">
+            <template slot-scope="scope">
+              <span v-if="scope.row.equipmentType==1">安卓</span>
+              <span v-if="scope.row.equipmentType==2">ios</span>
+            </template>
+          </el-table-column>
           <el-table-column  min-width="100px" prop="channelCode" label="渠道标识">
           </el-table-column>
           <el-table-column  min-width="200px" prop="outTradeNo" label="订单号">
