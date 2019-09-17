@@ -37,7 +37,7 @@
             </el-table-column>
             <el-table-column min-width="170px" prop="gameAddition" label="游戏加成(%)">
             </el-table-column>
-            <el-table-column prop="useDay" min-width="170" label="有效期(单位:天)">
+            <el-table-column prop="useDay" min-width="170" label="有效期(天)">
             </el-table-column>
             <el-table-column min-width="170" prop="price" label="售价(￥)">
             </el-table-column>
@@ -61,7 +61,7 @@
         <big-img v-if="showImg"
                  @clickit="viewImg"
                  :imgSrc="imgSrc"></big-img>
-        <el-dialog title="添加vip" :visible.sync="dialogFormVisible" width="900px">
+        <el-dialog title="添加vip" :close-on-click-modal="$close" :visible.sync="dialogFormVisible" width="900px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="12" style="margin-bottom: 10px">
@@ -70,20 +70,30 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+              <el-form-item label="vip类型:" :label-width="formLabelWidth" prop="vipType">
+                <el-select style="width: 187px" v-model="form.vipType" placeholder="">
+                  <el-option label="普通vip" value="1"></el-option>
+                  <el-option label="中青赚点" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="售价:" :label-width="formLabelWidth" prop="price">
                   <el-input v-model="form.price"  auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <div style="width: 100%;float: left;">
-                  <el-col :span="24" style="margin-bottom: 10px">
+
+                  <el-col :span="12" style="margin-bottom: 10px">
                     <el-form-item label="等级排序(值越大等级越高):" label-width="190px" prop="orderId">
                       <el-input v-model="form.orderId"  auto-complete="off" style="width:187px" clearable>
                       </el-input>
                     </el-form-item>
                   </el-col>
-              </div>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="首充奖励:" :label-width="formLabelWidth" prop="firstReward">
                   <el-input v-model="form.firstReward"  auto-complete="off" style="width:187px" clearable>
@@ -172,6 +182,14 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="可提现金额(-1无限制)元:" :label-width="formLabelWidth" prop="cashMoney">
+                  <el-input v-model="form.cashMoney" placeholder="-1无限制"  auto-complete="off" style="width:187px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="是否可用:" :label-width="formLabelWidth" prop="status">
                   <el-select v-model="form.status" placeholder="">
@@ -249,7 +267,7 @@
             <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改vip" :visible.sync="dialogTableVisible" width="900px">
+        <el-dialog title="修改vip" :close-on-click-modal="$close" :visible.sync="dialogTableVisible" width="900px">
           <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
               <el-col :span="12" style="margin-bottom: 10px">
@@ -264,14 +282,23 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <div style="width: 100%;float: left;">
-                <el-col :span="24" style="margin-bottom: 10px">
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="vip类型:" :label-width="formLabelWidth" prop="vipType">
+                  <el-select style="width: 187px" v-model="formtwo.vipType" placeholder="">
+                    <el-option label="普通vip" :value="1"></el-option>
+                    <el-option label="中青赚点" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+                <el-col :span="12" style="margin-bottom: 10px">
                   <el-form-item label="等级排序(值越大等级越高):" :label-width="formLabelWidth" prop="orderId">
                     <el-input v-model="formtwo.orderId"  auto-complete="off" style="width:187px" clearable>
                     </el-input>
                   </el-form-item>
                 </el-col>
-              </div>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="首充奖励:" :label-width="formLabelWidth" prop="firstReward">
                   <el-input v-model="formtwo.firstReward"  auto-complete="off" style="width:187px" clearable>
@@ -360,6 +387,14 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="可提现金额(-1无限制)元:" :label-width="formLabelWidth" prop="cashMoney">
+                  <el-input v-model="formtwo.cashMoney" placeholder="-1无限制"  auto-complete="off" style="width:187px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="是否可用:" :label-width="formLabelWidth" prop="status">
                   <el-select v-model="formtwo.status" placeholder="">
@@ -454,6 +489,14 @@
                       {{formtwoInfo.name}}
                     </div>
                   </div>
+                  <div class="body_list">
+                    <div class="title">vip类型:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.vipType==1">普通vip</span>
+                      <span v-if="formtwoInfo.vipType==2">中青赚点</span>
+                    </div>
+                  </div>
+
                   <div class="body_list" >
                     <div class="title">售价:</div>
                     <div class="name">
@@ -574,6 +617,14 @@
                       <span v-if="formtwoInfo.status==2">否</span>
                     </div>
                   </div>
+
+                  <div class="body_list" >
+                    <div class="title">可提现金额(元):</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.cashMoney==-1">无限制</span>
+                      <span v-else>{{formtwoInfo.cashMoney}}</span>
+                    </div>
+                  </div>
                   <div class="body_list" >
                     <div class="title">金币兑换金猪加成(%):</div>
                     <div class="name">
@@ -663,7 +714,20 @@
           backgroundImg:''
         },
         rules: {
+          // vipType vip类型 1.普通vip 2.中青赚点
+          // cashMoney 可提现金额 单位元，-1无限制
+          vipType: [{required: true, message: '请选择vip类型', trigger: 'change'}],
           name: [{required: true, message: '请输入vip名称', trigger: 'blur'},],
+          cashMoney: [{required: true, message: '请输入可提现金额', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+              var pattern = /^-?[1-9]\d*$/;
+              if (!pattern.test(value)) {
+                callback(new Error("请输入整数"));
+              }else{
+                callback();
+              }
+            }, trigger:'blur'}
+          ],
           firstReward: [{required: true, message: '请输入首充奖励', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
               var pattern = /^[0-9]*$/;
