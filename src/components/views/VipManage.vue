@@ -146,6 +146,14 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="奖励天数(-1无限制):" :label-width="formLabelWidth" prop="rewardDay">
+                  <el-input v-model="form.rewardDay"  placeholder="-1无限制"  auto-complete="off" style="width:187px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="兑换是否优先审核:" :label-width="formLabelWidth" prop="auditFirst">
                   <el-select v-model="form.auditFirst" placeholder="">
@@ -351,6 +359,13 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="奖励天数(-1无限制):" :label-width="formLabelWidth" prop="rewardDay">
+                  <el-input v-model="formtwo.rewardDay"  placeholder="-1无限制" auto-complete="off" style="width:187px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="兑换是否优先审核:" :label-width="formLabelWidth" prop="auditFirst">
                   <el-select v-model="formtwo.auditFirst" placeholder="">
@@ -573,10 +588,18 @@
                       {{formtwoInfo.everydayReliefPig | currenNum}}
                     </div>
                   </div>
+
                   <div class="body_list" >
                     <div class="title">救济金猪每日领取次数:</div>
                     <div class="name">
                       {{formtwoInfo.everydayReliefPigTimes}}
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">奖励天数:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.rewardDay==-1">无限制</span>
+                      <span v-else>{{formtwoInfo.rewardDay}}</span>
                     </div>
                   </div>
                   <div class="header">
@@ -717,7 +740,17 @@
           // vipType vip类型 1.普通vip 2.中青赚点
           // cashMoney 可提现金额 单位元，-1无限制
           vipType: [{required: true, message: '请选择vip类型', trigger: 'change'}],
-          name: [{required: true, message: '请输入vip名称', trigger: 'blur'},],
+          name: [{required: true, message: '请输入vip名称', trigger: 'blur'}],
+          rewardDay: [{required: true, message: '请输入奖励天数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^-?[1-9]\d*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
           cashMoney: [{required: true, message: '请输入可提现金额', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
               var pattern = /^-?[1-9]\d*$/;
@@ -806,7 +839,6 @@
                 }
               }, trigger:'blur'}],
           oneWithdrawals: [{required: true, message: '请选择是否一元提现', trigger: 'change'}],
-
           price: [{required: true, message: '请输入售价', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
                 var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
