@@ -113,7 +113,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" v-if="setSuperMan" :width="qxW">
               <template slot-scope="scope">
-                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1 && setSuperMan" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
+                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark)"  v-if="scope.row.roleType !=1 && scope.row.roleType !=4 && setSuperMan" size="mini"><span v-if="qxW='140px'"></span>设置超级合伙人</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -431,7 +431,7 @@
   }
 
   .userloanInformation-table .table-th.paa th{
-    padding: 12px 0;
+    /*padding: 12px 0;*/
   }
 
   .no-tip{
