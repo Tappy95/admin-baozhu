@@ -24,6 +24,12 @@
             </el-table-column>
             <el-table-column min-width="100px" prop="open28" label="发布状态">
             </el-table-column>
+            <el-table-column width="150px" prop="channelUpdate" label="是否独立更新">
+              <template slot-scope="scope">
+                <span v-if="scope.row.channelUpdate==1">是</span>
+                <span v-if="scope.row.channelUpdate==2">否</span>
+              </template>
+            </el-table-column>
             <el-table-column min-width="120px" prop="open28" label="开启28">
             </el-table-column>
             <el-table-column min-width="120px" prop="status" label="状态">
@@ -64,6 +70,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否独立更新:" prop="channelUpdate" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.channelUpdate" placeholder="">
+                    <el-option label="是" value="1"></el-option>
+                    <el-option label="否" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.status" placeholder="">
@@ -88,20 +104,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" v-if="formtwo.channelCode=='baozhu'">
-                <el-form-item label="版本号:" prop="versionNo" :label-width="formLabelWidth" >
-                  <el-input :style="styleObject"  min="0" v-model="formtwo.versionNo" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="是否开启28:" prop="open28" :label-width="formLabelWidth">
-                  <el-select :style="styleObject" v-model="formtwo.open28" placeholder="">
-                    <el-option label="开启" :value="1"></el-option>
-                    <el-option label="关闭" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.openNoviceTask" placeholder="">
@@ -110,6 +113,61 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+
+              <el-col :span="12">
+                <el-form-item label="是否开启28:" prop="open28" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.open28" placeholder="">
+                    <el-option label="开启" :value="1"></el-option>
+                    <el-option label="关闭" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+
+              <el-col :span="12">
+                <el-form-item label="是否独立更新:" prop="channelUpdate" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="formtwo.channelUpdate" placeholder="">
+                    <el-option label="是" :value="1"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" v-if="formtwo.channelUpdate==1">
+                <el-form-item label="安卓版本号:" prop="versionNo" :label-width="formLabelWidth" >
+                  <el-input :style="styleObject"  min="0" v-model="formtwo.versionNo" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" v-if="formtwo.channelUpdate==1">
+                <el-form-item label="ios版本号:" prop="iosVersionNo" :label-width="formLabelWidth" >
+                  <el-input :style="styleObject"  min="0" v-model="formtwo.iosVersionNo" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+
+              <el-col :span="22" v-if="formtwo.channelUpdate==1">
+                <el-form-item  label="安卓更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false"   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" v-if="formtwo.channelUpdate==1">
+                <el-form-item  label="ios更新地址:" prop="iosUpdateUrl" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false"   min="0" v-model="formtwo.iosUpdateUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" v-if="formtwo.channelUpdate==1">
+                <el-form-item label="更新描述:"  :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwo.updateRemark" auto-complete="off" clearable></el-input>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="24">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
@@ -118,24 +176,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
-                <el-form-item  label="安卓更新地址:" prop="updateUrl" :label-width="formLabelWidth" >
-                  <el-input spellcheck="false"   min="0" v-model="formtwo.updateUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
-                <el-form-item  label="ios更新地址:" prop="iosUpdateUrl" :label-width="formLabelWidth" >
-                  <el-input spellcheck="false"   min="0" v-model="formtwo.iosUpdateUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="22" v-if="formtwo.channelCode=='baozhu'">
-                <el-form-item label="更新描述:"  :label-width="formLabelWidth" >
-                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 12}" v-model="formtwo.updateRemark" auto-complete="off" clearable></el-input>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -158,19 +199,7 @@
                       {{formtwoInfo.channelCode}}
                     </div>
                   </div>
-                  <div class="body_list" v-if="formtwoInfo.channelCode=='baozhu'">
-                    <div class="title">版本号:</div>
-                    <div class="name">
-                      {{formtwoInfo.versionNo}}
-                    </div>
-                  </div>
-                  <div class="body_list">
-                    <div class="title">是否开启28:</div>
-                    <div class="name">
-                      <span v-if="formtwoInfo.open28==1">已开启</span>
-                      <span v-if="formtwoInfo.open28==2">已关闭</span>
-                    </div>
-                  </div>
+
                   <div class="body_list">
                     <div class="title">开启新手引导:</div>
                     <div class="name">
@@ -178,6 +207,38 @@
                       <span v-if="formtwoInfo.openNoviceTask==2">已关闭</span>
                     </div>
                   </div>
+
+                  <div class="body_list">
+                    <div class="title">是否开启28:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.open28==1">已开启</span>
+                      <span v-if="formtwoInfo.open28==2">已关闭</span>
+                    </div>
+                  </div>
+
+
+                  <div class="body_list">
+                    <div class="title">是否独立更新:</div>
+                        <div class="name">
+                      <span v-if="formtwoInfo.channelUpdate==1">是</span>
+                      <span v-if="formtwoInfo.channelUpdate==2">否</span>
+                    </div>
+                  </div>
+
+                  <div class="body_list" v-if="formtwoInfo.channelUpdate==1">
+                    <div class="title">安卓版本号:</div>
+                    <div class="name">
+                      {{formtwoInfo.versionNo}}
+                    </div>
+                  </div>
+
+                  <div class="body_list" v-if="formtwoInfo.channelUpdate==1">
+                    <div class="title">ios版本号:</div>
+                    <div class="name">
+                      {{formtwoInfo.iosVersionNo}}
+                    </div>
+                  </div>
+
                   <div class="body_list">
                     <div class="title">状态:</div>
                     <div class="name">
@@ -192,7 +253,7 @@
                     </div>
                   </div>
 
-                  <div v-if="formtwoInfo.channelCode=='baozhu'">
+                  <div v-if="formtwoInfo.channelUpdate==1">
                       <div class="header">
                         <span>更新</span>
                         <span></span>
@@ -286,7 +347,12 @@
             required: true,
             message: '请选择状态',
             trigger: 'change'
-          }]
+          }],
+          channelUpdate: [{
+            required: true,
+            message: '请选择是否独立更新',
+            trigger: 'change'
+          }],
         },
         formLabelWidth: '120px',
         currentPage: 1,

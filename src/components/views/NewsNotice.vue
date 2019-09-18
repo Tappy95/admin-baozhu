@@ -16,7 +16,7 @@
       </div>
       <div class="news-notice-table">
         <template>
-          <el-table :data="tableData" height="556">
+          <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" type="expand">
               <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -34,6 +34,12 @@
                       <span v-if="props.row.noticeType==2">首页活动</span>
                       <span v-if="props.row.noticeType==3">消息活动</span>
                   </el-form-item>
+
+                  <el-form-item label="app类型：">
+                  <span v-if="props.row.appType==1">宝猪</span>
+                  <span v-if="props.row.appType==2">中青赚点</span>
+                </el-form-item>
+
                   <el-form-item label="创建人：">
                     <span>{{ props.row.createrName }}</span>
                   </el-form-item>
@@ -45,10 +51,10 @@
                     <span class="blue" v-if="props.row.isRelease==2">未发布</span>
                     <span class="red" v-if="props.row.isRelease==3">已失效</span>
                   </el-form-item>
-                  <el-form-item label="标题：" style="width: 100%">
+                  <el-form-item label="标题：" style="width: 100%;white-space: pre-wrap;line-height: 30px">
                     <span>{{ props.row.noticeTitle }}</span>
                   </el-form-item>
-                  <el-form-item label="内容："style="width:80%;">
+                  <el-form-item label="内容："style="width:80%;white-space: pre-wrap;line-height: 30px">
                     <span>{{ props.row.noticeContent }}</span>
                   </el-form-item>
                 </el-form>
@@ -76,13 +82,21 @@
             </el-table-column>
             <el-table-column width="170" prop="cancelTime" :formatter="dateFormat" label="失效时间">
             </el-table-column>
-            <el-table-column prop="noticeType" label="类型">
+            <el-table-column width="150" prop="noticeType" label="类型">
               <template slot-scope="scope">
                 <span v-if="scope.row.noticeType==1">文字公告</span>
                 <span v-if="scope.row.noticeType==2">首页活动</span>
                 <span v-if="scope.row.noticeType==3">消息活动</span>
               </template>
             </el-table-column>
+
+            <el-table-column width="150" prop="appType" label="app类型">
+              <template slot-scope="scope">
+                <span v-if="scope.row.appType==1">宝猪</span>
+                <span v-if="scope.row.appType==2">中青赚点</span>
+              </template>
+            </el-table-column>
+
             <el-table-column prop="createrName" label="创建人">
             </el-table-column>
             <el-table-column label="发布状态">
@@ -121,14 +135,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
-                <el-form-item label="是否发布" prop="isPublish" :label-width="formLabelWidth">
-                  <el-select v-model="form.isPublish" placeholder="">
-                    <el-option label="是" value="1"></el-option>
-                    <el-option label="否" value="2"></el-option>
-                  </el-select>
-                </el-form-item>
+                  <el-form-item label="app类型" prop="appType" :label-width="formLabelWidth">
+                    <el-select v-model="form.appType" placeholder="">
+                      <el-option label="宝猪" value="1"></el-option>
+                      <el-option label="中青赚点" value="2"></el-option>
+                    </el-select>
+                  </el-form-item>
               </el-col>
+
               <el-col :span="22">
                 <el-form-item label="公告标题" :label-width="formLabelWidth" prop="noticeTitle">
                   <el-input v-model="form.noticeTitle" auto-complete="off"  clearable>
@@ -179,6 +195,16 @@
                     </el-date-picker>
                   </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否发布" prop="isPublish" :label-width="formLabelWidth">
+                  <el-select v-model="form.isPublish" placeholder="">
+                    <el-option label="是" value="1"></el-option>
+                    <el-option label="否" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -198,14 +224,17 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+
               <el-col :span="12">
-                <el-form-item label="是否发布"  :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.isPublish" placeholder="">
-                    <el-option label="是" :value="1"></el-option>
-                    <el-option label="否" :value="2"></el-option>
+                <el-form-item label="app类型" prop="appType" :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.appType" placeholder="">
+                    <el-option label="宝猪" :value="1"></el-option>
+                    <el-option label="中青赚点" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="22">
                 <el-form-item label="公告标题" :label-width="formLabelWidth" >
                   <el-input v-model="formtwo.noticeTitle" auto-complete="off"  clearable>
@@ -256,6 +285,15 @@
                   </el-date-picker>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否发布"  :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.isPublish" placeholder="">
+                    <el-option label="是" :value="1"></el-option>
+                    <el-option label="否" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
 
           </el-form>
@@ -273,14 +311,6 @@
                   <span></span>
                 </div>
                 <div class="body_list">
-                  <div class="title">发布状态:</div>
-                  <div class="name">
-                    <span  v-if="formtwoInfo.isRelease==1">已发布</span>
-                    <span  v-if="formtwoInfo.isRelease==2">未发布</span>
-                    <span  v-if="formtwoInfo.isRelease==3">已失效</span>
-                   </div>
-                </div>
-                <div class="body_list">
                   <div class="title">公告类型:</div>
                   <div class="name">
                     <span class="badeg status_on" v-if="formtwoInfo.noticeType==1">文字公告</span>
@@ -288,6 +318,15 @@
                     <span class="badeg status_off" v-if="formtwoInfo.noticeType==3">消息活动</span>
                   </div>
                 </div>
+
+                <div class="body_list">
+                  <div class="title">app类型:</div>
+                  <div class="name">
+                    <span  v-if="formtwoInfo.appType ==1">宝猪</span>
+                    <span  v-if="formtwoInfo.appType ==2">中青赚点</span>
+                  </div>
+                </div>
+
                 <div class="body_list">
                   <div class="title">权限:</div>
                   <div class="name">
@@ -306,21 +345,29 @@
                   <div class="title">失效时间:</div>
                   <div class="name">{{formtwoInfo.cancelTime | dateFont }}</div>
                 </div>
+                <div class="body_list" style="width: 100%">
+                  <div class="title">发布状态:</div>
+                  <div class="name">
+                    <span  v-if="formtwoInfo.isRelease==1">已发布</span>
+                    <span  v-if="formtwoInfo.isRelease==2">未发布</span>
+                    <span  v-if="formtwoInfo.isRelease==3">已失效</span>
+                  </div>
+                </div>
                 <div class="body_list dec" style="width: 100%" >
                 <div class="title">公告标题:</div>
-                  <div class="name"  style="width:600px;">
+                  <div class="name"  style="width:560px;">
                     <span class="dec" style="line-height: 30px; padding: 10px 10px">   {{formtwoInfo.noticeTitle}}</span>
                   </div>
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==1 || formtwoInfo.noticeType==3" >
                   <div class="title">公告内容:</div>
-                  <div class="name"  style="width:600px;">
-                    <span class="dec" style="line-height: 30px; padding: 10px 10px">  {{formtwoInfo.noticeContent}}</span>
+                  <div class="name"  style="width:560px;">
+                    <span class="dec" style="line-height: 30px;">  {{formtwoInfo.noticeContent}}</span>
                   </div>
                 </div>
                 <div class="body_list dec" style="width: 100%" v-if="formtwoInfo.noticeType==3 || formtwoInfo.noticeType==2">
                   <div class="title">链接地址:</div>
-                  <div class="name"  style="width:600px;">
+                  <div class="name"  style="width:560px;">
                     <span class="dec" style="line-height: 30px; padding: 10px 0">  {{formtwoInfo.linkAddress}}</span>
                   </div>
                 </div>
@@ -397,6 +444,11 @@
             message: '请选择发布时间',
             trigger: 'change'
           }],
+          appType: [{
+            required: true,
+            message: '请选择app类型',
+            trigger: 'change'
+          }],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -411,24 +463,24 @@
             onClick(picker) {
               const end = new Date();
               const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
+              start.setTime((start.getTime() + 3600 * 1000 * 24 * 7));
+              picker.$emit('pick', [end, start]);
             }
           }, {
             text: '最近一个月',
             onClick(picker) {
               const end = new Date();
               const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
+              start.setTime(start.getTime() + 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [end,start]);
             }
           }, {
             text: '最近三个月',
             onClick(picker) {
               const end = new Date();
               const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
+              start.setTime(start.getTime() + 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [end,start]);
             }
           }]
         },

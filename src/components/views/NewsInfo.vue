@@ -26,6 +26,12 @@
                   <el-form-item label="通知类型：">
                     {{props.row.informType}}
                   </el-form-item>
+
+                  <el-form-item label="app类型：">
+                    <span v-if="props.row.appType==1">宝猪</span>
+                    <span v-if="props.row.appType==2">中青赚点</span>
+                  </el-form-item>
+
                   <el-form-item label="通知方式：">
                     {{props.row.pushMode}}
                   </el-form-item>
@@ -41,7 +47,7 @@
                   <el-form-item label="标题：" style="width: 100%">
                     <span>{{ props.row.informTitle }}</span>
                   </el-form-item>
-                  <el-form-item label="内容："style="width:100%;">
+                  <el-form-item label="内容："style="width:100%;white-space: pre-wrap">
                     <span>{{ props.row.informContent }}</span>
                   </el-form-item>
                 </el-form>
@@ -62,6 +68,12 @@
             <el-table-column prop="isRelease" min-width="120px" label="发布状态">
             </el-table-column>
             <el-table-column prop="informType" min-width="120px" label="通知类型">
+            </el-table-column>
+            <el-table-column width="150" prop="appType" label="app类型">
+              <template slot-scope="scope">
+                <span v-if="scope.row.appType==1">宝猪</span>
+                <span v-if="scope.row.appType==2">中青赚点</span>
+              </template>
             </el-table-column>
             <el-table-column prop="pushMode" min-width="120px" label="通知方式">
             </el-table-column>
@@ -105,7 +117,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
                 <el-form-item label="是否发布" prop="isRelease" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.isRelease" placeholder="">
@@ -133,6 +144,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="app类型" prop="appType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject" v-model="form.appType" placeholder="">
+                    <el-option label="宝猪" value="1"></el-option>
+                    <el-option label="中青赚点" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="22">
                 <el-form-item v-if="myhttps" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
                   <el-input  v-model="form.informUrl" auto-complete="off"  clearable>
@@ -213,6 +234,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="app类型" prop="appType" :label-width="formLabelWidth">
+                  <el-select v-model="formtwo.appType" placeholder="">
+                    <el-option label="宝猪" :value="1"></el-option>
+                    <el-option label="中青赚点" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="22">
                 <el-form-item v-if="formtwo.informType==2" label="自定义消息跳转链接" :label-width="formLabelWidth" prop="informUrl">
                   <el-input  v-model="formtwo.informUrl" auto-complete="off"  clearable>
@@ -271,6 +302,14 @@
                   <span  v-if="formtwoInfo.informType==2">自定义通知</span>
                 </div>
               </div>
+
+                <div class="body_list">
+                  <div class="title">app类型:</div>
+                  <div class="name">
+                    <span  v-if="formtwoInfo.appType ==1">宝猪</span>
+                    <span  v-if="formtwoInfo.appType ==2">中青赚点</span>
+                  </div>
+                </div>
 
                 <div class="body_list">
                   <div class="title">推送对象:</div>
@@ -409,6 +448,11 @@
                }, trigger:'blur'}
              // let pattern = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
           ],
+          appType: [{
+            required: true,
+            message: '请选择app类型',
+            trigger: 'change'
+          }],
         },
         formLabelWidth: '160px',
         /* 分页*/

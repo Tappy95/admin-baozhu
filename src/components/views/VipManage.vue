@@ -236,6 +236,14 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="退款vipId:" :label-width="formLabelWidth" prop="returnVip">
+                  <el-select v-model="form.returnVip" placeholder="">
+                    <el-option label="不需要" value="-1"></el-option>
+                    <el-option v-for="(item,index) in zqVipList" :key="index" :label="item.name" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
             <el-form-item label="logo:"
                           :label-width="formLabelWidth">
@@ -446,6 +454,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="退款vipId:" :label-width="formLabelWidth" prop="returnVip">
+                  <el-select v-model="formtwo.returnVip" placeholder="">
+                    <el-option label="不需要" :value="-1"></el-option>
+                    <el-option v-for="(item,index) in zqVipList" :key="index" :label="item.name" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
             </el-row>
 
             <el-col :span="24">
@@ -669,6 +687,16 @@
                     </div>
                   </div>
 
+                  <div class="body_list" >
+                    <div class="title">退款vipId:</div>
+                    <div class="name">
+                      <el-select :disabled="true" v-model="formtwoInfo.returnVip" placeholder="">
+                        <el-option label="不需要" :value="-1"></el-option>
+                        <el-option v-for="(item,index) in zqVipList" :key="index" :label="item.name" :value="item.id"></el-option>
+                      </el-select>
+                    </div>
+                  </div>
+
                   <div class="header">
                     <span>图片</span>
                     <span></span>
@@ -734,7 +762,7 @@
         formtwoInfo:{},
         form: {
           logo:'',
-          backgroundImg:''
+          backgroundImg:'',
         },
         rules: {
           // vipType vip类型 1.普通vip 2.中青赚点
@@ -863,6 +891,7 @@
           coinToPigAddition: [{required: true, message: '请输入金币兑换金猪加成', trigger: 'blur'}],
           isTask: [{required: true, message: '请选择是否需要完成任务', trigger: 'change'}],
           isRenew: [{required: true, message: '请选择是否可以续费', trigger: 'change'}],
+          returnVip: [{required: true, message: '请选择退款vipId', trigger: 'change'}],
         },
         formLabelWidth: '190px',
         /* 分页*/
@@ -872,6 +901,7 @@
         formInline: {},
         tableData: [],
         isSubmit:false,
+        ZqVipList:[]
       }
     },
     components: {
@@ -891,6 +921,8 @@
       this.uploadData={
         token:getSession("token")
       }
+
+      this.getZqVip();
     },
     methods: {
       clickImg(img) {
@@ -979,7 +1011,21 @@
         this.backgroundImg ='';
         this.dialogFormVisible = true;
         this.isSubmit =false;
+        this.getZqVip();
       },
+
+      getZqVip() {
+        this.$fetch('/api/mVipInfo/dowZqVip').then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            console.log(res.data)
+            this.$nextTick(function () {
+              this.zqVipList = res.data;
+            })
+
+          }
+        })
+      },
+
       addBtn(form) {
         this.form.imageUrl=this.imageUrl;
         this.form.logo=this.imageUrl;
@@ -1127,6 +1173,14 @@
   }
 </script>
 <style type="text/css">
+
+ /*.vip-manage-wrap .el-input.is-disabled .el-input__inner{*/
+    /*background-color: #FFF;*/
+    /*border-color: #FFFF*/
+  /*}*/
+
+ /*!*.el-input.is-disabled .el-input__inner*!*/
+
   .avatar{
      width: 148px;
     height: 148px;
