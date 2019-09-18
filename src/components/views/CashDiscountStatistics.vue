@@ -30,7 +30,6 @@
           </el-input>
         </el-form-item>
 
-
         <el-form-item label="注册时间:">
           <el-date-picker
             v-model="selectTime"
@@ -42,6 +41,19 @@
             align="left">
           </el-date-picker>
         </el-form-item>
+
+        <el-form-item label="提现时间:">
+          <el-date-picker
+            v-model="selectTimeCash"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="至"
+            start-placeholder="起始提现时间"
+            end-placeholder="结束提现时间"
+            align="left">
+          </el-date-picker>
+        </el-form-item>
+
         <el-form-item >
           <el-button type="primary" plain @click="search" >查询</el-button>
         </el-form-item>
@@ -57,12 +69,6 @@
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
           </el-table-column>
           <el-table-column fixed="left" min-width="100px" prop="accountId" label="用户id">
-          </el-table-column>
-          <el-table-column label="登陆设备" min-width="120px">
-            <template slot-scope="scope">
-              <span v-if="scope.row.equipmentType==1">安卓</span>
-              <span v-if="scope.row.equipmentType==2">ios</span>
-            </template>
           </el-table-column>
           <el-table-column  min-width="100px" prop="channelCode" label="渠道标识">
           </el-table-column>
@@ -80,6 +86,12 @@
           <el-table-column  width="170px" prop="cashDate" label="提现时间">
           </el-table-column>
           <el-table-column  width="200" prop="days" label="距离注册时间的天数">
+          </el-table-column>
+          <el-table-column label="登陆设备" min-width="120px">
+            <template slot-scope="scope">
+              <span v-if="scope.row.equipmentType==1">安卓</span>
+              <span v-if="scope.row.equipmentType==2">ios</span>
+            </template>
           </el-table-column>
         </el-table>
       </template>
@@ -119,6 +131,7 @@
         minDays:'',
         maxDays:'',
         selectTime: '',
+        selectTimeCash:'',
         pickerOptions: {
           shortcuts: [{
             text: '最近一周',
@@ -198,8 +211,11 @@
           minDays:this.formInline.minDays,
           maxDays:this.formInline.maxDays,
           minCreateDate:this.formInline.minCreateDate,
-          maxCreateDate:this.formInline.maxCreateDate
+          maxCreateDate:this.formInline.maxCreateDate,
+          minCashTime:this.formInline.minCashTime,
+          maxCashTime:this.formInline.maxCashTime
         }
+
         this.$fetch('/api/userCashLog/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.tableData = res.data.list
@@ -235,6 +251,20 @@
           this.formInline.maxCreateDate = new Date(this.selectTime[1]).getTime();
         }else {
           this.formInline.maxCreateDate = ''
+        }
+
+        //起始提现时间
+        if (this.selectTimeCash && this.selectTimeCash[0]) {
+          this.formInline.minCashTime = new Date(this.selectTimeCash[0]).getTime();
+        }else {
+          this.formInline.minCashTime = ''
+        }
+
+        //结束提现时间
+        if (this.selectTimeCash && this.selectTimeCash[1]) {
+          this.formInline.maxCashTime = new Date(this.selectTimeCash[1]).getTime();
+        }else {
+          this.formInline.maxCashTime = ''
         }
 
         this.currentPage = 1;
