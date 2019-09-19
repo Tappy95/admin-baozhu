@@ -261,6 +261,21 @@
               </el-upload>
             </el-form-item>
 
+            <el-form-item label="过期logo:"
+                          :label-width="formLabelWidth">
+              <el-upload class="bannerAvatar-uploader"
+                         action="/api/upload"
+                         :data="uploadData"
+                         :show-file-list="false"
+                         :on-success="handleAvatarSuccessOver"
+                         :before-upload="beforeAvatarUploadOver">
+                <img v-if="overdueImg"
+                     :src="overdueImg"
+                     class="avatar">
+                <i v-else
+                   class="el-icon-plus bannerAvatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
             <el-form-item label="背景图:"
                           :label-width="formLabelWidth">
               <el-upload class="bannerAvatar-uploader"
@@ -467,23 +482,41 @@
             </el-row>
 
             <el-col :span="24">
-            <el-form-item label="logo:"
-                          prop="imageUrl"
+              <el-form-item label="logo:"
+                            prop="imageUrl"
+                            :label-width="formLabelWidth">
+                <el-upload class="bannerAvatar-uploader"
+                           action="/api/upload"
+                           :data="uploadData"
+                           :show-file-list="false"
+                           :on-success="handleAvatarSuccess"
+                           :before-upload="beforeAvatarUpload">
+                  <img v-if="imageUrl"
+                       :src="imageUrl"
+                       class="avatar">
+                  <i v-else
+                     class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                </el-upload>
+              </el-form-item>
+            </el-col>
+
+
+            <el-form-item label="过期logo:"
                           :label-width="formLabelWidth">
               <el-upload class="bannerAvatar-uploader"
                          action="/api/upload"
                          :data="uploadData"
                          :show-file-list="false"
-                         :on-success="handleAvatarSuccess"
-                         :before-upload="beforeAvatarUpload">
-                <img v-if="imageUrl"
-                     :src="imageUrl"
+                         :on-success="handleAvatarSuccessOver"
+                         :before-upload="beforeAvatarUploadOver">
+                <img v-if="overdueImg"
+                     :src="overdueImg"
                      class="avatar">
                 <i v-else
                    class="el-icon-plus bannerAvatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
-            </el-col>
+
             <el-col :span="24">
             <el-form-item label="背景图:"
                           :label-width="formLabelWidth">
@@ -702,7 +735,7 @@
                     <span></span>
                   </div>
 
-                  <div  class="body_list img" style="width: 100%;border: none" >
+                  <div  class="body_list img" style="width: 100%;height:140px;border: none" >
                     <div class="title" style="float: left;">logo:</div>
                     <div class="img_box" style="width: 600px;float: left;">
                       <div @click="clickImg(formtwoInfo.logo)" v-if="formtwoInfo.logo"   class="more_img">
@@ -711,7 +744,16 @@
                     </div>
                   </div>
 
-                  <div  class="body_list img" style="width: 100%;border: none" >
+                  <div  class="body_list img" style="width: 100%;height:140px;border: none" >
+                    <div class="title" style="float: left;">过期logo:</div>
+                    <div class="img_box" v-if="formtwoInfo.overdueImg " style="width: 600px;float: left;">
+                      <div @click="clickImg(formtwoInfo.overdueImg )"    class="more_img">
+                        <img  :src="formtwoInfo.overdueImg "  />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div  class="body_list img" style="width: 100%;height:140px;border: none" >
                     <div class="title" style="float: left;">背景图:</div>
                     <div class="img_box" style="width: 600px;float: left;">
                       <div @click="clickImg(formtwoInfo.backgroundImg)" v-if="formtwoInfo.backgroundImg"   class="more_img">
@@ -754,6 +796,7 @@
         upd:false,
         imageUrl: '',
         backgroundImg :'',
+        overdueImg:'',
         imgUrl:'',
         dialogTableVisible: false,
         formtwo: {},
@@ -763,6 +806,7 @@
         form: {
           logo:'',
           backgroundImg:'',
+          overdueImg:''
         },
         rules: {
           // vipType vip类型 1.普通vip 2.中青赚点
@@ -1008,6 +1052,7 @@
         this.form.backgroundImg='';
         this.formInline = {};
         this.imageUrl='';
+        this.overdueImg = ''
         this.backgroundImg ='';
         this.dialogFormVisible = true;
         this.isSubmit =false;
@@ -1028,6 +1073,7 @@
 
       addBtn(form) {
         this.form.imageUrl=this.imageUrl;
+        this.form.overdueImg=this.overdueImg;
         this.form.logo=this.imageUrl;
         this.form.backgroundImg=this.backgroundImg;
         this.$refs[form].validate(valid => {
@@ -1038,6 +1084,10 @@
             }
             if (!this.form.backgroundImg){
               this.$message({type: 'error', message: '请上传背景图！'})
+              return
+            }
+            if (!this.form.overdueImg){
+              this.$message({type: 'error', message: '请上传过期logo！'})
               return
             }
             this.$nextTick(function () {
@@ -1101,6 +1151,7 @@
       getInfo(id) {
         this.imageUrl='';
         this.backgroundImg='';
+        this.overdueImg ='';
         this.dialogTableVisible = true
         this.$fetch('/api/mVipInfo/queryOne', {
           id: id
@@ -1109,12 +1160,14 @@
               this.formtwo = res.data;
               this.imageUrl=res.data.logo;
               this.backgroundImg = res.data.backgroundImg;
+              this.overdueImg = res.data.overdueImg;
             }
         })
       },
       update(formtwo) {
         this.formtwo.logo=this.imageUrl;
         this.formtwo.backgroundImg = this.backgroundImg;
+        this.formtwo.overdueImg = this.overdueImg;
         this.$refs[formtwo].validate(valid => {
           if (valid) {
             if (!this.formtwo.logo){
@@ -1125,6 +1178,12 @@
               this.$message({type: 'error', message: '请上传背景图！'})
               return
             }
+
+            if (!this.formtwo.overdueImg){
+              this.$message({type: 'error', message: '请上传过期logo！'})
+              return
+            }
+
             this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.$message({type: 'success', message: '修改成功！'})
@@ -1158,6 +1217,13 @@
         this.backgroundImg=res.data
       },
       beforeAvatarUploadBg(file) {
+      },
+
+      handleAvatarSuccessOver(res, file) {
+        this.overdueImg=res.data
+        console.log(res.data)
+      },
+      beforeAvatarUploadOver(file) {
       },
 
       handleSizeChange(val) {
