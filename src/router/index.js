@@ -518,7 +518,12 @@ const routes = [
         component: resolve => require(['../components/views/BzGameSet.vue'], resolve),
         meta: { title: '游戏设置'}
       },
-
+      {
+        path: 'task-cash-order',
+        name: 'TaskCashOrder',
+        component: resolve => require(['../components/views/TaskCashOrder.vue'], resolve),
+        meta: { title: '任务提现订单'}
+      },
     ]
   }
 ]
