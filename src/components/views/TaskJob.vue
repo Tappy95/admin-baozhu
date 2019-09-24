@@ -21,17 +21,17 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column width="150px" prop="jobName" label="job名称">
+            <el-table-column min-width="150px" prop="jobName" label="job名称">
             </el-table-column>
-            <el-table-column width="150px" prop="jobGroup" label="job组">
+            <el-table-column min-width="150px" prop="jobGroup" label="job组">
             </el-table-column>
-            <el-table-column width="200px" prop="triggerName"  label="trigger名称">
+            <el-table-column min-width="200px" prop="triggerName"  label="trigger名称">
             </el-table-column>
-            <el-table-column width="200px" prop="triggerGroupName"  label="trigger组名称">
+            <el-table-column min-width="200px" prop="triggerGroupName"  label="trigger组名称">
             </el-table-column>
-            <el-table-column width="250px" prop="processClass"  label="处理类">
+            <el-table-column min-width="250px" prop="processClass"  label="处理类">
             </el-table-column>
             <el-table-column width="250px" prop="cronExpression"  label="cron表达式">
             </el-table-column>
@@ -52,50 +52,54 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-dialog title="添加任务调度" :visible.sync="dialogFormVisible" width="700px">
+        <el-dialog title="添加任务调度" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="job名称" :label-width="formLabelWidth" prop="jobName">
                   <el-input v-model="form.jobName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="trigger名称" prop="triggerName" :label-width="formLabelWidth">
                   <el-input v-model="form.triggerName" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="job组" prop="jobGroup" :label-width="formLabelWidth">
                   <el-input  v-model="form.jobGroup" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="trigger组名称" prop="triggerGroupName" :label-width="formLabelWidth">
                   <el-input  v-model="form.triggerGroupName" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="处理类" prop="processClass" :label-width="formLabelWidth">
                   <el-input  v-model="form.processClass" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="cron表达式" prop="cronExpression" :label-width="formLabelWidth">
                   <el-input v-model="form.cronExpression" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
+              <el-col :span="22">
+                <el-form-item label="描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input   type="textarea" :autosize="{ minRows: 4, maxRows: 8}"  v-model="form.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
+                  <el-select style="width: 210px" v-model="form.status" placeholder="">
+                    <el-option label="启动" value="1"></el-option>
+                    <el-option label="停止" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
-            <el-form-item label="描述" prop="remark" :label-width="formLabelWidth">
-              <el-input   type="textarea" :autosize="{ minRows: 4, maxRows: 8}" style="width: 370px;" v-model="form.remark" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
-              <el-select style="width: 210px" v-model="form.status" placeholder="">
-                <el-option label="启动" value="1"></el-option>
-                <el-option label="停止" value="2"></el-option>
-              </el-select>
-            </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -105,108 +109,118 @@
         <el-dialog title="修改任务" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo">
             <el-row>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="job名称" :label-width="formLabelWidth" prop="jobName">
                   <el-input v-model="formtwo.jobName" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="trigger名称" prop="triggerName" :label-width="formLabelWidth">
                   <el-input v-model="formtwo.triggerName" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="job组" prop="jobGroup" :label-width="formLabelWidth">
                   <el-input  v-model="formtwo.jobGroup" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="trigger组名称" prop="triggerGroupName" :label-width="formLabelWidth">
                   <el-input  v-model="formtwo.triggerGroupName" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="处理类" prop="processClass" :label-width="formLabelWidth">
                   <el-input  v-model="formtwo.processClass" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="18">
+              <el-col :span="22">
                 <el-form-item label="cron表达式" prop="cronExpression" :label-width="formLabelWidth">
                   <el-input v-model="formtwo.cronExpression" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
+              <el-col :span="22">
+                <el-form-item label="描述" prop="remark" :label-width="formLabelWidth">
+                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 8}"  v-model="formtwo.remark" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
+                  <el-select style="width: 210px" v-model="formtwo.status" placeholder="">
+                    <el-option label="启动" :value="1"></el-option>
+                    <el-option label="停止" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
-            <el-form-item label="描述" prop="remark" :label-width="formLabelWidth">
-              <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 8}" style="width: 370px;" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
-              <el-select style="width: 210px" v-model="formtwo.status" placeholder="">
-                <el-option label="启动" :value="1"></el-option>
-                <el-option label="停止" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
           </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogTableVisible = false">取 消</el-button>
               <el-button type="primary" @click="update(formtwo)">确 定</el-button>
             </div>
         </el-dialog>
-        <el-dialog title="任务详情" :visible.sync="dialogTableDetail" width="700px">
+        <el-dialog title="任务详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="job名称" :label-width="formLabelWidth" prop="jobName">
-                  <el-input :disabled="true" v-model="formtwoInfo.jobName" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="trigger名称" prop="triggerName" :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwoInfo.triggerName" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="18">
-                <el-form-item label="job组" prop="jobGroup" :label-width="formLabelWidth">
-                  <el-input  :disabled="true" v-model="formtwoInfo.jobGroup" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="18">
-                <el-form-item label="trigger组名称" prop="triggerGroupName" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  v-model="formtwoInfo.triggerGroupName" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="18">
-                <el-form-item label="处理类" prop="processClass" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  v-model="formtwoInfo.processClass" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="18">
-                <el-form-item label="cron表达式" prop="cronExpression" :label-width="formLabelWidth">
-                  <el-input :disabled="true" v-model="formtwoInfo.cronExpression" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-form-item label="描述" prop="remark" :label-width="formLabelWidth">
-              <el-input :disabled="true" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" style="width: 370px;" v-model="formtwoInfo.remark" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-col :span="12">
-              <el-form-item label="创建时间" prop="createDate" :label-width="formLabelWidth">
-                <el-input :disabled="true"  v-model="formtwoInfo.createDate" auto-complete="off" clearable></el-input>
-              </el-form-item>
-            </el-col>
-              <el-col :span="12">
-                <el-form-item label="修改时间" prop="modifiedDate" :label-width="formLabelWidth">
-                  <el-input :disabled="true"  v-model="formtwoInfo.modifiedDate" auto-complete="off" clearable></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
-              <el-select :disabled="true" style="width: 210px" v-model="formtwoInfo.status" placeholder="">
-                <el-option label="启动" :value="1"></el-option>
-                <el-option label="停止" :value="2"></el-option>
-              </el-select>
-            </el-form-item>
+            <div class="box_xinxi">
+              <div class="wrap_da">
+                <div class="header">
+                  <span>详情信息</span>
+                  <span></span>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">job名称:</div>
+                  <div class="name">
+                    {{formtwoInfo.jobName}}
+                  </div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">trigger名称:</div>
+                  <div class="name">
+                    {{formtwoInfo.triggerName}}
+                  </div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">job组:</div>
+                  <div class="name">{{formtwoInfo.jobGroup}}</div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">trigger组名称:</div>
+                  <div class="name">{{formtwoInfo.triggerGroupName}}</div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">处理类:</div>
+                  <div class="name">
+                    <div class="name">{{formtwoInfo.processClass}}</div>
+                  </div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">cron表达式:</div>
+                  <div class="name">
+                    <div class="name">{{formtwoInfo.cronExpression}}</div>
+                  </div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">描述:</div>
+                  <div class="name">{{formtwoInfo.remark}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">创建时间:</div>
+                  <div class="name">{{formtwoInfo.createDate}}</div>
+                </div>
+                <div class="body_list">
+                  <div class="title">修改时间:</div>
+                  <div class="name">{{formtwoInfo.modifiedDate}}</div>
+                </div>
+                <div class="body_list dec1">
+                  <div class="title">状态:</div>
+                  <div class="name">
+                    <span v-if="formtwoInfo.status==1">已启用</span>
+                    <span  v-if="formtwoInfo.status==2">已停用</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogTableDetail = false">取 消</el-button>
@@ -237,16 +251,7 @@
         dialogFormVisible: false,
         dialogTableDetail:false,
         formtwoInfo:{},
-        form: {
-          noticeTitle: '',
-          noticeContent: '',
-          password: '',
-          isRelease: '1'
-        },
-        roles: {
-          id: '',
-          realname: ''
-        },
+        form: {},
         rules: {
           jobName: [{
             required: true,
@@ -301,16 +306,13 @@
         formInline: {},
         tableData: [],
         isShow: false,
-        selectDept: [],
-        selectData: [],
-        staff: 1,
-        company: 2,
+        isSubmit:false,
       }
     },
     created() {
-      this.menuId=this.$route.query.id
-      this.queryBtns()
-      this.accountList()
+      this.menuId=this.$route.query.id;
+      this.queryBtns();
+      this.accountList();
     },
     methods: {
       queryBtns(){
@@ -382,18 +384,22 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
-        this.accountList()
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.accountList();
       },
       load() {
         this.form={};
         this.formInline = {};
         this.dialogFormVisible = true;
+        this.isSubmit=false;
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+            this.$nextTick(function () {
+              this.isSubmit=true;
+            })
             this.$post('/task/mTaskJob/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
               this.dialogFormVisible = false
@@ -403,10 +409,11 @@
               })
               this.accountList()
             } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
+                this.isSubmit=false;
+                this.$message({
+                  type: 'error',
+                  message: res.message
+                })
             }
           })
           } else {}
@@ -498,6 +505,9 @@
   }
 </script>
 <style type="text/css">
+  .administratormanage-wrap .body_list.dec1{
+    width: 100%;
+  }
   .administratormanage-wrap {
     width: 100%;
   }
