@@ -488,6 +488,37 @@ const routes = [
         component: resolve => require(['../components/views/SysTaskLog.vue'], resolve),
         meta: { title: '系统任务记录'}
       },
+      {
+        path: 'bz-game-manage',
+        name: 'BzGameManage',
+        component: resolve => require(['../components/views/BzGameManage.vue'], resolve),
+        meta: { title: '游戏管理'}
+      },
+      {
+        path: 'bz-task-job',
+        name: 'BzTaskJob',
+        component: resolve => require(['../components/views/BzTaskJob.vue'], resolve),
+        meta: { title: '28任务调度'}
+      },
+      {
+        path: 'bz-game-kind',
+        name: 'BzGameKind',
+        component: resolve => require(['../components/views/BzGameKind.vue'], resolve),
+        meta: { title: '彩种管理'}
+      },
+      {
+        path: 'bz-play-num',
+        name: 'BzPlayNum',
+        component: resolve => require(['../components/views/BzPlayNum.vue'], resolve),
+        meta: { title: '玩法个数'}
+      },
+      {
+        path: 'bz-game-set',
+        name: 'BzGameSet',
+        component: resolve => require(['../components/views/BzGameSet.vue'], resolve),
+        meta: { title: '游戏设置'}
+      },
+
     ]
   }
 ]
