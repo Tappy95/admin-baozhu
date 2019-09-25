@@ -28,26 +28,26 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-
             <el-form-item label="渠道标识:">
               <el-select   v-model="formInline.channelCode" placeholder="请选择渠道标识">
                 <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                 <el-option label="全部" value=""></el-option>
               </el-select>
             </el-form-item>
-
-          <!--<el-form-item label="是否购买vip:" :label-width="formLabelWidth" >-->
-            <!--<el-select  v-model="formInline.isRechargeVip" placeholder="请选择是否购买vip">-->
-              <!--<el-option label="是" value="1"></el-option>-->
-              <!--<el-option label="否" value="2"></el-option>-->
-              <!--<el-option label="全部" value=""></el-option>-->
-            <!--</el-select>-->
-          <!--</el-form-item>-->
-
+          <el-form-item label="注册时间:">
+            <el-date-picker
+              v-model="selectTime"
+              type="datetimerange"
+              :picker-options="pickerOptions"
+              range-separator="至"
+              start-placeholder="起始时间"
+              end-placeholder="结束时间"
+              align="left">
+            </el-date-picker>
+          </el-form-item>
           <el-form-item>
             <el-button @click="search()" type="primary" plain>查询</el-button>
           </el-form-item>
-
           <el-form-item>
             <el-button type="success" v-if="exportExle" plain @click="queryExport()" >导出表格</el-button>
           </el-form-item>
@@ -81,6 +81,12 @@
             </el-table-column>
             <el-table-column prop="apprentice" label="直属下级人数" min-width="110px">
             </el-table-column>
+
+            <el-table-column prop="yxCount" label="游戏次数" min-width="120px">
+            </el-table-column>
+            <el-table-column prop="zcYxCount" label="注册当天游戏次数" min-width="140px">
+            </el-table-column>
+
             <el-table-column label="渠道" min-width="100px">
               <template slot-scope="scope">
                 <span v-if="scope.row.channelCode">{{scope.row.channelCode}}</span>
@@ -233,6 +239,22 @@
                       {{message.apprentice}}
                     </div>
                   </div>
+
+                  <div class="body_list" >
+                    <div class="title">游戏次数:</div>
+                    <div class="name">
+                      {{message.yxCount}}
+                    </div>
+                  </div>
+
+                  <div class="body_list" >
+                    <div class="title">注册当天任务次数:</div>
+                    <div class="name">
+                      {{message.zcYxCount}}
+                    </div>
+                  </div>
+
+
                   <div class="body_list" >
                     <div class="title">渠道:</div>
                     <div class="name">
@@ -300,7 +322,7 @@
                      {{message.djCount}}
                     </div>
                   </div>
-                  <div class="body_list" >
+                  <div class="body_list"  >
                     <div class="title">注册时间:</div>
                     <div class="name">
                      {{message.createTime}}
@@ -501,9 +523,7 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
-        formInline: {
-          isRechargeVip:''
-        },
+        formInline: {},
         tableData:[],
         onetableData:[],
         rewardtableData:[],
@@ -520,6 +540,34 @@
         loading:false,
         fullscreenLoading:false,
         vip:"",
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        selectTime: '',
       }
     },
     created() {
@@ -586,8 +634,21 @@
       })
       },
       search() {
-        this.currentPage = 1
-        this.pageSize = 10
+
+        //起始注册时间
+        if (this.selectTime && this.selectTime[0]) {
+          this.formInline.startCreateTime = new Date(this.selectTime[0]).getTime();
+        }else {
+          this.formInline.startCreateTime = ''
+        }
+        //结束注册时间
+        if (this.selectTime && this.selectTime[1]) {
+          this.formInline.endCreateTime = new Date(this.selectTime[1]).getTime();
+        }else {
+          this.formInline.endCreateTime = ''
+        }
+        this.currentPage = 1;
+        this.pageSize = 10;
         this.accountList()
       },
       indexMethod(index) {
@@ -723,7 +784,9 @@
           accountId:this.formInline.accountId,
           mobile:this.formInline.mobile,
           level:this.formInline.level,
-          channelCode:this.formInline.channelCode
+          channelCode:this.formInline.channelCode,
+          startCreateTime:this.formInline.startCreateTime,//起始时间
+          endCreateTime:this.formInline.endCreateTime,//结束时间
           // isRechargeVip:this.formInline.isRechargeVip
         }
         this.$fetch('/api/userInfo/list', parameterData).then(res => {
@@ -758,78 +821,42 @@
         this.rewardcurrentPage = val
         this.reward(0)
       },
+
       //导出表格
       queryExport() {
+        this.search();
+        //开启正在导出弹层
         this.fullscreenLoading = this.$loading({
           lock: true,
           text: '正在导出...',
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-
-        let accountId=this.formInline.accountId;
-        let mobile=this.formInline.mobile;
-        let level=this.formInline.level;
-        let channelCode=this.formInline.channelCode;
-
-        let token= getSession("token");
-        let channel= getSession("channelCode");
-        let relation= getSession("userRelation");
-
-        let url = '/api/excl/userExcl';
-        let data = {url,accountId,mobile,level,channelCode,token,channel,relation};
-        this.doDownload(data);
+        this.formInline.token=getSession("token");
+        this.formInline.channel=getSession("channelCode");
+        this.formInline.relation= getSession("userRelation");
+        let url ='/api/excl/userExcl';
+        this.doDownload(this.formInline,url);
       },
-      doDownload(obj) {
-        let url = obj.url,
-          accountId=obj.accountId,
-          mobile=obj.mobile,
-          level=obj.level,
-          channelCode=obj.channelCode,
-          token= obj.token,
-          channel=obj.channel,
-          relation=obj.relation
 
-        let a1 = document.createElement('a');
+      doDownload(from,url){
+        let keys=[];
+        let data=[];
+        for (var i in from) {
+          if(from[i]!=null && from[i]!='') {
+            keys.push(i)
+            data.push(from[i])
+          }
+        }
         let http=url;
-        if(http==url){
-          if(accountId){
-            http=http+'?accountId=' + accountId
+        for(let i=0;i<keys.length;i++){
+          if(http==url){
+            http=http+'?'+keys[i]+'='+ data[i]
+          }else{
+            http=http+'&'+keys[i]+'='+ data[i]
           }
         }
-        if(http==url){
-          if(mobile){
-            http=http+'?mobile=' + mobile
-          }
-        }else{
-          if(mobile){
-            http=http+'&mobile=' + mobile
-          }
-        }
-        if(http==url){
-          if(level){
-            http=http+'?level=' + level
-          }
-        }else{
-          if(level){
-            http=http+'&level=' + level
-          }
-        }
-        if(http==url){
-          if(channelCode){
-            http=http+'?channelCode=' + channelCode
-          }
-        }else{
-          if(channelCode){
-            http=http+'&channelCode=' + channelCode
-          }
-        }
-
-        if(http==url){
-          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
-        }else{
-          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
-        }
+        let a1 = document.createElement('a');
         a1.setAttribute('href',http);
         let body = document.querySelector('body');
         body.appendChild(a1);
@@ -838,8 +865,91 @@
         //关闭正在导出弹层
         setTimeout(() => {
           this.fullscreenLoading.close();
-        }, 7000);
+      }, 9000);
       },
+
+      // //导出表格
+      // queryExport() {
+      //   this.fullscreenLoading = this.$loading({
+      //     lock: true,
+      //     text: '正在导出...',
+      //     spinner: 'el-icon-loading',
+      //     background: 'rgba(0, 0, 0, 0.7)'
+      //   });
+      //
+      //   let accountId=this.formInline.accountId;
+      //   let mobile=this.formInline.mobile;
+      //   let level=this.formInline.level;
+      //   let channelCode=this.formInline.channelCode;
+      //
+      //   let token= getSession("token");
+      //   let channel= getSession("channelCode");
+      //   let relation= getSession("userRelation");
+      //
+      //   let url = '/api/excl/userExcl';
+      //   let data = {url,accountId,mobile,level,channelCode,token,channel,relation};
+      //   this.doDownload(data);
+      // },
+      // doDownload(obj) {
+      //   let url = obj.url,
+      //     accountId=obj.accountId,
+      //     mobile=obj.mobile,
+      //     level=obj.level,
+      //     channelCode=obj.channelCode,
+      //     token= obj.token,
+      //     channel=obj.channel,
+      //     relation=obj.relation
+      //
+      //   let a1 = document.createElement('a');
+      //   let http=url;
+      //   if(http==url){
+      //     if(accountId){
+      //       http=http+'?accountId=' + accountId
+      //     }
+      //   }
+      //   if(http==url){
+      //     if(mobile){
+      //       http=http+'?mobile=' + mobile
+      //     }
+      //   }else{
+      //     if(mobile){
+      //       http=http+'&mobile=' + mobile
+      //     }
+      //   }
+      //   if(http==url){
+      //     if(level){
+      //       http=http+'?level=' + level
+      //     }
+      //   }else{
+      //     if(level){
+      //       http=http+'&level=' + level
+      //     }
+      //   }
+      //   if(http==url){
+      //     if(channelCode){
+      //       http=http+'?channelCode=' + channelCode
+      //     }
+      //   }else{
+      //     if(channelCode){
+      //       http=http+'&channelCode=' + channelCode
+      //     }
+      //   }
+      //
+      //   if(http==url){
+      //     http=http+'?token='+token+'&channel='+channel+'&relation='+relation
+      //   }else{
+      //     http=http+'&token='+token+'&channel='+channel+'&relation='+relation
+      //   }
+      //   a1.setAttribute('href',http);
+      //   let body = document.querySelector('body');
+      //   body.appendChild(a1);
+      //   a1.click();
+      //   a1.remove();
+      //   //关闭正在导出弹层
+      //   setTimeout(() => {
+      //     this.fullscreenLoading.close();
+      //   }, 7000);
+      // },
     }
   }
 </script>
