@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="bz-task-job-wrap">
+    <div class="bz-task-job-inner">
+      <div class="bz-task-job-header">
         <h3>定时任务/任务调度</h3>
         <hr />
       </div>
@@ -18,20 +18,20 @@
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="bz-task-job-table">
         <template>
-          <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
+          <el-table :data="tableData" max-height="560">
+            <el-table-column label="序号" fixed="left" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column min-width="150px" prop="jobName" label="job名称">
+            <el-table-column width="150px" prop="jobName" label="job名称">
             </el-table-column>
-            <el-table-column min-width="150px" prop="jobGroup" label="job组">
+            <el-table-column width="150px" prop="jobGroup" label="job组">
             </el-table-column>
-            <el-table-column min-width="200px" prop="triggerName"  label="trigger名称">
+            <el-table-column width="200px" prop="triggerName"  label="trigger名称">
             </el-table-column>
-            <el-table-column min-width="200px" prop="triggerGroupName"  label="trigger组名称">
+            <el-table-column width="200px" prop="triggerGroupName"  label="trigger组名称">
             </el-table-column>
-            <el-table-column min-width="250px" prop="processClass"  label="处理类">
+            <el-table-column width="250px" prop="processClass"  label="处理类">
             </el-table-column>
             <el-table-column width="250px" prop="cronExpression"  label="cron表达式">
             </el-table-column>
@@ -91,7 +91,7 @@
                   <el-input   type="textarea" :autosize="{ minRows: 4, maxRows: 8}"  v-model="form.remark" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
                   <el-select style="width: 210px" v-model="form.status" placeholder="">
                     <el-option label="启动" value="1"></el-option>
@@ -103,10 +103,10 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addBtn('form')">确 定</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改任务" :visible.sync="dialogTableVisible" width="700px">
+        <el-dialog title="修改任务" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="22">
@@ -142,10 +142,10 @@
               </el-col>
               <el-col :span="22">
                 <el-form-item label="描述" prop="remark" :label-width="formLabelWidth">
-                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 8}"  v-model="formtwo.remark" auto-complete="off" clearable></el-input>
+                  <el-input  type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="formtwo.remark" auto-complete="off" clearable></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="状态" prop="status" :label-width="formLabelWidth">
                   <el-select style="width: 210px" v-model="formtwo.status" placeholder="">
                     <el-option label="启动" :value="1"></el-option>
@@ -155,10 +155,10 @@
               </el-col>
             </el-row>
           </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogTableVisible = false">取 消</el-button>
-              <el-button type="primary" @click="update(formtwo)">确 定</el-button>
-            </div>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogTableVisible = false">取 消</el-button>
+            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
+          </div>
         </el-dialog>
         <el-dialog title="任务详情" :visible.sync="dialogTableDetail" width="800px">
           <el-form :model="formtwoInfo">
@@ -237,7 +237,7 @@
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
   export default {
-    name: 'NewsNotice',
+    name: 'BzTaskJob',
     data() {
       return {
         powerTrue:false,
@@ -305,7 +305,6 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isShow: false,
         isSubmit:false,
       }
     },
@@ -321,31 +320,31 @@
         }
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.length - 1; i >= 0; i--) {
-            if(res.data[i].btnCode == 'add') {
-              this.add=true
-            }
-            if(res.data[i].btnCode == 'upd') {
-              this.upd=true;
-              this.powerTrue =true;
-              this.optionW = '160px'
-            }
-            if(res.data[i].btnCode == 'del') {
-              this.del=true;
-              this.powerTrue =true;
-              this.optionW = '160px'
-            }
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'add') {
+                this.add=true
+              }
+              if(res.data[i].btnCode == 'upd') {
+                this.upd=true;
+                this.powerTrue =true;
+                this.optionW = '160px'
+              }
+              if(res.data[i].btnCode == 'del') {
+                this.del=true;
+                this.powerTrue =true;
+                this.optionW = '160px'
+              }
 
-            if (this.upd && this.del) {
-              this.upd=true;
-              this.del=true;
-              this.powerTrue =true;
-              this.optionW = '225px';
+              if (this.upd && this.del) {
+                this.upd=true;
+                this.del=true;
+                this.powerTrue =true;
+                this.optionW = '225px';
+              }
             }
+          } else {
           }
-        } else {
-        }
-      })
+        })
       },
       indexMethod(index) {
         return index * 1 + 1
@@ -363,25 +362,25 @@
           pageSize: this.pageSize,
           status: this.formInline.status
         }
-        this.$fetch('/task/mTaskJob/list', parameterData).then(res => {
+        this.$fetch('/bz28/lotteryTaskJob/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.list.length - 1; i >= 0; i--) {
-            if(res.data.list[i].status == 1) {
-              res.data.list[i].status = '启动'
-            }else {
-              res.data.list[i].status = '停止'
+            for(let i = res.data.list.length - 1; i >= 0; i--) {
+              if(res.data.list[i].status == 1) {
+                res.data.list[i].status = '启动'
+              }else {
+                res.data.list[i].status = '停止'
+              }
             }
+            this.tableData = res.data.list
+            this.totalCount = res.data.total
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message,
+              duration: 3000
+            })
           }
-          this.tableData = res.data.list
-          this.totalCount = res.data.total
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message,
-            duration: 3000
-          })
-        }
-      })
+        })
       },
       search() {
         this.currentPage = 1;
@@ -400,22 +399,22 @@
             this.$nextTick(function () {
               this.isSubmit=true;
             })
-            this.$post('/task/mTaskJob/add', this.form).then(res => {
+            this.$post('/bz28/lotteryTaskJob/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
-              this.dialogFormVisible = false
-              this.$message({
-                type: 'success',
-                message: '添加成功！'
-              })
-              this.accountList()
-            } else {
+                this.dialogFormVisible = false
+                this.$message({
+                  type: 'success',
+                  message: '添加成功！'
+                })
+                this.accountList()
+              } else {
                 this.isSubmit=false;
                 this.$message({
                   type: 'error',
                   message: res.message
                 })
-            }
-          })
+              }
+            })
           } else {}
         })
       },
@@ -427,67 +426,67 @@
           center: true
         })
           .then(() => {
-          this.delData(id)
-      })
-      .catch(() => {
-          this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
       },
       delData(id) {
         let parameterData = {
           id: id
         }
-        this.$fetch('/task/mTaskJob/remove', parameterData).then(res => {
+        this.$fetch('/bz28/lotteryTaskJob/remove', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          this.$message({
-            type: 'success',
-            message: '删除成功！'
-          })
-          this.accountList()
-        } else {
-          this.$message({
-            type: 'error',
-            message: '删除失败！'
-          })
-        }
-      })
+            this.$message({
+              type: 'success',
+              message: '删除成功！'
+            })
+            this.accountList()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '删除失败！'
+            })
+          }
+        })
       },
       getInfo(id) {
         this.dialogTableVisible = true
-        this.$fetch('/task/mTaskJob/queryOne', {
+        this.$fetch('/bz28/lotteryTaskJob/queryOne', {
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          this.formtwo = res.data
-        }
-      })
+            this.formtwo = res.data
+          }
+        })
       },
       update(formtwo) {
-        this.$put('/task/mTaskJob/modify', this.formtwo).then(res => {
+        this.$put('/bz28/lotteryTaskJob/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          this.$message({
-            type: 'success',
-            message: '修改成功！'
-          })
-          this.dialogTableVisible = false
-          this.accountList()
-        }
-      })
+            this.$message({
+              type: 'success',
+              message: '修改成功！'
+            })
+            this.dialogTableVisible = false
+            this.accountList()
+          }
+        })
       },
       getOne(id){
         this.dialogTableDetail = true
-        this.$fetch('/task/mTaskJob/queryOne', {
+        this.$fetch('/bz28/lotteryTaskJob/queryOne', {
           id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-          res.data.createDate =  formatDate(new Date(res.data.createDate), 'yyyy-MM-dd hh:mm:sss')
-          res.data.modifiedDate =  formatDate(new Date(res.data.modifiedDate), 'yyyy-MM-dd hh:mm:sss')
-          this.formtwoInfo = res.data
-        }
-      })
+            res.data.createDate =  formatDate(new Date(res.data.createDate), 'yyyy-MM-dd hh:mm:sss')
+            res.data.modifiedDate =  formatDate(new Date(res.data.modifiedDate), 'yyyy-MM-dd hh:mm:sss')
+            this.formtwoInfo = res.data
+          }
+        })
       },
       handleSizeChange(val) {
         this.pageSize = val
@@ -505,27 +504,28 @@
   }
 </script>
 <style type="text/css">
-  .administratormanage-wrap .body_list.dec1{
+  .bz-task-job-wrap .body_list.dec1{
     width: 100%;
   }
-  .administratormanage-wrap {
+
+  .bz-task-job-wrap {
     width: 100%;
   }
-  .administratormanage-inner {
+  .bz-task-job-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .bz-task-job-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .bz-task-job-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .bz-task-job-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }
