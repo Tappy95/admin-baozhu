@@ -524,6 +524,25 @@ const routes = [
         component: resolve => require(['../components/views/TaskCashOrder.vue'], resolve),
         meta: { title: '任务提现订单'}
       },
+      {
+        path: 'bz-game-report',
+        name: 'BzGameReport',
+        component: resolve => require(['../components/views/BzGameReport.vue'], resolve),
+        meta: { title: '游戏报表'}
+      },
+      {
+        path: 'bz-game-detail',
+        name: 'BzGameDetail',
+        component: resolve => require(['../components/views/BzGameDetail.vue'], resolve),
+        meta: { title: '投资明细'}
+      },
+      {
+        path: 'bz-lottery-manage',
+        name: 'BzLotteryManage',
+        component: resolve => require(['../components/views/BzLotteryManage.vue'], resolve),
+        meta: { title: '开奖管理'}
+      },
+
     ]
   }
 ]

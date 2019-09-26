@@ -65,15 +65,92 @@
                   </el-col>
                   <el-col :span="5">
                     <div class="d-option">
-                      <el-button type="success" size="small">规则</el-button>
-                      <el-button type="warning" size="small">编辑</el-button>
-                      <el-button type="danger" @click="robot" size="small">设置机器人</el-button>
+                      <el-button type="success" plain size="small">规则</el-button>
+                      <el-button type="warning" @click="bzeditTap" plain size="small">编辑</el-button>
+                      <el-button type="danger" plain @click="robot" size="small">设置机器人</el-button>
                     </div>
                   </el-col>
                 </el-row>
             </div>
           </el-col>
         </el-row>
+
+        <el-dialog title="编辑" :visible.sync="dialogTableVisible" width="900px">
+          <el-form :model="form" :rules="rules" ref="form">
+            <el-row>
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="公告类型" prop="noticeType" :label-width="formLabelWidth">-->
+                  <!--<el-select v-model="form.noticeType" placeholder="">-->
+                    <!--<el-option label="文字公告" value="1"></el-option>-->
+                    <!--<el-option label="首页活动" value="2"></el-option>-->
+                    <!--<el-option label="消息活动" value="3"></el-option>-->
+                  <!--</el-select>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="app类型" prop="appType" :label-width="formLabelWidth">-->
+                  <!--<el-select v-model="form.appType" placeholder="">-->
+                    <!--<el-option label="宝猪" value="1"></el-option>-->
+                    <!--<el-option label="中青赚点" value="2"></el-option>-->
+                  <!--</el-select>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
+
+              <el-col :span="22">
+                <el-form-item label="排序" :label-width="formLabelWidth" prop="noticeTitle">
+                  <el-input v-model="form.noticeTitle" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="24">
+                <el-form-item label="icon:"
+                              :label-width="formLabelWidth">
+                  <el-upload class="bannerAvatar-uploader"
+                             action="/api/upload"
+                             :data="uploadData"
+                             :show-file-list="false"
+                             :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <div class="img_loadBox" >
+                      <img v-if="imageUrl"
+                           :src="imageUrl"
+                           class="avatar">
+                      <i v-else
+                         class="el-icon-plus bannerAvatar-uploader-icon"></i>
+                    </div>
+                  </el-upload>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" >
+                <el-form-item label="游戏名称:" :label-width="formLabelWidth" prop="linkAddress">
+                  <el-input spellcheck="false" v-model="form.linkAddress" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="22" >
+                <el-form-item label="开奖来源:" prop="noticeContent" :label-width="formLabelWidth">
+                  <el-input  v-model="form.noticeContent" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="是否发布" prop="isPublish" :label-width="formLabelWidth">
+                  <el-select v-model="form.isPublish" placeholder="">
+                    <el-option label="是" value="1"></el-option>
+                    <el-option label="否" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogTableVisible = false">取 消</el-button>
+            <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
+          </div>
+        </el-dialog>
 
         <el-dialog title="设置机器人" :visible.sync="dialogFormVisible" width="1000px">
           <el-form :model="form" :rules="rules" ref="form">
@@ -83,7 +160,6 @@
                   <el-input :style="styleW" v-model="form.playType" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
-
                 <div class="play_type">
                    <div class="list1 list">
                      <div class="item">玩法</div>
@@ -120,7 +196,6 @@
                       <div class="item"> <input class="sel-input"  v-model="form.playType"/></div>
                     </div>
                 </div>
-
                 <div class="play_type">
                   <div class="list1 list">
                     <div class="item">玩法</div>
@@ -157,13 +232,10 @@
                     <div class="item"> <input class="sel-input"  v-model="form.playType"/></div>
                   </div>
                 </div>
-
               </el-col>
             </el-row>
-
           </el-form>
         </el-dialog>
-
       </div>
       <div class="block" style="display: none;">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
@@ -226,7 +298,6 @@
       this.menuId=this.$route.query.id;
       this.queryBtns();
       this.accountList();
-
     },
     filters: {
       dateFont: function (date){
@@ -296,6 +367,10 @@
         this.dialogFormVisible = true;
       },
 
+      bzeditTap(){
+        this.dialogTableVisible = true;
+      },
+
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()
@@ -303,6 +378,11 @@
       handleCurrentChange(val) {
         this.currentPage = val
         this.accountList()
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl=res.data
+      },
+      beforeAvatarUpload(file) {
       },
     },
   }

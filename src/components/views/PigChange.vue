@@ -38,6 +38,7 @@
               <el-option label="抽奖退回" value="9"></el-option>
               <el-option label="竞猜退回" value="10"></el-option>
               <el-option label="团队长赠送" value="11"></el-option>
+              <el-option label="每日救济金" value="12"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -149,6 +150,7 @@
                     <el-option label="抽奖退回" value="9"></el-option>
                     <el-option label="竞猜退回" value="10"></el-option>
                     <el-option label="团队长赠送" value="11"></el-option>
+                    <el-option label="每日救济金" value="12"></el-option>
                   </el-select>
 
                 </el-form-item>
@@ -458,8 +460,9 @@
               res.data.list[i].changedType = '竞猜退回'
             }else if(res.data.list[i].changedType == '11'){
               res.data.list[i].changedType = '团队长赠送'
+            }else if(res.data.list[i].changedType == '12'){
+              res.data.list[i].changedType = '每日救济金'
             }
-
 
             if(res.data.list[i].roleType == '1'){
               res.data.list[i].roleType = '小猪猪'

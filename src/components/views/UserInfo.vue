@@ -248,7 +248,7 @@
                   </div>
 
                   <div class="body_list" >
-                    <div class="title">注册当天任务次数:</div>
+                    <div class="title">注册当天游戏次数:</div>
                     <div class="name">
                       {{message.zcYxCount}}
                     </div>
