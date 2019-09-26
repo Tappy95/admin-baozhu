@@ -58,7 +58,7 @@
               </el-table-column>
               <el-table-column prop="btnCode" label="按钮代码">
               </el-table-column>
-              <el-table-column fixed="right" label="操作" width="75px">
+              <el-table-column fixed="right" label="操作" width="78px">
                 <template slot-scope="scope">
                   <el-button type="warning" plain size="mini" @click="butDelete(scope.row.id)">删除</el-button>
                 </template>

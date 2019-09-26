@@ -79,7 +79,7 @@
     data() {
       return {
         powerTrue:false,
-        optionW:'75px',
+        optionW:'78px',
         menuId:'',
         add:false,
         del:false,
@@ -135,7 +135,7 @@
               if(res.data[i].btnCode == 'del') {
                 this.del=true;
                 this.powerTrue =true;
-                this.optionW = '75px'
+                this.optionW = '78px'
               }
               if (this.upd && this.del) {
                 this.powerTrue =true;
