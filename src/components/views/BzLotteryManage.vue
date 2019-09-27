@@ -46,9 +46,9 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
-                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
-                <el-button type="warning" plain @click="lockTaps(scope.row.id,1)" size="mini" v-if="lock && scope.row.lockStatus==2"><span v-if="optionW='155'"></span>解锁</el-button>
-                <el-button type="danger" plain @click="lockTaps(scope.row.id,2)" size="mini" v-if="lock && scope.row.lockStatus==1"><span v-if="optionW='155'"></span>锁定</el-button>
+                <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd && scope.row.status==1 && scope.row.lockStatus==2">修改</el-button>
+                <el-button type="warning" plain @click="lockTaps(scope.row.id,1)" size="mini" v-if="lock && scope.row.lockStatus==2 && scope.row.status==1"><span v-if="optionW='155'"></span>解锁</el-button>
+                <el-button type="danger" plain @click="lockTaps(scope.row.id,2)" size="mini" v-if="lock && scope.row.lockStatus==1 && scope.row.status==1"><span v-if="optionW='155'"></span>锁定</el-button>
               </template>
             </el-table-column>
           </el-table>

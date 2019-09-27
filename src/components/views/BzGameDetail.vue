@@ -272,7 +272,7 @@
 <style type="text/css">
 
   .bz-detail-title{
-    color: #e6a23c;
+    color:#909399;
     font-size: 18px;
     margin: 20px 0;
   }

@@ -17,7 +17,9 @@
           <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" fixed="left" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column prop="playType"  label="玩法个数">
+            <el-table-column prop="playTypeStart"  label="玩法最少个数">
+            </el-table-column>
+            <el-table-column prop="playTypeEnd"  label="玩法最多个数">
             </el-table-column>
             <el-table-column  prop="probability"  label="概率(%)">
             </el-table-column>
@@ -28,13 +30,18 @@
             </el-table-column>
           </el-table>
         </template>
-
         <el-dialog title="添加" :visible.sync="dialogFormVisible" width="700px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="18">
-                <el-form-item label="玩法个数" :label-width="formLabelWidth" prop="playType">
-                  <el-input v-model="form.playType" auto-complete="off"  clearable>
+                <el-form-item label="玩法最少个数" :label-width="formLabelWidth" prop="playTypeStart">
+                  <el-input v-model="form.playTypeStart" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="18">
+                <el-form-item label="玩法最多个数" :label-width="formLabelWidth" prop="playTypeEnd">
+                  <el-input v-model="form.playTypeEnd" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -61,8 +68,6 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
-  import { delSession, getSession } from '../../utils/cookie'
-  import BigImg from './BigImg'
   export default {
     name: 'BzPlayNum',
     data() {
@@ -81,17 +86,36 @@
         form: {},
         imageUrl:'',
         rules: {
-          playType: [{required: true, message: '请输入玩法个数', trigger: 'blur'}],
           probability: [
             {required: true, message: '请输入概率', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
-                var pattern = /^[0-9]*$/;;
+                var pattern = /^[0-9]*$/;
                 if (!pattern.test(value)) {
                   callback(new Error("请输入正整数"));
                 }else{
                   callback();
                 }
               }, trigger:'blur'}],
+            playTypeStart: [
+              {required: true, message: '请输入玩法最少个数', trigger: 'blur'},
+              {validator:(rule,value,callback)=>{
+                  var pattern = /^[0-9]*$/;
+                  if (!pattern.test(value)) {
+                    callback(new Error("请输入正整数"));
+                  }else{
+                    callback();
+                  }
+                }, trigger:'blur'}],
+            playTypeEnd: [
+              {required: true, message: '请输入玩法最多个数', trigger: 'blur'},
+              {validator:(rule,value,callback)=>{
+                  var pattern = /^[0-9]*$/;
+                  if (!pattern.test(value)) {
+                    callback(new Error("请输入正整数"));
+                  }else{
+                    callback();
+                  }
+                }, trigger:'blur'}],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -102,9 +126,6 @@
         uploadData:{},
         isSubmit:false,
       }
-    },
-    components: {
-      'big-img': BigImg
     },
     created() {
       this.menuId=this.$route.query.id;
@@ -177,6 +198,11 @@
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
+
+            if (this.form.playTypeStart >= this.form.playTypeEnd){
+              this.$message({type: 'warning', message: '玩法最少个数不得大于等于玩法最多个数！'})
+              return false
+            }
             this.$nextTick(function () {
               this.isSubmit=true;
             })
