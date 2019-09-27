@@ -75,7 +75,7 @@
           <el-table-column fixed="right" label="操作"  width="175" >
             <template slot-scope="scope">
               <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">查看</el-button>
-              <el-button size="mini" type="warning" plain @click="getDetail(scope.row.id)">投资明细</el-button>
+              <el-button size="mini" type="warning" plain @click="getDetail(scope.row.id,scope.row.timeNo)">投资明细</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -318,11 +318,12 @@
       },
 
       //跳转投资明细
-      getDetail(id){
+      getDetail(id,num){
         this.$router.push({
           name: 'BzGameDetail',
           query:{
-            detailId:id
+            detailId:id,
+            num:num
           }
         })
       },

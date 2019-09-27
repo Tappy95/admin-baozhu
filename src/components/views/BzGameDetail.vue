@@ -1,16 +1,15 @@
 <template>
-  <div class="ba-game-details-wrap">
-    <div class="ba-game-details-inner">
-      <div class="ba-game-details-header">
-        <h3>宝猪28/投资明细</h3>
+  <div class="bz-game-details-wrap">
+    <div class="bz-game-details-inner">
+      <div class="bz-game-details-header">
+        <!--<h3>宝猪28/投资明细</h3>-->
+        <div class="bz-detail-title">期数 {{nums}} 投资明细</div>
         <div class="bz-28-title">
-          <!--<el-link type="success">成功链接</el-link>-->
-          <el-button @click="backReport" type="success" size="small" plain icon="el-icon-arrow-left">返回游戏报表</el-button>
+           <span  @click="backReport"><i  class="el-icon-arrow-left"></i> 返回游戏报表</span>
+          <!--<el-button @click="backReport" type="success" size="small" plain icon="el-icon-arrow-left">返回游戏报表</el-button>-->
         </div>
         <hr />
       </div>
-
-
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="用户Id:">
           <el-input v-model="formInline.accountId" auto-complete="off" placeholder="请输入用户Id"  clearable>
@@ -28,7 +27,7 @@
         <!--</el-form-item>-->
       </el-form>
     </div>
-    <div class="ba-game-details-table">
+    <div class="bz-game-details-table">
       <template>
         <el-table :data="tableData" max-height="506">
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -136,6 +135,7 @@
           }]
         },
         detailId:'',
+        nums:'',
       }
     },
     filters: {
@@ -149,6 +149,8 @@
     created() {
       this.menuId=this.$route.query.id;
       this.detailId = this.$route.query.detailId;
+      this.nums = this.$route.query.num;
+
       this.channelCode = getSession("channelCode");
       this.queryBtns();
       this.accountList();
@@ -268,31 +270,40 @@
   }
 </script>
 <style type="text/css">
+
+  .bz-detail-title{
+    color: #e6a23c;
+    font-size: 18px;
+    margin: 20px 0;
+  }
   .bz-28-title{
     margin: 20px 0 10px 0;
+    font-size: 14px;
+    color: #67c23a;
+    cursor: pointer;
   }
   .text_gree{
     color: #cccccc;
   }
-  .ba-game-details-wrap {
+  .bz-game-details-wrap {
     width: 100%;
   }
 
-  .ba-game-details-inner {
+  .bz-game-details-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .ba-game-details-header {
+  .bz-game-details-header {
     margin-bottom: 20px;
   }
 
-  .ba-game-details-header hr {
+  .bz-game-details-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .ba-game-details-table {
+  .bz-game-details-table {
     border: 1px solid #e6e6e6;
     margin: 20px;
   }
