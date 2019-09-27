@@ -542,7 +542,18 @@ const routes = [
         component: resolve => require(['../components/views/BzLotteryManage.vue'], resolve),
         meta: { title: '开奖管理'}
       },
-
+      {
+        path: 'channel-account',
+        name: 'ChannelAccount',
+        component: resolve => require(['../components/views/ChannelAccount.vue'], resolve),
+        meta: { title: '渠道对账'}
+      },
+      {
+        path: 'bz-Base-multiple',
+        name: 'BzBaseMultiple',
+        component: resolve => require(['../components/views/BzBaseMultiple.vue'], resolve),
+        meta: { title: '投注倍数'}
+      },
     ]
   }
 ]
