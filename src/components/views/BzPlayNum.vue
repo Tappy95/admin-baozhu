@@ -198,8 +198,7 @@
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
-
-            if (this.form.playTypeStart >= this.form.playTypeEnd){
+            if (parseInt(this.form.playTypeEnd) <= parseInt(this.form.playTypeStart)){
               this.$message({type: 'warning', message: '玩法最少个数不得大于等于玩法最多个数！'})
               return false
             }

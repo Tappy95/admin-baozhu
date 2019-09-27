@@ -191,7 +191,7 @@
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
-            if (this.form.baseMultipleStart >= this.form.baseMultipleEnd){
+            if (parseInt(this.form.baseMultipleEnd) <= parseInt(this.form.baseMultipleStart)){
               this.$message({type: 'warning', message: '最低倍数不得大于等于最高倍数！'})
               return false
             }

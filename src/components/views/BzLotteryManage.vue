@@ -91,7 +91,7 @@
     data() {
       return {
         powerTrue:false,
-        optionW:'78px',
+        optionW:'0',
         menuId:'',
         lock:false,
         del:false,
