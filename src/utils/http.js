@@ -13,15 +13,19 @@ var ua = navigator.userAgent.toLowerCase();
 var ua2 = window.navigator.userAgent.toLowerCase();
 
 //本地
-// var https='';
+var https='';
 //小明
 // var https='http://192.168.1.226:8088';
 ////测试环境
-  var https='http://192.168.1.193:8088';
+//   var https='http://192.168.1.193:8088';
 //正式环境 2019-6-14-online
 // var https='https://admin.bzlyplay.com';
 //预发
-// var https='http://tadmin.baozhu8.com';
+// var https='https://tadmin.baozhu8.com';
+
+
+//点击空白处不关闭弹框
+Vue.prototype.$close=false;
 
 axios.interceptors.request.use(
   config => {
@@ -57,7 +61,7 @@ axios.interceptors.request.use(
         // sign: getSession("sign"),
         // user_agent: ua,
         ...config.params
-      }
+    }
       config.paramsSerializer=function(params) {
         return  qs.stringify(config.params)
       }
