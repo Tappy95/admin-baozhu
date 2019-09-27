@@ -150,7 +150,7 @@
                            type="danger" plain
                            size="mini" style="margin-bottom: 8px"
                            @click="setSuper(scope.row.userId,scope.row.status,scope.row.remark,1)">冻结账户</el-button>
-                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="scope.row.roleType !=1 && setSuperMan" size="mini"><span v-if="optionW='305px'"></span>设置超级合伙人</el-button>
+                <el-button type="success" plain @click="setSuper(scope.row.userId,scope.row.roleType,scope.row.remark,2)"  v-if="(scope.row.roleType ==3 || scope.row.roleType ==2)  && setSuperMan" size="mini"><span v-if="optionW='305px'"></span>设置超级合伙人</el-button>
                 <!--<el-button type="" v-if="setSuperMan"-->
                            <!--size="mini" style="margin-bottom: 8px"-->
                            <!--@click="reward(scope.row.userId)">设置超级合伙人</el-button>-->
