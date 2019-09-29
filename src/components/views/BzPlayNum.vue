@@ -23,9 +23,10 @@
             </el-table-column>
             <el-table-column  prop="probability"  label="概率(%)">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" v-if="del" width="80">
+            <el-table-column fixed="right" label="操作" v-if="powerTrue"  :width="optionW">
               <template slot-scope="scope">
-                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" >删除</el-button>
+                <el-button type="success" plain size="mini" v-if="del" @click="getInfo(scope.row.id)" >修改</el-button>
+                <el-button type="warning" plain size="mini" v-if="upd" @click="Delete(scope.row.id)" >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -56,6 +57,35 @@
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
+          </div>
+        </el-dialog>
+
+        <el-dialog title="修改" :visible.sync="dialogTableVisible" width="600px">
+          <el-form :model="formtwo" :rules="rules" ref="formtwo">
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="玩法最少个数" :label-width="formLabelWidth" prop="playTypeStart">
+                  <el-input v-model="formtwo.playTypeStart" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="18">
+                <el-form-item label="玩法最多个数" :label-width="formLabelWidth" prop="playTypeEnd">
+                  <el-input v-model="formtwo.playTypeEnd" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="概率" :label-width="formLabelWidth" prop="probability">
+                  <el-input  v-model="formtwo.probability" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogTableVisible = false">取 消</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -150,8 +180,20 @@
                 this.add=true
               }
               if(res.data[i].btnCode == 'del') {
+                this.powerTrue = true;
                 this.del=true;
+                this.optionW = '75'
               }
+              if(res.data[i].btnCode == 'upd') {
+                this.powerTrue = true;
+                this.upd=true;
+                this.optionW = '75'
+              }
+
+              if (this.upd && this.del) {
+                this.optionW = '150'
+              }
+
             }
           } else {
           }
@@ -224,6 +266,28 @@
           } else {}
         })
       },
+      update(formtwo){
+        this.$refs[formtwo].validate(valid => {
+          if(valid) {
+            if (parseInt(this.formtwo.playTypeEnd) <= parseInt(this.formtwo.playTypeStart)){
+              this.$message({type: 'warning', message: '玩法最少个数不得大于等于玩法最多个数！'})
+              return false
+            }
+            this.$post('/bz28/lotteryRobotPlayed/modify', this.formtwo).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogTableVisible = false;
+                this.$message({
+                  type: 'success',
+                  message: '修改成功！'
+                })
+                this.accountList();
+              } else {
+                this.$message({type: 'error', message: res.message})
+              }
+            })
+          } else {}
+        })
+      },
       Delete(id) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -261,7 +325,7 @@
         })
       },
       getInfo(id) {
-        this.dialogTableVisible = true
+        this.dialogTableVisible = true;
         this.$fetch('/bz28/lotteryRobotPlayed/queryOne', {
           id: id
         }).then(res => {

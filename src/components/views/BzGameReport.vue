@@ -25,25 +25,27 @@
           </el-table-column>
           <el-table-column  min-width="100px" prop="timeNo" label="期号">
           </el-table-column>
+          <el-table-column  width="170px" :formatter="dateFormat" prop="endDate" label="预计开奖时间">
+          </el-table-column>
           <el-table-column  min-width="200px" label="实际竞猜人数">
             <template slot-scope="scope">
               <span>{{scope.row.sjjcCount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="210px" label="实际竞猜金额">
+          <el-table-column  min-width="210px" label="实际竞猜金猪">
             <template slot-scope="scope">
               <span>{{scope.row.sjjcAmount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="150px" label="实际中奖金额">
+          <el-table-column  min-width="150px" label="实际中奖金猪">
             <template slot-scope="scope">
               <span>{{scope.row.sjzjAmount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="170px" label="实际盈亏金额">
+          <el-table-column min-width="170px" label="实际盈亏金猪">
             <template slot-scope="scope">
               <span v-if="scope.row.sjykAmount>0" class="red">+{{scope.row.sjykAmount | currency}}</span>
-              <span v-else-if="scope.row.sjykAmount<0" class="green">-{{scope.row.sjykAmount | currency}}</span>
+              <span v-else-if="scope.row.sjykAmount<0" class="green">{{scope.row.sjykAmount | currency}}</span>
               <span v-else>{{scope.row.sjykAmount}}</span>
             </template>
           </el-table-column>
@@ -52,12 +54,12 @@
               <span>{{scope.row.robotCount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="170" label="机器人竞猜金额">
+          <el-table-column  min-width="170" label="机器人竞猜金猪">
             <template slot-scope="scope">
               <span>{{scope.row.robotAmount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="170"  label="机器人中奖金额">
+          <el-table-column  min-width="170"  label="机器人中奖金猪">
             <template slot-scope="scope">
               <span>{{scope.row.robotzjAmount | currency}}</span>
             </template>
@@ -74,7 +76,7 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作"  width="175" >
             <template slot-scope="scope">
-              <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">查看</el-button>
+              <el-button type="info" plain @click="getOne(scope.row.id,scope.row.timeNo)" size="mini">查看</el-button>
               <el-button size="mini" type="warning" plain @click="getDetail(scope.row.id,scope.row.timeNo)">投资明细</el-button>
             </template>
           </el-table-column>
@@ -82,28 +84,31 @@
       </template>
     </div>
     <el-dialog title="查看" :visible.sync="dialogTableDetail" width="1150px">
+      <div class="timeN_title">期号：{{this.timeNoDetail}}</div>
       <template>
         <el-table :data="tableDetail" max-height="506">
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
           </el-table-column>
           <el-table-column  width="80px" prop="name" label="玩法">
           </el-table-column>
+          <el-table-column  width="100px" prop="odds" label="赔率(%)">
+          </el-table-column>
           <el-table-column  width="150px"  label="实际竞猜人数">
             <template slot-scope="scope">
               <span>{{scope.row.sjjcCount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="150px"  label="实际竞猜金额">
+          <el-table-column  min-width="150px"  label="实际竞猜金猪">
             <template slot-scope="scope">
               <span>{{scope.row.sjjcAmount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="150px" label="预计中奖金额">
+          <el-table-column  min-width="150px" label="预计中奖金猪">
             <template slot-scope="scope">
               <span>{{scope.row.yjzAmount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="150px" label="实际中奖金额">
+          <el-table-column  min-width="150px" label="实际中奖金猪">
             <template slot-scope="scope">
               <span>{{scope.row.sjzjAmount | currency}}</span>
             </template>
@@ -113,7 +118,7 @@
               <span>{{scope.row.robotjcCount | currency}}</span>
             </template>
           </el-table-column>
-          <el-table-column  min-width="150px"  label="机器人竞猜金额">
+          <el-table-column  min-width="150px"  label="机器人竞猜金猪">
             <template slot-scope="scope">
               <span>{{scope.row.robotjcAmount | currency}}</span>
             </template>
@@ -182,6 +187,7 @@
         },
         dialogTableDetail:false,
         tableDetail:[],
+        timeNoDetail:'',
       }
     },
     filters: {
@@ -304,8 +310,9 @@
         }, 9000);
       },
 
-      getOne(id){
+      getOne(id,timeNoDetail){
         this.dialogTableDetail = true;
+        this.timeNoDetail = timeNoDetail;
         this.$fetch('/bz28/lotteryTime/timeDetail', {
           id: id,
           lotteryId:1
@@ -339,6 +346,13 @@
   }
 </script>
 <style type="text/css">
+
+  .timeN_title{
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #ff4d51;
+  }
+
   .bz-game-report-wrap {
     width: 100%;
   }

@@ -23,9 +23,10 @@
             </el-table-column>
             <el-table-column  prop="probability"  label="概率(%)">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" v-if="del" width="80">
+            <el-table-column fixed="right" label="操作" v-if="powerTrue"  :width="optionW">
               <template slot-scope="scope">
-                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" >删除</el-button>
+                <el-button type="success" plain size="mini" v-if="del" @click="getInfo(scope.row.id)" >修改</el-button>
+                <el-button type="warning" plain size="mini" v-if="upd" @click="Delete(scope.row.id)" >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -58,6 +59,36 @@
             <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
+
+        <el-dialog title="修改" :visible.sync="dialogTableVisible" width="600px">
+          <el-form :model="formtwo" :rules="rules" ref="formtwo">
+            <el-row>
+              <el-col :span="18">
+                <el-form-item label="最低倍数" :label-width="formLabelWidth" prop="baseMultipleStart">
+                  <el-input v-model="formtwo.baseMultipleStart" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="18">
+                <el-form-item label="最高倍数" :label-width="formLabelWidth" prop="baseMultipleEnd">
+                  <el-input v-model="formtwo.baseMultipleEnd" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="概率" :label-width="formLabelWidth" prop="probability">
+                  <el-input  v-model="formtwo.probability" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="update('formtwo')">确 定</el-button>
+          </div>
+        </el-dialog>
+
       </div>
       <div class="block">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
@@ -143,8 +174,20 @@
                 this.add=true
               }
               if(res.data[i].btnCode == 'del') {
+                this.powerTrue = true;
                 this.del=true;
+                this.optionW = '75'
               }
+              if(res.data[i].btnCode == 'upd') {
+                this.powerTrue = true;
+                this.upd=true;
+                this.optionW = '75'
+              }
+
+              if (this.upd && this.del) {
+                this.optionW = '150'
+              }
+
             }
           } else {
           }
@@ -254,7 +297,7 @@
         })
       },
       getInfo(id) {
-        this.dialogTableVisible = true
+        this.dialogTableVisible = true;
         this.$fetch('/bz28/mLotteryBaseMultiple/queryOne', {
           id: id
         }).then(res => {
@@ -263,6 +306,30 @@
           }
         })
       },
+
+      update(formtwo){
+        this.$refs[formtwo].validate(valid => {
+          if(valid) {
+            if (parseInt(this.formtwo.baseMultipleEnd) <= parseInt(this.formtwo.baseMultipleStart)){
+              this.$message({type: 'warning', message: '最低倍数不得大于等于最高倍数！'})
+              return false
+            }
+            this.$post('/bz28/mLotteryBaseMultiple/modify', this.formtwo).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.dialogTableVisible = false;
+                this.$message({
+                  type: 'success',
+                  message: '修改成功！'
+                })
+                this.accountList();
+              } else {
+                this.$message({type: 'error', message: res.message})
+              }
+            })
+          } else {}
+        })
+      },
+
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()
