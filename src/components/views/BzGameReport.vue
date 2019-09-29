@@ -10,6 +10,19 @@
           <el-input v-model="formInline.timeNo" auto-complete="off" placeholder="请输入期号"  clearable>
           </el-input>
         </el-form-item>
+
+        <el-form-item label="预计开奖时间">
+          <el-date-picker
+            v-model="selectTime"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            align="left">
+          </el-date-picker>
+        </el-form-item>
+
         <el-form-item >
           <el-button type="primary" plain @click="search" >查询</el-button>
         </el-form-item>
@@ -83,6 +96,7 @@
         </el-table>
       </template>
     </div>
+
     <el-dialog title="查看" :visible.sync="dialogTableDetail" width="1150px">
       <div class="timeN_title">期号：{{this.timeNoDetail}}</div>
       <template>
@@ -126,6 +140,20 @@
         </el-table>
       </template>
     </el-dialog>
+
+    <div class="sun_sty report" v-if="tableData.length>0">
+      <div class="list">
+        <div class="item"><p>小计<span>({{tableData.length}}):</span></p></div>
+        <div class="item"><p> [ 实际竞猜金猪： {{xjsjjcAmount | currency}} ]</p></div>
+        <div class="item"><p> [ 实际中奖金猪：{{xjsjzjAmount | currency}} ]</p></div>
+      </div>
+      <div class="list">
+        <div class="item"><p>合计<span>({{totalCount}}):</span></p></div>
+        <div class="item"><p> [ 实际竞猜金猪： {{zjsjjcAmount | currency}} ]</p></div>
+        <div class="item"><p>[ 实际竞猜金猪：{{zjsjzjAmount | currency}} ]</p></div>
+      </div>
+    </div>
+
       <div class="block" style="margin-left: 10px">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
@@ -188,6 +216,10 @@
         dialogTableDetail:false,
         tableDetail:[],
         timeNoDetail:'',
+        xjsjjcAmount:'',
+        xjsjzjAmount:'',
+        zjsjjcAmount:'',
+        zjsjzjAmount:'',
       }
     },
     filters: {
@@ -235,11 +267,18 @@
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           timeNo:this.formInline.timeNo,
+          startTime:this.formInline.startTime,
+          endTime:this.formInline.endTime,
         }
         this.$fetch('/bz28/lotteryTime/queryList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.tableData = res.data.list;
-            this.totalCount = res.data.total;
+              this.tableData = res.data.list;
+              this.totalCount = res.data.total;
+
+              this.xjsjjcAmount=res.data.xjsjjcAmount;
+              this.xjsjzjAmount=res.data.xjsjzjAmount;
+              this.zjsjjcAmount=res.data.zjsjjcAmount;
+              this.zjsjzjAmount=res.data.zjsjzjAmount;
           } else {
             this.$message({type: 'error', message: res.message, duration: 3000})
           }
@@ -259,6 +298,7 @@
         }else {
           this.formInline.endTime = ''
         }
+
         this.currentPage = 1;
         this.pageSize = 10;
         this.accountList()
@@ -379,4 +419,41 @@
   .el-table th {
     background-color: #e6e6e6;
   }
+
+.report {
+  margin-left: 20px;
+}
+  .sun_sty{
+    font-size: 14px;
+    color: #13ce66;
+    margin-bottom: 20px;
+  }
+  .sun_sty .list{
+    width: 100%;
+    height: 30px;
+    /*text-align: right;*/
+  }
+  .sun_sty.report .list .item:nth-child(1){
+    width: 100px;
+    min-width: 100px;
+    max-width: 150px;
+  }
+  .sun_sty .list .item{
+    float: left;
+    min-width: 200px;
+    max-width: 300px;
+    height: 30px;
+  }
+
+  .sun_sty p{
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+  }
+
+  .sun_sty p span{
+    font-size: 12px;
+  }
+
+
 </style>
