@@ -106,7 +106,10 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
-        formInline: {},
+        formInline: {
+          timeNo:'',
+          status:"1"
+        },
         tableData: [],
         uploadData:{},
         pickerOptions: {
@@ -138,7 +141,6 @@
         },
         selectTime: [],
         showImg:false,
-
       }
     },
 
