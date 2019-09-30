@@ -48,7 +48,7 @@
         menuId:'',
         formLabelWidth: '120px',
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 20,
         totalCount: 0,
         formInline: {},
         tableData: [],
