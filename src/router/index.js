@@ -554,6 +554,13 @@ const routes = [
         component: resolve => require(['../components/views/BzBaseMultiple.vue'], resolve),
         meta: { title: '投注倍数'}
       },
+      {
+        path: 'bz-log',
+        name: 'BzLog',
+        component: resolve => require(['../components/views/BzLog.vue'], resolve),
+        meta: { title: '宝猪28操作日志'}
+      },
+
     ]
   }
 ]
