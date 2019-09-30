@@ -267,6 +267,8 @@
         })
       },
       update(formtwo) {
+          this.formtwo.adminId = getSession("adminId");
+          this.formtwo.adminMobile = getSession("mobileCookie");
         this.$put('/bz28/lotteryTime/setResultNum', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({

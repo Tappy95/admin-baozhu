@@ -150,11 +150,11 @@
       <div class="list">
         <div class="item"><p>合计<span>({{totalCount}}):</span></p></div>
         <div class="item"><p> [ 实际竞猜金猪： {{zjsjjcAmount | currency}} ]</p></div>
-        <div class="item"><p>[ 实际竞猜金猪：{{zjsjzjAmount | currency}} ]</p></div>
+        <div class="item"><p>[ 实际中奖金猪：{{zjsjzjAmount | currency}} ]</p></div>
       </div>
     </div>
 
-      <div class="block" style="margin-left: 10px">
+    <div class="block" style="margin-left: 10px">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
       </div>
