@@ -2,7 +2,7 @@
   <div class="bz-log-wrap">
     <div class="bz-log-inner">
       <div class="bz-log-header">
-        <h3>宝猪28/数据统计</h3>
+        <h3>宝猪28/操作日志</h3>
         <hr />
       </div>
       <div>
