@@ -138,7 +138,7 @@
           typeName: [{required: true, message: '请输入游戏名称', trigger: 'blur'}],
           status: [{required: true, message: '请选择是否启用', trigger: 'change'}],
           orders: [
-            {required: true, message: '请选择是否启用', trigger: 'change'},
+            {required: true, message: '请输入排序值', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
                 var pattern = /^[0-9]*$/;
                 if (!pattern.test(value)) {
