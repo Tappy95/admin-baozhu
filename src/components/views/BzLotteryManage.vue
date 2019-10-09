@@ -62,8 +62,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="14">
-                <el-form-item label="结果:" :label-width="formLabelWidth" >
-                  <el-input placeholder="示例：1,2,3,4" v-model="formtwo.resultNum" auto-complete="off"  clearable>
+                <el-form-item label="中奖号码:" :label-width="formLabelWidth" >
+                  <el-input placeholder="示例: 8" v-model="formtwo.resultNum" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>

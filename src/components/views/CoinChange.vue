@@ -62,6 +62,7 @@
                   <el-option label="达人邀请周榜奖励" value="27"></el-option>
                   <el-option label="高额赚提成" value="28"></el-option>
                   <el-option label="每日红包任务" value="29"></el-option>
+                  <!--<el-option label="观看视频" value="30"></el-option>-->
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -188,8 +189,9 @@
                     <el-option label="达人后续奖励" :value="25"></el-option>
                     <el-option label="阅读小说" :value="26"></el-option>
                     <el-option label="达人邀请周榜奖励" :value="27"></el-option>
-                    <el-option label="高额赚提成" value="28"></el-option>
-                    <el-option label="每日红包任务" value="29"></el-option>
+                    <el-option label="高额赚提成" :value="28"></el-option>
+                    <el-option label="每日红包任务" :value="29"></el-option>
+                    <el-option label="观看视频" :value="30"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -699,6 +701,9 @@
                 break;
               case 29:
                 res.data.list[i].changedType = '每日红包任务';
+                break;
+              case 30:
+                res.data.list[i].changedType = '观看视频';
                 break;
               // default:
             }
