@@ -560,6 +560,12 @@ const routes = [
         component: resolve => require(['../components/views/BzLog.vue'], resolve),
         meta: { title: '宝猪28操作日志'}
       },
+      {
+        path: 'csj-callback',
+        name: 'CSJCallback',
+        component: resolve => require(['../components/views/CSJCallback.vue'], resolve),
+        meta: { title: '穿山甲回调'}
+      },
 
     ]
   }
