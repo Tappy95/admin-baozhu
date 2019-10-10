@@ -132,7 +132,7 @@
           moneyMax:'',
           gameMax:'',
           startRegisterTime:'',
-          startRegisterTime:'',
+          endRegisterTime:'',
         },
         tableData: [],
         channelCode:'',
@@ -220,7 +220,7 @@
           moneyMax:this.formInline.moneyMax,
           gameMax:this.formInline.gameMax,
           startRegisterTime:this.formInline.startRegisterTime,
-          startRegisterTime:this.formInline.startRegisterTime
+          endRegisterTime:this.formInline.endRegisterTime
         }
 
         this.$fetch('/api/lUserExchangeCash/cashGameStatistic', parameterData).then(res => {
