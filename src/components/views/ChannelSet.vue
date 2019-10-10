@@ -296,7 +296,6 @@
               </template>
             </el-table-column>
           </el-table>
-
           <div class="block" style="margin-top: 20px">
             <el-pagination @size-change="handleSizeChange1" @current-change="handleCurrentChange1" :current-page="currentPage1" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize1" layout="total, sizes, prev, pager, next, jumper" :total="totalCount1">
             </el-pagination>
@@ -321,16 +320,21 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
               <el-col :span="12">
-                <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"   v-model="formUser.referrerAddition" auto-complete="off"  clearable>
+                <el-form-item label="达人推荐好友奖励金币数:" prop="darenCoin" :label-width="formLabelWidth01">
+                  <el-input :style="styleObject"   v-model="formUser.darenCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="20">
+              <el-col :span="12">
                 <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
                   <el-input :style="styleObject"     v-model="formUser.recommendCoin" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
+                  <el-input :style="styleObject"   v-model="formUser.referrerAddition" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -340,7 +344,6 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-
               <el-col :span="20">
                 <el-form-item label="累计连续签到15天奖励金币:" prop="sign15" :label-width="formLabelWidth01">
                   <el-input :style="styleObject"   v-model="formUser.sign15" auto-complete="off"  clearable>
@@ -372,11 +375,9 @@
                   <div class="item"><el-input   v-model="formUser.vip3188" auto-complete="off"  clearable> </el-input></div>
                 </div>
               </div>
-
               <el-col :span="18" >
                 <p>好友到达一定成长等级可获得相应奖励:</p>
               </el-col>
-
               <div class="my-coltable small">
                 <div class="list">
                   <div class="item">成长值等级</div>
@@ -421,17 +422,26 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  v-model="fromEditUser.referrerAddition" auto-complete="off"  clearable>
+                <el-form-item label="达人推荐好友奖励金币数:" prop="darenCoin" :label-width="formLabelWidth01">
+                  <el-input :style="styleObject"   v-model="fromEditUser.darenCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="20">
+
+              <el-col :span="12">
                 <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
                   <el-input :style="styleObject"  v-model="fromEditUser.recommendCoin" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
+                  <el-input :style="styleObject"  v-model="fromEditUser.referrerAddition" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="20">
                 <el-form-item label="累计连续签到7天奖励金币:" prop="sign7" :label-width="formLabelWidth01">
                   <el-input :style="styleObject"   v-model="fromEditUser.sign7" auto-complete="off"  clearable>
@@ -498,93 +508,107 @@
             <el-button type="primary" @click="EditUserAward('fromEditUser')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="用户奖励详情" :visible.sync="dialogInfoUser" width="800px">
+        <el-dialog title="用户奖励详情" :visible.sync="dialogInfoUser" width="850px">
           <el-form :model="fromInfoUser">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="用户类型:" prop="userType" :label-width="formLabelWidth01">
-                  <el-select :disabled="true" :style="styleObject" v-model="fromInfoUser.userType" placeholder="">
-                    <el-option label="普通用户" :value="1"></el-option>
-                    <el-option label="团队长" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="状态:" prop="status" :label-width="formLabelWidth01">
-                  <el-select :disabled="true" :style="styleObject" v-model="fromInfoUser.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="12">
-                <el-form-item label="徒弟游戏试玩加成(%):" prop="referrerAddition" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject" :disabled="true" type="number"   v-model="fromInfoUser.referrerAddition" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="20">
-                <el-form-item label="推荐有效好友奖励金币数:" prop="recommendCoin" :label-width="formLabelWidth01">
-                  <el-input :disabled="true" :style="styleObject"     v-model="fromInfoUser.recommendCoin" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="20">
-                <el-form-item label="累计连续签到7天奖励金币:" prop="sign7" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number" :disabled="true"  v-model="fromInfoUser.sign7" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-
-              <el-col :span="20">
-                <el-form-item label="累计连续签到15天奖励金币:" prop="sign15" :label-width="formLabelWidth01">
-                  <el-input :style="styleObject"  type="number" :disabled="true"   v-model="fromInfoUser.sign15" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="18">
-                <p>好友累计购买VIP权益达到一定等级，可获得相应奖励:</p>
-              </el-col>
-              <div class="my-coltable big">
-                <div class="list">
-                  <div class="item">购买VIP权益</div>
-                  <div class="item">18</div>
-                  <div class="item">48</div>
-                  <div class="item">228</div>
-                  <div class="item">1188</div>
-                  <div class="item">1688</div>
-                  <div class="item">1888</div>
-                  <div class="item">3188</div>
-                </div>
-                <div class="list">
-                  <div class="item">奖励比值(%)</div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip18" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip48" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip228" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip1188" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip1688" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.vip1888" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"> <el-input :disabled="true"  v-model="fromInfoUser.vip3188" auto-complete="off"  clearable> </el-input></div>
-                </div>
-              </div>
-              <el-col :span="18" >
-                <p>好友到达一定成长等级可获得相应奖励:</p>
-              </el-col>
-              <div class="my-coltable small">
-                <div class="list">
-                  <div class="item">成长值等级</div>
-                  <div class="item">4</div>
-                  <div class="item">6</div>
-                  <div class="item">8</div>
-                  <div class="item">12</div>
-                </div>
-                <div class="list">
-                  <div class="item">奖励/金币</div>
-                  <div class="item"><el-input :disabled="true" v-model="fromInfoUser.level4" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.level6" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.level8" auto-complete="off"  clearable></el-input></div>
-                  <div class="item"><el-input  :disabled="true" v-model="fromInfoUser.level12" auto-complete="off"  clearable></el-input></div>
+            <el-row >
+              <div class="box_xinxi">
+                <div class="wrap_da">
+                  <div class="header">
+                    <span>基本信息</span>
+                    <span></span>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">用户类型:</div>
+                    <div class="name">
+                      <span v-if="fromInfoUser.userType==1">普通用户</span>
+                      <span v-if="fromInfoUser.userType==2">团队长</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">状态:</div>
+                    <div class="name">
+                      <span v-if="fromInfoUser.status==1">已启用</span>
+                      <span v-if="fromInfoUser.status==2">已停用</span>
+                    </div>
+                  </div>
+                  <div class="body_list">
+                      <div class="title">达人推荐好友奖励金币数:</div>
+                      <div class="name">
+                        {{fromInfoUser.darenCoin | currencyNum}}
+                      </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">推荐有效好友奖励金币数:</div>
+                    <div class="name">
+                      {{fromInfoUser.recommendCoin | currencyNum}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title">累计连续签到7天奖励金币:</div>
+                    <div class="name">
+                      {{fromInfoUser.sign7 | currencyNum}}
+                    </div>
+                  </div>
+                  <div class="body_list">
+                    <div class="title" style="width: 205px">累计连续签到15天奖励金币:</div>
+                    <div class="name">
+                      {{fromInfoUser.sign15 | currencyNum}}
+                    </div>
+                  </div>
+                  <div class="body_list" style="width: 100%">
+                    <div class="title">徒弟游戏试玩加成(%):</div>
+                    <div class="name">
+                      {{fromInfoUser.referrerAddition}}
+                    </div>
+                  </div>
+                  <div class="header mar-top">
+                    <span>相应奖励</span>
+                    <span></span>
+                  </div>
+                  <el-col :span="18">
+                    <p>好友累计购买VIP权益达到一定等级，可获得相应奖励:</p>
+                  </el-col>
+                  <div class="my-coltable big">
+                    <div class="list">
+                      <div class="item">购买VIP权益</div>
+                      <div class="item">18</div>
+                      <div class="item">48</div>
+                      <div class="item">228</div>
+                      <div class="item">1188</div>
+                      <div class="item">1688</div>
+                      <div class="item">1888</div>
+                      <div class="item">3188</div>
+                    </div>
+                    <div class="list">
+                      <div class="item">奖励比值(%)</div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.vip18" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.vip48" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.vip228" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.vip1188" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.vip1688" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.vip1888" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"> <el-input :readonly="true"  v-model="fromInfoUser.vip3188" auto-complete="off"  clearable> </el-input></div>
+                    </div>
+                  </div>
+                  <el-col :span="18" >
+                    <p>好友到达一定成长等级可获得相应奖励:</p>
+                  </el-col>
+                  <div class="my-coltable small">
+                    <div class="list">
+                      <div class="item">成长值等级</div>
+                      <div class="item">4</div>
+                      <div class="item">6</div>
+                      <div class="item">8</div>
+                      <div class="item">12</div>
+                    </div>
+                    <div class="list">
+                      <div class="item">奖励/金币</div>
+                      <div class="item"><el-input :readonly="true" v-model="fromInfoUser.level4" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.level6" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.level8" auto-complete="off"  clearable></el-input></div>
+                      <div class="item"><el-input  :readonly="true" v-model="fromInfoUser.level12" auto-complete="off"  clearable></el-input></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </el-row>
@@ -705,6 +729,15 @@
                   callback();
                 }
               }, trigger:'blur'}],
+          darenCoin:[{required: true, message: '请输入达人推荐好友奖励金币数', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value)) {
+                  callback(new Error("请输入正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}],
         },
         formLabelWidth01:'188px',
         formLabelWidth: '190px',
@@ -751,10 +784,11 @@
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
-      // currency: function (num){
-      //   (num);
-      //   return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
-      // },
+      currencyNum: function (num) {
+        var dataval = parseInt(num);
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        // return dataval.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+      }
     },
     methods: {
       //游戏商户
@@ -1292,6 +1326,10 @@
   }
 </script>
 <style type="text/css">
+
+  .mar-top{
+    margin-top: 20px;
+  }
   .my-coltable{
     height: 80px;
     border-top: 1px solid #cccccc;

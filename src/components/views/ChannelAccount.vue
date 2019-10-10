@@ -19,6 +19,18 @@
           <el-input v-model="formInline.moneyMin" style="width: 150px" placeholder="请输入最小金额" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
+
+        <el-form-item label="状态:" >
+          <el-select v-model="formInline.state"  placeholder="请选择状态">
+            <el-option label="审核中" value="1"></el-option>
+            <el-option label="提现成功" value="2"></el-option>
+            <el-option label="提现失败" value="3"></el-option>
+            <el-option label="提现异常" value="4"></el-option>
+            <el-option label="提现通过" value="5"></el-option>
+            <el-option label="全部" value=""></el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="至:">
           <el-input v-model="formInline.moneyMax" style="width: 150px" placeholder="请输入最大金额" auto-complete="off"  clearable>
           </el-input>
@@ -45,15 +57,15 @@
         <el-form-item >
           <el-button type="primary" plain @click="search" >查询</el-button>
         </el-form-item>
-        <!--<el-form-item>-->
-          <!--<el-button type="success" plain @click="queryExport" v-if="exportExle">导出表格</el-button>-->
-        <!--</el-form-item>-->
+        <el-form-item>
+          <el-button type="success" plain @click="queryExport" v-if="exportExle">导出表格</el-button>
+        </el-form-item>
       </el-form>
 
     </div>
     <div class="channel-account-table">
       <template>
-        <el-table :data="tableData" max-height="506">
+        <el-table :data="tableData"  v-loading="loading" max-height="506">
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
           </el-table-column>
           <el-table-column fixed="left"  min-width="200px" prop="outTradeNo" label="订单号">
@@ -131,6 +143,7 @@
           moneyMin:'',
           moneyMax:'',
           gameMax:'',
+          state:'',
           startRegisterTime:'',
           endRegisterTime:'',
         },
@@ -168,6 +181,7 @@
             }
           }]
         },
+        loading:false,
       }
     },
     filters: {
@@ -211,6 +225,7 @@
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
       accountList() {
+        this.loading =true;
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -219,20 +234,23 @@
           moneyMin:this.formInline.moneyMin,
           moneyMax:this.formInline.moneyMax,
           gameMax:this.formInline.gameMax,
+          state:this.formInline.state,
           startRegisterTime:this.formInline.startRegisterTime,
           endRegisterTime:this.formInline.endRegisterTime
         }
 
         this.$fetch('/api/lUserExchangeCash/cashGameStatistic', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.tableData = res.data.list
-            this.totalCount = res.data.total
+            this.tableData = res.data.list;
+            this.totalCount = res.data.total;
+            this.loading =false;
           } else {
             this.$message({
               type: 'error',
               message: res.message,
               duration: 3000
             })
+            this.loading =false;
           }
         })
       },
@@ -268,7 +286,7 @@
         this.formInline.token=getSession("token");
         this.formInline.channel=getSession("channelCode");
         this.formInline.relation= getSession("userRelation");
-        let url ='/api/excl/exclUserCashLog';
+        let url ='/api/excl/channelStatisticExcl';
         this.doDownload(this.formInline,url);
       },
 

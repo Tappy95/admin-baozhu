@@ -389,7 +389,7 @@
             <el-row v-if="formtwo.lotterySort==1">
               <el-form  :model="formtwo"
                        :rules="rules"
-                       ref="formShop">
+                       ref="formtwo">
                 <div class="form">
                   <el-row>
                     <el-col :span="12">
@@ -511,7 +511,7 @@
                  class="dialog-footer">
               <el-button @click="dialogTableVisible = false">取 消</el-button>
               <el-button type="primary"
-                         @click="update(formtwo)">确 定</el-button>
+                         @click="update('formtwo')">确 定</el-button>
             </div>
             <el-row style="display: none;">
               <el-col :span="12">
@@ -1081,14 +1081,16 @@
           }
           this.formtwo.carouselImg=arr1.substr(0, arr1.length - 1);
           this.formtwo.infoImg=arr2.substr(0, arr2.length - 1); //普通用户奖励图
+
+          console.log(this.formtwo)
         }
 
         this.formtwo.imageUrl=this.imageUrl;
         this.formtwo.createTime = '';
 
-        this.$refs[formtwo].validate(valid => {
-          if (valid) {
-            this.$put('/api/mLotteryGoods/modify', this.formtwo).then(res => {
+            this.$refs[formtwo].validate(valid => {
+              if (valid) {
+                this.$put('/api/mLotteryGoods/modify', this.formtwo).then(res => {
               if ((res.statusCode + "").startsWith("2")) {
                 this.$message({type: 'success', message: '修改成功！'})
                 this.dialogTableVisible = false

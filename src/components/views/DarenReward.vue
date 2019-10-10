@@ -20,7 +20,7 @@
       </div>
       <div class="daren-reward-table">
         <template>
-          <el-table :data="tableData" height="556">
+          <el-table :data="tableData" max-height="550">
             <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
             </el-table-column>
             <el-table-column min-width="120" prop="rewardType"  label="奖励类型">
@@ -35,6 +35,10 @@
               <template slot-scope="scope">
                 <span>{{scope.row.coin | currencyNum}}</span>
               </template>
+            </el-table-column>
+            <el-table-column prop="dayLimit" label="天数限制">
+            </el-table-column>
+            <el-table-column prop="peopleLimit" label="人数限制">
             </el-table-column>
             <el-table-column prop="orders" label="排序">
             </el-table-column>
@@ -75,6 +79,19 @@
                   <el-input :style="styleObject" v-model="form.coin" auto-complete="off"  clearable></el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item  label="天数限制"  :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="form.dayLimit" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item  label="人数限制"  :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="form.peopleLimit" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                 <el-form-item  label="排序" prop="orders" :label-width="formLabelWidth">
                   <el-input :style="styleObject" v-model="form.orders" auto-complete="off"  clearable></el-input>
@@ -95,7 +112,7 @@
             <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
           </div>
         </el-dialog>
-        <el-dialog title="修改提现规则" :visible.sync="dialogTableVisible" width="700px">
+        <el-dialog title="修改" :visible.sync="dialogTableVisible" width="700px">
           <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
               <el-col :span="24">
@@ -117,6 +134,19 @@
                   <el-input :style="styleObject" v-model="formtwo.coin" auto-complete="off"  clearable></el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item  label="天数限制" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.dayLimit" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
+                <el-form-item  label="人数限制"  :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formtwo.peopleLimit" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="排序" prop="orders" :label-width="formLabelWidth">
                   <el-input :style="styleObject" v-model="formtwo.orders" auto-complete="off"  clearable></el-input>
@@ -159,7 +189,15 @@
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        form: {},
+        form: {
+          rewardName:'',
+          rewardType:'',
+          coin:'',
+          dayLimit:'',
+          peopleLimit:'',
+          orders:'',
+          state:'',
+        },
         rules: {
           rewardType: [{
             required: true,
@@ -246,7 +284,7 @@
 
             if (this.upd && this.del) {
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '150px'
             }
           }
         } else {
@@ -346,6 +384,10 @@
       },
       getInfo(id) {
         this.dialogTableVisible = true;
+        this.formtwo = {};
+
+        console.log("llllllll")
+         // return false
         this.$fetch('/api/darenReward/queryOne', {
           id: id
         }).then(res => {
