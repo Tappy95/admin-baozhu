@@ -43,10 +43,13 @@
             </el-table-column>
             <el-table-column width="170"  prop="qualityScore" label="质量分">
               <template slot-scope="scope">
-                <span :class="scope.row.qualityScore<=40?'red':'green'">{{scope.row.qualityScore}}</span>
+                <span :class="scope.row.qualityScore<40?'red':'green'">{{scope.row.qualityScore}}</span>
               </template>
             </el-table-column>
             <el-table-column width="170"  prop="activityScore" label="活跃度">
+              <template slot-scope="scope">
+                <span :class="scope.row.activityScore<0.4?'red':'green'">{{scope.row.activityScore}}</span>
+              </template>
             </el-table-column>
             <el-table-column width="150"  prop="apprenticeCount" label="下级人数">
             </el-table-column>
