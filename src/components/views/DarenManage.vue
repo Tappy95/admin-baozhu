@@ -32,7 +32,7 @@
       </div>
       <div class="daren-manage-table">
         <template>
-          <el-table :data="tableData" height="578">
+          <el-table :data="tableData" max-height="578"  v-loading="loading">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
             <el-table-column fixed="left" min-width="150"  prop="accountId" label="用户Id">
@@ -40,6 +40,13 @@
             <el-table-column width="150"  prop="userName" label="达人姓名">
             </el-table-column>
             <el-table-column width="170"  prop="channelCode" label="渠道">
+            </el-table-column>
+            <el-table-column width="170"  prop="qualityScore" label="质量分">
+              <template slot-scope="scope">
+                <span :class="scope.row.qualityScore<=40?'red':'green'">{{scope.row.qualityScore}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column width="170"  prop="activityScore" label="活跃度">
             </el-table-column>
             <el-table-column width="150"  prop="apprenticeCount" label="下级人数">
             </el-table-column>
@@ -77,10 +84,17 @@
               </template>
             </el-table-column>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" :width="optionW">
+            <!--:width="optionW"-->
+            <el-table-column fixed="right" label="操作" :width="optionW" >
               <template slot-scope="scope">
                 <el-button type="info" plain @click="getOne(scope.row.userId)" size="mini">详情</el-button>
                 <el-button type="danger" plain size="mini" @click="cancelTap(scope.row.accountId)" v-if="cancelDR">取消身份</el-button>
+                <el-button type="success" plain v-if="editScore" @click="getHyd(scope.row.userId,scope.row.qualityScore,scope.row.activityScore)" size="mini">活跃度分</el-button>
+                <el-button type="warning" v-if="scope.row.openActivity==1 && openActive" plain @click="showHyd(scope.row.userId,2)" size="mini">
+                  <span v-if="optionW='370'"></span>展示活跃度</el-button>
+                <el-button type="warning" v-if="scope.row.openActivity==2 && openActive" plain @click="showHyd(scope.row.userId,1)" size="mini">
+                  <span v-if="optionW='370'"></span>不展示活跃度</el-button>
+                <!--openActivity：是否打开活跃度展示（1-不展示 2-展示）-->
               </template>
             </el-table-column>
           </el-table>
@@ -98,6 +112,27 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button type="primary" :disabled="isSubmit" @click="addBtn('form')">确 定</el-button>
+          </div>
+        </el-dialog>
+        <el-dialog title="修改活跃度分" :visible.sync="dialogTableHyd" width="700px">
+          <el-form :model="formhyd" :rules="rules" ref="formhyd">
+            <el-row>
+              <el-col :span="19">
+                <el-form-item label="质量分:" prop="qualityScore" :label-width="formLabelWidth">
+                  <el-input v-model="formhyd.qualityScore" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="14">
+                <el-form-item label="活跃度:" prop="activityScore" :label-width="formLabelWidth">
+                  <el-input :style="styleObject" v-model="formhyd.activityScore" auto-complete="off"  clearable></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <!--<el-button @click="dialogTableHyd = false">取 消</el-button>-->
+            <el-button type="primary" @click="update('formhyd')">确 定</el-button>
           </div>
         </el-dialog>
         <el-dialog title="详情" :visible.sync="dialogTableDetail" width="1200px">
@@ -176,7 +211,7 @@
           </div>
         </el-dialog>
       </div>
-      <div class="block">
+      <div class="block mar_bot">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
       </div>
@@ -197,13 +232,20 @@
         addDR:false,
         cancelDR:false,
         Exlexport:false,
+        openActive:false,
+        editScore:false,
         dialogTableVisible: false,
         formtwo: {},
-        dialogFormVisible: false,
+        dialogTableHyd: false,
         dialogTableDetail:false,
         formtwoInfo:[],
         form: {
           accountId:''
+        },
+        formhyd:{
+          qualityScore:'',
+          activityScore:'',
+          userId:''
         },
         currentId:'',
         formLabelWidth: '140px',
@@ -226,7 +268,28 @@
                 }
               }, trigger:'blur'}
           ],
-        },
+          qualityScore: [{required: true, message: '请输入质量分', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                var pattern = /^[0-9]*$/;
+                if (!pattern.test(value) || (value <0 || value>100)) {
+                  callback(new Error("请输入0至100的正整数"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
+          activityScore: [{required: true, message: '请输入活跃度', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                let  n =value;
+                let a1 = n.toString().split(".")[1].length;
+                if ((value>1 || value<0) || a1>2) {
+                  callback(new Error("请输入0至1之间的数(只保留小数点后两位)"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
+    },
         styleObject:{
           width:'200px'
         },
@@ -262,9 +325,11 @@
         formDetail:{},
         selectTimeDetail:'',
         rewardSum:'',
-        isSubmit:false
+        isSubmit:false,
+        loading:false,
       }
     },
+
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
       currencyNum: function (num){
@@ -275,7 +340,7 @@
       datetime: function (date){
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss');
       },
-    },
+      },
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
@@ -292,12 +357,22 @@
               if(res.data[i].btnCode == 'Exlexport') {
                 this.Exlexport=true;
               }
+              if(res.data[i].btnCode == 'addDR') {
+                this.addDR=true;
+              }
               if(res.data[i].btnCode === 'cancelDR') {
                 this.cancelDR=true;
                 this.optionW = '170'
               }
-              if(res.data[i].btnCode == 'addDR') {
-                this.addDR=true;
+              if(res.data[i].btnCode === 'editScore') {
+                this.editScore=true;
+                this.optionW = '170'
+              }
+              if(res.data[i].btnCode === 'openActive') {
+                this.openActive=true;
+              }
+              if (this.editScore && this.cancelDR) {
+                this.optionW='260'
               }
             }
           } else {
@@ -315,6 +390,7 @@
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
       accountList() {
+        this.loading =true;
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -327,12 +403,14 @@
           if ((res.statusCode+"").startsWith("2")) {
             this.tableData = res.data.list;
             this.totalCount = res.data.total;
+            this.loading =false;
           } else {
             this.$message({
               type: 'error',
               message: res.message,
               duration: 3000
             })
+            this.loading =false;
           }
         })
       },
@@ -353,7 +431,6 @@
         this.pageSize = 10;
         this.accountList();
       },
-
       searchDetail() {
         //起始时间
         if (this.selectTimeDetail && this.selectTimeDetail[0]) {
@@ -376,6 +453,33 @@
         this.formInline = {};
         this.dialogFormVisible = true;
       },
+
+      //活跃度弹框
+      getHyd(userId,qualityScore,activityScore){
+         this.dialogTableHyd = true;
+         this.formhyd.userId = userId;
+        this.formhyd.qualityScore = qualityScore;
+        this.formhyd.activityScore = activityScore;
+        console.log(this.formhyd)
+      },
+
+      update(formhyd) {
+        this.$refs[formhyd].validate(valid => {
+          if(valid) {
+            this.$put('/api/userActivity/modifyScore', this.formhyd).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({
+                  type: 'success',
+                  message: '修改成功！'
+                })
+                this.dialogTableHyd = false;
+                this.accountList();
+              }
+            })
+          }
+        })
+      },
+
       addTap(id) {
         this.isSubmit =false;
         this.dialogTableVisible = true;
@@ -438,6 +542,51 @@
           }
         })
       },
+
+      //是否展示活跃度
+      showHyd(userid,types){
+        let funType = '';
+        if (types==2){
+           funType = '展示活跃度';
+        } else if (types==1) {
+           funType = '不展示活跃度';
+        }
+
+        this.$confirm('此操作将'+funType+'是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            let parameterData = {
+              userId: userid,
+              openActivity:types,
+            }
+            this.$post('/api/userActivity/openActivity', parameterData).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({
+                  type: 'success',
+                  message: funType+'操作成功！'
+                })
+                this.accountList()
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: res.message
+                })
+              }
+            })
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消操作'
+            })
+          })
+      },
+
+
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
@@ -463,7 +612,10 @@
           } else {}
         })
       },
+
+      //导出表格
       queryExport() {
+        this.search();
         //开启正在导出弹层
         this.fullscreenLoading = this.$loading({
           lock: true,
@@ -471,32 +623,28 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-
-        let  accountId=this.formInline.accountId;
-        let  mobile=this.formInline.mobile;
-        let  darenTime_start=this.formInline.darenTime_start;
-        let  darenTime_end=this.formInline.darenTime_end;
-        let token= getSession("token");
-        let channel= getSession("channelCode");
-        let relation= getSession("userRelation");
+        this.formInline.token=getSession("token");
+        this.formInline.channel=getSession("channelCode");
+        this.formInline.relation= getSession("userRelation");
         let url ='/api/excl/drExcl';
-
-        let keys=new Array("url","accountId","mobile","darenTime_start","darenTime_end","token","channel","relation");
-        let data =new Array (url,accountId,mobile,darenTime_start,darenTime_end,token,channel,relation);
-        //this.doDownload(data);
-        this.doDownload(keys,data);
+        this.doDownload(this.formInline,url);
       },
-      doDownload(key,data){
-        let http=data[0];
-        for(let i=1;i<key.length;i++){
-          if(http==data[0]){
-            if(data[i]!=null && data[i]!=''){
-              http=http+'?'+key[i]+'='+ data[i]
-            }
+
+      doDownload(from,url){
+        let keys=[];
+        let data=[];
+        for (var i in from) {
+          if(from[i]!=null && from[i]!='') {
+            keys.push(i)
+            data.push(from[i])
+          }
+        }
+        let http=url;
+        for(let i=0;i<keys.length;i++){
+          if(http==url){
+            http=http+'?'+keys[i]+'='+ data[i]
           }else{
-            if(data[i]!=null && data[i]!=''){
-              http=http+'&'+key[i]+'='+ data[i]
-            }
+            http=http+'&'+keys[i]+'='+ data[i]
           }
         }
         let a1 = document.createElement('a');
@@ -508,8 +656,9 @@
         //关闭正在导出弹层
         setTimeout(() => {
           this.fullscreenLoading.close();
-        }, 5000);
+        }, 9000);
       },
+
       handleSizeChange(val) {
         this.pageSize = val;
         this.accountList();
@@ -542,19 +691,8 @@
     color: #E6A23C;
   }
 
-  .sun_sty{
-    font-size: 14px;
-    color: #13ce66;
+  .mar_bot{
     margin-bottom: 20px;
-  }
-  .sun_sty p{
-    margin: 0;
-    padding: 0;
-    line-height: 30px;
-  }
-  .sun_sty p span{
-    transform: scale(0.5);
-    font-size: 12px;
   }
 
   .daren-manage-wrap {
@@ -583,8 +721,4 @@
   .el-table th {
     background-color: #e6e6e6;
   }
-
-
-
-
 </style>
