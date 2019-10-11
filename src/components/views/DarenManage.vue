@@ -32,7 +32,7 @@
       </div>
       <div class="daren-manage-table">
         <template>
-          <el-table :data="tableData" max-height="578"  v-loading="loading">
+          <el-table :data="tableData" height="558"  v-loading="loading">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
             </el-table-column>
             <el-table-column fixed="left" min-width="150"  prop="accountId" label="用户Id">
@@ -280,13 +280,21 @@
           ],
           activityScore: [{required: true, message: '请输入活跃度', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
-                let  n =value;
-                let a1 = n.toString().split(".")[1].length;
-                if ((value>1 || value<0) || a1>2) {
+                   let  n = 2,
+                        a2 = value,
+                        a1 =0;
+                    if(typeof a2 !== 'string'){
+                      a2 = a2.toString();
+                    }
+                   if (a2.includes('.')) {
+                     a1 = a2.split('.')[1].length;
+                   }
+                if ((value>1 || value<0) || a1>n) {
                   callback(new Error("请输入0至1之间的数(只保留小数点后两位)"));
                 }else{
                   callback();
                 }
+                
               }, trigger:'blur'}
           ],
     },
