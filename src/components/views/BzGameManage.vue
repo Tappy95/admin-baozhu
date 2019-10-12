@@ -41,6 +41,8 @@
             </el-table-column>
             <el-table-column min-width="120px" prop="probability" label="中奖概率">
             </el-table-column>
+            <el-table-column min-width="120px" prop="openProbability" label="开奖概率">
+            </el-table-column>
             <el-table-column min-width="170px" prop="basePig" label="基准金猪">
               <template slot-scope="scope">
                 <span>{{scope.row.basePig | currencyNum}}</span>
@@ -123,6 +125,13 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="12">
+                <el-form-item label="开奖概率:" :label-width="formLabelWidth" prop="openProbability">
+                  <el-input :style="styleObject"  v-model="form.openProbability" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="24">
               <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                 <el-select :style="styleObject" v-model="form.status" placeholder="">
@@ -188,6 +197,13 @@
                 </el-form-item>
               </el-col>
 
+              <el-col :span="12">
+                <el-form-item label="开奖概率:" :label-width="formLabelWidth" prop="openProbability">
+                  <el-input :style="styleObject"  v-model="formtwo.openProbability" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="24">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="formtwo.status" placeholder="">
@@ -244,10 +260,21 @@
                   </div>
                 </div>
                 <div class="body_list">
+                  <div class="title">中奖概率:</div>
+                  <div class="name">
+                    <div class="name">{{formtwoInfo.probability}}</div>
+                  </div>
+                </div>
+                <div class="body_list">
+                  <div class="title">开奖概率:</div>
+                  <div class="name">
+                    <div class="name">{{formtwoInfo.openProbability}}</div>
+                  </div>
+                </div>
+                <div class="body_list">
                   <div class="title">创建时间:</div>
                   <div class="name">{{formtwoInfo.createTime | dateFormat}}</div>
                 </div>
-
                 <div class="body_list">
                 <div class="title">状态:</div>
                   <div class="name">
@@ -255,7 +282,6 @@
                     <span  v-if="formtwoInfo.status==2">已停用</span>
                   </div>
                 </div>
-
               </div>
             </div>
           </el-form>
@@ -305,14 +331,50 @@
               }, trigger:'blur'}],
           probability: [
             {required: true, message: '请输入中奖概率', trigger: 'blur'},
+            // {validator:(rule,value,callback)=>{
+            //     var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+            //     if (!pattern.test(value)) {
+            //       callback(new Error("请输入正数"));
+            //     }else{
+            //       callback();
+            //     }
+            //   }, trigger:'blur'}
+
             {validator:(rule,value,callback)=>{
-                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
-                if (!pattern.test(value)) {
-                  callback(new Error("请输入正数"));
+                let a2 = value,
+                  a1 =0;
+                if(typeof a2 !== 'string'){
+                  a2 = a2.toString();
+                }
+                if (a2.includes('.')) {
+                  a1 = a2.split('.')[1].length;
+                }
+                if ((value>1 || value<0) || a1>3) {
+                  callback(new Error("请输入0至1之间的数(只保留小数点后3位)"));
                 }else{
                   callback();
                 }
-              }, trigger:'blur'}],
+              }, trigger:'blur'}
+              ],
+
+          openProbability: [{required: true, message: '请输入开奖概率', trigger: 'blur'},
+            {validator:(rule,value,callback)=>{
+                let a2 = value,
+                  a1 =0;
+                if(typeof a2 !== 'string'){
+                  a2 = a2.toString();
+                }
+                if (a2.includes('.')) {
+                  a1 = a2.split('.')[1].length;
+                }
+                if ((value>1 || value<0) || a1>3) {
+                  callback(new Error("请输入0至1之间的数(只保留小数点后3位)"));
+                }else{
+                  callback();
+                }
+              }, trigger:'blur'}
+          ],
+
           basePig: [
             {required: true, message: '请输入基准金猪', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
@@ -326,9 +388,9 @@
           pigMin: [
             {required: true, message: '请输入最小投注', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
-                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                var pattern = /^[0-9]*$/;
                 if (!pattern.test(value)) {
-                  callback(new Error("请输入正数"));
+                  callback(new Error("请输入正整数"));
                 }else{
                   callback();
                 }
@@ -336,9 +398,9 @@
           pigMax: [
             {required: true, message: '请输入最大投注', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
-                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                var pattern = /^[0-9]*$/;
                 if (!pattern.test(value)) {
-                  callback(new Error("请输入正数"));
+                  callback(new Error("请输入正整数"));
                 }else{
                   callback();
                 }
