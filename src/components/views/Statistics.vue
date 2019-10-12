@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap" style="height: 100vh; background:rgba(244,244,245,1)">
+    <div class="wrap" style="height: 100vh; background-color:#f2f8f9">
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="grid_item bg1 grid-content">
@@ -54,454 +54,382 @@
                 align="left">
               </el-date-picker>
           </el-form-item>
+
             <el-form-item label="渠道标识:" :label-width="formLabelWidth">
               <el-select  v-model="formInline.channelCode" placeholder="请选择渠道标识">
                 <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                 <el-option label="全部" value=""></el-option>
               </el-select>
             </el-form-item>
+
+          <el-form-item label="模块:" :label-width="formLabelWidth">
+            <el-select  v-model="selectType" @change="selectTap(selectType)" placeholder="请选择模块">
+              <el-option label="模块1" value="1"></el-option>
+              <el-option label="模块2" value="2"></el-option>
+              <el-option label="模块3" value="3"></el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item style="margin-left: 20px">
-             <el-button type="primary" plain @click="search">查询</el-button>
+             <el-button type="primary" plain @click="search(selectType)">查询</el-button>
           </el-form-item>
           <el-form-item style="margin-left: 20px">
             <el-button type="danger" plain @click="typeTap">昨天</el-button>
           </el-form-item>
         </el-form>
       </el-row>
-     <div class="box_wrap">
+     <div class="box_wrap" >
           <el-row :gutter="10">
-            <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}"  >
-            <el-popover
-              :placement=place
-              title="新增注册量"
-              width="200"
-              :offset=off
-              trigger="hover"
-              content="时间段内注册的人数">
-              <div slot="reference" class="list grid-content">
-                <img src="../../assets/statistics/zuce_add.png"/>
-                <div class="dec">
-                  <p>{{listData.regUser}}<span>人</span></p>
-                  <p>新增注册量</p>
-                </div>
-              </div>
-            </el-popover>
-            </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="领取每日红包人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                content="时间段内参加每日领取每日红包的人数">
+            <div v-if="selectType==1">
+                <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}"  >
+                <el-popover
+                  :placement=place
+                  title="新增注册量"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  content="时间段内注册的人数">
                   <div slot="reference" class="list grid-content">
-                    <img src="../../assets/statistics/sign_num.png"/>
+                    <img src="../../assets/statistics/zuce_add.png"/>
                     <div class="dec">
-                      <p>{{listData.signCount}}<span>人</span></p>
-                      <p>领取每日红包人数</p>
+                      <p>{{listData.regUser}}<span>人</span></p>
+                      <p>新增注册量</p>
                     </div>
                   </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+                </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="登录人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                content="时间段内登录过的总人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/login_num.png"/>
-                  <div class="dec">
-                    <p>{{listData.loginCount}}<span>人</span></p>
-                    <p>登录人数</p>
+
+
+                <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                  <el-popover
+                    :placement=place
+                    title="领取每日红包人数"
+                    width="200"
+                    :offset=off
+                    trigger="hover"
+                    content="时间段内参加每日领取每日红包的人数">
+                      <div slot="reference" class="list grid-content">
+                        <img src="../../assets/statistics/sign_num.png"/>
+                        <div class="dec">
+                          <p>{{listData.signCount}}<span>人</span></p>
+                          <p>领取每日红包人数</p>
+                        </div>
+                      </div>
+                  </el-popover>
+                </el-col>
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="登录人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  content="时间段内登录过的总人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/login_num.png"/>
+                    <div class="dec">
+                      <p>{{listData.loginCount}}<span>人</span></p>
+                      <p>登录人数</p>
+                    </div>
                   </div>
-                </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="连续登录人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                content="时间段内每天有登录过的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/lxdenlu.png"/>
-                  <div class="dec">
-                    <p>{{listData.lxdlCount}}<span>人</span></p>
-                    <p>连续登录人数</p>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="连续登录人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  content="时间段内每天有登录过的人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/lxdenlu.png"/>
+                    <div class="dec">
+                      <p>{{listData.lxdlCount}}<span>人</span></p>
+                      <p>连续登录人数</p>
+                    </div>
                   </div>
-                </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
-              <!--<el-popover-->
-                <!--:placement=place-->
-                <!--title="首次购买VIP人数"-->
-                <!--width="200"-->
-                <!--:offset=off-->
-                <!--trigger="hover"-->
-                <!--content="时间段内第一次购买VIP的人数">-->
-                <!--<div slot="reference" class="list grid-content">-->
-                <!--<img src="../../assets/statistics/first_vip.png"/>-->
-                <!--<div class="dec">-->
-                  <!--<p>{{listData.firstVip}}<span>人</span></p>-->
-                  <!--<p>首次购买VIP人数</p>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--</el-popover>-->
-            <!--</el-col>-->
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="参与答题赚人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内成功参加答题、出题的人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/dati.png"/>
+                    <div class="dec">
+                      <p>{{listData.dtCount }}<span>人</span></p>
+                      <p>参与答题赚人数</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="绑定支付通道人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                content="时间段内绑定过支付宝、微信等支付通道的总人数">
-                <div slot="reference" class="list grid-content">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="参与快速赚人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内在快速赚中至少完成一个任务（金币变动）的人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/fast_zhuan.png"/>
+                    <div class="dec">
+                      <p>{{listData.kszUserNum}}<span>人</span></p>
+                      <p>参与快速赚人数</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="参与签到赚人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内在签到赚中至少完成一个任务（金币变动）的人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/qiandao.png"/>
+                    <div class="dec">
+                      <p>{{listData.qdzUserNum}}<span>人</span></p>
+                      <p>参与签到赚人数</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
+
+            </div>
+
+            <div v-if="selectType==2">
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="购买VIP人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  content="时间段内购买VIP的人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/vip_num.png"/>
+                    <div class="dec">
+                      <p>{{listData.vipCounts}}<span>人</span></p>
+                      <p>购买VIP人数</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="提现人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内通过支付通道提现成功的人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/person.png"/>
+                    <div class="dec">
+                      <p>{{listData.cashUserNum}}<span>人</span></p>
+                      <p>提现人数</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="购买VIP总金额"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内用户购买VIP会员实际会费的总金额，不包含优惠赠送金额">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/vip_acconut.png"/>
+                    <div class="dec">
+                    <p>{{listData.vipAmount}}<span>元</span></p>
+                    <p>购买VIP总金额</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="总提现金额"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内通过支付通道兑换成功的金额">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/wallet.png"/>
+                    <div class="dec">
+                      <p>{{listData.txzAmount}}<span>元</span></p>
+                      <p>总提现金额</p>
+                    </div>
+                  </div>
+                </el-popover>
+              </el-col>
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="游戏试玩累计金额"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段参加第三方游戏的试玩加成、试玩赠送的总金额">
+                  <div slot="reference" class="list grid-content">
+                      <img src="../../assets/statistics/game.png"/>
+                      <div class="dec">
+                        <p>{{listData.swAmount}}<span>元</span></p>
+                        <p>游戏试玩累计金额</p>
+                      </div>
+                    </div>
+                </el-popover>
+              </el-col>
+
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="绑定支付通道人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  content="时间段内绑定过支付宝、微信等支付通道的总人数">
+                  <div slot="reference" class="list grid-content">
                     <img src="../../assets/statistics/pay_num.png"/>
                     <div class="dec">
                       <p>{{listData.bindZFB}}<span>人</span></p>
                       <p>绑定支付通道人数</p>
                     </div>
-                </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="购买VIP人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                content="时间段内购买VIP的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/vip_num.png"/>
-                  <div class="dec">
-                    <p>{{listData.vipCounts}}<span>人</span></p>
-                    <p>购买VIP人数</p>
                   </div>
-                </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="提现人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内通过支付通道提现成功的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/person.png"/>
-                  <div class="dec">
-                    <p>{{listData.cashUserNum}}<span>人</span></p>
-                    <p>提现人数</p>
-                  </div>
-                </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="购买VIP总金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内用户购买VIP会员实际会费的总金额，不包含优惠赠送金额">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/vip_acconut.png"/>
-                  <div class="dec">
-                  <p>{{listData.vipAmount}}<span>元</span></p>
-                  <p>购买VIP总金额</p>
-                  </div>
-                </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="游戏试玩累计金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段参加第三方游戏的试玩加成、试玩赠送的总金额">
-                <div slot="reference" class="list grid-content">
-                    <img src="../../assets/statistics/game.png"/>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="好友贡献"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内包含推荐用户、徒弟贡献、徒弟到达第四级获取等总贡献金额">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/more_get.png"/>
                     <div class="dec">
-                      <p>{{listData.swAmount}}<span>元</span></p>
-                      <p>游戏试玩累计金额</p>
+                      <p>{{listData.hygxAmount}}<span>元</span></p>
+                      <p>好友贡献</p>
                     </div>
                   </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="总提现金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内通过支付通道兑换成功的金额">
-              <div slot="reference" class="list grid-content">
-                <img src="../../assets/statistics/wallet.png"/>
-                <div class="dec">
-                  <p>{{listData.txzAmount}}<span>元</span></p>
-                  <p>总提现金额</p>
-                </div>
-              </div>
-              </el-popover>
-            </el-col>
+            </div>
 
-            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
-              <!--<el-popover-->
-                <!--:placement=place-->
-                <!--title="礼品等价总金额"-->
-                <!--width="200"-->
-                <!--:offset=off-->
-                <!--trigger="hover"-->
-                <!--:tabindex=tabindex-->
-                <!--content="时间段内所有兑换礼品相应价值的总金额">-->
-                <!--<div slot="reference" class="list grid-content">-->
-                    <!--<img src="../../assets/statistics/gift.png"/>-->
-                    <!--<div class="dec">-->
-                      <!--<p>{{listData.lpdjAmount}}<span>元</span></p>-->
-                      <!--<p>礼品等价总金额</p>-->
-                    <!--</div>-->
-                 <!--</div>-->
-              <!--</el-popover>-->
-            <!--</el-col>-->
+            <div v-if="selectType==3">
 
-            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
-              <!--<el-popover-->
-                <!--:placement=place-->
-                <!--title="升级运营总监总金额"-->
-                <!--width="200"-->
-                <!--:offset=off-->
-                <!--trigger="hover"-->
-                <!--:tabindex=tabindex-->
-                <!--content="时间段内所有渠道用户升级为运营总监所付费金额（含首次和续费金额）">-->
-                <!--<div slot="reference" class="list grid-content">-->
-                    <!--<img src="../../assets/statistics/upgrade.png"/>-->
-                    <!--<div class="dec">-->
-                      <!--<p>{{listData.tdzAmount}}<span>元</span></p>-->
-                      <!--<p>升级运营总监总金额</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-              <!--</el-popover>-->
-            <!--</el-col>-->
-
-            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
-              <!--<el-popover-->
-                <!--:placement=place-->
-                <!--title="活动奖励"-->
-                <!--width="200"-->
-                <!--:offset=off-->
-                <!--trigger="hover"-->
-                <!--:tabindex=tabindex-->
-                <!--content="时间段内参加答题、领取每日红包、新人注册、出题、阅读资讯等所有平台活动赠送的总金额">-->
-                <!--<div slot="reference" class="list grid-content">-->
-                  <!--<img src="../../assets/statistics/flag.png"/>-->
-                  <!--<div class="dec">-->
-                    <!--<p>{{listData.hdjlAmount}}<span>元</span></p>-->
-                    <!--<p>活动奖励</p>-->
-                  <!--</div>-->
-              <!--</div>-->
-              <!--</el-popover>-->
-            <!--</el-col>-->
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="好友贡献"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内包含推荐用户、徒弟贡献、徒弟到达第四级获取等总贡献金额">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/more_get.png"/>
-                  <div class="dec">
-                    <p>{{listData.hygxAmount}}<span>元</span></p>
-                    <p>好友贡献</p>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="参与竞猜游戏的人数"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内参与游戏竞猜的总人数">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/jc_game.png"/>
+                    <div class="dec">
+                      <p>{{listData.jcrAmount}}<span>人</span></p>
+                      <p>参与竞猜游戏的人数</p>
+                    </div>
                   </div>
-              </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="参与快速赚人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内在快速赚中至少完成一个任务（金币变动）的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/fast_zhuan.png"/>
-                  <div class="dec">
-                    <p>{{listData.kszUserNum}}<span>人</span></p>
-                    <p>参与快速赚人数</p>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="总竞猜金额"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内参加宝猪乐园游戏竞猜的总金额">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/coin.png"/>
+                    <div class="dec">
+                      <p>{{listData.jczAmount}}<span>元</span></p>
+                      <p>总竞猜金额</p>
+                    </div>
                   </div>
-                </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="参与签到赚人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内在签到赚中至少完成一个任务（金币变动）的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/qiandao.png"/>
-                  <div class="dec">
-                    <p>{{listData.qdzUserNum}}<span>人</span></p>
-                    <p>参与签到赚人数</p>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="中奖总金额"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内游戏竞猜的总猜中金额">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/trophy.png"/>
+                    <div class="dec">
+                      <p>{{listData.zjzAmount}}<span>元</span></p>
+                      <p>中奖总金额</p>
+                    </div>
                   </div>
-                </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="参与答题赚人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内成功参加答题、出题的人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/dati.png"/>
-                  <div class="dec">
-                    <p>{{listData.dtCount }}<span>人</span></p>
-                    <p>参与答题赚人数</p>
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-popover
+                  :placement=place
+                  title="抽奖总金额"
+                  width="200"
+                  :offset=off
+                  trigger="hover"
+                  :tabindex=tabindex
+                  content="时间段内参加金猪抽奖总消耗金猪的金额">
+                  <div slot="reference" class="list grid-content">
+                    <img src="../../assets/statistics/turntable.png"/>
+                    <div class="dec">
+                      <p>{{listData.cjzAmount}}<span>元</span></p>
+                      <p>抽奖总金额</p>
+                    </div>
                   </div>
-                </div>
-              </el-popover>
-            </el-col>
+                </el-popover>
+              </el-col>
+
+            </div>
           </el-row>
-          <el-row style="padding-bottom: 30px">
-            <!--<el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">-->
-              <!--<el-popover-->
-                <!--:placement=place-->
-                <!--title="兑换金猪总金额"-->
-                <!--width="200"-->
-                <!--:offset=off-->
-                <!--trigger="hover"-->
-                <!--:tabindex=tabindex-->
-                <!--content="时间段内用户进行VIP充值、金币兑换、参加活动、升级运营总监等赠送金猪的总金额">-->
-                <!--<div slot="reference" class="list grid-content">-->
-                    <!--<img src="../../assets/statistics/exchange.png"/>-->
-                  <!--<div class="dec">-->
-                    <!--<p>{{listData.jzdhAmount}}<span>元</span></p>-->
-                    <!--<p>兑换金猪总金额</p>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</el-popover>-->
-            <!--</el-col>-->
 
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="参与竞猜游戏的人数"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内参与游戏竞猜的总人数">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/jc_game.png"/>
-                  <div class="dec">
-                    <p>{{listData.jcrAmount}}<span>人</span></p>
-                    <p>参与竞猜游戏的人数</p>
-                  </div>
-                </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="总竞猜金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内参加宝猪乐园游戏竞猜的总金额">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/coin.png"/>
-                  <div class="dec">
-                    <p>{{listData.jczAmount}}<span>元</span></p>
-                    <p>总竞猜金额</p>
-                  </div>
-              </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="中奖总金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内游戏竞猜的总猜中金额">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/trophy.png"/>
-                  <div class="dec">
-                    <p>{{listData.zjzAmount}}<span>元</span></p>
-                    <p>中奖总金额</p>
-                  </div>
-                </div>
-              </el-popover>
-            </el-col>
-
-            <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
-              <el-popover
-                :placement=place
-                title="抽奖总金额"
-                width="200"
-                :offset=off
-                trigger="hover"
-                :tabindex=tabindex
-                content="时间段内参加金猪抽奖总消耗金猪的金额">
-                <div slot="reference" class="list grid-content">
-                  <img src="../../assets/statistics/turntable.png"/>
-                  <div class="dec">
-                    <p>{{listData.cjzAmount}}<span>元</span></p>
-                    <p>抽奖总金额</p>
-                  </div>
-                </div>
-              </el-popover>
-            </el-col>
-          </el-row>
     </div>
     </div>
 </template>
@@ -551,7 +479,9 @@
           place:'top',//提示信息的位置
           off:0,
           tabindex:0,
-          powers:''
+          powers:'',
+          selectType:'1',
+          interType:'homeTable1',
         };
       },
       created(){
@@ -567,8 +497,12 @@
         },
       },
       methods: {
+        selectTap(types){
+          this.search(types)
+          // console.log(a)
+        },
           //查询
-          search(){
+          search(types){
             //起始时间
             if (this.selectTime && this.selectTime[0]) {
               this.formInline.startTime = formatDate(new Date(this.selectTime[0]), 'yyyy-MM-dd hh:mm:sss');
@@ -584,28 +518,25 @@
               this.formInline.endTime = ''
             }
 
-            this.type = '';
-            this.list();
-          },
+            if (types==1) {
+              this.interType = 'homeTable1'
+            }else if (types==2){
+              this.interType = 'homeTable2'
+            }else if (types==3){
+              this.interType = 'homeTable3'
+            }
 
-          typeTap(){
-            // console.log(this.selectTime)
-            this.type = 'yesterday';
-            this.selectTime = [];
-            // this.formInline = {};
-            this.list();
+            this.list()
           },
 
         list() {
           let parameterData = {
             channelCode: this.formInline.channelCode,
-            type: this.type,
             startDate: this.formInline.startTime,
             endDate: this.formInline.endTime
           }
-          this.$fetch('/api/pDataStatistics/homeTable', parameterData).then(res => {
+          this.$fetch('/api/pDataStatistics/'+this.interType, parameterData).then(res => {
             if ((res.statusCode+"").startsWith("2")) {
-              // console.log(res.data)
               this.listData = res.data;
             } else {
               this.$message({
@@ -616,6 +547,7 @@
             }
           })
         },
+
         //调取名称列表
         channelList(){
           this.$fetch('/api/mChannelInfo/downList',{
