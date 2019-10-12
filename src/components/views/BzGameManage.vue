@@ -331,15 +331,6 @@
               }, trigger:'blur'}],
           probability: [
             {required: true, message: '请输入中奖概率', trigger: 'blur'},
-            // {validator:(rule,value,callback)=>{
-            //     var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
-            //     if (!pattern.test(value)) {
-            //       callback(new Error("请输入正数"));
-            //     }else{
-            //       callback();
-            //     }
-            //   }, trigger:'blur'}
-
             {validator:(rule,value,callback)=>{
                 let a2 = value,
                   a1 =0;
@@ -355,8 +346,7 @@
                   callback();
                 }
               }, trigger:'blur'}
-              ],
-
+          ],
           openProbability: [{required: true, message: '请输入开奖概率', trigger: 'blur'},
             {validator:(rule,value,callback)=>{
                 let a2 = value,
