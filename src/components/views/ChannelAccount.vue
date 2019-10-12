@@ -15,10 +15,6 @@
           <el-input v-model="formInline.channelCode" placeholder="请输入渠道标识" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
-        <el-form-item label="提现金额:">
-          <el-input v-model="formInline.moneyMin" style="width: 150px" placeholder="请输入最小金额" auto-complete="off"  clearable>
-          </el-input>
-        </el-form-item>
 
         <el-form-item label="状态:" >
           <el-select v-model="formInline.state"  placeholder="请选择状态">
@@ -31,6 +27,10 @@
           </el-select>
         </el-form-item>
 
+        <el-form-item label="提现金额:">
+          <el-input v-model="formInline.moneyMin" style="width: 150px" placeholder="请输入最小金额" auto-complete="off"  clearable>
+          </el-input>
+        </el-form-item>
         <el-form-item label="至:">
           <el-input v-model="formInline.moneyMax" style="width: 150px" placeholder="请输入最大金额" auto-complete="off"  clearable>
           </el-input>
