@@ -73,9 +73,9 @@
           <el-form-item style="margin-left: 20px">
              <el-button type="primary" plain @click="search(selectType)">查询</el-button>
           </el-form-item>
-          <el-form-item style="margin-left: 20px">
-            <el-button type="danger" plain @click="typeTap">昨天</el-button>
-          </el-form-item>
+          <!--<el-form-item style="margin-left: 20px">-->
+            <!--<el-button type="danger" plain @click="typeTap">昨天</el-button>-->
+          <!--</el-form-item>-->
         </el-form>
       </el-row>
      <div class="box_wrap" >
