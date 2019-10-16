@@ -566,7 +566,18 @@ const routes = [
         component: resolve => require(['../components/views/CSJCallback.vue'], resolve),
         meta: { title: '穿山甲回调'}
       },
-
+      {
+        path: 'gold-eggs-type',
+        name: 'GoldEggsType',
+        component: resolve => require(['../components/views/GoldEggsType.vue'], resolve),
+        meta: { title: '金蛋类型'}
+      },
+      {
+        path: 'gold-eggs-orders',
+        name: 'GoldEggsOrders',
+        component: resolve => require(['../components/views/GoldEggsOrders.vue'], resolve),
+        meta: { title: '金蛋订单'}
+      },
     ]
   }
 ]
