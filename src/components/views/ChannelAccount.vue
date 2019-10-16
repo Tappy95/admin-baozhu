@@ -95,7 +95,7 @@
           </el-table-column>
           <el-table-column  min-width="170px" prop="oneGame"  label="注册当天游戏次数">
           </el-table-column>
-          <el-table-column  min-width="180px" prop="oneGame"  label="注册前两天游戏次数">
+          <el-table-column  min-width="180px" prop="twoGame"  label="注册前两天游戏次数">
           </el-table-column>
           <el-table-column  min-width="120px" prop="totalGame" label="累计游戏次数">
           </el-table-column>

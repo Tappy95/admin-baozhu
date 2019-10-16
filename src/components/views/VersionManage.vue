@@ -22,8 +22,8 @@
             </el-table-column>
             <el-table-column min-width="200px" fixed="left" prop="channelCode" label="渠道标识">
             </el-table-column>
-            <el-table-column min-width="100px" prop="open28" label="发布状态">
-            </el-table-column>
+            <!--<el-table-column min-width="100px" prop="open28" label="发布状态">-->
+            <!--</el-table-column>-->
             <el-table-column width="150px" prop="channelUpdate" label="是否独立更新">
               <template slot-scope="scope">
                 <span v-if="scope.row.channelUpdate==1">是</span>
