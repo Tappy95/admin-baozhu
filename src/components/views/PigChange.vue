@@ -25,8 +25,8 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-          <el-form-item  label="状态:" >
-            <el-select v-model="formInline.changedType"  placeholder="请选择状态">
+          <el-form-item  label="类型:" >
+            <el-select v-model="formInline.changedType"  placeholder="请选择类型">
               <el-option label="vip" value="1"></el-option>
               <el-option label="提现" value="2"></el-option>
               <el-option label="任务" value="3"></el-option>
@@ -39,6 +39,8 @@
               <el-option label="竞猜退回" value="10"></el-option>
               <el-option label="团队长赠送" value="11"></el-option>
               <el-option label="每日救济金" value="12"></el-option>
+              <el-option label="砸金蛋" value="13"></el-option>
+              <el-option label="使用金蛋" value="14"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -151,6 +153,8 @@
                     <el-option label="竞猜退回" value="10"></el-option>
                     <el-option label="团队长赠送" value="11"></el-option>
                     <el-option label="每日救济金" value="12"></el-option>
+                    <el-option label="砸金蛋" value="13"></el-option>
+                    <el-option label="使用金蛋" value="14"></el-option>
                   </el-select>
 
                 </el-form-item>
@@ -462,6 +466,10 @@
               res.data.list[i].changedType = '团队长赠送'
             }else if(res.data.list[i].changedType == '12'){
               res.data.list[i].changedType = '每日救济金'
+            }else if(res.data.list[i].changedType == '13'){
+              res.data.list[i].changedType = '砸金蛋'
+            }else if(res.data.list[i].changedType == '14'){
+              res.data.list[i].changedType = '使用金蛋'
             }
 
             if(res.data.list[i].roleType == '1'){
@@ -500,25 +508,6 @@
           } else {
             res.data.flowType = '支出'
           }
-          // if(res.data.changedType == '1'){
-          //   res.data.changedType = 'vip'
-          // }else if(res.data.changedType == '2'){
-          //   res.data.changedType = '提现'
-          // }else if(res.data.changedType == '3'){
-          //   res.data.changedType = '任务'
-          // }else if(res.data.changedType == '4'){
-          //   res.data.changedType = '游戏试玩'
-          // }else if(res.data.changedType == '5'){
-          //   res.data.changedType = '金币兑换'
-          // }else if(res.data.changedType == '6'){
-          //   res.data.changedType = '竞猜'
-          // }else if(res.data.changedType == '7'){
-          //   res.data.changedType = 'vip救济金'
-          // }else if(res.data.changedType == '8'){
-          //   res.data.changedType = '金猪抽奖'
-          // }else if(res.data.changedType == '9'){
-          //   res.data.changedType = '抽奖退回'
-          // }
           res.data.changedTime=formatDate(new Date(res.data.changedTime), 'yyyy-MM-dd hh:mm:sss')
           this.message=res.data
          }
@@ -546,12 +535,7 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-        console.log(this.isShow)
-      }
     },
-
   }
 </script>
 <style type="text/css">
