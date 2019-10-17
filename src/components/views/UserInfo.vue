@@ -82,10 +82,10 @@
             <el-table-column prop="apprentice" label="直属下级人数" min-width="110px">
             </el-table-column>
 
-            <el-table-column prop="yxCount" label="游戏次数" min-width="120px">
-            </el-table-column>
-            <el-table-column prop="zcYxCount" label="注册当天游戏次数" min-width="140px">
-            </el-table-column>
+            <!--<el-table-column prop="yxCount" label="游戏次数" min-width="120px">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="zcYxCount" label="注册当天游戏次数" min-width="140px">-->
+            <!--</el-table-column>-->
 
             <el-table-column label="渠道" min-width="100px">
               <template slot-scope="scope">
@@ -240,19 +240,19 @@
                     </div>
                   </div>
 
-                  <div class="body_list" >
-                    <div class="title">游戏次数:</div>
-                    <div class="name">
-                      {{message.yxCount}}
-                    </div>
-                  </div>
+                  <!--<div class="body_list" >-->
+                    <!--<div class="title">游戏次数:</div>-->
+                    <!--<div class="name">-->
+                      <!--{{message.yxCount}}-->
+                    <!--</div>-->
+                  <!--</div>-->
 
-                  <div class="body_list" >
-                    <div class="title">注册当天游戏次数:</div>
-                    <div class="name">
-                      {{message.zcYxCount}}
-                    </div>
-                  </div>
+                  <!--<div class="body_list" >-->
+                    <!--<div class="title">注册当天游戏次数:</div>-->
+                    <!--<div class="name">-->
+                      <!--{{message.zcYxCount}}-->
+                    <!--</div>-->
+                  <!--</div>-->
 
 
                   <div class="body_list" >

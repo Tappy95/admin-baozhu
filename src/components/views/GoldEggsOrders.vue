@@ -11,8 +11,8 @@
             <el-input v-model="formInline.accountId" placeholder="请输入用户Id" clearable></el-input>
           </el-form-item>
 
-          <el-form-item label="使用者用户id:">
-            <el-input v-model="formInline.exchangeAccountId" placeholder="请输入使用者用户id" clearable></el-input>
+          <el-form-item label="使用者用户Id:">
+            <el-input v-model="formInline.exchangeAccountId" placeholder="请输入使用者用户Id" clearable></el-input>
           </el-form-item>
 
           <el-form-item label="状态:">
@@ -52,7 +52,7 @@
       <div class="gold-eggs-order-table">
         <template>
           <el-table :data="tableData" max-height="556">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='120'>
+            <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
             <el-table-column prop="accountId" label="用户Id">
             </el-table-column>
