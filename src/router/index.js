@@ -578,6 +578,12 @@ const routes = [
         component: resolve => require(['../components/views/GoldEggsOrders.vue'], resolve),
         meta: { title: '金蛋订单'}
       },
+      {
+        path: 'user-trial',
+        name: 'UserTrial',
+        component: resolve => require(['../components/views/UserTrial.vue'], resolve),
+        meta: { title: '用户试玩数据'}
+      },
     ]
   }
 ]
