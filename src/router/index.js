@@ -608,6 +608,12 @@ const routes = [
         component: resolve => require(['../components/views/PunchCardRecord.vue'], resolve),
         meta: { title: '打卡记录'}
       },
+      {
+        path: 'rank-coin',
+        name: 'RankCoin',
+        component: resolve => require(['../components/views/RankCoin.vue'], resolve),
+        meta: { title: '金币排行'}
+      },
     ]
   }
 ]
