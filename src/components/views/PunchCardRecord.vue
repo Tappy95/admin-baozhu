@@ -79,12 +79,12 @@
       </div>
       <div class="sun_sty" v-if="tableData.length>0">
         <div class="list nolen">
-          <div class="item" style="width: 40px"><p>小计:<span></span></p></div>
+          <div class="item" style="min-width: 40px"><p>小计:<span></span></p></div>
           <div class="item"><p> [ 支付金额： {{subPayCoin | currency}} ]</p></div>
           <div class="item"><p>[ 奖励金额：{{subRewardCoin | currency}} ]</p></div>
         </div>
         <div class="list nolen">
-          <div class="item" style="width: 40px"><p>合计:<span></span></p></div>
+          <div class="item" style="min-width: 40px"><p>合计:<span></span></p></div>
           <div class="item"><p> [ 支付金额： {{payCoin | currency}} ]</p></div>
           <div class="item"><p>[ 奖励金额：{{rewardCoin | currency}} ]</p></div>
         </div>
