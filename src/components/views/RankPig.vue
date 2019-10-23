@@ -1,10 +1,11 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="rank-pig-wrap">
+    <div class="rank-pig-inner">
+      <div class="rank-pig-header">
         <h3>运营管理/金猪排行</h3>
-        <hr />
+        <el-button size="small" @click="JumpTap" plain type="warning">金币排行</el-button>
       </div>
+      <hr />
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="是否真实用户:">
@@ -14,17 +15,16 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-          <!--<el-form-item label="排行榜类型:">-->
-            <!--<el-select placeholder="请选择排行榜类型" v-model="formInline.rankType" >-->
-              <!--<el-option label="天榜" value="1"></el-option>-->
-              <!--<el-option label="周榜" value="2"></el-option>-->
-              <!--<el-option label="月榜" value="3"></el-option>-->
-              <!--<el-option label="年榜" value="4"></el-option>-->
-              <!--<el-option label="总榜" value="5"></el-option>-->
-              <!--<el-option label="全部" value=""></el-option>-->
-            <!--</el-select>-->
-          <!--</el-form-item>-->
-
+          <el-form-item label="排行榜类型:">
+            <el-select placeholder="请选择排行榜类型" v-model="formInline.rankType" >
+              <el-option label="天榜" value="1"></el-option>
+              <el-option label="周榜" value="2"></el-option>
+              <el-option label="月榜" value="3"></el-option>
+              <el-option label="年榜" value="4"></el-option>
+              <el-option label="总榜" value="5"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="排名时间:">
             <el-date-picker
               v-model="formInline.rankDate"
@@ -37,12 +37,12 @@
           <el-button type="primary" plain @click="search()">查询</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="rank-pig-table">
         <template>
           <el-table :data="tableData" max-height="680">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column fixed="left" prop="rankType" label="类型">
+            <el-table-column fixed="left" prop="rankType" label="排行榜类型">
               <template slot-scope="scope">
                 <span v-if="scope.row.rankType==1">天榜</span>
                 <span v-if="scope.row.rankType==2">周榜</span>
@@ -61,13 +61,13 @@
                      @click="clickImg($event)">
               </template>
             </el-table-column>
-            <el-table-column min-width="200" prop="userId"  label="用户Id">
+            <el-table-column min-width="270" prop="userId"  label="用户Id">
             </el-table-column>
-            <el-table-column prop="aliasName"  label="用户别名">
+            <el-table-column min-width="120" prop="aliasName"  label="用户别名">
             </el-table-column>
-            <el-table-column prop="mobile"  label="电话号码">
+            <el-table-column min-width="120" prop="mobile"  label="电话号码">
             </el-table-column>
-            <el-table-column   label="累计金猪数">
+            <el-table-column min-width="150"  label="累计金猪数">
               <template slot-scope="scope">
                 <span class="green">
                  {{scope.row.pigBalance | currency}}
@@ -78,8 +78,7 @@
             </el-table-column>
             <el-table-column prop="createTime" width="170" :formatter="dateFormat" label="创建时间">
             </el-table-column>
-
-            <el-table-column prop="realData"  label="是否真实用户">
+            <el-table-column min-width="150" prop="realData"  label="是否真实用户">
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.realData==1">是</span>
                 <span class="red" v-if="scope.row.realData==2">否</span>
@@ -186,7 +185,8 @@
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           realData:this.formInline.realData,
-          rankDate:this.formInline.rankDate
+          rankDate:this.formInline.rankDate,
+          rankType:this.formInline.rankType,
         }
         this.$fetch('/api/rankPig/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -220,9 +220,11 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-        console.log(this.isShow)
+      JumpTap(){
+        console.log("llllllllllll")
+        this.$router.push({
+          name:'RankCoin'
+        })
       }
     },
 
@@ -235,25 +237,35 @@
   .red{
     color: #ff4d51;
   }
-  .administratormanage-wrap {
+  .rank-pig-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .rank-pig-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .rank-pig-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+  }
+
+  .rank-pig-header h3{
+    width: 300px;
+  }
+
+  .rank-pig-wrap hr {
+    color: #e6e6e6;
+    opacity: 0.5;
+    /*float: left;*/
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
-    color: #e6e6e6;
-    opacity: 0.5;
-  }
-
-  .administratormanage-table {
+  .rank-pig-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
     overflow: auto;
