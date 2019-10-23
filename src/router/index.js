@@ -584,6 +584,30 @@ const routes = [
         component: resolve => require(['../components/views/UserTrial.vue'], resolve),
         meta: { title: '用户试玩数据'}
       },
+      {
+        path: 'punch-award-rules',
+        name: 'PunchAwardRules',
+        component: resolve => require(['../components/views/PunchAwardRules.vue'], resolve),
+        meta: { title: '奖励规则'}
+      },
+      {
+        path: 'rank-robot',
+        name: 'RankRobot',
+        component: resolve => require(['../components/views/RankRobot.vue'], resolve),
+        meta: { title: '排行榜人机'}
+      },
+      {
+        path: 'rank-reward-config',
+        name: 'RankRewardConfig',
+        component: resolve => require(['../components/views/RankRewardConfig.vue'], resolve),
+        meta: { title: '排行榜奖励配置'}
+      },
+      {
+        path: 'punch-card-record',
+        name: 'PunchCardRecord',
+        component: resolve => require(['../components/views/PunchCardRecord.vue'], resolve),
+        meta: { title: '打卡记录'}
+      },
     ]
   }
 ]
