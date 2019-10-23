@@ -31,6 +31,8 @@
           <el-table :data="tableData" max-height="556">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
+            <el-table-column width="170"  prop="rankName" label="排行榜名称">
+            </el-table-column>
             <el-table-column min-width="120" prop="rankType" label="排行榜类型">
               <template slot-scope="scope">
                 <span v-if="scope.row.rankType==1">金猪排行榜</span>
@@ -72,6 +74,12 @@
         <el-dialog title="添加排行榜" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
+              <el-col :span="24">
+                <el-form-item prop="rankName" label="排行榜名称:"  :label-width="formLabelWidth">
+                  <el-input   v-model="form.rankName" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                   <el-form-item label="排行榜类型:" :label-width="formLabelWidth" prop="rankType">
                     <el-select :style="styleObject"  v-model="form.rankType" placeholder="">
@@ -122,6 +130,11 @@
         <el-dialog title="修改排行榜" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo" :rules="rules" ref="formtwo">
             <el-row>
+              <el-col :span="24">
+                <el-form-item prop="rankName" label="排行榜名称:"  :label-width="formLabelWidth">
+                  <el-input   v-model="formtwo.rankName" auto-complete="off" clearable></el-input>
+                </el-form-item>
+              </el-col>
               <el-col :span="12">
                 <el-form-item label="排行榜类型:" :label-width="formLabelWidth" prop="rankType">
                   <el-select :style="styleObject"  v-model="formtwo.rankType" placeholder="">
@@ -176,6 +189,12 @@
                 <div class="header">
                   <span>详情信息</span>
                   <span></span>
+                </div>
+                <div class="body_list" style="width: 100%">
+                  <div class="title">排行榜名称:</div>
+                  <div class="name">
+                    {{formtwoInfo.rankName}}
+                  </div>
                 </div>
                 <div class="body_list">
                   <div class="title">排行榜类型:</div>
@@ -264,6 +283,9 @@
         formInline: {},
         tableData: [],
         rules: {
+          rankName: [
+            {required: true, message: '请输入排行榜名称', trigger: 'blur' }
+           ],
           status: [
             {required: true, message: '请选择状态', trigger: 'change' }
           ],
@@ -276,7 +298,7 @@
           rangeMin: [
             { required: true, message: '请输入随机范围(min)', trigger: 'blur' },
             {validator:(rule,value,callback)=>{
-                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                let pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
                 if (!pattern.test(value)) {
                   callback(new Error("请输入正数"));
                 }else{
@@ -287,7 +309,7 @@
           rangeMax: [
             { required: true, message: '请输入随机范围(max)', trigger: 'blur' },
             {validator:(rule,value,callback)=>{
-                var pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
+                let pattern = /^(0|[1-9][0-9]*)(\.\d+)?$/;
                 if (!pattern.test(value)) {
                   callback(new Error("请输入正数"));
                 }else{
@@ -298,7 +320,7 @@
           upNum: [
             { required: true, message: '真实用户上榜数', trigger: 'blur' },
             {validator:(rule,value,callback)=>{
-                var pattern = /^[0-9]*$/;
+                let pattern = /^[0-9]*$/;
                 if (!pattern.test(value)) {
                   callback(new Error("请输入正整数"));
                 }else{

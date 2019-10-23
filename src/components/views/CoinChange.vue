@@ -63,6 +63,9 @@
                   <el-option label="高额赚提成" value="28"></el-option>
                   <el-option label="每日红包任务" value="29"></el-option>
                   <el-option label="观看视频" value="30"></el-option>
+                  <el-option label="小游戏奖励" value="31"></el-option>
+                  <el-option label="打卡消耗" value="32"></el-option>
+                  <el-option label="打卡奖励" value="33"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -291,6 +294,7 @@
                     <el-option label="签到赚" :value="21"></el-option>
                     <el-option label="大众团队长分佣" :value="22"></el-option>
                     <el-option label="快速赚任务" :value="23"></el-option>
+
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -597,8 +601,8 @@
       },
       accountList() {
         let parameterData = {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
+          pageNum:this.currentPage,
+          pageSize:this.pageSize,
           /*userName:this.formInline.userName,*/
           changedType:this.formInline.changedType,
           mobile:this.formInline.mobile,
@@ -704,6 +708,15 @@
                 break;
               case 30:
                 res.data.list[i].changedType = '观看视频';
+                break;
+              case 31:
+                res.data.list[i].changedType = '小游戏奖励';
+                break;
+              case 32:
+                res.data.list[i].changedType = '打卡消耗';
+                break;
+              case 33:
+                res.data.list[i].changedType = '打卡奖励';
                 break;
               // default:
             }

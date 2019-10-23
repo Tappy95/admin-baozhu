@@ -698,7 +698,6 @@
               }else {
                 this.$message({
                   type: 'error',
-                  type: 'error',
                   message: res.message
                 })
               }

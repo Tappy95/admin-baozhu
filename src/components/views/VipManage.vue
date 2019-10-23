@@ -817,7 +817,7 @@
             {validator:(rule,value,callback)=>{
                 var pattern = /^-?[1-9]\d*$/;
                 if (!pattern.test(value)) {
-                  callback(new Error("请输入整数"));
+                  callback(new Error("请输入正整数"));
                 }else{
                   callback();
                 }
@@ -827,7 +827,7 @@
             {validator:(rule,value,callback)=>{
               var pattern = /^-?[1-9]\d*$/;
               if (!pattern.test(value)) {
-                callback(new Error("请输入整数"));
+                callback(new Error("请输入正整数"));
               }else{
                 callback();
               }
