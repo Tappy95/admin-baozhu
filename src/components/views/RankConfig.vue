@@ -2,7 +2,7 @@
   <div class="rank-config-wrap">
     <div class="rank-config-inner">
       <div class="rank-config-header">
-        <h3>运营管理/排行榜</h3>
+        <h3>运营管理/排行榜配置</h3>
         <hr />
       </div>
       <div>
@@ -43,7 +43,7 @@
             <el-table-column min-width="120" prop="dataLogic" label="数据筛选逻辑">
               <template slot-scope="scope">
                 <span v-if="scope.row.dataLogic==1">月榜</span>
-                <span v-if="scope.row.dataLogic==2">总榜</span>
+                <span v-if="scope.row.dataLogic==2">日榜</span>
               </template>
             </el-table-column>
             <el-table-column width="170"  prop="rangeMin" label="随机范围(min)">
@@ -93,7 +93,7 @@
                 <el-form-item label="数据筛选逻辑:" :label-width="formLabelWidth" prop="dataLogic">
                   <el-select :style="styleObject"  v-model="form.dataLogic" placeholder="">
                     <el-option label="月榜" value="1"></el-option>
-                    <el-option label="总榜" value="2"></el-option>
+                    <el-option label="日榜" value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -148,7 +148,7 @@
                 <el-form-item label="数据筛选逻辑:" :label-width="formLabelWidth" prop="dataLogic">
                   <el-select :style="styleObject"  v-model="formtwo.dataLogic" placeholder="">
                     <el-option label="月榜" :value="1"></el-option>
-                    <el-option label="总榜" :value="2"></el-option>
+                    <el-option label="日榜" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -208,7 +208,7 @@
                   <div class="title">数据筛选逻辑:</div>
                   <div class="name">
                     <span v-if="formtwoInfo.dataLogic==1">月榜</span>
-                    <span  v-if="formtwoInfo.dataLogic==2">总榜</span>
+                    <span  v-if="formtwoInfo.dataLogic==2">日榜</span>
                   </div>
                 </div>
                 <div class="body_list">

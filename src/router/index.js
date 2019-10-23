@@ -408,7 +408,7 @@ const routes = [
         path: 'rank-config',
         name: 'RankConfig',
         component: resolve => require(['../components/views/RankConfig.vue'], resolve),
-        meta: { title: '排行榜'}
+        meta: { title: '排行榜配置'}
       },
       {
         path: 'signin-log',
