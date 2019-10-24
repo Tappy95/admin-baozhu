@@ -31,7 +31,10 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-          <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-form-item label="">
+            <el-button type="primary" plain @click="search()">查询</el-button>
+          </el-form-item>
+
         </el-form>
       </div>
       <div class="rank-pig-table">

@@ -368,7 +368,6 @@
   .rankRobot_img{
     max-width: 100px;
     max-height: 50px;
-    border-radius: 50%;
   }
   .rank-robot-wrap {
     width: 100%;
