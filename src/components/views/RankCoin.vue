@@ -55,10 +55,6 @@
                      @click="clickImg($event)">
               </template>
             </el-table-column>
-            <el-table-column min-width="270" prop="userId"  label="用户Id">
-            </el-table-column>
-            <el-table-column min-width="120" prop="aliasName"  label="用户别名">
-            </el-table-column>
             <el-table-column min-width="120" prop="mobile"  label="电话号码">
             </el-table-column>
             <el-table-column min-width="170" label="累计金币数">
@@ -68,21 +64,19 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column prop="rankDate" width="170" :formatter="dateFormat" label="排名时间">
-            </el-table-column>
-            <el-table-column prop="createTime" width="170" :formatter="dateFormat" label="创建时间">
-            </el-table-column>
-            <el-table-column  min-width="170"  prop="realData"  label="是否真实用户">
-              <template slot-scope="scope">
-                <span class="green" v-if="scope.row.realData==1">是</span>
-                <span class="red" v-if="scope.row.realData==2">否</span>
-              </template>
-            </el-table-column>
             <el-table-column  min-width="170"   label="奖励金币数">
               <template slot-scope="scope">
                 <span class="green">
                  {{scope.row.rewardAmount | currency}}
                 </span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="rankDate" width="170" :formatter="dateFormat" label="排名时间">
+            </el-table-column>
+            <el-table-column  min-width="170"  prop="realData"  label="是否真实用户">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.realData==1">是</span>
+                <span class="red" v-if="scope.row.realData==2">否</span>
               </template>
             </el-table-column>
           </el-table>

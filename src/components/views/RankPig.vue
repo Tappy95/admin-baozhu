@@ -42,7 +42,7 @@
           <el-table :data="tableData" max-height="680">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column fixed="left" prop="rankType" label="排行榜类型">
+            <el-table-column fixed="left" min-width="150" prop="rankType" label="排行榜类型">
               <template slot-scope="scope">
                 <span v-if="scope.row.rankType==1">日榜</span>
                 <span v-if="scope.row.rankType==3">月榜</span>
@@ -58,10 +58,7 @@
                      @click="clickImg($event)">
               </template>
             </el-table-column>
-            <el-table-column min-width="270" prop="userId"  label="用户Id">
-            </el-table-column>
-            <el-table-column min-width="120" prop="aliasName"  label="用户别名">
-            </el-table-column>
+
             <el-table-column min-width="120" prop="mobile"  label="电话号码">
             </el-table-column>
             <el-table-column min-width="150"  label="累计金猪数">
@@ -71,10 +68,18 @@
                 </span>
               </template>
             </el-table-column>
+
+            <el-table-column  min-width="170"   label="奖励金猪数">
+              <template slot-scope="scope">
+                <span class="green">
+                 {{scope.row.rewardAmount | currency}}
+                </span>
+              </template>
+            </el-table-column>
+
             <el-table-column prop="rankDate" width="170" :formatter="dateFormat" label="排名时间">
             </el-table-column>
-            <el-table-column prop="createTime" width="170" :formatter="dateFormat" label="创建时间">
-            </el-table-column>
+
             <el-table-column min-width="150" prop="realData"  label="是否真实用户">
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.realData==1">是</span>
