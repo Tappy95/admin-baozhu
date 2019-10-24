@@ -14,7 +14,6 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-
           <el-form-item label="所属排行名称:" :label-width="formLabelWidth" prop="configId">
             <el-select :style="styleObject"  v-model="formInline.configId" placeholder="">
               <el-option v-for="(item,index) in rankNameList" :key="item" :label="item.rankName" :value="item.id"></el-option>

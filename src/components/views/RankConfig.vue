@@ -15,7 +15,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="排行榜类型:">
-            <el-select  v-model="formInline.rankType" placeholder="请选择状态">
+            <el-select  v-model="formInline.rankType" placeholder="请选择排行榜类型">
               <el-option label="金猪排行榜" value="1"></el-option>
               <el-option label="金币排行榜" value="2"></el-option>
               <el-option label="好友排行榜" value="3"></el-option>

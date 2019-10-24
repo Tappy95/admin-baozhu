@@ -17,11 +17,8 @@
           </el-form-item>
           <el-form-item label="排行榜类型:">
             <el-select placeholder="请选择排行榜类型" v-model="formInline.rankType" >
-              <el-option label="天榜" value="1"></el-option>
-              <el-option label="周榜" value="2"></el-option>
+              <el-option label="日榜" value="1"></el-option>
               <el-option label="月榜" value="3"></el-option>
-              <el-option label="年榜" value="4"></el-option>
-              <el-option label="总榜" value="5"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -44,11 +41,8 @@
             </el-table-column>
             <el-table-column fixed="left" prop="rankType" label="排行榜类型">
               <template slot-scope="scope">
-                <span v-if="scope.row.rankType==1">天榜</span>
-                <span v-if="scope.row.rankType==2">周榜</span>
+                <span v-if="scope.row.rankType==1">日榜</span>
                 <span v-if="scope.row.rankType==3">月榜</span>
-                <span v-if="scope.row.rankType==4">年榜</span>
-                <span v-if="scope.row.rankType==5">总榜</span>
               </template>
             </el-table-column>
             <el-table-column width="120" prop="rankOrder" label="排名">
@@ -116,7 +110,11 @@
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
-        formInline: {},
+        formInline: {
+          realData:'',
+          rankDate:'',
+          rankType:'1',
+        },
         tableData: [],
         isShow: false,
         message:{},
