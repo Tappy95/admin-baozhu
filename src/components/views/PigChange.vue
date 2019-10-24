@@ -41,6 +41,7 @@
               <el-option label="每日救济金" value="12"></el-option>
               <el-option label="砸金蛋" value="13"></el-option>
               <el-option label="使用金蛋" value="14"></el-option>
+              <el-option label="金猪排行日榜奖励" value="15"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -155,8 +156,8 @@
                     <el-option label="每日救济金" value="12"></el-option>
                     <el-option label="砸金蛋" value="13"></el-option>
                     <el-option label="使用金蛋" value="14"></el-option>
+                    <el-option label="金猪排行日榜奖励" value="15"></el-option>
                   </el-select>
-
                 </el-form-item>
               </el-col>
               <el-col :span="10" style="margin-bottom: 10px">
@@ -470,6 +471,8 @@
               res.data.list[i].changedType = '砸金蛋'
             }else if(res.data.list[i].changedType == '14'){
               res.data.list[i].changedType = '使用金蛋'
+            }else if(res.data.list[i].changedType == '15'){
+              res.data.list[i].changedType = '金猪排行日榜奖励'
             }
 
             if(res.data.list[i].roleType == '1'){

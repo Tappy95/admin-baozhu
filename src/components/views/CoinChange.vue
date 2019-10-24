@@ -66,6 +66,7 @@
                   <el-option label="小游戏奖励" value="31"></el-option>
                   <el-option label="打卡消耗" value="32"></el-option>
                   <el-option label="打卡奖励" value="33"></el-option>
+                  <el-option label="金币排行日榜奖励" value="34"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -717,6 +718,9 @@
                 break;
               case 33:
                 res.data.list[i].changedType = '打卡奖励';
+                break;
+              case 34:
+                res.data.list[i].changedType = '金币排行日榜奖励';
                 break;
               // default:
             }
