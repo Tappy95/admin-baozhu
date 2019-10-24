@@ -19,8 +19,12 @@
               <el-option v-for="(item,index) in rankNameList" :key="item" :label="item.rankName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-button type="primary" plain @click="search()">查询</el-button>
-          <el-button type="success" v-if="add" plain @click="load()">添加</el-button>
+          <el-form-item label="">
+            <el-button type="primary" plain @click="search()">查询</el-button>
+          </el-form-item>
+          <el-form-item label="">
+            <el-button type="success" v-if="add" plain @click="load()">添加</el-button>
+          </el-form-item>
         </el-form>
       </div>
       <div class="rank-config-table">
