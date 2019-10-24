@@ -2,7 +2,7 @@
   <div class="rank-pig-wrap">
     <div class="rank-pig-inner">
       <div class="rank-pig-header">
-        <h3>运营管理/金猪排行</h3>
+        <h3>排行榜/金猪排行</h3>
         <el-button size="small" @click="JumpTap" plain type="warning">金币排行</el-button>
       </div>
       <hr />

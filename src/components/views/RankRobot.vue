@@ -2,7 +2,7 @@
   <div class="rank-robot-wrap">
     <div class="rank-robot-inner">
       <div class="rank-robot-header">
-        <h3>运营管理/排行榜人机</h3>
+        <h3>排行榜/排行榜人机</h3>
         <hr />
       </div>
       <div>

@@ -2,7 +2,7 @@
   <div class="rank-coin-wrap">
     <div class="rank-coin-inner">
       <div class="rank-coin-header">
-        <h3>运营管理/金币排行</h3>
+        <h3>排行榜/金币排行</h3>
         <el-button size="small" @click="JumpTap" plain type="warning">金猪排行</el-button>
       </div>
       <hr />

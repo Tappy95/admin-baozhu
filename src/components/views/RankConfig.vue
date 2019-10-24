@@ -2,7 +2,7 @@
   <div class="rank-config-wrap">
     <div class="rank-config-inner">
       <div class="rank-config-header">
-        <h3>运营管理/排行榜配置</h3>
+        <h3>排行榜/排行榜配置</h3>
         <hr />
       </div>
       <div>
