@@ -10,7 +10,6 @@
           <el-form-item label="用户Id:">
             <el-input v-model="formInline.accountId" placeholder="请输入用户Id" clearable></el-input>
           </el-form-item>
-
           <el-form-item  label="状态:" >
             <el-select v-model="formInline.state"  placeholder="请选择状态">
               <el-option label="待打卡" value="1"></el-option>
@@ -19,8 +18,7 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-
-          <el-form-item :label-width="labelWidth" label="创建时间:">
+          <el-form-item  label="创建时间:">
             <el-date-picker
               v-model="selectTime"
               type="datetimerange"
@@ -72,7 +70,7 @@
                 <span v-if="scope.row.isCoupon==2">是</span>
               </template>
             </el-table-column>
-            <el-table-column  prop="createTime" :formatter="dateFormat" min-width="170px" label="创建时间">
+            <el-table-column  prop="createTime" :formatter="dateFormat" width="170px" label="创建时间">
             </el-table-column>
           </el-table>
         </template>
@@ -102,20 +100,8 @@
     name: 'PunchCardRecord',
     data() {
       return {
-        styleObject: {
-          width: '200px',
-        },
-        searchTrue:false,
-        exportExle:false,
-        menuId:'',
-        isNotAuditing:false,
-        labelWidth:'80px',
-        optionW:'1px',
-        messageForm:{},
-        reasonMess:false,
-        dialogTableVisible:false,
-        dialogTable:false,
-        formLabelWidth: '120px',
+
+
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
@@ -123,7 +109,7 @@
         subRewardCoin:'',
         payCoin:'',
         rewardCoin:'',
-      formInline: {
+        formInline: {
           startCreateTime:'',
           endCreateTime:'',
           accountId:'',
@@ -174,29 +160,6 @@
       },
     },
     methods: {
-      queryBtns(){
-        let parameterData = {
-          menuId: this.menuId
-        }
-        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-            for(let i = res.data.length - 1; i >= 0; i--) {
-              if(res.data[i].btnCode == 'exa') {
-                this.powerTrue =true;
-                this.exa=true
-              }
-              if(res.data[i].btnCode == 'search') {
-                this.searchTrue =true;
-              }
-              if(res.data[i].btnCode == 'exportExle') {
-                this.exportExle =true;
-              }
-
-            }
-          } else {
-          }
-        })
-      },
       indexMethod(index) {
         return index * 1 + 1
       },
