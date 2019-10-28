@@ -440,7 +440,8 @@
   }
   .sun_sty .list .item{
     float: left;
-    min-width: 200px;
+    width: 200px;
+    min-width: 250px;
     max-width: 300px;
     height: 30px;
   }

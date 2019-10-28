@@ -347,6 +347,7 @@
 
   .sun_sty .list .item.su{
     float: left;
+    width: 150px;
     min-width: 150px;
     max-width: 200px;
     height: 30px;

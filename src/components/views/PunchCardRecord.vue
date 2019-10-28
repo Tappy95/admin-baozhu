@@ -242,6 +242,7 @@
     float: left;
     width: 150px;
     height: 30px;
+    min-width: 150px;
     max-width: 300px;
   }
 
