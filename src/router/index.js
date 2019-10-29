@@ -620,6 +620,18 @@ const routes = [
         component: resolve => require(['../components/views/PunchCardStatistics.vue'], resolve),
         meta: { title: '打卡统计'}
       },
+      {
+        path: 'history-statistics',
+        name: 'HistoryStatistics',
+        component: resolve => require(['../components/views/HistoryStatistics.vue'], resolve),
+        meta: { title: '历史首页数据'}
+      },
+      {
+        path: 'history-coin-change',
+        name: 'HistoryCoinChange',
+        component: resolve => require(['../components/views/HistoryCoinChange.vue'], resolve),
+        meta: { title: '历史金币账变明细'}
+      },
     ]
   }
 ]
