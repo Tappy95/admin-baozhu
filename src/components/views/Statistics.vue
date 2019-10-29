@@ -870,6 +870,7 @@
   .box_wrap{
     border-radius:4px;
     background: rgba(255,255,255,1);
+    padding: 30px;
     /*padding-top: 10px;*/
   }
 

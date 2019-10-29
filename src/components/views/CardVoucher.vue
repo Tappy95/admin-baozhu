@@ -153,7 +153,7 @@
             <el-table-column label="序号"
                              type="index"
                              :index="indexMethod"
-                             min-width='80' fixed="left">
+                            width='80' fixed="left">
             </el-table-column>
             <el-table-column fixed="left" prop="passbookName"
                              label="卡券名称" min-width="200px" >
