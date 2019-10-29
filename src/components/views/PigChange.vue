@@ -553,13 +553,11 @@
     /*text-align: right;*/
   }
   .sun_sty .list .item:nth-child(1){
-    width: 100px;
     min-width: 100px;
     max-width: 150px;
   }
   .sun_sty .list .item{
     float: left;
-    width: 240px;
     min-width: 240px;
     max-width: 300px;
     height: 30px;

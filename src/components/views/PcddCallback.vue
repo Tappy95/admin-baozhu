@@ -339,7 +339,6 @@
     /*text-align: right;*/
   }
   .sun_sty .list .item.xiao:nth-child(1){
-    width: 50px;
     min-width: 50px;
     max-width: 50px
   }
@@ -351,7 +350,6 @@
   }
   .sun_sty .list .item{
     float: left;
-    width: 240px;
     min-width: 240px;
     max-width: 300px;
     height: 30px;

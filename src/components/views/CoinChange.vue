@@ -19,7 +19,7 @@
               <el-form-item  label="至">
                 <el-input type="number" min="0" v-model="formInline.coinMax" placeholder="请输入最大金额" clearable></el-input>
               </el-form-item>
-              <el-form-item :label-width="labelWidth" label="兑换时间:">
+              <el-form-item :label-width="labelWidth" label="变更时间:">
                 <el-date-picker
                   v-model="selectTime"
                   type="datetimerange"
@@ -855,12 +855,11 @@
     height: 30px;
   }
   .sun_sty .list .item:nth-child(1){
-    width: 100px;
+    min-width: 100px;
     max-width: 200px;
   }
   .sun_sty .list .item{
     float: left;
-    width: 200px;
     height: 30px;
     min-width: 200px;
     max-width: 300px;
