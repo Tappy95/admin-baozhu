@@ -632,6 +632,12 @@ const routes = [
         component: resolve => require(['../components/views/HistoryCoinChange.vue'], resolve),
         meta: { title: '历史金币账变明细'}
       },
+      {
+        path: 'gyro',
+        name: 'Gyro',
+        component: resolve => require(['../components/views/Gyro.vue'], resolve),
+        meta: { title: '陀螺仪'}
+      },
     ]
   }
 ]
