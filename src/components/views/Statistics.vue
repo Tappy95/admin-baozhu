@@ -82,7 +82,7 @@
           <el-row :gutter="10">
 
             <div v-if="selectType==1">
-                <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}"  >
+                <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}"  >
                 <el-popover
                   :placement=place
                   title="新增注册量"
@@ -102,7 +102,7 @@
 
 
 
-                <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+                <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                   <el-popover
                     :placement=place
                     title="领取每日红包人数"
@@ -120,7 +120,7 @@
                   </el-popover>
                 </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="登录人数"
@@ -138,7 +138,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="连续登录人数"
@@ -217,7 +217,7 @@
 
             <div v-if="selectType==2">
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="购买VIP人数"
@@ -235,7 +235,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="提现人数"
@@ -254,7 +254,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="购买VIP总金额"
@@ -272,7 +272,7 @@
                   </div>
                 </el-popover>
               </el-col>
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="总提现金额"
@@ -291,7 +291,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="游戏试玩累计金额"
@@ -310,7 +310,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="绑定支付通道人数"
@@ -328,7 +328,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="好友贡献"
@@ -351,7 +351,7 @@
 
             <div v-if="selectType==3">
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="参与竞猜游戏的人数"
@@ -389,7 +389,7 @@
                 </el-popover>
               </el-col>
 
-              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+              <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
                 <el-popover
                   :placement=place
                   title="中奖总金额"
