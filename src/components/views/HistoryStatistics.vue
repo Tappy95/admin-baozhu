@@ -87,7 +87,7 @@
       <el-row :gutter="10">
 
         <div v-if="selectType==1">
-          <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}"  >
+          <el-col  :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}"  >
             <el-popover
               :placement=place
               title="新增注册量"
@@ -107,7 +107,7 @@
 
 
 
-          <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+          <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
             <el-popover
               :placement=place
               title="领取每日红包人数"
@@ -125,7 +125,7 @@
             </el-popover>
           </el-col>
 
-          <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+          <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
             <el-popover
               :placement=place
               title="登录人数"
@@ -143,7 +143,7 @@
             </el-popover>
           </el-col>
 
-          <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 4}">
+          <el-col :md="{span: 8}" :lg="{span: 6}" :xl="{span: 6}">
             <el-popover
               :placement=place
               title="连续登录人数"
