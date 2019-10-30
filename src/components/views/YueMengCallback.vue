@@ -300,41 +300,41 @@
   .el-table.a th{
     padding: 12px 0;
   }
-  .sun_sty{
+  .yuemeng-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .yuemeng-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item.xiao:nth-child(1){
+  .yuemeng-wrap .sun_sty .list .item.xiao:nth-child(1){
     width: 50px;
     min-width: 50px;
     max-width: 50px
   }
-  .sun_sty .list .item.su{
+  .yuemeng-wrap .sun_sty .list .item.su{
     float: left;
     min-width: 200px;
     max-width: 200px;
     height: 30px;
   }
-  .sun_sty .list .item{
+  .yuemeng-wrap .sun_sty .list .item{
     float: left;
     min-width: 200px;
     max-width: 300px;
     height: 30px;
   }
 
-  .sun_sty p{
+  .yuemeng-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .yuemeng-wrap .sun_sty p span{
     font-size: 12px;
   }
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="pcdd-callback-wrap">
+    <div class="pcdd-callback-inner">
+      <div class="pcdd-callback-header">
         <h3>游戏回调/pcdd回调</h3>
         <hr />
       </div>
@@ -47,7 +47,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="pcdd-callback-table">
         <template>
           <!--:class="showW?'u':'a'"-->
           <el-table :class="showW?'a':'u'" :data="tableData" max-height="600">
@@ -328,40 +328,40 @@
   .el-table.a th{
     padding: 12px 0;
   }
-  .sun_sty{
+  .pcdd-callback-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .pcdd-callback-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item.xiao:nth-child(1){
+  .pcdd-callback-wrap .sun_sty .list .item.xiao:nth-child(1){
     min-width: 50px;
     max-width: 50px
   }
-  .sun_sty .list .item.su{
+  .pcdd-callback-wrap .sun_sty .list .item.su{
     float: left;
     min-width: 150px;
     max-width: 200px;
     height: 30px;
   }
-  .sun_sty .list .item{
+  .pcdd-callback-wrap .sun_sty .list .item{
     float: left;
     min-width: 240px;
     max-width: 300px;
     height: 30px;
   }
 
-  .sun_sty p{
+  .pcdd-callback-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .pcdd-callback-wrap .sun_sty p span{
     font-size: 12px;
   }
 
@@ -386,25 +386,25 @@
   .mar_bottom{
     margin-bottom: 20px;
   }
-  .administratormanage-wrap {
+  .pcdd-callback-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .pcdd-callback-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .pcdd-callback-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .pcdd-callback-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .pcdd-callback-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

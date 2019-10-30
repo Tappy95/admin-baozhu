@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="coin-change-wrap">
+    <div class="coin-change-inner">
+      <div class="coin-change-header">
         <h3>财务流水/金币账变明细</h3>
         <hr />
       </div>
@@ -79,7 +79,7 @@
         </el-form>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="coin-change-table">
         <template>
           <el-table :data="tableData" max-height="518">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -845,33 +845,33 @@
   }
 </script>
 <style type="text/css">
-  .sun_sty{
+  .coin-change-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .coin-change-wrap  .sun_sty .list{
     width: 100%;
     height: 30px;
   }
-  .sun_sty .list .item:nth-child(1){
+  .coin-change-wrap .sun_sty .list .item:nth-child(1){
     min-width: 100px;
-    max-width: 200px;
+    max-width: 150px;
   }
-  .sun_sty .list .item{
+  .coin-change-wrap .sun_sty .list .item{
     float: left;
     height: 30px;
     min-width: 200px;
     max-width: 300px;
   }
 
-  .sun_sty p{
+  .coin-change-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .coin-change-wrap .sun_sty p span{
     font-size: 12px;
   }
 
@@ -887,25 +887,25 @@
     color: #E6A23C;
   }
 
-  .administratormanage-wrap {
+  .coin-change-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .coin-change-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .coin-change-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .coin-change-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .coin-change-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

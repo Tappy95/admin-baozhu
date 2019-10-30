@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="lottery-order-wrap">
+    <div class="lottery-order-inner">
+      <div class="lottery-order-header">
         <h3>财务流水/礼品兑换管理</h3>
         <hr />
       </div>
@@ -46,7 +46,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="lottery-order-table">
         <template>
           <el-table :data="tableData" height="528" :row-class-name="tableRowClassName">
             <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
@@ -785,6 +785,22 @@
   }
 </script>
 <style type="text/css">
+
+  .lottery-order-wrap .sun_sty{
+    font-size: 14px;
+    color: #13ce66;
+    margin-bottom: 20px;
+  }
+  .lottery-order-wrap .sun_sty p{
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+  }
+  .lottery-order-wrap .sun_sty p span{
+    transform: scale(0.5);
+    font-size: 12px;
+  }
+
   .change_box{
     width: 100%;
     height: auto;
@@ -810,25 +826,25 @@
   .amountred{
     color: #ff4d51;
   }
-  .administratormanage-wrap {
+  .lottery-order-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .lottery-order-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .lottery-order-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .lottery-order-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .lottery-order-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="xianwan-callback-wrap">
+    <div class="xianwan-callback-inner">
+      <div class="xianwan-callback-header">
         <h3>游戏回调/闲玩回调</h3>
         <hr />
       </div>
@@ -49,7 +49,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="xianwan-callback-table">
         <template>
           <!--:class="showW?'u':'a'"-->
           <el-table :class="showW?'a':'u'" :data="tableData" max-height="600">
@@ -327,41 +327,41 @@
   .el-table.a th{
     padding: 12px 0;
   }
-  .sun_sty{
+  .xianwan-callback-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .xianwan-callback-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item.xiao:nth-child(1){
+  .xianwan-callback-wrap .sun_sty .list .item.xiao:nth-child(1){
     width: 50px;
     min-width: 50px;
     max-width: 50px
   }
-  .sun_sty .list .item.su{
+  .xianwan-callback-wrap .sun_sty .list .item.su{
     float: left;
     min-width: 150px;
     max-width: 200px;
     height: 30px;
   }
-  .sun_sty .list .item{
+  .xianwan-callback-wrap .sun_sty .list .item{
     float: left;
     min-width: 240px;
     max-width: 300px;
     height: 30px;
   }
 
-  .sun_sty p{
+  .xianwan-callback-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .xianwan-callback-wrap .sun_sty p span{
     font-size: 12px;
   }
 
@@ -386,25 +386,25 @@
   .mar_bottom{
     margin-bottom: 20px;
   }
-  .administratormanage-wrap {
+  .xianwan-callback-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .xianwan-callback-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .xianwan-callback-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .xianwan-callback-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .xianwan-callback-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

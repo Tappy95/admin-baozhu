@@ -77,12 +77,12 @@
       </div>
       <div class="sun_sty" v-if="tableData.length>0">
         <div class="list nolen">
-          <div class="item" style="min-width: 40px"><p>小计:<span></span></p></div>
+          <div class="item" style="min-width: 50px"><p>小计:<span></span></p></div>
           <div class="item"><p> [ 支付金额： {{subPayCoin | currency}} ]</p></div>
           <div class="item"><p>[ 奖励金额：{{subRewardCoin | currency}} ]</p></div>
         </div>
         <div class="list nolen">
-          <div class="item" style="min-width: 40px"><p>合计:<span></span></p></div>
+          <div class="item" style="min-width: 50px"><p>合计:<span></span></p></div>
           <div class="item"><p> [ 支付金额： {{payCoin | currency}} ]</p></div>
           <div class="item"><p>[ 奖励金额：{{rewardCoin | currency}} ]</p></div>
         </div>
@@ -225,20 +225,20 @@
   }
 </script>
 <style type="text/css">
-  .sun_sty{
+  .punch-card-record-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .punch-card-record-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
   }
-  .sun_sty .list.nolen .item:nth-child(1){
-    width: 40px;
+  .punch-card-record-wrap .sun_sty .list.nolen .item:nth-child(1){
+    width: 50px;
     /*max-width: 200px;*/
   }
-  .sun_sty .list .item{
+  .punch-card-record-wrap .sun_sty .list .item{
     float: left;
     width: 240px;
     height: 30px;
@@ -246,13 +246,13 @@
     max-width: 300px;
   }
 
-  .sun_sty p{
+  punch-card-record-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  punch-card-record-wrap .sun_sty p span{
     font-size: 12px;
   }
 

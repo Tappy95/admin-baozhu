@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="cash-manage-wrap">
+    <div class="cash-manage-inner">
+      <div class="cash-manage-header">
         <h3>财务流水/提现管理</h3>
         <hr />
       </div>
@@ -87,7 +87,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="cash-manage-table">
         <template>
           <el-table :data="tableData" height="548" :row-class-name="tableRowClassName">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -747,17 +747,18 @@
   }
 </script>
 <style type="text/css">
-  .sun_sty{
+
+  .cash-manage-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty p{
+ .cash-manage-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
-  .sun_sty p span{
+  .cash-manage-wrap .sun_sty p span{
     transform: scale(0.5);
     font-size: 12px;
   }
@@ -818,25 +819,25 @@
   .blue{
     color: #409EFF;
   }
-  .administratormanage-wrap {
+  .cash-manage-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .cash-manage-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .cash-manage-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .cash-manage-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .cash-manage-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

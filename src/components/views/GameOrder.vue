@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="game-order-wrap">
+    <div class="game-order-inner">
+      <div class="game-order-header">
         <h3>财务流水/乐园竞猜明细</h3>
         <hr />
       </div>
@@ -52,7 +52,7 @@
           <el-button type="success" plain style="margin-bottom: 20px;margin-left: 10px" v-if="exportExle" @click="queryExport()">导出表格</el-button>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="game-order-table">
         <template>
           <el-table :data="tableData" height="528" style="overflow-y: auto">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='50'>
@@ -604,33 +604,33 @@
   amountred{
     color: #fbc4c4;
   }
-  .sun_sty{
+  .game-order-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .game-order-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
   }
-  .sun_sty .list .item:nth-child(1){
+  .game-order-wrap .sun_sty .list .item:nth-child(1){
     min-width: 120px;
     max-width: 180px;
   }
-  .sun_sty .list .item{
+  .game-order-wrap .sun_sty .list .item{
     float: left;
     min-width: 280px;
     height: 30px;
     max-width: 350px;
   }
 
-  .sun_sty p{
+  .game-order-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .game-order-wrap .sun_sty p span{
     font-size: 12px;
   }
 
@@ -657,25 +657,25 @@
     max-width:148px;
     max-height:148px;
   }
-  .administratormanage-wrap {
+  .game-order-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .game-order-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .game-order-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .game-order-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .game-order-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

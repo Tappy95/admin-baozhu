@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="pig-change-wrap">
+    <div class="pig-change-inner">
+      <div class="pig-change-header">
         <h3>财务流水/金猪账变明细</h3>
         <hr />
       </div>
@@ -64,7 +64,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="pig-change-table">
         <template>
           <el-table :data="tableData" max-height="518">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -542,21 +542,21 @@
   }
 </script>
 <style type="text/css">
-  .sun_sty{
+  .pig-change-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .pig-change-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item:nth-child(1){
+  .pig-change-wrap .sun_sty .list .item:nth-child(1){
     min-width: 100px;
     max-width: 150px;
   }
-  .sun_sty .list .item{
+  .pig-change-wrap .sun_sty .list .item{
     float: left;
     min-width: 240px;
     max-width: 300px;
@@ -564,13 +564,13 @@
 
   }
 
-  .sun_sty p{
+  .pig-change-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .pig-change-wrap .sun_sty p span{
     font-size: 12px;
   }
 
@@ -583,25 +583,25 @@
   .amountyellow{
     color: #E6A23C;
   }
-  .administratormanage-wrap {
+  .pig-change-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .pig-change-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .pig-change-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .pig-change-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .pig-change-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

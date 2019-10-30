@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="rechargr-change-wrap">
+    <div class="rechargr-change-inner">
+      <div class="rechargr-change-header">
         <h3>财务流水/入款记录</h3>
         <hr />
       </div>
@@ -56,7 +56,7 @@
           <p class="sun_sty">1元=10000金币=100000金猪</p>
         </div>
       </div>
-      <div class="administratormanage-table">
+      <div class="rechargr-change-table">
         <template>
           <el-table :data="tableData" height="555" max-height="518">
             <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
@@ -553,17 +553,17 @@
   }
 </script>
 <style type="text/css">
-.sun_sty{
+.rechargr-change-wrap .sun_sty{
   font-size: 14px;
   color: #13ce66;
   margin-bottom: 20px;
 }
-.sun_sty p{
+.rechargr-change-wrap .sun_sty p{
   margin: 0;
   padding: 0;
   line-height: 30px;
 }
-.sun_sty p span{
+.rechargr-change-wrap .sun_sty p span{
   font-size: 12px;
   margin-right: 10px;
 }
@@ -585,25 +585,25 @@
     color: #fbc4c4;
   }
 
-  .administratormanage-wrap {
+  .rechargr-change-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .rechargr-change-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .rechargr-change-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .rechargr-change-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .rechargr-change-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }

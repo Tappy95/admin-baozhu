@@ -238,27 +238,27 @@
   .el-table.a th{
     padding: 12px 0;
   }
-  .sun_sty{
+  .csj-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .csj-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
     /*text-align: right;*/
   }
-  .sun_sty .list .item.xiao:nth-child(1){
+  .csj-wrap .sun_sty .list .item.xiao:nth-child(1){
     min-width: 50px;
     max-width: 50px
   }
-  .sun_sty .list .item.su{
+  .csj-wrap .sun_sty .list .item.su{
     float: left;
     min-width: 150px;
     max-width: 200px;
     height: 30px;
   }
-  .sun_sty .list .item{
+  .csj-wrap .sun_sty .list .item{
     float: left;
     width: 240px;
     min-width: 240px;
@@ -266,13 +266,13 @@
     height: 30px;
   }
 
-  .sun_sty p{
+  .csj-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .csj-wrap .sun_sty p span{
     font-size: 12px;
   }
   .mar-bottom{

@@ -1,7 +1,7 @@
 <template>
-  <div class="administratormanage-wrap">
-    <div class="administratormanage-inner">
-      <div class="administratormanage-header">
+  <div class="bz-callback-wrap">
+    <div class="bz-callback-inner">
+      <div class="bz-callback-header">
         <h3>第三方回调/宝猪回调</h3>
         <hr />
       </div>
@@ -49,7 +49,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="administratormanage-table">
+      <div class="bz-callback-table">
         <template>
           <!--:class="showW?'u':'a'"-->
           <el-table :class="showW?'a':'u'" :data="tableData" max-height="600">
@@ -325,41 +325,42 @@
   .el-table.a th{
     padding: 12px 0;
   }
-  .sun_sty{
+  .bz-callback-wrap .sun_sty{
     font-size: 14px;
     color: #13ce66;
     margin-bottom: 20px;
   }
-  .sun_sty .list{
+  .bz-callback-wrap .sun_sty .list{
     width: 100%;
     height: 30px;
+    float: left;
     /*text-align: right;*/
   }
-  .sun_sty .list .item.xiao:nth-child(1){
+  .bz-callback-wrap .sun_sty .list .item.xiao:nth-child(1){
     min-width: 50px;
     max-width: 50px
   }
-  .sun_sty .list .item.su{
+  .bz-callback-wrap .sun_sty .list .item.su{
     float: left;
     min-width: 150px;
-    max-width: 200px;
+    max-width: 180px;
     height: 30px;
   }
-  .sun_sty .list .item{
+  .bz-callback-wrap .sun_sty .list .item{
     float: left;
     width: 240px;
     min-width: 240px;
-    max-width: 300px;
+    max-width: 280px;
     height: 30px;
   }
 
-  .sun_sty p{
+  .bz-callback-wrap .sun_sty p{
     margin: 0;
     padding: 0;
     line-height: 30px;
   }
 
-  .sun_sty p span{
+  .bz-callback-wrap .sun_sty p span{
     font-size: 12px;
   }
 
@@ -384,25 +385,25 @@
   .mar_bottom{
     margin-bottom: 20px;
   }
-  .administratormanage-wrap {
+  .bz-callback-wrap {
     width: 100%;
   }
 
-  .administratormanage-inner {
+  .bz-callback-inner {
     margin: auto;
     padding: 0 20px;
   }
 
-  .administratormanage-header {
+  .bz-callback-header {
     margin-bottom: 20px;
   }
 
-  .administratormanage-header hr {
+  .bz-callback-header hr {
     color: #e6e6e6;
     opacity: 0.5;
   }
 
-  .administratormanage-table {
+  .bz-callback-table {
     border: 1px solid #e6e6e6;
     margin-bottom: 20px;
   }
