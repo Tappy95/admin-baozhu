@@ -126,7 +126,7 @@
             </el-table-column>
             <el-table-column label="提现金额" min-width="150px">
               <template slot-scope="scope">
-                <span class="amountred">{{scope.row.txAmount | currencyFixed}}</span>
+                <span class="amountred">{{scope.row.txAmount | currency}}</span>
               </template>
             </el-table-column>
             <el-table-column prop="txCount" label="提现次数" min-width="100px">
