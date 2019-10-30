@@ -13,7 +13,7 @@
           <el-form-item  label="电话号码:">
             <el-input  v-model="formInline.mobile" placeholder="请输入电话号码" clearable></el-input>
           </el-form-item>
-          <el-form-item label="兑换时间:">
+          <el-form-item label="变更时间:">
             <el-date-picker
               v-model="selectTime"
               type="datetimerange"
