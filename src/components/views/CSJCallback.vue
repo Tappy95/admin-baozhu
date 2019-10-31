@@ -18,10 +18,11 @@
                       clearable></el-input>
           </el-form-item>
           <el-form-item label="视频用途:" >
-            <el-select v-model="formInline.operateType" placeholder="请选择状态">
+            <el-select v-model="formInline.operateType" placeholder="请选择视频用途">
               <el-option label="每日红包" value="1"></el-option>
               <el-option label="首页视频" value="2"></el-option>
               <el-option label="补签卡" value="3"></el-option>
+              <el-option label="首页弹窗" value="4"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -63,6 +64,7 @@
                 <span class="red" v-if="scope.row.operateType==1">每日红包</span>
                 <span class="green" v-if="scope.row.operateType==2">首页视频</span>
                 <span class="yellow" v-if="scope.row.operateType==3">补签卡</span>
+                <span class="yellow" v-if="scope.row.operateType==4">首页弹窗</span>
               </template>
             </el-table-column>
             <el-table-column min-width="120" prop="reward_amount" label="奖励金币数量">
