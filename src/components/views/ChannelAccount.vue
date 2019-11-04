@@ -143,6 +143,7 @@
           moneyMin:'',
           moneyMax:'',
           gameMax:'',
+          gameMin:'',
           state:'',
           startRegisterTime:'',
           endRegisterTime:'',
@@ -234,6 +235,7 @@
           moneyMin:this.formInline.moneyMin,
           moneyMax:this.formInline.moneyMax,
           gameMax:this.formInline.gameMax,
+          gameMin:this.formInline.gameMin,
           state:this.formInline.state,
           startRegisterTime:this.formInline.startRegisterTime,
           endRegisterTime:this.formInline.endRegisterTime
