@@ -100,6 +100,7 @@
                 <span v-if="scope.row.roleType==1">小猪猪</span>
                 <span v-if="scope.row.roleType==2">团队长</span>
                 <span v-if="scope.row.roleType==3">超级合伙人</span>
+                <span v-if="scope.row.roleType==4">邀请达人</span>
               </template>
             </el-table-column>
             <el-table-column label="金币余额" min-width="150px">
@@ -274,6 +275,7 @@
                       <span v-if="message.roleType==1">小猪猪</span>
                       <span v-if="message.roleType==2">团队长</span>
                       <span v-if="message.roleType==3">超级合伙人</span>
+                      <span v-if="message.roleType==4">邀请达人</span>
                     </div>
                   </div>
                   <div class="header">

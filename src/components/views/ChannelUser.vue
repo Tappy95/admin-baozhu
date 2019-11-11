@@ -80,6 +80,7 @@
                 <span v-if="scope.row.roleType==1">小猪猪</span>
                 <span v-if="scope.row.roleType==2">团队长</span>
                 <span v-if="scope.row.roleType==3">超级合伙人</span>
+                <span v-if="scope.row.roleType==4">邀请达人</span>
               </template>
             </el-table-column>
             <el-table-column min-width="150px" prop="level" label="用户等级">
