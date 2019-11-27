@@ -638,6 +638,18 @@ const routes = [
         component: resolve => require(['../components/views/Gyro.vue'], resolve),
         meta: { title: '陀螺仪'}
       },
+      {
+        path: 'wish-managePage',
+        name: 'WishManagePage',
+        component: resolve => require(['../components/views/WishManagePage.vue'], resolve),
+        meta: { title: '商品管理'}
+      },
+      {
+        path: 'wish-drawRecord',
+        name: 'WishDrawRecord',
+        component: resolve => require(['../components/views/WishDrawRecord.vue'], resolve),
+        meta: { title: '抽奖记录'}
+      },
     ]
   }
 ]
