@@ -42,6 +42,8 @@
               <el-option label="砸金蛋" value="13"></el-option>
               <el-option label="使用金蛋" value="14"></el-option>
               <el-option label="金猪排行日榜奖励" value="15"></el-option>
+              <el-option label="兑换心愿值" value="16"></el-option>
+              <el-option label="抽奖奖励金猪" value="17"></el-option>
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
@@ -157,6 +159,8 @@
                     <el-option label="砸金蛋" value="13"></el-option>
                     <el-option label="使用金蛋" value="14"></el-option>
                     <el-option label="金猪排行日榜奖励" value="15"></el-option>
+                    <el-option label="兑换心愿值" value="16"></el-option>
+                    <el-option label="抽奖奖励金猪" value="17"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
