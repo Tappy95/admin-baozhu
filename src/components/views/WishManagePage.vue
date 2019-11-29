@@ -107,7 +107,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="22">
-                <el-form-item label="淘宝口令" :label-width="formLabelWidth" prop="passUrl">
+                <el-form-item label="淘宝口令" :label-width="formLabelWidth">
                   <el-input spellcheck="false" v-model="form.passUrl" auto-complete="off"  clearable>
                   </el-input>
                 </el-form-item>
