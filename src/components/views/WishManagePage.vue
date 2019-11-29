@@ -300,11 +300,11 @@
             message: '请选择商品类型',
             trigger: 'change'
           }],
-          passUrl: [{
-            required: true,
-            message: '请输入淘宝口令',
-            trigger: 'blur'
-          }],
+          // passUrl: [{
+          //   required: true,
+          //   message: '请输入淘宝口令',
+          //   trigger: 'blur'
+          // }],
           answerMin: [{
             required: true,
             message: '请输入答案最小值',
