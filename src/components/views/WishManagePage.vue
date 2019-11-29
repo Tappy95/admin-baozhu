@@ -315,11 +315,11 @@
             message: '请输入答案最大值',
             trigger: 'blur'
           }],
-          passUrl: [{
-            required: true,
-            message: '请输入淘宝口令',
-            trigger: 'blur'
-          }],
+          // passUrl: [{
+          //   required: true,
+          //   message: '请输入淘宝口令',
+          //   trigger: 'blur'
+          // }],
           tipsRange: [{
             required: true,
             message: '请输入提示范围',
@@ -508,7 +508,7 @@
       })
       },
       update(formtwo) {
-        this.formtwo.imageUrl = this.imageUrl;
+        this.formtwo.goodsImg = this.imageUrl;
 
         this.$put('/wish/guesGoods/update', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
