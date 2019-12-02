@@ -103,6 +103,8 @@
                            @click="getInfo(scope.row.id,1)">详情</el-button>
                 <el-button type="warning" plain size="mini"
                            @click="getInfo(scope.row.id,2)" v-if="upd">修改</el-button>
+                <el-button type="warning" plain size="mini"
+                           @click="Delete(scope.row.id)" v-if="del">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -326,6 +328,7 @@
         optionW:'75px',
         menuId:'',
         upd:false,
+        del:false,
         imageUrl: '',
         dialogTableDetail: false,
         dialogTableVisible:false,
@@ -377,7 +380,15 @@
               }
               if(res.data[i].btnCode == 'upd') {
                 this.upd=true;
-                this.optionW = '150px';
+                this.optionW = '150';
+              }
+              if(res.data[i].btnCode == 'del') {
+                this.del=true;
+                this.optionW ='150';
+              }
+
+              if(this.del && this.upd) {
+                this.optionW = '220px';
               }
             }
           } else {
@@ -537,6 +548,44 @@
           }
         })
       },
+
+      Delete(id) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
+      },
+      delData(id) {
+        let parameterData = {
+          id: id
+        }
+        this.$fetch('/api/tpTaskInfo/delete', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.$message({
+              type: 'success',
+              message: '删除成功！'
+            })
+            this.accountList()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '删除失败！'
+            })
+          }
+        })
+      },
+
     }
   }
 </script>

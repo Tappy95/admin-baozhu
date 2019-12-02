@@ -33,7 +33,7 @@ Vue.prototype.$uploadFile=uploadFile;
 Vue.prototype.$quit=quit;
 Vue.prototype.$delNew=delNew;
 
-Vue.prototype.$patternNum1 = /^[0-9]*$/; //请输入正整数
+Vue.prototype.$patternNum1 = /^[0-9]*$/; //请输入pcdd-callback
 Vue.prototype.$patternNum2 = /^(0|[1-9][0-9]*)(\.\d+)?$/; //请输入正数
 Vue.config.productionTip = false
 
