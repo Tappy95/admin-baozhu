@@ -62,6 +62,8 @@
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
+                <el-button type="success" plain @click="isUpper(scope.row.id,2)" size="mini" v-if="upper && scope.row.state==1">下架</el-button>
+                <el-button type="success" plain @click="isUpper(scope.row.id,1)" size="mini" v-if="upper && scope.row.state==2">上架</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -106,6 +108,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="商品价格:"
+                              :label-width="formLabelWidth" prop="price">
+                  <el-input spellcheck="false" v-model="form.price" auto-complete="off"  clearable style="width: 200px">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+
               <el-col :span="22">
                 <el-form-item label="淘宝口令" :label-width="formLabelWidth">
                   <el-input spellcheck="false" v-model="form.passUrl" auto-complete="off"  clearable>
@@ -149,13 +161,13 @@
               <el-col :span="12">
                 <el-form-item label="状态"  :label-width="formLabelWidth" prop="state">
                   <el-select v-model="form.state" placeholder="">
-                    <el-option label="正常" :value="1"></el-option>
-                    <el-option label="删除" :value="2"></el-option>
+                    <el-option label="上架" :value="1"></el-option>
+                    <el-option label="下架" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
             </el-row>
-            </el-row>
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -163,7 +175,7 @@
           </div>
         </el-dialog>
         <!-- 修改公告 -->
-        <el-dialog title="修改公告" :visible.sync="dialogTableVisible" width="800px">
+        <el-dialog title="修改商品" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
             <el-row>
               <el-col :span="22">
@@ -199,6 +211,15 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12">
+                <el-form-item label="商品价格:"
+                              :label-width="formLabelWidth" prop="price">
+                  <el-input spellcheck="false" v-model="formtwo.price" auto-complete="off"  clearable style="width: 200px">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="22">
                 <el-form-item label="淘宝口令" :label-width="formLabelWidth" >
                   <el-input spellcheck="false" v-model="formtwo.passUrl" auto-complete="off" clearable>
@@ -239,14 +260,14 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+             <!-- <el-col :span="12">
                 <el-form-item label="状态"  :label-width="formLabelWidth" prop="state">
                   <el-select v-model="formtwo.state" placeholder="">
                     <el-option label="正常" :value="1"></el-option>
                     <el-option label="删除" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
-              </el-col>
+              </el-col>-->
             </el-row>
 
           </el-form>
@@ -277,6 +298,7 @@
         add:false,
         del:false,
         upd:false,
+        upper:false,
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
@@ -340,6 +362,10 @@
             message: '请选择状态',
             trigger: 'change'
           }],
+          price: [
+            { required: true, message: '请输入商品价格', trigger: 'blur' },
+            { type: 'number', message: '请输入数字值'}
+          ],
         },
         formLabelWidth: '120px',
         currentPage: 1,
@@ -400,13 +426,13 @@
               this.powerTrue =true;
               this.optionW = '160px'
             }
-            if(res.data[i].btnCode == 'del') {
-              this.del=true;
+            if(res.data[i].btnCode == 'upper') {
+              this.upper=true;
               this.powerTrue =true;
               this.optionW = '160px'
             }
 
-            if (this.upd && this.del) {
+            if (this.upd && this.upper) {
               this.powerTrue =true;
               this.optionW = '220px'
             }
@@ -482,6 +508,21 @@
             }
           })
           } else {}
+        })
+      },
+      isUpper(id,state){
+        let parameterData = {
+          id: id,
+          state: state
+        }
+        this.$put('/wish/guesGoods/updateState', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.$message({
+              type: 'success',
+              message: '操作成功！'
+            })
+            this.accountList();
+          }
         })
       },
       getInfo(id) {

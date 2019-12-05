@@ -28,6 +28,12 @@
             </el-table-column>
             <el-table-column min-width="500" prop="content" label="注册地址">
             </el-table-column>
+            <el-table-column width="150px" prop="webType" label="平台类型">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.webType==1">app</span>
+                <span class="red" v-if="scope.row.webType==2">小程序</span>
+              </template>
+            </el-table-column>
             <el-table-column width="150px" prop="status" label="状态">
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.status==1">已启用</span>
@@ -138,7 +144,16 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="20">
+              <el-col :span="12" >
+                <el-form-item label="平台类型:" prop="webType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="form.webType" placeholder="">
+                    <el-option label="app" value="1"></el-option>
+                    <el-option label="小程序" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.status" placeholder="">
                     <el-option label="启用" value="1"></el-option>
@@ -227,6 +242,15 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <!--<el-col :span="12">
+                <el-form-item label="平台类型:" prop="webType" :label-width="formLabelWidth">
+                  <el-select :style="styleObject"  v-model="formtwo.webType" placeholder="">
+                    <el-option label="app" :value="1"></el-option>
+                    <el-option label="小程序" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>-->
 
               <el-col :span="20">
                 <el-form-item label="状态:" prop="status" :label-width="formLabelWidth">
@@ -450,6 +474,11 @@
           openWx: [{
             required: true,
             message: '请选择是否开启微信支付',
+            trigger: 'change'
+          }],
+          webType: [{
+            required: true,
+            message: '请选择平台类型',
             trigger: 'change'
           }],
         },
