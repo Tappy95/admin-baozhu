@@ -477,6 +477,10 @@
               res.data.list[i].changedType = '使用金蛋'
             }else if(res.data.list[i].changedType == '15'){
               res.data.list[i].changedType = '金猪排行日榜奖励'
+            }else if(res.data.list[i].changedType == '16'){
+              res.data.list[i].changedType = '兑换心愿值'
+            }else if(res.data.list[i].changedType == '17'){
+              res.data.list[i].changedType = '抽奖奖励金猪'
             }
 
             if(res.data.list[i].roleType == '1'){
