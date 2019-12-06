@@ -363,8 +363,7 @@
             trigger: 'change'
           }],
           price: [
-            { required: true, message: '请输入商品价格', trigger: 'blur' },
-            { type: 'number', message: '请输入数字值'}
+            { required: true, message: '请输入商品价格', trigger: 'blur' }
           ],
         },
         formLabelWidth: '120px',
