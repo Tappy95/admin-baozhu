@@ -33,6 +33,12 @@
                 <span class="red" v-if="scope.row.isTask==2">否</span>
               </template>
             </el-table-column>
+            <el-table-column min-width="120" prop="webType"  label="平台类型">
+              <template slot-scope="scope">
+                <span v-if="scope.row.webType==1">app</span>
+                <span v-if="scope.row.webType==3">心愿猪app</span>
+              </template>
+            </el-table-column>
             <el-table-column fixed="right" label="操作" v-if="powerTrue" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
@@ -52,8 +58,14 @@
             </el-form-item>
             <el-form-item label="是否完成任务:" prop="isTask" :label-width="formLabelWidth">
               <el-select :style="styleObject" v-model="form.isTask" placeholder="">
-                <el-option label="是" :value="1"></el-option>
-                <el-option label="否" :value="2"></el-option>
+                <el-option label="是" value="1"></el-option>
+                <el-option label="否" value="2"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="平台类型:" prop="webType" :label-width="formLabelWidth">
+              <el-select :style="styleObject" v-model="form.webType" placeholder="">
+                <el-option label="app" value="1"></el-option>
+                <el-option label="心愿猪app" value="3"></el-option>
               </el-select>
             </el-form-item>
           </el-form>
@@ -68,15 +80,19 @@
             <el-form-item label="提现金额" prop="price" :label-width="formLabelWidth">
               <el-input v-model="formtwo.price" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
-
             <el-form-item label="排序" prop="orders" :label-width="formLabelWidth">
               <el-input v-model="formtwo.orders" auto-complete="off" style="width: 300px" clearable></el-input>
             </el-form-item>
-
             <el-form-item label="是否完成任务:" prop="isTask" :label-width="formLabelWidth">
               <el-select :style="styleObject" v-model="formtwo.isTask" placeholder="">
                 <el-option label="是" :value="1"></el-option>
                 <el-option label="否" :value="2"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="平台类型:" prop="webType" :label-width="formLabelWidth">
+              <el-select :style="styleObject" v-model="formtwo.webType" placeholder="">
+                <el-option label="app" :value="1"></el-option>
+                <el-option label="心愿猪app" :value="3"></el-option>
               </el-select>
             </el-form-item>
           </el-form>
@@ -136,6 +152,11 @@
           isTask: [{
             required: true,
             message: '请选择是否需要完成任务',
+            trigger: 'change'
+          }],
+          webType: [{
+            required: true,
+            message: '请选择平台类型',
             trigger: 'change'
           }],
         },
@@ -314,9 +335,6 @@
         this.currentPage = val
         this.accountList()
       },
-      toggle: function(value) {
-        this.isShow = !this.isShow;
-      }
     },
 
   }

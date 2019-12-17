@@ -67,6 +67,7 @@
                   <el-option label="打卡消耗" value="32"></el-option>
                   <el-option label="打卡奖励" value="33"></el-option>
                   <el-option label="金币排行日榜奖励" value="34"></el-option>
+                  <el-option label="心愿猪宝箱抽奖" value="35"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -96,7 +97,7 @@
             </el-table-column>
             <el-table-column min-width="120" sortable coinBalance prop="level" label="成长等级">
             </el-table-column>
-            <el-table-column prop="changedType" min-width="170px" label="类型">
+            <el-table-column prop="changedType" min-width="170px" label="变更类型">
             </el-table-column>
             <el-table-column prop="revenue" sortable min-width="150" label="收入">
               <template slot-scope="scope">
@@ -721,6 +722,9 @@
                 break;
               case 34:
                 res.data.list[i].changedType = '金币排行日榜奖励';
+                break;
+              case 35:
+                res.data.list[i].changedType = '心愿猪宝箱抽奖';
                 break;
               // default:
             }

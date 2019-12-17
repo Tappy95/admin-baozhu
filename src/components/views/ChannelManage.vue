@@ -32,6 +32,7 @@
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.webType==1">app</span>
                 <span class="red" v-if="scope.row.webType==2">小程序</span>
+                <span class="yellow" v-if="scope.row.webType==3">心愿猪app</span>
               </template>
             </el-table-column>
             <el-table-column width="150px" prop="status" label="状态">
@@ -149,6 +150,7 @@
                   <el-select :style="styleObject"  v-model="form.webType" placeholder="">
                     <el-option label="app" value="1"></el-option>
                     <el-option label="小程序" value="2"></el-option>
+                    <el-option label="心愿猪app" value="3"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
