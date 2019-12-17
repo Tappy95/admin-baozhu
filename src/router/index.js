@@ -650,6 +650,12 @@ const routes = [
         component: resolve => require(['../components/views/WishDrawRecord.vue'], resolve),
         meta: { title: '抽奖记录'}
       },
+      {
+        path: 'wish-box',
+        name: 'WishBox',
+        component: resolve => require(['../components/views/WishBox.vue'], resolve),
+        meta: { title: '宝箱记录'}
+      },
     ]
   }
 ]
