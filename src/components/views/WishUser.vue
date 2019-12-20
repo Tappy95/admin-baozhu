@@ -11,7 +11,7 @@
           <el-input v-model="formInline.accountId" auto-complete="off" placeholder="请输入用户Id"  clearable>
           </el-input>
         </el-form-item>
-        <el-form-item  label="渠道标识:">
+        <el-form-item  label="渠道标识:" v-if="channelCode=='baozhu' || channelCode=='wishbz'">
           <el-input v-model="formInline.channelCode" placeholder="请输入渠道标识" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
@@ -19,6 +19,15 @@
           <el-input v-model="formInline.mobile" placeholder="请输入手机号" auto-complete="off"  clearable>
           </el-input>
         </el-form-item>
+
+        <el-form-item  label="平台类型:" v-if="channelCode=='baozhu' || channelCode=='wishbz'">
+          <el-select v-model="formInline.webType" placeholder="请选择平台类型" clearable>
+            <el-option label="宝猪乐园" value="1"></el-option>
+            <el-option label="心愿猪" value="3"></el-option>
+            <el-option label="全部" value=""></el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="注册时间:">
           <el-date-picker
             v-model="selectTime"
@@ -72,7 +81,7 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
-  import { getSession } from '../../utils/cookie'
+  // import { getSession } from '../../utils/cookie'
 
   export default {
     name: 'WishUser',
@@ -86,13 +95,10 @@
         formInline: {
           accountId:'',
           channelCode:'',
-          moneyMin:'',
-          moneyMax:'',
-          gameMax:'',
-          gameMin:'',
-          state:'',
-          startRegisterTime:'',
-          endRegisterTime:'',
+          mobile:'',
+          startTime:'',
+          endTime:'',
+          webType:''
         },
         tableData: [],
         channelCode:'',
@@ -141,7 +147,8 @@
     },
     created() {
       this.menuId=this.$route.query.id;
-      this.channelCode = getSession("channelCode")
+      this.channelCode = this.$getSession("channelCode");
+      console.log(this.channelCode)
       this.queryBtns();
       this.accountList();
     },
@@ -180,7 +187,8 @@
           channelCode :this.formInline.channelCode,
           mobile:this.formInline.mobile,
           startTime:this.formInline.startTime,
-          endTime:this.formInline.endTime
+          endTime:this.formInline.endTime,
+          webType:this.formInline.webType
         }
 
         this.$fetch('/wish/userInfo/htPage', parameterData).then(res => {
@@ -226,9 +234,9 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-        this.formInline.token=getSession("token");
-        this.formInline.channel=getSession("channelCode");
-        this.formInline.relation= getSession("userRelation");
+        this.formInline.token=this.$getSession("token");
+        this.formInline.channel=this.$getSession("channelCode");
+        this.formInline.relation= this.$getSession("userRelation");
         let url ='/api/excl/userWishExcl';
         this.doDownload(this.formInline,url);
       },
