@@ -656,6 +656,18 @@ const routes = [
         component: resolve => require(['../components/views/WishBox.vue'], resolve),
         meta: { title: '宝箱记录'}
       },
+      {
+        path: 'wish-user',
+        name: 'WishUser',
+        component: resolve => require(['../components/views/WishUser.vue'], resolve),
+        meta: { title: '用户心愿值'}
+      },
+      {
+        path: 'wish-xw-callback',
+        name: 'WishXwCallback',
+        component: resolve => require(['../components/views/WishXwCallback.vue'], resolve),
+        meta: { title: '闲玩回调'}
+      },
     ]
   }
 ]
