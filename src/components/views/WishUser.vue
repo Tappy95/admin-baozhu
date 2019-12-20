@@ -46,7 +46,7 @@
           </el-table-column>
           <el-table-column fixed="left" min-width="200px" prop="accountId" label="用户Id">
           </el-table-column>
-          <el-table-column  min-width="100px" prop="mobile" label="手机号">
+          <el-table-column  min-width="120px" prop="mobile" label="手机号">
           </el-table-column>
           <el-table-column  min-width="180px" prop="channelCode"  label="渠道标识">
           </el-table-column>
@@ -55,6 +55,8 @@
           <el-table-column min-width="170px"  prop="videoWish" label="看视频获得心愿">
           </el-table-column>
           <el-table-column  min-width="170px"  prop="gameWish" label="游戏试玩获得心愿">
+          </el-table-column>
+          <el-table-column  min-width="170px"  prop="consumeWish" label="已消耗心愿值">
           </el-table-column>
           <el-table-column  width="170px" :formatter="dateFormat" prop="createTime" label="注册时间">
           </el-table-column>
