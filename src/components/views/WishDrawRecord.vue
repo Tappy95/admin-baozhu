@@ -13,17 +13,24 @@
           <el-form-item label="期号">
             <el-input v-model="formInline.issueNumber" placeholder="请输入期号" clearable></el-input>
           </el-form-item>
-          <el-form-item :label-width="labelWidth" label="状态:">
+          <el-form-item  label="状态:">
             <el-select v-model="formInline.state" placeholder="请选择状态" clearable>
               <el-option label="未猜中" value="1"></el-option>
               <el-option label="已猜中" value="2"></el-option>
               <el-option label="幸运儿" value="3"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label-width="labelWidth" label="是否发货:">
+          <el-form-item  label="是否发货:">
             <el-select v-model="formInline.isMail" placeholder="请选择是否发货" clearable>
               <el-option label="待发货" value="1"></el-option>
               <el-option label="已发货" value="2"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item  label="用户类型:">
+            <el-select v-model="formInline.userTypeStr" placeholder="请选择用户类型" clearable>
+              <el-option label="真实用户" value="1"></el-option>
+              <el-option label="机器人" value="2"></el-option>
             </el-select>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
@@ -44,7 +51,7 @@
               </template>
             </el-table-column>
             <el-table-column width="170" prop="mobile" label="注册手机号"></el-table-column>
-            <el-table-column min-width="170" prop="goodsName" label="商品名称"></el-table-column>
+            <el-table-column min-width="270" prop="goodsName" label="商品名称"></el-table-column>
             <el-table-column min-width="170" prop="price" label="商品价格"></el-table-column>
             <el-table-column width="170" prop="receiver" label="收货人姓名"></el-table-column>
             <el-table-column width="170" prop="contactMobile" label="收货人电话"></el-table-column>
@@ -71,7 +78,7 @@
                   plain
                   @click="getInfo(scope.row.id,scope.row.isMail,scope.row.remarks)"
                   size="mini"
-                  v-if="send && scope.row.state==3"
+                  v-if="send && scope.row.state==3 && typeSel"
                 >发货</el-button>
               </template>
             </el-table-column>
@@ -145,13 +152,16 @@ export default {
       currentPage: 1,
       pageSize: 10,
       totalCount: 0,
-      formInline: {},
+      formInline: {
+        userTypeStr:"1"
+      },
       tableData: [],
       uploadData: {},
       selectTime: [],
       showImg: false,
       isSubmit: false,
-      send: false
+      send: false,
+      typeSel:true
     };
   },
   components: {
@@ -192,28 +202,10 @@ export default {
       this.$fetch("/api/pMenuBtn/queryBtns", parameterData).then(res => {
         if ((res.statusCode + "").startsWith("2")) {
           for (let i = res.data.length - 1; i >= 0; i--) {
-            if (res.data[i].btnCode == "add") {
-              this.add = true;
-            }
-            if (res.data[i].btnCode == "upd") {
-              this.upd = true;
-              this.powerTrue = true;
-              this.optionW = "160px";
-            }
-            if (res.data[i].btnCode == "del") {
-              this.del = true;
-              this.powerTrue = true;
-              this.optionW = "160px";
-            }
             if (res.data[i].btnCode == "send") {
               this.send = true;
               this.powerTrue = true;
-              this.optionW = "160px";
-            }
-
-            if (this.upd && this.del) {
-              this.powerTrue = true;
-              this.optionW = "220px";
+              this.optionW = "75";
             }
           }
         } else {
@@ -238,7 +230,8 @@ export default {
         accountId: this.formInline.accountId,
         issueNumber: this.formInline.issueNumber,
         state: this.formInline.state,
-        isMail: this.formInline.isMail
+        isMail: this.formInline.isMail,
+        userTypeStr:this.formInline.userTypeStr
       };
       this.$fetch("/wish//guesUserLog/page", parameterData).then(res => {
         if ((res.statusCode + "").startsWith("2")) {
@@ -256,6 +249,11 @@ export default {
     search() {
       this.currentPage = 1;
       this.pageSize = 10;
+      if (this.formInline.userTypeStr=='2'){
+        this.typeSel= false
+      } else {
+        this.typeSel= true
+      }
       this.accountList();
     },
     load() {

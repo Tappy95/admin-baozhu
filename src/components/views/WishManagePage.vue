@@ -39,7 +39,7 @@
                 <span v-if="scope.row.goodsType==2">高价商品</span>
               </template>
             </el-table-column>
-            <el-table-column width="170" prop="passUrl" label="淘宝口令">
+            <el-table-column min-width="300" prop="passUrl" label="淘宝口令">
             </el-table-column>
             <el-table-column width="170" prop="answerMin" label="答案最小值">
             </el-table-column>
@@ -62,8 +62,10 @@
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
-                <el-button type="success" plain @click="isUpper(scope.row.id,2)" size="mini" v-if="upper && scope.row.state==1">下架</el-button>
-                <el-button type="success" plain @click="isUpper(scope.row.id,1)" size="mini" v-if="upper && scope.row.state==2">上架</el-button>
+                <el-button type="danger" plain @click="isUpper(scope.row.id,2)" size="mini" v-if="upper && scope.row.state==1 && scope.row.isTop==1">下架</el-button>
+                <el-button type="warning" plain @click="isUpper(scope.row.id,1)" size="mini" v-if="upper && scope.row.state==2">上架</el-button>
+                <el-button type="danger" plain @click="isTop(scope.row.id,2)" size="mini" v-if="tops && scope.row.state==1 && scope.row.isTop==1">置顶</el-button>
+                <el-button type="primary" plain @click="isTop(scope.row.id,1)" size="mini" v-if="tops && scope.row.state==1 && scope.row.isTop==2">不置顶</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -75,13 +77,13 @@
         <el-dialog title="添加商品" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
-              <el-col :span="12">
+              <el-col :span="22">
                 <el-form-item label="商品名称" :label-width="formLabelWidth" prop="goodsName">
                   <el-input v-model="form.goodsName" auto-complete="off" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
+              <el-col :span="22">
                 <el-form-item label="图片:"
                               :label-width="formLabelWidth">
                   <el-upload class="bannerAvatar-uploader"
@@ -100,9 +102,10 @@
                   </el-upload>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
                 <el-form-item label="商品类型" prop="goodsType" :label-width="formLabelWidth">
-                  <el-select v-model="form.goodsType" placeholder="">
+                  <el-select v-model="form.goodsType" placeholder="" style="width: 200px">
                     <el-option label="普通商品" value="1"></el-option>
                     <el-option label="高价商品" value="2"></el-option>
                   </el-select>
@@ -110,20 +113,12 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="商品价格:"
-                              :label-width="formLabelWidth" prop="price">
+                <el-form-item label="商品价格:" :label-width="formLabelWidth" prop="price">
                   <el-input spellcheck="false" v-model="form.price" auto-complete="off"  clearable style="width: 200px">
                   </el-input>
                 </el-form-item>
               </el-col>
 
-
-              <el-col :span="22">
-                <el-form-item label="淘宝口令" :label-width="formLabelWidth">
-                  <el-input spellcheck="false" v-model="form.passUrl" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
               <el-col :span="12">
                 <el-form-item label="答案最小值:"
                               :label-width="formLabelWidth" prop="answerMin">
@@ -138,12 +133,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22">
-                <el-form-item label="提示范围" :label-width="formLabelWidth" prop="tipsRange">
-                  <el-input spellcheck="false" v-model="form.tipsRange" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="名次最小值:"
                               :label-width="formLabelWidth" prop="rankingMin">
@@ -158,6 +148,21 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="提示范围" :label-width="formLabelWidth" prop="tipsRange">
+                  <el-input spellcheck="false" v-model="form.tipsRange" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="淘宝口令" :label-width="formLabelWidth">
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="form.passUrl" auto-complete="off"  clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="状态"  :label-width="formLabelWidth" prop="state">
                   <el-select v-model="form.state" placeholder="">
@@ -205,14 +210,14 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="商品类型" prop="goodsType" :label-width="formLabelWidth">
-                  <el-select v-model="formtwo.goodsType" placeholder="">
+                  <el-select v-model="formtwo.goodsType" placeholder="" style="width: 200px">
                     <el-option label="普通商品" :value="1"></el-option>
                     <el-option label="高价商品" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
 
-              <el-col :span="12">
+              <el-col :span="11">
                 <el-form-item label="商品价格:"
                               :label-width="formLabelWidth" prop="price">
                   <el-input spellcheck="false" v-model="formtwo.price" auto-complete="off"  clearable style="width: 200px">
@@ -220,12 +225,6 @@
                 </el-form-item>
               </el-col>
 
-              <el-col :span="22">
-                <el-form-item label="淘宝口令" :label-width="formLabelWidth" >
-                  <el-input spellcheck="false" v-model="formtwo.passUrl" auto-complete="off" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
               <el-col :span="12">
                 <el-form-item label="答案最小值:"
                               :label-width="formLabelWidth">
@@ -240,12 +239,7 @@
                   </el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="22">
-                <el-form-item label="提示范围" :label-width="formLabelWidth" >
-                  <el-input spellcheck="false" v-model="formtwo.tipsRange" auto-complete="off" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+
               <el-col :span="12">
                 <el-form-item label="名次最小值:"
                               :label-width="formLabelWidth" prop="rankingMin">
@@ -260,6 +254,21 @@
                   </el-input>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="提示范围" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" v-model="formtwo.tipsRange" auto-complete="off" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="22">
+                <el-form-item label="淘宝口令" :label-width="formLabelWidth" >
+                  <el-input spellcheck="false" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="formtwo.passUrl" auto-complete="off" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+
              <!-- <el-col :span="12">
                 <el-form-item label="状态"  :label-width="formLabelWidth" prop="state">
                   <el-select v-model="formtwo.state" placeholder="">
@@ -366,7 +375,7 @@
             { required: true, message: '请输入商品价格', trigger: 'blur' }
           ],
         },
-        formLabelWidth: '120px',
+        formLabelWidth: '100px',
         currentPage: 1,
         pageSize: 10,
         totalCount: 0,
@@ -376,6 +385,7 @@
         selectTime: [],
         showImg:false,
         isSubmit:false,
+        tops:false
       }
     },
     components: {
@@ -423,18 +433,29 @@
             if(res.data[i].btnCode == 'upd') {
               this.upd=true;
               this.powerTrue =true;
-              this.optionW = '160px'
+              this.optionW = '75'
             }
             if(res.data[i].btnCode == 'upper') {
               this.upper=true;
               this.powerTrue =true;
+              this.optionW = '75'
+            }
+
+            if(res.data[i].btnCode == 'tops') {
+              this.tops =true;
+              this.optionW = '75'
+            }
+
+            if ((this.upd && this.upper) || (this.upd && this.tops) || (this.upper && this.tops) ) {
+              this.powerTrue =true;
               this.optionW = '160px'
             }
 
-            if (this.upd && this.upper) {
+            if (this.upd && this.upper && this.tops){
               this.powerTrue =true;
-              this.optionW = '220px'
+              this.optionW = '220'
             }
+
           }
         } else {
         }
@@ -450,7 +471,8 @@
         }
         return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
       },
-      // 详情
+
+      // 列表
       accountList() {
         let parameterData = {
           pageNum: this.currentPage,
@@ -566,6 +588,40 @@
           }
       })
       },
+
+      isTop(id,stats) {
+        // isTop 1不置顶2置顶
+        // id 商品id
+        let tempState = ''
+
+        if (stats==1){
+          tempState = '不置顶'
+        } else if(stats==2){
+          tempState = '置顶'
+        }
+        this.$confirm('此操作将'+tempState+'该商品,是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            this.$post('/wish/guesGoods/updateTop',{
+              id: id,
+              isTop: stats
+            }).then(res => {
+              if ((res.statusCode+"").startsWith("2")) {
+                this.$message({ type: 'success', message: '删除成功！' })
+                this.accountList()
+              } else {
+              }
+            })
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消删除' })
+          })
+      },
+
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()

@@ -20,7 +20,6 @@
 
           <el-form-item label="订单号:" >
             <el-input placeholder="请输入订单号"
-                      v-model="formInline.ordernum"
                       clearable></el-input>
           </el-form-item>
 
