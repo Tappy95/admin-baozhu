@@ -65,6 +65,8 @@
           </el-table-column>
           <el-table-column  min-width="170px"  prop="gameWish" label="游戏试玩获得心愿">
           </el-table-column>
+          <el-table-column  min-width="170px"  prop="bagWish" label="抽福袋获取心愿值">
+          </el-table-column>
           <el-table-column  min-width="170px"  prop="consumeWish" label="已消耗心愿值">
           </el-table-column>
           <el-table-column  width="170px" :formatter="dateFormat" prop="createTime" label="注册时间">
