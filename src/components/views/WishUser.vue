@@ -67,6 +67,10 @@
           </el-table-column>
           <el-table-column  min-width="170px"  prop="bagWish" label="抽福袋获取心愿值">
           </el-table-column>
+          <el-table-column  min-width="170px"  prop="catWish" label="变现猫心愿值">
+          </el-table-column>
+          <el-table-column  min-width="170px"  prop="regConsumeWish" label="注册当天消耗心愿值">
+          </el-table-column>
           <el-table-column  min-width="170px"  prop="consumeWish" label="已消耗心愿值">
           </el-table-column>
           <el-table-column  width="170px" :formatter="dateFormat" prop="createTime" label="注册时间">
