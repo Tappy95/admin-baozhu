@@ -11,6 +11,15 @@
               <el-input v-model="formInline.channelCode" placeholder="请输入渠道标识" auto-complete="off"  clearable>
               </el-input>
             </el-form-item>
+          <el-form-item  label="平台类型:">
+            <el-select v-model="formInline.webType" placeholder="请选择平台类型" clearable>
+              <el-option label="宝猪乐园" value="1"></el-option>
+              <el-option label="小程序" value="2"></el-option>
+              <el-option label="心愿猪app" value="3"></el-option>
+              <el-option label="全部" value=""></el-option>
+            </el-select>
+          </el-form-item>
+
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
           <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
@@ -30,7 +39,7 @@
             </el-table-column>
             <el-table-column width="150px" prop="webType" label="平台类型">
               <template slot-scope="scope">
-                <span class="green" v-if="scope.row.webType==1">app</span>
+                <span class="green" v-if="scope.row.webType==1">宝猪乐园</span>
                 <span class="red" v-if="scope.row.webType==2">小程序</span>
                 <span class="yellow" v-if="scope.row.webType==3">心愿猪app</span>
               </template>
@@ -148,7 +157,7 @@
               <el-col :span="12" >
                 <el-form-item label="平台类型:" prop="webType" :label-width="formLabelWidth">
                   <el-select :style="styleObject"  v-model="form.webType" placeholder="">
-                    <el-option label="app" value="1"></el-option>
+                    <el-option label="宝猪乐园" value="1"></el-option>
                     <el-option label="小程序" value="2"></el-option>
                     <el-option label="心愿猪app" value="3"></el-option>
                   </el-select>
@@ -315,7 +324,18 @@
                       <span v-if="formtwoInfo.status==2">已停用</span>
                     </div>
                   </div>
+                  <!--webType;//平台类型1app2小程序,3心愿猪app-->
+
                   <div class="body_list">
+                    <div class="title">平台类型:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.webType==1">宝猪乐园</span>
+                      <span v-if="formtwoInfo.webType==2">小程序</span>
+                      <span v-if="formtwoInfo.webType==3">心愿猪app</span>
+                    </div>
+                  </div>
+
+                  <div class="body_list" style="width: 100%;">
                     <div class="title">创建时间:</div>
                     <div class="name">
                       {{formtwoInfo.createTime}}
@@ -579,7 +599,8 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          channelCode: this.formInline.channelCode
+          channelCode: this.formInline.channelCode,
+          webType: this.formInline.webType,
         }
         this.$fetch('/api/mChannelInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
