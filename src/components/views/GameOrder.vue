@@ -493,7 +493,7 @@
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
 
-        let url = '/api/excl/orderExcl';
+        let url = '/excl/orderExcl';
         let data = {url,accountId,lotteryId,actionNo,status,startTime,endTime,token,channel,relation};
         this.doDownload(data);
       },

@@ -481,7 +481,7 @@
         this.formInline.token= getSession("token");
         this.formInline.channel= getSession("channelCode")
         this.formInline.relation= getSession("userRelation");
-        let url = '/api/excl/exclCash';
+        let url = '/excl/exclCash';
         //let data = {url,outTradeNo,accountId,state,isLocking,bankNum,startTime,endTime,examineStartTime,examineEndTime,coinMin,coinMax,channelCode,days,token,channel,relation};
         this.doDownload(this.formInline,url);
       },

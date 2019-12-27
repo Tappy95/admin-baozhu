@@ -198,7 +198,7 @@
         let token= getSession("token");
         let channel= getSession("channelCode");
 
-        let url = '/api/excl/exclDataStatistics';
+        let url = '/excl/exclDataStatistics';
         let data = {url,channelCode,creatorTime,token,channel};
         this.doDownload(data);
       },

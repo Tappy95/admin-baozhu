@@ -637,7 +637,7 @@
         this.formInline.token=getSession("token");
         this.formInline.channel=getSession("channelCode");
         this.formInline.relation= getSession("userRelation");
-        let url ='/api/excl/drExcl';
+        let url ='/excl/drExcl';
         this.doDownload(this.formInline,url);
       },
 

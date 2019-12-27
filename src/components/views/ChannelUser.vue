@@ -304,7 +304,7 @@
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
 
-        let url = '/api/excl/channelExclUser';
+        let url = '/excl/channelExclUser';
         // let data = {url,accountId,level,startTime,endTime,token,channel,relation};
         // this.doDownload(data);
 

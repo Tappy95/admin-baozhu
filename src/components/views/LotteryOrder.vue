@@ -689,7 +689,7 @@
         let token= getSession("token");
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
-        let url = '/api/excl/lotteryOrderExcl';
+        let url = '/excl/lotteryOrderExcl';
         let data = {url,accountId,status,minPrice,maxPrice,startTime,endTime,token,channel,relation};
         this.doDownload(data);
       },

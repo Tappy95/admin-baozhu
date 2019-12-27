@@ -430,7 +430,7 @@
         let token= getSession("token");
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
-        let url = '/api/excl/payExcl';
+        let url = '/excl/payExcl';
         let data = {url,accountId,state,channelCode,startTime,endTime,startPayTime,endPayTime,outTradeNo,token,channel,relation};
         this.doDownload(data);
       },

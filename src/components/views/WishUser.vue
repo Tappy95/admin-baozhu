@@ -59,6 +59,8 @@
           </el-table-column>
           <el-table-column  min-width="180px" prop="channelCode"  label="渠道标识">
           </el-table-column>
+          <el-table-column  min-width="170px"  prop="regConsumeWish" label="注册当天消耗心愿值">
+          </el-table-column>
           <el-table-column  min-width="120px" prop="shareWish" label="分享获得心愿">
           </el-table-column>
           <el-table-column min-width="170px"  prop="videoWish" label="看视频获得心愿">
@@ -68,8 +70,6 @@
           <el-table-column  min-width="170px"  prop="bagWish" label="抽福袋获取心愿值">
           </el-table-column>
           <el-table-column  min-width="170px"  prop="catWish" label="变现猫心愿值">
-          </el-table-column>
-          <el-table-column  min-width="170px"  prop="regConsumeWish" label="注册当天消耗心愿值">
           </el-table-column>
           <el-table-column  min-width="170px"  prop="consumeWish" label="已消耗心愿值">
           </el-table-column>
@@ -243,7 +243,7 @@
         this.formInline.token=this.$getSession("token");
         this.formInline.channel=this.$getSession("channelCode");
         this.formInline.relation= this.$getSession("userRelation");
-        let url ='/api/excl/userWishExcl';
+        let url ='/excl/userWishExcl';
         this.doDownload(this.formInline,url);
       },
 

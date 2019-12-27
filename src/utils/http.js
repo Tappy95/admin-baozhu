@@ -103,6 +103,8 @@ axios.interceptors.response.use(
 )
 
 export function fetch(url,params={}){
+  console.log(url)
+  url.replace("/excl","/excl")
   return new Promise((resolve,reject) => {
     axios.get(https+url,{
       params:params,
@@ -115,6 +117,7 @@ export function fetch(url,params={}){
     })
   })
 }
+
  export function post(url,data = {}){
    return new Promise((resolve,reject) => {
      axios.post(https+url,data,{

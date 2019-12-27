@@ -256,7 +256,7 @@
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
 
-        let url = '/api/excl/gameTeskExcl';
+        let url = '/excl/gameTeskExcl';
         let data = {url,accountId,gameName,tpName,startTime,endTime,token,channel,relation};
         this.doDownload(data);
       },

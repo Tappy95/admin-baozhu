@@ -466,7 +466,7 @@
         let channel= getSession("channelCode")
         let relation= getSession("userRelation");
 
-        let url = '/api/excl/exclCoinChange';
+        let url = '/excl/exclCoinChange';
         let data = {url,changedType,mobile,accountId,startTime,endTime,coinMin,coinMax,token,channel,relation};
         this.doDownload(data);
       },

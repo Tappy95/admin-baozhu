@@ -837,7 +837,7 @@
         this.formInline.token=getSession("token");
         this.formInline.channel=getSession("channelCode");
         this.formInline.relation= getSession("userRelation");
-        let url ='/api/excl/userExcl';
+        let url ='/excl/userExcl';
         this.doDownload(this.formInline,url);
       },
 
@@ -888,7 +888,7 @@
       //   let channel= getSession("channelCode");
       //   let relation= getSession("userRelation");
       //
-      //   let url = '/api/excl/userExcl';
+      //   let url = '/excl/userExcl';
       //   let data = {url,accountId,mobile,level,channelCode,token,channel,relation};
       //   this.doDownload(data);
       // },

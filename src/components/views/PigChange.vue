@@ -306,7 +306,7 @@
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
 
-        let url = '/api/excl/exclPigChange';
+        let url = '/excl/exclPigChange';
         let data = {url,userName,changedType,mobile,accountId,flowType,startTime,endTime,token,channel,relation};
         this.doDownload(data);
       },

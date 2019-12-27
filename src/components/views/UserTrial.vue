@@ -229,7 +229,7 @@
         this.formInline.token=getSession("token");
         this.formInline.channel=getSession("channelCode");
         this.formInline.relation= getSession("userRelation");
-        let url ='/api/excl/userGameStatisticExcl';
+        let url ='/excl/userGameStatisticExcl';
         this.doDownload(this.formInline,url);
       },
 
