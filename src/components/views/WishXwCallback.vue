@@ -58,26 +58,26 @@
             </el-table-column>
             <el-table-column min-width="120" prop="accountId" label="用户Id">
             </el-table-column>
-            <el-table-column min-width="120" prop="merid" label="用户注册游戏Id">
-            </el-table-column>
-            <el-table-column min-width="120" prop="adid" label="游戏Id">
-            </el-table-column>
+            <!--<el-table-column min-width="120" prop="merid" label="用户注册游戏Id">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column min-width="120" prop="adid" label="游戏Id">-->
+            <!--</el-table-column>-->
             <el-table-column min-width="120" prop="adname" label="游戏名称">
             </el-table-column>
             <el-table-column min-width="150" prop="appid" label="开发者Id">
             </el-table-column>
             <el-table-column min-width="170" prop="deviceid" label="设备号">
             </el-table-column>
-            <el-table-column min-width="120" prop="dlevel"  label="奖励级别">
-            </el-table-column>
+            <!--<el-table-column min-width="120" prop="dlevel"  label="奖励级别">-->
+            <!--</el-table-column>-->
             <el-table-column min-width="120" prop="price" label="总奖励">
             </el-table-column>
             <el-table-column min-width="120" prop="money" label="用户奖励">
             </el-table-column>
             <el-table-column min-width="120" prop="xy" label="心愿值">
             </el-table-column>
-            <el-table-column min-width="250" prop="event"  label="奖励说明">
-            </el-table-column>
+            <!--<el-table-column min-width="250" prop="event"  label="奖励说明">-->
+            <!--</el-table-column>-->
             <el-table-column min-width="120" prop="status"  label="状态">
               <template slot-scope="scope">
                 <span class="red" v-if="scope.row.status==2">失败</span>
