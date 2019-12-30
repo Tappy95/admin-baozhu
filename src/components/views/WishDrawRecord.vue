@@ -33,7 +33,14 @@
               <el-option label="机器人" value="2"></el-option>
             </el-select>
           </el-form-item>
-          <el-button type="primary" plain @click="search()">查询</el-button>
+
+          <el-form-item>
+            <el-button type="primary" plain @click="search()">查询</el-button>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="success" v-if="exportExle" plain @click="queryExport()" >导出表格</el-button>
+          </el-form-item>
         </el-form>
       </div>
       <div class="news-notice-table">
@@ -126,7 +133,7 @@
 </template>
 <script type="text/javascript">
 import { formatDate } from "../../utils/date.js";
-import { delSession, getSession } from "../../utils/cookie";
+import { getSession } from "../../utils/cookie";
 import BigImg from "./BigImg";
 export default {
   name: "NewsNotice",
@@ -161,7 +168,8 @@ export default {
       showImg: false,
       isSubmit: false,
       send: false,
-      typeSel:true
+      typeSel:true,
+      exportExle:false
     };
   },
   components: {
@@ -206,6 +214,10 @@ export default {
               this.send = true;
               this.powerTrue = true;
               this.optionW = "75";
+            }
+
+            if (res.data[i].btnCode == "exportExle") {
+              this.exportExle = true;
             }
           }
         } else {
@@ -292,6 +304,54 @@ export default {
         }
       });
     },
+
+
+    //导出表格
+    queryExport() {
+      this.search();
+      //开启正在导出弹层
+      this.fullscreenLoading = this.$loading({
+        lock: true,
+        text: '正在导出...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      this.formInline.token=getSession("token");
+      this.formInline.channel=getSession("channelCode");
+      this.formInline.relation= getSession("userRelation");
+      let url ='/excl/guessLogExcl';
+      this.doDownload(this.formInline,url);
+    },
+
+    doDownload(from,url){
+      let keys=[];
+      let data=[];
+      for (var i in from) {
+        if(from[i]!=null && from[i]!='') {
+          keys.push(i)
+          data.push(from[i])
+        }
+      }
+      let http=url;
+      for(let i=0;i<keys.length;i++){
+        if(http==url){
+          http=http+'?'+keys[i]+'='+ data[i]
+        }else{
+          http=http+'&'+keys[i]+'='+ data[i]
+        }
+      }
+      let a1 = document.createElement('a');
+      a1.setAttribute('href',http);
+      let body = document.querySelector('body');
+      body.appendChild(a1);
+      a1.click();
+      a1.remove();
+      //关闭正在导出弹层
+      setTimeout(() => {
+        this.fullscreenLoading.close();
+      }, 9000);
+    },
+
     handleSizeChange(val) {
       this.pageSize = val;
       this.accountList();
