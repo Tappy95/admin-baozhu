@@ -73,8 +73,9 @@
             </el-table-column>
             <el-table-column width="150" prop="isMail" label="是否发货">
               <template slot-scope="scope">
-                <span v-if="scope.row.isMail==1">待发货</span>
-                <span v-if="scope.row.isMail==2">已发货</span>
+                <span v-if="scope.row.isMail==1 && scope.row.state==3">待发货</span>
+                <span v-if="scope.row.isMail==2 && scope.row.state==3">已发货</span>
+                <span v-if="scope.row.isMail==1 && scope.row.state!=3">不发货</span>
               </template>
             </el-table-column>
             <el-table-column width="170" prop="remarks" label="备注"></el-table-column>
