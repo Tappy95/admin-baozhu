@@ -16,7 +16,7 @@ module.exports = {
       '/api': {
         // target: 'http://192.168.1.193:8088',//测试环境小伟
         // target: 'http://192.168.1.226:8088/',//小明
-        target: 'http://192.168.1.53:8082',//小伟
+        target: 'http://192.168.1.37:8082',//小伟
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
@@ -25,7 +25,7 @@ module.exports = {
       '/task': {
         // target: 'http://192.168.1.193:8088',//测试环境
         // target: 'http://192.168.1.226:8085/',//小明
-        target: 'http://192.168.1.53:8085',//小伟
+        target: 'http://192.168.1.37:8085',//小伟
         changeOrigin: true,
         pathRewrite: {
           '^/task': '/'
@@ -34,7 +34,7 @@ module.exports = {
         '/guess': {
           // target: 'http://192.168.1.193:8088',//测试环境
           // target: 'http://192.168.1.226:8085/',//小明
-          target: 'http://192.168.1.53:8087',//小伟
+          target: 'http://192.168.1.37:8087',//小伟
           changeOrigin: true,
           pathRewrite: {
             '^/guess': '/'
@@ -43,7 +43,7 @@ module.exports = {
         '/push': {
             // target: 'http://192.168.1.193:8088',//测试环境
             // target: 'http://192.168.1.226:8085/',//小明
-            target: 'http://192.168.1.53:8080',//小伟
+            target: 'http://192.168.1.37:8080',//小伟
             changeOrigin: true,
             pathRewrite: {
               '^/push': '/'
@@ -52,7 +52,7 @@ module.exports = {
         '/bz28': {
               // target: 'http://192.168.1.193:8088',//测试环境
               // target: 'http://192.168.1.226:8085/',//小明
-              target: 'http://192.168.1.53:18087',//小伟
+              target: 'http://192.168.1.37:18087',//小伟
               changeOrigin: true,
               pathRewrite: {
                 '^/bz28': '/'
@@ -61,7 +61,7 @@ module.exports = {
         '/wish': {
                 // target: 'http://192.168.1.193:8088',//测试环境
                 // target: 'http://192.168.1.226:8085/',//小明
-                target: 'http://192.168.1.53:8091',//小伟
+                target: 'http://192.168.1.37:8091',//小伟
                 changeOrigin: true,
                 pathRewrite: {
                   '^/wish': '/'
@@ -70,7 +70,7 @@ module.exports = {
          '/excl': {
                   // target: 'http://192.168.1.193:8088',//测试环境
                   // target: 'http://192.168.1.226:8085/',//小明
-                  target: 'http://192.168.1.53:8088',//小伟
+                  target: 'http://192.168.1.37:8088',//小伟
                   changeOrigin: true,
                   pathRewrite: {
                     // '^/excl': '/'
