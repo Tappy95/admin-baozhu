@@ -5,7 +5,6 @@
         <h3>心愿猪/用户心愿值</h3>
         <hr />
       </div>
-
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="用户Id:">
           <el-input v-model="formInline.accountId" auto-complete="off" placeholder="请输入用户Id"  clearable>
@@ -46,14 +45,13 @@
           <el-button type="success" plain @click="queryExport" v-if="exportExle">导出表格</el-button>
         </el-form-item>
       </el-form>
-
     </div>
     <div class="channel-account-table">
       <template>
         <el-table :data="tableData"  v-loading="loading" max-height="506">
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
           </el-table-column>
-          <el-table-column fixed="left" min-width="200px" prop="accountId" label="用户Id">
+          <el-table-column fixed="left" min-width="120px" prop="accountId" label="用户Id">
           </el-table-column>
           <el-table-column  min-width="120px" prop="mobile" label="手机号">
           </el-table-column>
@@ -74,6 +72,10 @@
           <el-table-column  min-width="170px"  prop="consumeWish" label="已消耗心愿值">
           </el-table-column>
           <el-table-column  width="170px" :formatter="dateFormat" prop="createTime" label="注册时间">
+          </el-table-column>
+          <el-table-column  width="170px" prop="activeDay" label="连续登陆天数">
+          </el-table-column>
+          <el-table-column  width="170px" prop="lastActiveTime" label="最后一次登陆时间">
           </el-table-column>
         </el-table>
       </template>

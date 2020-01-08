@@ -62,7 +62,7 @@
             <el-table-column min-width="170" prop="price" label="商品价格"></el-table-column>
             <el-table-column width="170" prop="receiver" label="收货人姓名"></el-table-column>
             <el-table-column width="170" prop="contactMobile" label="收货人电话"></el-table-column>
-            <el-table-column width="170" prop="detailAddress" label="收货地址"></el-table-column>
+            <el-table-column min-width="170" prop="detailAddress" label="收货地址"></el-table-column>
             <el-table-column width="170" prop="guessNumber" label="抽奖次数"></el-table-column>
             <el-table-column width="150" prop="state" label="状态">
               <template slot-scope="scope">
@@ -78,7 +78,8 @@
                 <span v-if="scope.row.isMail==1 && scope.row.state!=3">不发货</span>
               </template>
             </el-table-column>
-            <el-table-column width="170" prop="remarks" label="备注"></el-table-column>
+            <el-table-column min-width="170" prop="remarks" label="备注"></el-table-column>
+            <el-table-column width="170" prop="guessTime" label="中奖时间"></el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <el-button

@@ -36,7 +36,9 @@
         <el-table :data="tableData"  v-loading="loading" max-height="506">
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
           </el-table-column>
-          <el-table-column fixed="left" width="150px" label="商品图片">
+          <el-table-column fixed="left" min-width="120px" prop="timeNo" label="期号">
+          </el-table-column>
+          <el-table-column  width="150px" label="商品图片">
             <template slot-scope="scope">
               <img :src='scope.row.goodsImg'
                    style="max-width: 45px;max-height: 45px"
@@ -45,19 +47,17 @@
           </el-table-column>
           <el-table-column  min-width="170px"  prop="goodsName" label="商品名称">
           </el-table-column>
-          <el-table-column  min-width="120px" prop="timeNo" label="期号">
+          <el-table-column  min-width="170px"  prop="goodsTypeName" label="商品分类名称">
+          </el-table-column>
+          <el-table-column  min-width="170px"  prop="timesNum" label="夺宝总人次">
           </el-table-column>
           <el-table-column  min-width="120px" prop="userNums" label="夺宝人数">
           </el-table-column>
           <el-table-column  min-width="120px" prop="timesNumSurplus"  label="剩余夺宝次数">
           </el-table-column>
-          <el-table-column  min-width="170px"  prop="goodsTypeName" label="商品分类名称">
-          </el-table-column>
           <el-table-column  min-width="120px" prop="timesXy" label="每次消耗心愿">
           </el-table-column>
           <el-table-column min-width="120px"  prop="accountId" label="幸运儿Id">
-          </el-table-column>
-          <el-table-column  min-width="170px"  prop="timesNum" label="夺宝总人次">
           </el-table-column>
           <el-table-column width="100px" prop="status" label="状态">
             <template slot-scope="scope">
@@ -69,12 +69,45 @@
           </el-table-column>
           <el-table-column  min-width="170px" :formatter="dateFormat"  prop="createTime" label="创建时间">
           </el-table-column>
+
+          <el-table-column fixed="right" v-if="luck" label="操作" width="110">
+            <template slot-scope="scope">
+              <el-button
+                type="success"
+                plain
+                v-if="scope.row.status==1"
+                @click="getInfo(scope.row.id,scope.row.timesNum)"
+                size="mini">设置幸运儿</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </template>
     </div>
     <big-img v-if="showImg"
              @clickit="viewImg"
              :imgSrc="imgSrc"></big-img>
+
+    <!-- 设置幸运儿 -->
+    <el-dialog title="设置幸运儿" :visible.sync="dialogFormVisible" width="600px">
+      <el-form :model="form">
+        <el-row>
+          <el-col :span="16">
+            <el-form-item label="用户ID:" :label-width="formLabelWidth">
+              <el-input v-model="form.accountId" auto-complete="off" clearable></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="22">
+            <el-form-item label="密码:" :label-width="formLabelWidth" >
+              <el-input type="password" v-model="form.sign" auto-complete="off" clearable></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="update">确 定</el-button>
+      </div>
+    </el-dialog>
 
     <div class="block" style="margin-left: 10px">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
@@ -108,37 +141,19 @@
         maxDays:'',
         selectTime: '',
         selectTimeCash:'',
-        pickerOptions: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
         loading:false,
         showImg:false,
         imgSrc:'',
-        goodsList:[]
+        goodsList:[],
+        luck:false,
+        form:{
+          id:'',
+          accountId: '',
+          sign: ''
+        },
+        id:'',
+        dialogFormVisible:false,
+        formLabelWidth:'120px'
       }
     },
     components: {
@@ -170,6 +185,9 @@
             for(let i = res.data.length - 1; i >= 0; i--) {
               if(res.data[i].btnCode == 'exportExle') {
                 this.exportExle=true
+              }
+              if(res.data[i].btnCode == 'luck') {
+                this.luck=true
               }
             }
           } else {
@@ -300,6 +318,35 @@
       viewImg() {
         this.showImg = false
       },
+
+      getInfo(id, timesNum,) {
+        this.id = id
+        // this.form.sign = timesNum;
+        this.dialogFormVisible = true;
+      },
+      update() {
+        let parameterData = {
+          id: this.id,
+          accountId: this.form.accountId,
+          sign: this.form.sign
+        };
+        this.$fetch("/wish/dbLog/setLuck", parameterData).then(res => {
+          if ((res.statusCode + "").startsWith("2")) {
+            this.$message({
+              type: "success",
+              message: "修改成功！"
+            });
+            this.dialogFormVisible = false;
+            this.accountList();
+          } else {
+            this.$message({
+              type: "error",
+              message: res.message
+            });
+          }
+        });
+      },
+
     },
   }
 </script>
