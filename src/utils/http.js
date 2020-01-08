@@ -17,7 +17,7 @@ var https='';
 //小明
 // var https='http://192.168.1.226:8088';
 ////测试环境
-//    var https='http://192.168.1.193:8088';
+//    var https='http://192.168.1.193:8082';
 //正式环境 2019-6-14-online
 // var https='https://admin.bzlyplay.com';
 //预发

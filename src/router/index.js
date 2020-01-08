@@ -668,6 +668,18 @@ const routes = [
         component: resolve => require(['../components/views/WishXwCallback.vue'], resolve),
         meta: { title: '闲玩回调'}
       },
+      {
+        path: 'db-list',
+        name: 'DbList',
+        component: resolve => require(['../components/views/DbList.vue'], resolve),
+        meta: { title: '夺宝列表'}
+      },
+      {
+        path: 'db-record',
+        name: 'DbRecord',
+        component: resolve => require(['../components/views/DbRecord.vue'], resolve),
+        meta: { title: '夺宝记录'}
+      }
     ]
   }
 ]
