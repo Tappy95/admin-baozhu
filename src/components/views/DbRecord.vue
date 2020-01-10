@@ -276,7 +276,7 @@
         this.formInline.token=this.$getSession("token");
         this.formInline.channel=this.$getSession("channelCode");
         this.formInline.relation= this.$getSession("userRelation");
-        let url ='/excl/userWishExcl';
+        let url ='/excl/dbUserLogExcl';
         this.doDownload(this.formInline,url);
       },
 

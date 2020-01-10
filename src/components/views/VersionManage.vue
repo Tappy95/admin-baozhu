@@ -50,10 +50,12 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
-                  <el-input  :style="styleObject"  v-model="form.channelCode" auto-complete="off"  clearable>
-                  </el-input>
+                  <el-select  :style="styleObject" v-model="form.channelCode" placeholder="">
+                    <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
                 <el-form-item label="是否开启28:" prop="open28" :label-width="formLabelWidth">
                   <el-select :style="styleObject" v-model="form.open28" placeholder="">
@@ -98,12 +100,12 @@
         <el-dialog title="修改版本" :visible.sync="dialogTableVisible" width="800px">
           <el-form :model="formtwo">
             <el-row>
-              <el-col :span="12">
-                <el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">
-                  <el-input  :style="styleObject"  v-model="formtwo.channelCode" auto-complete="off"  clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
+              <!--<el-col :span="12">-->
+                <!--<el-form-item label="渠道标识:" :label-width="formLabelWidth" prop="channelCode">-->
+                  <!--<el-input  :style="styleObject"  v-model="formtwo.channelCode" auto-complete="off"  clearable>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
+              <!--</el-col>-->
 
               <el-col :span="12">
                 <el-form-item label="开启新手引导:" prop="openNoviceTask" :label-width="formLabelWidth">
@@ -360,13 +362,15 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isSubmit:false
+        isSubmit:false,
+        channelNameList:[]
       }
     },
     created() {
       this.menuId=this.$route.query.id;
       this.queryBtns();
       this.accountList();
+      this.channelList();
     },
     methods: {
       queryBtns(){
@@ -455,6 +459,7 @@
         this.formInline = {};
         this.dialogFormVisible = true;
         this.isSubmit=false;
+        this.channelList();
       },
       addBtn(form) {
         this.$refs[form].validate(valid => {
@@ -557,6 +562,17 @@
           }
         })
       },
+
+      //调取名称列表
+      channelList(){
+        this.$fetch('/api/mChannelInfo/versionDownList',{
+        }).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.channelNameList = res.data;
+          }
+        })
+      },
+
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()

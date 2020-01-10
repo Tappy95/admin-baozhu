@@ -45,6 +45,8 @@
                       <el-option label="首页底部" value="2"></el-option>
                       <el-option label="游戏列表头部" value="3"></el-option>
                       <el-option label="金猪乐园轮播" value="4"></el-option>
+                      <el-option label="心愿猪app首页" value="5"></el-option>
+                      <el-option label="心愿猪小程序首页" value="6"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>
@@ -195,6 +197,8 @@
                     <el-option label="首页底部" :value="2"></el-option>
                     <el-option label="游戏列表头部" :value="3"></el-option>
                     <el-option label="金猪乐园轮播" :value="4"></el-option>
+                    <el-option label="心愿猪app首页" :value="5"></el-option>
+                    <el-option label="心愿猪小程序首页" :value="6"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -430,6 +434,10 @@ export default {
                res.data.list[i].position ="游戏列表头部"
              }else if (res.data.list[i].position ==4){
                res.data.list[i].position ="金猪乐园轮播"
+             }else if (res.data.list[i].position ==5){
+               res.data.list[i].position ="心愿猪app首页"
+             }else if (res.data.list[i].position ==5){
+               res.data.list[i].position ="心愿猪小程序首页"
              }
             if(res.data.list[i].status ==1){
                res.data.list[i].status ="已启用"
