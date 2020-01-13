@@ -135,7 +135,7 @@
             <el-table-column prop="title"
               label="Banner标题" fixed="left" min-width="160px">
             </el-table-column>
-            <el-table-column prop="position" min-width="120px"
+            <el-table-column prop="position" min-width="150px"
               label="显示位置">
             </el-table-column>
             <el-table-column prop="status" min-width="120px"
@@ -436,7 +436,7 @@ export default {
                res.data.list[i].position ="金猪乐园轮播"
              }else if (res.data.list[i].position ==5){
                res.data.list[i].position ="心愿猪app首页"
-             }else if (res.data.list[i].position ==5){
+             }else if (res.data.list[i].position ==6){
                res.data.list[i].position ="心愿猪小程序首页"
              }
             if(res.data.list[i].status ==1){
