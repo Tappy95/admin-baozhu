@@ -42,22 +42,22 @@
         <el-table :data="tableData"  v-loading="loading" max-height="506">
           <el-table-column fixed="left" label="序号" type="index" :index="indexMethod" width='80'>
           </el-table-column>
-          <el-table-column  min-width="170px"  prop="accountId" label="夺宝人账户id">
+          <el-table-column  min-width="150px"  prop="accountId" label="夺宝人账户id">
           </el-table-column>
-          <el-table-column  min-width="200px" prop="mobile" label="夺宝人电话号码">
+          <el-table-column  min-width="150px" prop="mobile" label="夺宝人电话号码">
           </el-table-column>
-
-          <el-table-column  min-width="120px" prop="timeNo" label="期号">
+          <el-table-column  min-width="170px" prop="timeNo" label="期号">
           </el-table-column>
           <el-table-column  min-width="120px" prop="joinNum"  label="参与次数">
           </el-table-column>
-          <el-table-column  min-width="170px"  prop="xyExpend" label="消耗心愿值	">
+          <el-table-column  min-width="150px"  prop="xyExpend" label="消耗心愿值	">
           </el-table-column>
-          <el-table-column min-width="120px"  prop="goodsName" label="商品名称	">
+          <el-table-column min-width="200px"  prop="goodsName" label="商品名称	">
           </el-table-column>
+          <el-table-column width="150" prop="typeName" label="商品类型"></el-table-column>
           <el-table-column  min-width="100px" prop="goodsPrice" label="商品价格">
           </el-table-column>
-          <el-table-column  min-width="250px" prop="modifyTime" :formatter="dateFormat" label="最后一次参与夺宝时间">
+          <el-table-column  min-width="170px" prop="modifyTime" :formatter="dateFormat" label="最后一次参与夺宝时间">
           </el-table-column>
           <el-table-column width="100px" prop="isMail" label="是否发货">
             <template slot-scope="scope">
@@ -66,13 +66,13 @@
               <span v-if="scope.row.isMail==''">不发货</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="200px"  prop="receiver" label="收件人">
+          <el-table-column min-width="120px"  prop="receiver" label="收件人">
           </el-table-column>
-          <el-table-column min-width="200px"  prop="receiverMobile" label="收件人电话号码">
+          <el-table-column min-width="150px"  prop="receiverMobile" label="收件人电话号码">
           </el-table-column>
           <el-table-column  min-width="200px" prop="address" label="详细地址">
           </el-table-column>
-          <el-table-column  min-width="170px"  prop="remarks" label="描述">
+          <el-table-column  min-width="200px"  prop="remarks" label="描述">
           </el-table-column>
           <el-table-column  width="170px"  prop="mailTime" :formatter="dateFormat" label="发货时间">
           </el-table-column>

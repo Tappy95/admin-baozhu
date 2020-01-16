@@ -7,8 +7,8 @@
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="用户id">
-            <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
+          <el-form-item label="用户Id">
+            <el-input v-model="formInline.accountId" placeholder="请输入用户Id" clearable></el-input>
           </el-form-item>
           <el-form-item label="期号">
             <el-input v-model="formInline.issueNumber" placeholder="请输入期号" clearable></el-input>
@@ -48,30 +48,31 @@
           <el-table :data="tableData" max-height="556">
             <el-table-column label="序号" type="index" fixed="left" :index="indexMethod" width="80"></el-table-column>
             <el-table-column fixed="left" width="170" prop="issueNumber" label="期号">
-              <template slot-scope="scope">
-                <div class="yichu">{{scope.row.issueNumber}}</div>
-              </template>
+              <!--<template slot-scope="scope">-->
+                <!--<div class="yichu">{{scope.row.issueNumber}}</div>-->
+              <!--</template>-->
             </el-table-column>
-            <el-table-column fixed="left" width="170" prop="accountId" label="用户id">
+            <el-table-column fixed="left" width="150" prop="accountId" label="用户Id">
               <template slot-scope="scope">
                 <div class="yichu">{{scope.row.accountId}}</div>
               </template>
             </el-table-column>
-            <el-table-column width="170" prop="mobile" label="注册手机号"></el-table-column>
+            <el-table-column width="150" prop="mobile" label="注册手机号"></el-table-column>
             <el-table-column min-width="270" prop="goodsName" label="商品名称"></el-table-column>
+            <el-table-column width="150" prop="typeName" label="商品类型"></el-table-column>
             <el-table-column min-width="170" prop="price" label="商品价格"></el-table-column>
             <el-table-column width="170" prop="receiver" label="收货人姓名"></el-table-column>
-            <el-table-column width="170" prop="contactMobile" label="收货人电话"></el-table-column>
-            <el-table-column min-width="170" prop="detailAddress" label="收货地址"></el-table-column>
-            <el-table-column width="170" prop="guessNumber" label="抽奖次数"></el-table-column>
-            <el-table-column width="150" prop="state" label="状态">
+            <el-table-column width="150" prop="contactMobile" label="收货人电话"></el-table-column>
+            <el-table-column min-width="270" prop="detailAddress" label="收货地址"></el-table-column>
+            <el-table-column width="120" prop="guessNumber" label="抽奖次数"></el-table-column>
+            <el-table-column width="120" prop="state" label="状态">
               <template slot-scope="scope">
                 <span v-if="scope.row.state==1">未猜中</span>
                 <span v-if="scope.row.state==2">已猜中</span>
                 <span v-if="scope.row.state==3">幸运儿</span>
               </template>
             </el-table-column>
-            <el-table-column width="150" prop="isMail" label="是否发货">
+            <el-table-column width="120" prop="isMail" label="是否发货">
               <template slot-scope="scope">
                 <span v-if="scope.row.isMail==1 && scope.row.state==3">待发货</span>
                 <span v-if="scope.row.isMail==2 && scope.row.state==3">已发货</span>
