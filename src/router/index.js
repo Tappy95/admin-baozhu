@@ -679,6 +679,48 @@ const routes = [
         name: 'DbRecord',
         component: resolve => require(['../components/views/DbRecord.vue'], resolve),
         meta: { title: '夺宝记录'}
+      },
+      {
+        path: 'cjjp-management',
+        name: 'CjjpManagement',
+        component: resolve => require(['../components/views/CjjpManagement.vue'], resolve),
+        meta: { title: '抽奖奖品概率管理'}
+      },
+      {
+        path: 'wish-jdrw-management',
+        name: 'WishJdrwManagement',
+        component: resolve => require(['../components/views/WishJdrwManagement.vue'], resolve),
+        meta: { title: '阶段任务奖励管理'}
+      },
+      {
+        path: 'wish-xyjl-set',
+        name: 'WishXyjlSet',
+        component: resolve => require(['../components/views/WishXyjlSet.vue'], resolve),
+        meta: { title: '心愿奖励设置'}
+      },
+      {
+        path: 'wish-zrptsy',
+        name: 'WishZrptsy',
+        component: resolve => require(['../components/views/WishZrptsy.vue'], resolve),
+        meta: { title: '昨日平台收益'}
+      },
+      {
+        path: 'wish-xyxfhx',
+        name: 'WishXyxfhx',
+        component: resolve => require(['../components/views/WishXyxfhx.vue'], resolve),
+        meta: { title: '用户分红心幸运星'}
+      },
+      {
+        path: 'wish-yhfhx',
+        name: 'WishYhfhx',
+        component: resolve => require(['../components/views/WishYhfhx.vue'], resolve),
+        meta: { title: '用户分红心列表'}
+      },
+      {
+        path: 'wish-yhxyx',
+        name: 'WishYhxyx',
+        component: resolve => require(['../components/views/WishYhxyx.vue'], resolve),
+        meta: { title: '用户幸运星列表'}
       }
     ]
   }

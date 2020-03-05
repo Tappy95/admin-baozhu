@@ -34,6 +34,7 @@
               <template slot-scope="scope">
                 <span class="red" v-if="scope.row.boxType==1">金币宝箱</span>
                 <span class="green" v-if="scope.row.boxType==2">心愿宝箱</span>
+                <span class="blue" v-if="scope.row.boxType==3">分红心</span>
               </template>
             </el-table-column>
             <el-table-column min-width="150px" prop="amount" label="奖励数量">

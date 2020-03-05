@@ -68,6 +68,11 @@
                   <el-option label="打卡奖励" value="33"></el-option>
                   <el-option label="金币排行日榜奖励" value="34"></el-option>
                   <el-option label="心愿猪宝箱抽奖" value="35"></el-option>
+                  <el-option label="心愿猪新手引导奖励" value="36"></el-option>
+                  <el-option label="分红心瓜分金额" value="37"></el-option>
+                  <el-option label="幸运星瓜分金额 " value="38"></el-option>
+                  <el-option label="徒弟贡献金额" value="39"></el-option>
+                  <el-option label="徒孙贡献金额" value="40"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -725,6 +730,21 @@
                 break;
               case 35:
                 res.data.list[i].changedType = '心愿猪宝箱抽奖';
+                break;
+              case 36:
+                res.data.list[i].changedType = '心愿猪新手引导奖励';
+                break;
+              case 37:
+                res.data.list[i].changedType = '分红心瓜分金额';
+                break;
+              case 38:
+                res.data.list[i].changedType = '幸运星瓜分金额';
+                break;
+              case 39:
+                res.data.list[i].changedType = '徒弟贡献金额';
+                break;
+              case 40:
+                res.data.list[i].changedType = '徒孙贡献金额';
                 break;
               // default:
             }
