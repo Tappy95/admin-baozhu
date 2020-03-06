@@ -28,7 +28,7 @@
             </el-table-column>
             <el-table-column prop="yesterDate" label="昨日日期">
             </el-table-column>
-            <el-table-column prop="platformIncome" label="平台收入">
+            <el-table-column prop="platformIncome" label="平台收入(单位:元)">
             </el-table-column>
             <el-table-column prop="rateFhx" label="分红心分红比例">
             </el-table-column>
@@ -51,7 +51,7 @@
             <el-row>
 
               <el-col :span="12">
-                <el-form-item label="昨日日期:" :label-width="formLabelWidth" prop="yesterDate">
+                <el-form-item label="昨日日期" :label-width="formLabelWidth" prop="yesterDate">
                   <el-date-picker
                     v-model="form.yesterDate"
                     type="date"
@@ -61,7 +61,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="平台收入" :label-width="formLabelWidth" prop="platformIncome">
+                <el-form-item label="平台收入(单位:元)" :label-width="formLabelWidth" prop="platformIncome">
                   <el-input v-model="form.platformIncome" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
@@ -99,7 +99,7 @@
 
             <el-row>
               <el-col :span="12">
-                <el-form-item label="昨日日期:" :label-width="formLabelWidth" prop="yesterDate">
+                <el-form-item label="昨日日期" :label-width="formLabelWidth" prop="yesterDate">
                   <el-date-picker
                     v-model="formtwo.yesterDate"
                     type="date"
@@ -109,7 +109,7 @@
               </el-col>
 
               <el-col :span="12">
-                <el-form-item label="平台收入" :label-width="formLabelWidth" prop="platformIncome">
+                <el-form-item label="平台收入(单位:元)" :label-width="formLabelWidth" prop="platformIncome">
                   <el-input v-model="formtwo.platformIncome" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>

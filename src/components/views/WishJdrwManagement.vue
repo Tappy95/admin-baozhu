@@ -18,7 +18,7 @@
       <div class="administratormanage-table">
         <template>
           <el-table :data="tableData" height="580">
-            <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
+            <el-table-column label="序号" type="index" :index="indexMethod" width='60'>
             </el-table-column>
             <el-table-column prop="levelName" label="阶段名称">
             </el-table-column>
@@ -26,7 +26,7 @@
             </el-table-column>
             <el-table-column prop="apprenticeNum" label="徒子徒孙数量">
             </el-table-column>
-            <el-table-column prop="apprenticeIncome" label="徒子徒孙贡献收益">
+            <el-table-column prop="apprenticeIncome" label="徒子徒孙贡献收益(单位:元)">
             </el-table-column>
             <el-table-column prop="rewardFhxNum" label="奖励分红心数量">
             </el-table-column>
@@ -66,7 +66,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="徒子徒孙贡献收益" :label-width="formLabelWidth" prop="apprenticeIncome">
+                <el-form-item label="徒子徒孙贡献收益(单位:元)" :label-width="formLabelWidth" prop="apprenticeIncome">
                   <el-input v-model="form.apprenticeIncome" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
@@ -122,7 +122,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="徒子徒孙贡献收益" :label-width="formLabelWidth" prop="apprenticeIncome">
+                <el-form-item label="徒子徒孙贡献收益(单位:元)" :label-width="formLabelWidth" prop="apprenticeIncome">
                   <el-input v-model="formtwo.apprenticeIncome" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>

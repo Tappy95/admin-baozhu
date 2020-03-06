@@ -47,6 +47,9 @@
                 <el-option label="分红心" value="2"></el-option>
               </el-select>
             </el-form-item>
+            <div>
+              <p style="margin:-20px auto 2px 120px;color:red;font-size:12px;">如奖品类型为现金，则奖励数量请兑换成金币数</p>
+            </div>
 
             <el-form-item label="奖励数量" :label-width="formLabelWidth" prop="rewardNum">
               <el-input v-model="form.rewardNum" auto-complete="off" style="width: 340px" clearable>
@@ -71,6 +74,9 @@
                 <el-option label="分红心" :value="2"></el-option>
               </el-select>
             </el-form-item>
+            <div>
+              <p style="margin:-20px auto 2px 120px;color:red;font-size:12px;">如奖品类型为现金，则奖励数量请兑换成金币数</p>
+            </div>
             <el-form-item label="奖励数量" :label-width="formLabelWidth" prop="rewardNum">
               <el-input v-model="formtwo.rewardNum" auto-complete="off" style="width: 340px" clearable>
               </el-input>
