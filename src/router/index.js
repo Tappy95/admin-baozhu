@@ -721,6 +721,12 @@ const routes = [
         name: 'WishYhxyx',
         component: resolve => require(['../components/views/WishYhxyx.vue'], resolve),
         meta: { title: '用户幸运星列表'}
+      },
+      {
+        path: 'ytt-callback',
+        name: 'YttCallback',
+        component: resolve => require(['../components/views/YttCallback.vue'], resolve),
+        meta: { title: '悦头条回调'}
       }
     ]
   }
