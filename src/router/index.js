@@ -727,6 +727,12 @@ const routes = [
         name: 'YttCallback',
         component: resolve => require(['../components/views/YttCallback.vue'], resolve),
         meta: { title: '悦头条回调'}
+      },
+      {
+        path: 'wish-swjl-set',
+        name: 'WishSwjlSet',
+        component: resolve => require(['../components/views/WishSwjlSet.vue'], resolve),
+        meta: { title: '试玩奖品概率设置'}
       }
     ]
   }
