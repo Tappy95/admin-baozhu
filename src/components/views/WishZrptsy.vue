@@ -81,8 +81,8 @@
               <el-col :span="12">
                 <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
                   <el-select v-model="form.status" placeholder="">
-                    <el-option label="启用" value="1"></el-option>
-                    <el-option label="停用" value="2"></el-option>
+                    <el-option label="待发放" value="1"></el-option>
+                    <el-option label="已发放" value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -129,8 +129,8 @@
               <el-col :span="12">
                 <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
                   <el-select v-model="formtwo.status" placeholder="">
-                    <el-option label="启用" :value="1"></el-option>
-                    <el-option label="停用" :value="2"></el-option>
+                    <el-option label="待发放" :value="1"></el-option>
+                    <el-option label="已发放" :value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -301,9 +301,9 @@
             this.totalCount = res.data.total;
             for(var i =0;i<res.data.list.length;i++){
               if(res.data.list[i].status==1){
-                res.data.list[i].status = '启用';
+                res.data.list[i].status = '待发放';
               }else{
-                res.data.list[i].status = '停用';
+                res.data.list[i].status = '已发放';
               }
             }
           } else {
