@@ -733,6 +733,12 @@ const routes = [
         name: 'WishSwjlSet',
         component: resolve => require(['../components/views/WishSwjlSet.vue'], resolve),
         meta: { title: '试玩奖品概率设置'}
+      },
+      {
+        path: 'wish-yhjl',
+        name: 'WishYhjl',
+        component: resolve => require(['../components/views/WishYhjl.vue'], resolve),
+        meta: { title: '分红心幸运星用户奖励'}
       }
     ]
   }
