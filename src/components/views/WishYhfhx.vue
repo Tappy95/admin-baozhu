@@ -244,7 +244,7 @@
         this.$fetch('/wish/userFhxLog/listB', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.tableData = res.data.list;
-            this.totalCount = res.data.total;
+            this.totalCount = res.data.count;
             for(var i = 0;i<res.data.list.length;i++){
               // 1-抽奖 2-邀请好友 3-试玩任务 4-系统任务
               if(res.data.list[i].changedType==1){
