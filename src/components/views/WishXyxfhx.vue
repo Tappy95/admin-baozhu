@@ -12,7 +12,15 @@
                       placeholder="请输入账户Id"
                       clearable></el-input>
           </el-form-item>
+          <el-form-item label="所属渠道:">
+            <el-input v-model="formInline.channelCode"
+                      placeholder="请输入所属渠道"
+                      clearable></el-input>
+          </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
+          <el-form-item>
+            <el-button type="success" v-if="exportExle" plain @click="queryExport()" >导出表格</el-button>
+          </el-form-item>
           <!-- <el-button type="success" plain @click="load()" v-if="add">添加</el-button> -->
         </el-form>
       </div>
@@ -23,6 +31,8 @@
             </el-table-column>
             <el-table-column prop="accountId" label="账户Id">
             </el-table-column>
+            <el-table-column prop="regCount" label="注册当日获取分红心" width='160'>
+            </el-table-column>
             <el-table-column prop="fhxTotal" label="分红心总数">
             </el-table-column>
             <el-table-column prop="fhxActive" label="分红心-有效">
@@ -30,6 +40,8 @@
             <el-table-column prop="fhxOverdue" label="分红心-过期">
             </el-table-column>
             <el-table-column prop="xyxTotal" label="幸运星总数">
+            </el-table-column>
+            <el-table-column prop="channelCode" label="渠道标识">
             </el-table-column>
             <el-table-column prop="updateTime" label="变更时间" :formatter="dateFormat">
             </el-table-column>
@@ -136,6 +148,7 @@
   </div>
 </template>
 <script type="text/javascript">
+  import { getSession } from '../../utils/cookie'
   import { formatDate } from '../../utils/date.js'
   export default {
     name: 'ResourceType',
@@ -195,6 +208,8 @@
         selectData: [],
         staff: 1,
         company: 2,
+        exportExle:false,
+        fullscreenLoading:false
       }
     },
     created() {
@@ -228,6 +243,9 @@
                 this.powerTrue =true;
                 this.optionW = '150px'
               }
+              if(res.data[i].btnCode == 'exportExle') {
+                this.exportExle=true;
+              }
             }
           } else {
           }
@@ -247,13 +265,13 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          accountId: this.formInline.accountId
+          accountId: this.formInline.accountId,
+          channelCode: this.formInline.channelCode,
         }
         this.$fetch('/wish/userFhxXyx/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.tableData = res.data.list;
             this.totalCount = res.data.total;
-            
           } else {
             this.$message({
               type: 'error',
@@ -329,7 +347,52 @@
       },
       toggle: function(value) {
         this.isShow = !this.isShow;
-      }
+      },
+      //导出表格
+      queryExport() {
+        this.search();
+        //开启正在导出弹层
+        this.fullscreenLoading = this.$loading({
+          lock: true,
+          text: '正在导出...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        this.formInline.token=getSession("token");
+        this.formInline.channel=getSession("channelCode");
+        this.formInline.relation= getSession("userRelation");
+        let url ='/excl/fhxXyxExcl';
+        this.doDownload(this.formInline,url);
+      },
+
+      doDownload(from,url){
+        let keys=[];
+        let data=[];
+        for (var i in from) {
+          if(from[i]!=null && from[i]!='') {
+            keys.push(i)
+            data.push(from[i])
+          }
+        }
+        let http=url;
+        for(let i=0;i<keys.length;i++){
+          if(http==url){
+            http=http+'?'+keys[i]+'='+ data[i]
+          }else{
+            http=http+'&'+keys[i]+'='+ data[i]
+          }
+        }
+        let a1 = document.createElement('a');
+        a1.setAttribute('href',http);
+        let body = document.querySelector('body');
+        body.appendChild(a1);
+        a1.click();
+        a1.remove();
+        //关闭正在导出弹层
+        setTimeout(() => {
+          this.fullscreenLoading.close();
+        }, 9000);
+      },
     },
   }
 </script>

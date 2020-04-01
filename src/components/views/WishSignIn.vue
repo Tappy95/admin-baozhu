@@ -2,42 +2,19 @@
   <div class="administratormanage-wrap">
     <div class="administratormanage-inner">
       <div class="administratormanage-header">
-        <h3>心愿猪/分红心幸运星用户奖励</h3>
+        <h3>心愿猪/心愿猪签到设置</h3>
         <hr />
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="账户Id:">
-            <el-input v-model="formInline.accountId"
-                      placeholder="请输入账户Id"
-                      clearable></el-input>
-          </el-form-item>
-          <el-form-item label="奖励类型:" >
-            <el-select v-model="formInline.rewardType"  placeholder="请选择状态" clearable>
-              <el-option label="分红心奖励" value="1"></el-option>
-              <el-option label="幸运星奖励" value="2"></el-option>
+          <el-form-item label="状态:" >
+            <el-select v-model="formInline.status"  placeholder="请选择状态" clearable>
+              <el-option label="启用" value="1"></el-option>
+              <el-option label="停用" value="2"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="奖励日期:">
-            <el-date-picker
-            @change="timePickeTap"
-              v-model="formInline.winDate"
-              align="right"
-              type="date"
-              placeholder="选择日期"
-              :picker-options="pickerOptions">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="所属渠道:">
-            <el-input v-model="formInline.channelCode"
-                      placeholder="请输入所属渠道"
-                      clearable></el-input>
-          </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
-          <el-form-item>
-            <el-button type="success" v-if="exportExle" plain @click="queryExport()" >导出表格</el-button>
-          </el-form-item>
-          <!-- <el-button type="success" plain @click="load()" v-if="add">添加</el-button> -->
+          <el-button type="success" plain @click="load()" v-if="add">添加</el-button>
         </el-form>
       </div>
       <div class="administratormanage-table">
@@ -45,51 +22,50 @@
           <el-table :data="tableData" height="580">
             <el-table-column label="序号" type="index" :index="indexMethod" width='80'>
             </el-table-column>
-            <el-table-column prop="accountId" label="账户Id">
+            <el-table-column prop="orderId" label="排序id">
             </el-table-column>
-            <el-table-column prop="channelCode" label="渠道标识">
+            <el-table-column prop="signName" label="签到名称">
             </el-table-column>
-            <el-table-column prop="rewardType" label="奖励类型">
+            <el-table-column prop="gameCount" label="游戏任务数">
             </el-table-column>
-            <el-table-column prop="totalNum" label="总数">
+            <el-table-column prop="rewardCount" label="奖励分红心数">
             </el-table-column>
-            <el-table-column prop="num" label="用户持有数">
+            <el-table-column prop="createTime" label="创建时间" :formatter="dateFormat">
             </el-table-column>
-            <el-table-column prop="rewardAmount" label="奖励金额（单位：金币）">
+            <el-table-column prop="status" label="状态">
             </el-table-column>
-            <el-table-column prop="status" label="奖励状态">
-            </el-table-column>
-            <el-table-column prop="winDate" label="奖励日期">
-            </el-table-column>
-            <el-table-column prop="settleTime" label="实际奖励时间" :formatter="dateFormat">
-            </el-table-column>
-            <!-- <el-table-column fixed="right" label="操作" :width="optionW">
+            <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
-                <el-button type="info" plain size="mini" @click="getInfo(scope.row.userId)">详情</el-button>
                 <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
                 <el-button type="success" plain @click="getInfo(scope.row.id)" size="mini" v-if="upd">修改</el-button>
               </template>
-            </el-table-column> -->
+            </el-table-column>
           </el-table>
         </template>
-        <!-- <el-dialog title="添加" :visible.sync="dialogFormVisible" width="800px">
+        <el-dialog title="添加" :visible.sync="dialogFormVisible" width="800px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="条件心愿值" :label-width="formLabelWidth" prop="additionNum">
-                  <el-input v-model="form.additionNum" auto-complete="off" style="width: 200px" clearable>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="排序号" :label-width="formLabelWidth" prop="orderId">
+                <el-form-item label="排序id" :label-width="formLabelWidth" prop="orderId">
                   <el-input v-model="form.orderId" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="奖励心愿值" :label-width="formLabelWidth" prop="rewardNum">
-                  <el-input v-model="form.rewardNum" auto-complete="off" style="width: 200px" clearable>
+                <el-form-item label="签到名称" :label-width="formLabelWidth" prop="signName">
+                  <el-input v-model="form.signName" auto-complete="off" style="width: 200px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="游戏任务数" :label-width="formLabelWidth" prop="gameCount">
+                  <el-input v-model="form.gameCount" auto-complete="off" style="width: 200px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="奖励分红心数" :label-width="formLabelWidth" prop="rewardCount">
+                  <el-input v-model="form.rewardCount" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -107,48 +83,50 @@
             <el-button @click="dialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="addBtn('form')">确 定</el-button>
           </div>
-        </el-dialog> -->
-        <el-dialog title="详情" :visible.sync="dialogTableVisible" width="800px">
+        </el-dialog>
+        <el-dialog title="修改" :visible.sync="dialogTableVisible" width="800px">
           
           <el-form :model="formtwo">
 
             <el-row>
               <el-col :span="12">
-                <el-form-item label="分红心总数" :label-width="formLabelWidth" prop="fhxTotal">
-                  <el-input v-model="formtwo.fhxTotal" auto-complete="off" style="width: 200px" clearable :disabled="true">
+                <el-form-item label="排序id" :label-width="formLabelWidth" prop="orderId">
+                  <el-input v-model="formtwo.orderId" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="分红心-有效" :label-width="formLabelWidth" prop="fhxActive">
-                  <el-input v-model="formtwo.fhxActive" auto-complete="off" style="width: 200px" clearable :disabled="true">
+                <el-form-item label="签到名称" :label-width="formLabelWidth" prop="signName">
+                  <el-input v-model="formtwo.signName" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="分红心-过期" :label-width="formLabelWidth" prop="fhxOverdue">
-                  <el-input v-model="formtwo.fhxOverdue" auto-complete="off" style="width: 200px" clearable :disabled="true">
+                <el-form-item label="游戏任务数" :label-width="formLabelWidth" prop="gameCount">
+                  <el-input v-model="formtwo.gameCount" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="幸运星总数" :label-width="formLabelWidth" prop="xyxTotal">
-                  <el-input v-model="formtwo.xyxTotal" auto-complete="off" style="width: 200px" clearable :disabled="true">
+                <el-form-item label="奖励分红心数" :label-width="formLabelWidth" prop="rewardCount">
+                  <el-input v-model="formtwo.rewardCount" auto-complete="off" style="width: 200px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="变更时间" :label-width="formLabelWidth" prop="updateTime">
-                  <el-input v-model="formtwo.updateTime" auto-complete="off" style="width: 200px" clearable :disabled="true">
-                  </el-input>
+                <el-form-item label="状态" :label-width="formLabelWidth" prop="status">
+                  <el-select v-model="formtwo.status" placeholder="">
+                    <el-option label="启用" :value="1"></el-option>
+                    <el-option label="停用" :value="2"></el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
             </el-row>
             
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <!-- <el-button @click="dialogTableVisible = false">取 消</el-button>
-            <el-button type="primary" @click="update(formtwo)">确 定</el-button> -->
+            <el-button @click="dialogTableVisible = false">取 消</el-button>
+            <el-button type="primary" @click="update(formtwo)">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -161,8 +139,6 @@
 </template>
 <script type="text/javascript">
   import { formatDate } from '../../utils/date.js'
-  import { getSession } from '../../utils/cookie'
-
   export default {
     name: 'ResourceType',
     data() {
@@ -189,19 +165,24 @@
           realname: ''
         },
         rules: {
-          additionNum: [{
-            required: true,
-            message: '请输入条件心愿值',
-            trigger: 'blur'
-          }],
           orderId: [{
             required: true,
-            message: '请输入排序',
+            message: '请输入排序id',
             trigger: 'blur'
           }],
-          rewardNum: [{
+          signName: [{
             required: true,
-            message: '请输入奖励心愿值',
+            message: '请输入签到名称',
+            trigger: 'blur'
+          }],
+          gameCount: [{
+            required: true,
+            message: '请输入游戏任务数',
+            trigger: 'blur'
+          }],
+          rewardCount: [{
+            required: true,
+            message: '请输入奖励分红心数',
             trigger: 'blur'
           }],
           status: [{
@@ -221,8 +202,6 @@
         selectData: [],
         staff: 1,
         company: 2,
-        exportExle:false,
-        fullscreenLoading:false
       }
     },
     created() {
@@ -256,9 +235,6 @@
                 this.powerTrue =true;
                 this.optionW = '150px'
               }
-              if(res.data[i].btnCode == 'exportExle') {
-                this.exportExle=true;
-              }
             }
           } else {
           }
@@ -278,30 +254,19 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          accountId: this.formInline.accountId,
-          winDate: this.formInline.winDate,
-          rewardType: this.formInline.rewardType,
-          channelCode: this.formInline.channelCode,
+          status: this.formInline.status
         }
-        this.$fetch('/wish/userRewardLog/listB', parameterData).then(res => {
+        this.$fetch('/wish/signInfo/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.tableData = res.data.list;
             this.totalCount = res.data.total;
-            for(var i = 0;i<res.data.list.length;i++){
-              // 1-抽奖 2-邀请好友 3-试玩任务 4-系统任务
-              if(res.data.list[i].rewardType==1){
-                res.data.list[i].rewardType = '分红心奖励';
-              }else{
-                res.data.list[i].rewardType = '幸运星奖励';
-              }
-
+            for(var i =0;i<res.data.list.length;i++){
               if(res.data.list[i].status==1){
-                res.data.list[i].status = '待奖励';
+                res.data.list[i].status = '启用';
               }else{
-                res.data.list[i].status = '已奖励';
+                res.data.list[i].status = '停用';
               }
             }
-            
           } else {
             this.$message({
               type: 'error',
@@ -324,7 +289,7 @@
       addBtn(form) {
         this.$refs[form].validate(valid => {
           if(valid) {
-            this.$post('/wish/xyzReward/add', this.form).then(res => {
+            this.$post('/wish/signInfo/add', this.form).then(res => {
               if ((res.statusCode+"").startsWith("2")) {
                 this.dialogFormVisible = false
                 this.$message({
@@ -342,20 +307,55 @@
           } else {}
         })
       },
-      
-      getInfo(userId) {
+      Delete(id) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
+      },
+      delData(id) {
+        let parameterData = {
+          id: id
+        }
+        this.$post('/wish/signInfo/remove', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.$message({
+              type: 'success',
+              message: '删除成功！'
+            })
+            this.formInline = {};
+            this.accountList();
+          } else {
+            this.$message({
+              type: 'error',
+              message: '删除失败！'
+            })
+          }
+        })
+      },
+      getInfo(id) {
         this.dialogTableVisible = true;
-        this.$fetch('/wish/userFhxXyx/info', {
-          userId: userId
+        this.$fetch('/wish/signInfo/info', {
+          id: id
         }).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
-            this.formtwo = res.data;
-            this.formtwo.updateTime = formatDate(new Date(res.data.updateTime),'yyyy-MM-dd')
+            this.formtwo = res.data
           }
         })
       },
       update(formtwo) {
-        this.$put('/wish/xyzReward/modify', this.formtwo).then(res => {
+        this.$put('/wish/signInfo/modify', this.formtwo).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
             this.$message({
               type: 'success',
@@ -366,7 +366,22 @@
           }
         })
       },
-      
+      getOne(id){
+        this.dialogTableDetail = true
+        this.$fetch('/api/appNotice/info', {
+          id: id
+        }).then(res => {
+          if(res.data != null ){
+            if (res.data.staffType == '2') {
+              this.isShow = false
+            } else {
+              this.isShow = true
+            }          res.data.createrTime =  formatDate(new Date(res.data.createrTime), 'yyyy-MM-dd hh:mm:sss')
+
+            this.formtwoInfo = res.data
+          }
+        })
+      },
       handleSizeChange(val) {
         this.pageSize = val
         this.accountList()
@@ -377,61 +392,7 @@
       },
       toggle: function(value) {
         this.isShow = !this.isShow;
-      },
-      //时间查询
-      timePickeTap(){
-        if (this.formInline.winDate){
-          let times = this.formInline.winDate;
-          this.formInline.winDate = formatDate(new Date(times), 'yyyy-MM-dd');
-        }else {
-          this.formInline.winDate = ''
-        }
-      },
-      //导出表格
-      queryExport() {
-        this.search();
-        //开启正在导出弹层
-        this.fullscreenLoading = this.$loading({
-          lock: true,
-          text: '正在导出...',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        this.formInline.token=getSession("token");
-        this.formInline.channel=getSession("channelCode");
-        this.formInline.relation= getSession("userRelation");
-        let url ='/excl/listBExcl';
-        this.doDownload(this.formInline,url);
-      },
-
-      doDownload(from,url){
-        let keys=[];
-        let data=[];
-        for (var i in from) {
-          if(from[i]!=null && from[i]!='') {
-            keys.push(i)
-            data.push(from[i])
-          }
-        }
-        let http=url;
-        for(let i=0;i<keys.length;i++){
-          if(http==url){
-            http=http+'?'+keys[i]+'='+ data[i]
-          }else{
-            http=http+'&'+keys[i]+'='+ data[i]
-          }
-        }
-        let a1 = document.createElement('a');
-        a1.setAttribute('href',http);
-        let body = document.querySelector('body');
-        body.appendChild(a1);
-        a1.click();
-        a1.remove();
-        //关闭正在导出弹层
-        setTimeout(() => {
-          this.fullscreenLoading.close();
-        }, 9000);
-      },
+      }
     },
   }
 </script>

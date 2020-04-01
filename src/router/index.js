@@ -739,7 +739,20 @@ const routes = [
         name: 'WishYhjl',
         component: resolve => require(['../components/views/WishYhjl.vue'], resolve),
         meta: { title: '分红心幸运星用户奖励'}
+      },
+      {
+        path: 'wish-signin',
+        name: 'WishSignIn',
+        component: resolve => require(['../components/views/WishSignIn.vue'], resolve),
+        meta: { title: '心愿猪签到设置'}
+      },
+      {
+        path: 'wish-yhqdjl',
+        name: 'wishYhqdjl',
+        component: resolve => require(['../components/views/wishYhqdjl.vue'], resolve),
+        meta: { title: '用户签到记录'}
       }
+      
     ]
   }
 ]
