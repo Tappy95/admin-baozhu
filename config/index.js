@@ -14,9 +14,9 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        // target: 'http://192.168.1.193:8082',//测试环境小伟
+        target: 'http://192.168.1.193:8082',//测试环境小伟
         // target: 'http://192.168.1.226:8088/',//小明
-        target: 'http://192.168.1.44:8082',//小伟
+        // target: 'http://192.168.1.44:8082',//小伟
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
@@ -68,9 +68,9 @@ module.exports = {
                 }
                 },
          '/excl': {
-                  // target: 'http://192.168.1.193:8088',//测试环境
+                  target: 'http://192.168.1.193:8088',//测试环境
                   // target: 'http://192.168.1.226:8085/',//小明
-                  target: 'http://192.168.1.44:8088',//小伟
+                  // target: 'http://192.168.1.44:8088',//小伟
                   changeOrigin: true,
                   pathRewrite: {
                     // '^/excl': '/'
