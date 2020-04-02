@@ -23,6 +23,10 @@
                       clearable></el-input>
           </el-form-item>
 
+          <el-form-item v-if="channelCode=='baozhu'" label="渠道标识:">
+            <el-input  v-model="formInline.channelCode" placeholder="请输入渠道标识" clearable></el-input>
+          </el-form-item>
+
           <el-form-item label="状态:" >
             <el-select v-model="formInline.status " placeholder="请选择状态">
               <el-option label="失败" value="2"></el-option>
@@ -57,6 +61,8 @@
             <el-table-column min-width="250" fixed="left" prop="ordernum" label="订单号">
             </el-table-column>
             <el-table-column min-width="120" prop="accountId" label="用户Id">
+            </el-table-column>
+            <el-table-column min-width="150" prop="channelCode" label="渠道号">
             </el-table-column>
             <!--<el-table-column min-width="120" prop="merid" label="用户注册游戏Id">-->
             <!--</el-table-column>-->
@@ -112,6 +118,7 @@
   </div>
 </template>
 <script type="text/javascript">
+  import { getSession } from '../../utils/cookie'
   import { formatDate } from '../../utils/date.js'
   export default {
     name: 'WishXwCallback',
@@ -162,12 +169,14 @@
             }
           }]
         },
-        selectTime:''
+        selectTime:'',
+        channelCode:'',
       }
     },
     created() {
       this.menuId=this.$route.query.id;
       this.accountList();
+      this.channelCode=getSession("channelCode");
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
@@ -197,7 +206,8 @@
           status:this.formInline.status,
           ordernum:this.formInline.ordernum,
           startTime:this.formInline.startTime,
-          endTime:this.formInline.endTime
+          endTime:this.formInline.endTime,
+          channelCode:this.formInline.channelCode,
         }
         this.$fetch('/api/XWCallback/xyzList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

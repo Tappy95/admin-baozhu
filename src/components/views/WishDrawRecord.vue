@@ -248,7 +248,7 @@ export default {
         isMail: this.formInline.isMail,
         userTypeStr:this.formInline.userTypeStr
       };
-      this.$fetch("/wish//guesUserLog/page", parameterData).then(res => {
+      this.$fetch("/wish/guesUserLog/page", parameterData).then(res => {
         if ((res.statusCode + "").startsWith("2")) {
           this.tableData = res.data.list;
           this.totalCount = res.data.total;
