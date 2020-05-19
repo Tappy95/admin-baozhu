@@ -131,7 +131,7 @@
           orderNum:this.formInline.orderNum,
           name:this.formInline.name,
           userId:this.formInline.userId,
-          resultCode:this.formInline.resultCode,
+          resultCode:this.formInline.resultCode
         }
         this.$fetch('/api/taskCallback/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {

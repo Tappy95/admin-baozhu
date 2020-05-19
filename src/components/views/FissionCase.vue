@@ -165,6 +165,7 @@
                       <el-upload
                         action="/api/upload"
                         list-type="picture-card"
+                        :data="uploadData"
                         :file-list="fileList1"
                         :on-success="handlePicture01"
                         :on-preview="handlePictureCardPreview1"
@@ -180,6 +181,7 @@
                       <el-upload
                         action="/api/upload"
                         list-type="picture-card"
+                        :data="uploadData"
                         :file-list="fileList2"
                         :on-success="handlePicture02"
                         :on-preview="handlePictureCardPreview2"
@@ -194,6 +196,7 @@
                         <el-upload
                           action="/api/upload"
                           list-type="picture-card"
+                          :data="uploadData"
                           :file-list="fileList3"
                           :on-success="handlePicture03"
                           :on-preview="handlePictureCardPreview3"
@@ -208,6 +211,7 @@
                     <el-upload
                       action="/api/upload"
                       list-type="picture-card"
+                      :data="uploadData"
                       :file-list="fileList4"
                       :on-success="handlePicture04"
                       :on-preview="handlePictureCardPreview4"
@@ -222,6 +226,7 @@
                     <el-upload
                       action="/api/upload"
                       list-type="picture-card"
+                      :data="uploadData"
                       :file-list="fileList5"
                       :on-success="handlePicture05"
                       :on-preview="handlePictureCardPreview5"
@@ -431,6 +436,7 @@
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
+                    :data="uploadData"
                     :file-list="fileList1"
                     :on-success="handlePicture01"
                     :on-preview="handlePictureCardPreview1"
@@ -444,6 +450,7 @@
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
+                    :data="uploadData"
                     :file-list="fileList2"
                     :on-success="handlePicture02"
                     :on-preview="handlePictureCardPreview2"
@@ -457,6 +464,7 @@
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
+                    :data="uploadData"
                     :file-list="fileList3"
                     :on-success="handlePicture03"
                     :on-preview="handlePictureCardPreview3"
@@ -470,6 +478,7 @@
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
+                    :data="uploadData"
                     :file-list="fileList4"
                     :on-success="handlePicture04"
                     :on-preview="handlePictureCardPreview4"
@@ -484,6 +493,7 @@
                   <el-upload
                     action="/api/upload"
                     list-type="picture-card"
+                    :data="uploadData"
                     :file-list="fileList5"
                     :on-success="handlePicture05"
                     :on-preview="handlePictureCardPreview5"

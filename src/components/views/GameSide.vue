@@ -34,6 +34,9 @@
             :picker-options="pickerTime">
           </el-date-picker>
         </el-form-item>
+        <el-form-item label="渠道标识:">
+          <el-input v-model="formInline.channelCode" placeholder="请输入渠道标识" clearable></el-input>
+        </el-form-item>
         <el-form-item >
           <el-button type="primary" plain @click="search" >查询</el-button>
         </el-form-item>
@@ -191,6 +194,7 @@
           tpName :this.formInline.tpName,
           startTime:this.formInline.startTime,
           endTime:this.formInline.endTime,
+          channelCode:this.formInline.channelCode
         }
         this.$fetch('/api/tpCallback/queryList', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
@@ -252,12 +256,13 @@
         let tpName=this.formInline.tpName;
         let startTime=this.formInline.startTime;
         let endTime=this.formInline.endTime;
+        let channelCode=this.formInline.channelCode;
         let token= getSession("token");
         let channel= getSession("channelCode");
         let relation= getSession("userRelation");
 
         let url = '/excl/gameTeskExcl';
-        let data = {url,accountId,gameName,tpName,startTime,endTime,token,channel,relation};
+        let data = {url,accountId,gameName,tpName,startTime,endTime,token,channel,relation,channelCode};
         this.doDownload(data);
       },
       doDownload(obj) {
@@ -269,8 +274,8 @@
           endTime=obj.endTime,
           token= obj.token,
           channel=obj.channel,
-          relation=obj.relation
-
+          relation=obj.relation,
+          channelCode=obj.channelCode
         let a1 = document.createElement('a');
         let http=url;
         if(http==url){
@@ -317,9 +322,9 @@
 
 
         if(http==url){
-          http=http+'?token='+token+'&channel='+channel+'&relation='+relation
+          http=http+'?token='+token+'&channel='+channel+'&relation='+relation+'&channelCode='+channelCode
         }else{
-          http=http+'&token='+token+'&channel='+channel+'&relation='+relation
+          http=http+'&token='+token+'&channel='+channel+'&relation='+relation+'&channelCode='+channelCode
         }
         a1.setAttribute('href',http);
         let body = document.querySelector('body');

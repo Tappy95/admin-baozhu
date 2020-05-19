@@ -330,6 +330,42 @@
                      {{message.createTime}}
                     </div>
                   </div>
+                  <div class="body_list"  >
+                    <div class="title">IMEI:</div>
+                    <div class="name">
+                     {{message.imei}}
+                    </div>
+                  </div>
+                  
+                  <div class="body_list"></div>
+                  <div style=" width: 80%;
+        height: auto;
+        height: 50px;
+        color: #353535;
+        line-height: 50px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #e7e7eb;
+        display: inline-block;">
+                    <div style="width: 200px;
+    float: left;
+    padding-right: 30px;
+    color: #a6a6a6;
+    box-sizing: border-box;
+    text-align: right;">userId:</div>
+                    <div style="float: left;
+    color: #606266">
+                     {{message.userId}}
+                    </div>
+                  </div>
+                  <div style=" width: 20%;
+        height: auto;
+        height: 50px;
+        color: #353535;
+        line-height: 50px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #e7e7eb;
+        display: inline-block;"></div>
+
                 </div>
               </div>
             </el-row>

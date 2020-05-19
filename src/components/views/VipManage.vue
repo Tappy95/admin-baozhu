@@ -43,6 +43,8 @@
             </el-table-column>
             <el-table-column min-width="150" prop="status" label="是否可用">
             </el-table-column>
+            <el-table-column min-width="150" prop="highVip" label="是否为高额赚VIP">
+            </el-table-column>
             <el-table-column min-width="170" prop="coinToPigAddition" label="金币兑换金猪加成(%)">
             </el-table-column>
             <el-table-column min-width="80" prop="orderId" label="等级">
@@ -203,6 +205,15 @@
                   <el-select v-model="form.status" placeholder="">
                     <el-option label="是" value="1"></el-option>
                     <el-option label="否" value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="是否为高额赚VIP:" :label-width="formLabelWidth" prop="highVip">
+                  <el-select v-model="form.highVip" placeholder="">
+                    <el-option label="不是" value="1"></el-option>
+                    <el-option label="是" value="2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -441,6 +452,16 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="是否为高额赚VIP:" :label-width="formLabelWidth" prop="highVip">
+                  <el-select v-model="formtwo.highVip" placeholder="">
+                    <el-option label="不是" :value="1"></el-option>
+                    <el-option label="是" :value="2"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="单笔限额(金猪):" :label-width="formLabelWidth" prop="onetimeLimit">
                   <el-input v-model="formtwo.onetimeLimit"  auto-complete="off" style="width:187px" clearable>
@@ -481,7 +502,7 @@
 
             </el-row>
 
-            <el-col :span="24">
+            <!-- <el-col :span="24"> -->
               <el-form-item label="logo:"
                             prop="imageUrl"
                             :label-width="formLabelWidth">
@@ -498,7 +519,7 @@
                      class="el-icon-plus bannerAvatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
-            </el-col>
+            <!-- </el-col> -->
 
 
             <el-form-item label="过期logo:"
@@ -689,6 +710,13 @@
                     <div class="name">
                       <span v-if="formtwoInfo.status==1">是</span>
                       <span v-if="formtwoInfo.status==2">否</span>
+                    </div>
+                  </div>
+                  <div class="body_list" >
+                    <div class="title">是否为高额赚VIP:</div>
+                    <div class="name">
+                      <span v-if="formtwoInfo.highVip==1">不是</span>
+                      <span v-if="formtwoInfo.highVip==2">是</span>
                     </div>
                   </div>
 
@@ -921,6 +949,7 @@
                 }
               }, trigger:'blur'}],
           status: [{required: true, message: '请选择是否可用', trigger: 'change'}],
+          highVip: [{required: true, message: '请选择是否为高额赚VIP', trigger: 'change'}],
           logo: [{required: true, message: '请选择图片', trigger: 'change'}],
           backgroundImg: [{required: true, message: '请选择背景图', trigger: 'change'}],
           orderId: [{required: true, message: '请输入等级排序', trigger: 'blur'},
@@ -1028,6 +1057,11 @@
               res.data.list[i].status = '是'
             } else {
               res.data.list[i].status = '否'
+            }
+            if(res.data.list[i].highVip == '1') {
+              res.data.list[i].highVip = '不是'
+            } else {
+              res.data.list[i].highVip = '是'
             }
           }
           this.tableData = res.data.list

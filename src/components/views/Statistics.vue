@@ -56,17 +56,20 @@
           </el-form-item>
 
             <el-form-item label="渠道标识:" :label-width="formLabelWidth">
-              <el-select  v-model="formInline.channelCode" placeholder="请选择渠道标识">
+              <!-- <el-select  v-model="formInline.channelCode" placeholder="请选择渠道标识">
                 <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                 <el-option label="全部" value=""></el-option>
-              </el-select>
+              </el-select> -->
+              <el-input v-model="formInline.channelCode"
+                      placeholder="请输入渠道标识"
+                      clearable></el-input>
             </el-form-item>
 
           <el-form-item label="模块:" :label-width="formLabelWidth">
             <el-select  v-model="selectType" @change="selectTap(selectType)" placeholder="请选择模块">
               <el-option label="模块1" value="1"></el-option>
               <el-option label="模块2" value="2"></el-option>
-              <el-option label="模块3" value="3"></el-option>
+              <!-- <el-option label="模块3" value="3"></el-option> -->
             </el-select>
           </el-form-item>
 
