@@ -37,6 +37,13 @@
                 <span class="green" v-if="scope.row.isValid==1">否</span>
               </template>
             </el-table-column>
+
+            <el-table-column fixed="right" label="操作" :width="optionW">
+              <template slot-scope="scope">
+                <el-button type="warning" plain size="mini" @click="Delete(scope.row.id)" v-if="del">删除</el-button>
+              </template>
+            </el-table-column>
+
           </el-table>
         </template>
       </div>
@@ -62,14 +69,39 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        optionW:'1px',
+        del:true,
+        powerTrue:false,
+        optionW:'75px',
       }
     },
     created() {
       this.menuId=this.$route.query.id;
-      // this.queryBtns();
+      this.queryBtns();
     },
     methods: {
+      queryBtns(){
+        let parameterData = {
+          menuId: this.menuId
+        }
+        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            for(let i = res.data.length - 1; i >= 0; i--) {
+              if(res.data[i].btnCode == 'del') {
+                console.log(del)
+                this.del=true;
+                this.powerTrue =true;
+                this.optionW = '75px'
+              }
+
+              if (this.upd && this.del) {
+                this.powerTrue =true;
+                this.optionW = '160px'
+              }
+            }
+          } else {
+          }
+        })
+      },
       indexMethod(index) {
         return index * 1 + 1
       },
@@ -117,6 +149,32 @@
         this.currentPage = 1;
         this.pageSize = 10;
         this.accountList();
+      },
+
+      Delete(id) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        })
+          .then(() => {
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({ type: 'info', message: '已取消删除' })
+          })
+      },
+      delData(id) {
+        this.$fetch('/push/validateCode/remove',{
+          id: id
+        } ).then(res => {
+          if ((res.statusCode+"").startsWith("2")) {
+            this.$message({ type: 'success', message: '删除成功！' })
+            this.accountList()
+          } else {
+          }
+        })
       },
 
 
