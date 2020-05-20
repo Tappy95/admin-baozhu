@@ -28,12 +28,19 @@
               <el-option label="全部" value=""></el-option>
             </el-select>
           </el-form-item>
-            <el-form-item label="渠道标识:">
+
+          <el-form-item label="渠道标识:">
+            <el-input v-model="formInline.channelCode"
+                      placeholder="请输入渠道标识"
+                      clearable></el-input>
+          </el-form-item>
+            <!-- <el-form-item label="渠道标识:">
               <el-select   v-model="formInline.channelCode" placeholder="请选择渠道标识">
                 <el-option  v-for="(item,index) in channelNameList" :key="index" :label="item.channelCode" :value="item.channelCode"></el-option>
                 <el-option label="全部" value=""></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
+
           <el-form-item label="注册时间:">
             <el-date-picker
               v-model="selectTime"

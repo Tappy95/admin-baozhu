@@ -73,6 +73,8 @@
                   <el-option label="幸运星瓜分金额 " value="38"></el-option>
                   <el-option label="徒弟贡献金额" value="39"></el-option>
                   <el-option label="徒孙贡献金额" value="40"></el-option>
+                  <el-option label="好友开通VIP奖励" value="41"></el-option>
+                  <el-option label="团队开通VIP奖励" value="42"></el-option>
                   <el-option label="全部" value=""></el-option>
                 </el-select>
               </el-form-item>
@@ -745,6 +747,12 @@
                 break;
               case 40:
                 res.data.list[i].changedType = '徒孙贡献金额';
+                break;
+              case 41:
+                res.data.list[i].changedType = '好友开通VIP奖励';
+                break;
+              case 42:
+                res.data.list[i].changedType = '团队开通VIP奖励';
                 break;
               // default:
             }
