@@ -2,7 +2,7 @@
 	<div class="login-main">
 		<div class="login-inner">
 			<div class="login-header">
-				<h2>宝猪乐园后台管理系统</h2>
+				<h2>赚米吧后台管理系统</h2>
 			</div>
 			<div class="login-content ku">
 				<!--<h3 class="login-dl">后台登录</h3>-->
@@ -90,7 +90,7 @@ export default {
               this.$fetch("/api/pMenu/queryMenu", parameterData).then(res => {
                 if ((res.statusCode+"").startsWith("2")) {
                     let login = JSON.stringify(res.data);
-                    // console.log(res.data)
+                    console.log(res.data)
                     let n=0;
                     for (var i=0;i<res.data.length;i++) {
                       if(res.data[i].fileName=="首页"){

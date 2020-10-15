@@ -13,7 +13,8 @@ var ua = navigator.userAgent.toLowerCase();
 var ua2 = window.navigator.userAgent.toLowerCase();
 
 //本地
-var https='';
+var https='http://lottery.shouzhuan518.com';
+var newPlatformUrl = 'http://lottery.shouzhuan518.com';
 //小明
 // var https='http://192.168.1.226:8088';
 ////测试环境
@@ -107,6 +108,22 @@ export function fetch(url,params={}){
   // url.replace("/excl","/excl")
   return new Promise((resolve,reject) => {
     axios.get(https+url,{
+      params:params,
+    })
+    .then(response => {
+      resolve(response.data);
+    })
+    .catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function newPlatformGet(url,params={}){
+  // console.log(url)
+  // url.replace("/excl","/excl")
+  return new Promise((resolve,reject) => {
+    axios.get(newPlatformUrl+url,{
       params:params,
     })
     .then(response => {

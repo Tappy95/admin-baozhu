@@ -12,94 +12,80 @@ module.exports = {
   dev: {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/api': {
-        target: 'http://192.168.1.193:8082',//测试环境小伟
-        // target: 'http://192.168.1.226:8088/',//小明
-        // target: 'http://192.168.1.44:8082',//小伟
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/'
-        }
-      },
-      '/task': {
-        target: 'http://192.168.1.193:8085',//测试环境
-        // target: 'http://192.168.1.226:8085/',//小明
-        // target: 'http://192.168.1.44:8085',//小伟
-        changeOrigin: true,
-        pathRewrite: {
-          '^/task': '/'
-        }
-        },
-        '/guess': {
-          target: 'http://192.168.1.193:18087',//测试环境
-          // target: 'http://192.168.1.226:8085/',//小明
-          // target: 'http://192.168.1.44:8087',//小伟
-          changeOrigin: true,
-          pathRewrite: {
-            '^/guess': '/'
-          }
-          },
-        '/push': {
-            target: 'http://192.168.1.193:8080',//测试环境
-            // target: 'http://192.168.1.226:8085/',//小明
-            // target: 'http://192.168.1.44:8080',//小伟
-            changeOrigin: true,
-            pathRewrite: {
-              '^/push': '/'
-            }
-            },
-        '/bz28': {
-              target: 'http://192.168.1.193:18087',//测试环境
-              // target: 'http://192.168.1.226:8085/',//小明
-              // target: 'http://192.168.1.44:18087',//小伟
-              changeOrigin: true,
-              pathRewrite: {
-                '^/bz28': '/'
-              }
-              },
-        '/wish': {
-                target: 'http://192.168.1.193:8091',//测试环境
-                // target: 'http://192.168.1.226:8085/',//小明
-                // target: 'http://192.168.1.44:8091',//小伟
-                changeOrigin: true,
-                pathRewrite: {
-                  '^/wish': '/'
-                }
-                },
-         '/excl': {
-                  target: 'http://192.168.1.193:8088',//测试环境
-                  // target: 'http://192.168.1.226:8085/',//小明
-                  // target: 'http://192.168.1.44:8088',//小伟
-                  changeOrigin: true,
-                  pathRewrite: {
-                    // '^/excl': '/'
-                  },
-                }
-                },
+    // proxyTable: {
+    //   '/api': {
+    //     target: 'http://172.19.119.128:8082',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/api': '/'
+    //     }
+    //   },
+    //   '/task': {
+    //     target: 'http://172.19.119.128:8085',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/task': '/'
+    //     }
+    //   },
+    //   '/guess': {
+    //     target: 'http://172.19.119.128:18087',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/guess': '/'
+    //     }
+    //   },
+    //   '/push': {
+    //     target: 'http://172.19.119.128:8080',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/push': '/'
+    //     }
+    //   },
+    //   '/bz28': {
+    //     target: 'http://172.19.119.128:18087',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/bz28': '/'
+    //     }
+    //   },
+    //   '/wish': {
+    //     target: 'http://172.19.119.128:8091',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/wish': '/'
+    //     }
+    //   },
+    //   '/excl': {
+    //     target: 'http://172.19.119.128:8088',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       // '^/excl': '/'
+    //     },
+    //   }
+    // },
 
-              host: '0.0.0.0',
-              port: 8080,
-              autoOpenBrowser: true,
-              errorOverlay: true,
-              notifyOnErrors: true,
-              poll: false,
+    host: '0.0.0.0',
+    port: 8080,
+    autoOpenBrowser: true,
+    errorOverlay: true,
+    notifyOnErrors: true,
+    poll: false,
 
-              devtool: 'cheap-module-eval-source-map',
-              cacheBusting: true,
-              cssSourceMap: true
-            },
+    devtool: 'cheap-module-eval-source-map',
+    cacheBusting: true,
+    cssSourceMap: true
+  },
 
-            build: {
-              index: path.resolve(__dirname, '../dist/index.html'),
+  build: {
+    index: path.resolve(__dirname, '../dist/index.html'),
 
-              assetsRoot: path.resolve(__dirname, '../dist'),
-              assetsSubDirectory: 'static',
-              assetsPublicPath: '/',
-              productionSourceMap: false,
-              devtool: '#source-map',
-              productionGzip: false,
-              productionGzipExtensions: ['js', 'css'],
-              bundleAnalyzerReport: process.env.npm_config_report
-            }
-          }
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    productionSourceMap: false,
+    devtool: '#source-map',
+    productionGzip: false,
+    productionGzipExtensions: ['js', 'css'],
+    bundleAnalyzerReport: process.env.npm_config_report
+  }
+}

@@ -14,7 +14,7 @@ import $ from 'jquery'
 
 import path from './utils/path'
 import {delCookie,setCookie,getCookie,getSession,setSession,delSession} from './utils/cookie'
-import {post,fetch,put,del,uploadFile,quit,delNew} from './utils/http'
+import {post,fetch,put,del,uploadFile,quit,delNew,newPlatformGet} from './utils/http'
 
 Vue.prototype.$delCookie=delCookie;
 Vue.prototype.$setCookie=setCookie;
@@ -27,6 +27,7 @@ Vue.prototype.$path=path;
 
 Vue.prototype.$post=post;
 Vue.prototype.$fetch=fetch;
+Vue.prototype.$newPlatformGet=newPlatformGet;
 Vue.prototype.$put=put;
 Vue.prototype.$del=del;
 Vue.prototype.$uploadFile=uploadFile;
@@ -38,9 +39,7 @@ Vue.prototype.$patternNum2 = /^(0|[1-9][0-9]*)(\.\d+)?$/; //请输入正数
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
-})
+  render: h => h(App),
+}).$mount('#app')

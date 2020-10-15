@@ -11,14 +11,14 @@ const routes = [
     path: '/',
     name: 'LogIn',
     component: resolve => require(['../components/LogIn.vue'], resolve),
-    meta: { title: '宝猪乐园后台管理系统'}
+    meta: { title: '赚米吧后台管理系统'}
   },
   {
     path: '/',
     redirect: '/home-page',
     name: 'Index',
     component: resolve => require(['../components/Index.vue'], resolve),
-    meta: {auth: true,title:'宝猪乐园后台管理系统'},
+    meta: {auth: true,title:'赚米吧后台管理系统'},
     children: [{
       path: 'administrator-manage',
       name: 'AdministratorManage',
@@ -385,6 +385,24 @@ const routes = [
         name: 'XianWanCallback',
         component: resolve => require(['../components/views/XianWanCallback.vue'], resolve),
         meta: { title: '闲玩回调'}
+      },
+      {
+        path: 'newPlatform-callback',
+        name: 'newPlatformCallback',
+        component: resolve => require(['../components/views/newPlatformCallback.vue'], resolve),
+        meta: { title: '新平台回调'}
+      },
+      {
+        path: 'newcoin-change',
+        name: 'newcoinchange',
+        component: resolve => require(['../components/views/newcoinchange.vue'], resolve),
+        meta: { title: '金币账变流水渠道版'}
+      },
+      {
+        path: 'rootcoin-change',
+        name: 'rootcoinchange',
+        component: resolve => require(['../components/views/rootcoinchange.vue'], resolve),
+        meta: { title: '金币账变流水渠道版'}
       },
       {
         path: 'youLe-callback',

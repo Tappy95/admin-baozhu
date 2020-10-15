@@ -23,6 +23,11 @@
                       v-model="formInline.ordernum"
                       clearable></el-input>
           </el-form-item>
+          <el-form-item label="关键字:" >
+            <el-input placeholder="请输入关键字"
+                      v-model="formInline.event"
+                      clearable></el-input>
+          </el-form-item>
 
           <el-form-item label="状态:" >
             <el-select v-model="formInline.status " placeholder="请选择状态">
@@ -59,7 +64,7 @@
             </el-table-column>
             <el-table-column min-width="120" prop="accountId" label="用户Id">
             </el-table-column>
-            <el-table-column min-width="120" prop="merid" label="用户注册游戏Id">
+            <el-table-column min-width="120" prop="channelCode" label="渠道标识">
             </el-table-column>
             <el-table-column min-width="120" prop="adid" label="游戏Id">
             </el-table-column>
@@ -210,7 +215,8 @@
           status:this.formInline.status,
           ordernum:this.formInline.ordernum,
           startTime:this.formInline.startTime,
-          endTime:this.formInline.endTime
+          endTime:this.formInline.endTime,
+          event:this.formInline.event
         }
         this.$fetch('/api/XWCallback/list', parameterData).then(res => {
           if ((res.statusCode+"").startsWith("2")) {
