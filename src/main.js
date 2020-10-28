@@ -14,7 +14,7 @@ import $ from 'jquery'
 
 import path from './utils/path'
 import {delCookie,setCookie,getCookie,getSession,setSession,delSession} from './utils/cookie'
-import {post,fetch,put,del,uploadFile,quit,delNew,newPlatformGet} from './utils/http'
+import {fetchlocal,postlocal,post,fetch,put,del,uploadFile,quit,delNew,newPlatformGet} from './utils/http'
 
 Vue.prototype.$delCookie=delCookie;
 Vue.prototype.$setCookie=setCookie;
@@ -25,8 +25,10 @@ Vue.prototype.$delSession=delSession;
 
 Vue.prototype.$path=path;
 
+Vue.prototype.$postlocal=postlocal;
 Vue.prototype.$post=post;
 Vue.prototype.$fetch=fetch;
+Vue.prototype.$fetchlocal=fetchlocal;
 Vue.prototype.$newPlatformGet=newPlatformGet;
 Vue.prototype.$put=put;
 Vue.prototype.$del=del;

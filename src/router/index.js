@@ -171,6 +171,30 @@ const routes = [
         meta: { title: 'VIP管理'}
       },
       {
+        path: 'checkpoint',
+        name: 'Checkpoint',
+        component: resolve => require(['../components/views/CheckpointManage.vue'], resolve),
+        meta: { title: '闯关活动'}
+      },
+      {
+        path: 'checkpoint-record',
+        name: 'CheckpointRecord',
+        component: resolve => require(['../components/views/CheckpointRecordManage.vue'], resolve),
+        meta: { title: '闯关记录'}
+      },
+      {
+        path: 'checkpoint-income',
+        name: 'CheckpointIncome',
+        component: resolve => require(['../components/views/CheckpointIncome.vue'], resolve),
+        meta: { title: '闯关收益'}
+      },
+      {
+        path: 'checkpoint-income-change',
+        name: 'CheckpointIncomeChange',
+        component: resolve => require(['../components/views/CheckpointIncomeChange.vue'], resolve),
+        meta: { title: '收益转余额'}
+      },
+      {
         path: 'pig-change',
         name: 'PigChange',
         component: resolve => require(['../components/views/PigChange.vue'], resolve),

@@ -13,7 +13,10 @@ var ua = navigator.userAgent.toLowerCase();
 var ua2 = window.navigator.userAgent.toLowerCase();
 
 //本地
+// var https='http://192.168.0.192:30001';
+// var newPlatformUrl = 'http://192.168.0.192:30001';
 var https='http://lottery.shouzhuan518.com';
+var httpslocal='http://127.0.0.1:30001';
 var newPlatformUrl = 'http://lottery.shouzhuan518.com';
 //小明
 // var https='http://192.168.1.226:8088';
@@ -118,6 +121,21 @@ export function fetch(url,params={}){
     })
   })
 }
+export function fetchlocal(url,params={}){
+  // console.log(url)
+  // url.replace("/excl","/excl")
+  return new Promise((resolve,reject) => {
+    axios.get(httpslocal+url,{
+      params:params,
+    })
+    .then(response => {
+      resolve(response.data);
+    })
+    .catch(err => {
+      reject(err)
+    })
+  })
+}
 
 export function newPlatformGet(url,params={}){
   // console.log(url)
@@ -138,6 +156,17 @@ export function newPlatformGet(url,params={}){
  export function post(url,data = {}){
    return new Promise((resolve,reject) => {
      axios.post(https+url,data,{
+            emulateJSON: true
+          }).then(response => {
+            resolve(response.data);
+          },err => {
+            reject(err)
+          })
+   })
+ }
+ export function postlocal(url,data = {}){
+   return new Promise((resolve,reject) => {
+     axios.post(httpslocal+url,data,{
             emulateJSON: true
           }).then(response => {
             resolve(response.data);
