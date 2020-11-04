@@ -67,9 +67,9 @@
                   <el-option label="打卡消耗" value="32"></el-option>
                   <el-option label="打卡奖励" value="33"></el-option>
                   <el-option label="金币排行日榜奖励" value="34"></el-option>
-                  <el-option label="心愿猪宝箱抽奖" value="35"></el-option>
-                  <el-option label="心愿猪新手引导奖励" value="36"></el-option>
-                  <el-option label="分红心瓜分金额" value="37"></el-option>
+                  <el-option label="合伙人一级直属用户贡献" value="35"></el-option>
+                  <el-option label="合伙人二级直属用户贡献" value="36"></el-option>
+                  <el-option label="闯关助力" value="37"></el-option>
                   <el-option label="幸运星瓜分金额 " value="38"></el-option>
                   <el-option label="徒弟贡献金额" value="39"></el-option>
                   <el-option label="徒孙贡献金额" value="40"></el-option>
@@ -92,7 +92,7 @@
                   <el-option label="否" value="0"></el-option>
                 </el-select>
               </el-form-item>
-              
+
               <el-form-item label="渠道选择:" >
             <el-select v-model="formInline.channelType" placeholder="请选择渠道">
               <el-option v-for="(item,index) in channelList" :key="index" :label="item.name" :value="item.id"></el-option>
@@ -775,13 +775,13 @@
                 res.data.list[i].changedType = '金币排行日榜奖励';
                 break;
               case 35:
-                res.data.list[i].changedType = '心愿猪宝箱抽奖';
+                res.data.list[i].changedType = '合伙人一级直属用户贡献';
                 break;
               case 36:
-                res.data.list[i].changedType = '心愿猪新手引导奖励';
+                res.data.list[i].changedType = '合伙人二级直属用户贡献';
                 break;
               case 37:
-                res.data.list[i].changedType = '分红心瓜分金额';
+                res.data.list[i].changedType = '闯关助力';
                 break;
               case 38:
                 res.data.list[i].changedType = '幸运星瓜分金额';

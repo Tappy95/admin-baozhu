@@ -172,13 +172,13 @@ const routes = [
       },
       {
         path: 'checkpoint',
-        name: 'Checkpoint',
+        name: 'CheckpointManage',
         component: resolve => require(['../components/views/CheckpointManage.vue'], resolve),
         meta: { title: '闯关活动'}
       },
       {
         path: 'checkpoint-record',
-        name: 'CheckpointRecord',
+        name: 'CheckpointRecordManage',
         component: resolve => require(['../components/views/CheckpointRecordManage.vue'], resolve),
         meta: { title: '闯关记录'}
       },
@@ -794,7 +794,7 @@ const routes = [
         component: resolve => require(['../components/views/wishYhqdjl.vue'], resolve),
         meta: { title: '用户签到记录'}
       }
-      
+
     ]
   }
 ]
