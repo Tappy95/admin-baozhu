@@ -44,7 +44,7 @@
               <el-option label="新人注册" value="9"></el-option>
               <el-option label="任务" value="10"></el-option>
               <el-option label="出题" value="11"></el-option>
-              <el-option label="兑换金猪" value="12"></el-option>
+              <el-option label="兑换闯关奖励" value="12"></el-option>
               <el-option label="阅读资讯" value="13"></el-option>
               <el-option label="提现退回" value="14"></el-option>
               <el-option label="直属用户返利" value="15"></el-option>
@@ -70,7 +70,7 @@
               <el-option label="合伙人一级直属用户贡献" value="35"></el-option>
               <el-option label="合伙人二级直属用户贡献" value="36"></el-option>
               <el-option label="闯关助力" value="37"></el-option>
-              <el-option label="幸运星瓜分金额 " value="38"></el-option>
+              <el-option label="合伙人二级以下直属用户贡献 " value="38"></el-option>
               <el-option label="徒弟贡献金额" value="39"></el-option>
               <el-option label="徒孙贡献金额" value="40"></el-option>
               <el-option label="好友开通VIP奖励" value="41"></el-option>
@@ -712,7 +712,7 @@
                                     res.data.list[i].changedType = '出题';
                                     break;
                                 case 12:
-                                    res.data.list[i].changedType = '兑换金猪';
+                                    res.data.list[i].changedType = '兑换闯关奖励';
                                     break;
                                 case 13:
                                     res.data.list[i].changedType = '阅读资讯';
@@ -790,7 +790,7 @@
                                     res.data.list[i].changedType = '闯关助力';
                                     break;
                                 case 38:
-                                    res.data.list[i].changedType = '幸运星瓜分金额';
+                                    res.data.list[i].changedType = '合伙人二级以下直属用户贡献';
                                     break;
                                 case 39:
                                     res.data.list[i].changedType = '徒弟贡献金额';
