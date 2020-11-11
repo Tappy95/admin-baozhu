@@ -423,6 +423,12 @@ const routes = [
         meta: { title: '金币账变流水渠道版'}
       },
       {
+        path: 'JQLcoin-change',
+        name: 'JQLcoinchange',
+        component: resolve => require(['../components/views/JQLcoinchange.vue'], resolve),
+        meta: { title: '金币账变流水金麒麟版'}
+      },
+      {
         path: 'rootcoin-change',
         name: 'rootcoinchange',
         component: resolve => require(['../components/views/rootcoinchange.vue'], resolve),

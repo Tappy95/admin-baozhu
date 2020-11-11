@@ -81,7 +81,7 @@ export default {
               this.$setSession('token', res.token);
               this.$setSession('mobileCookie', res.data.mobile);
               this.$setSession('roleName', res.data.roleName);
-
+              this.$setSession('realname', res.data.realname);
               this.$setSession('userRelation', res.data.userRelation)
 
               let parameterData = {

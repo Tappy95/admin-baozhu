@@ -123,8 +123,16 @@
             </el-table-column>
             <el-table-column min-width="120" prop="userName" label="姓名">
             </el-table-column>
-            <el-table-column min-width="120" sortable coinBalance prop="level" label="成长等级">
+            <el-table-column min-width="120" prop="roleType" label="用户等级">
             </el-table-column>
+            <el-table-column min-width="120" prop="referrerId" label="上级ID">
+            </el-table-column>
+            <el-table-column min-width="120" prop="leaderId" label="最高领导人ID">
+            </el-table-column>
+            <el-table-column min-width="120" prop="phoneNum" label="手机">
+            </el-table-column>
+<!--            <el-table-column min-width="120" sortable coinBalance prop="level" label="成长等级">-->
+<!--            </el-table-column>-->
             <el-table-column prop="changedType" min-width="170px" label="变更类型">
             </el-table-column>
             <el-table-column prop="revenue" sortable min-width="150" label="收入">
@@ -802,11 +810,11 @@
             }
 
             if(res.data.list[i].roleType == '1'){
-              res.data.list[i].roleType = '小猪猪'
+              res.data.list[i].roleType = '小麒麟'
             }else if(res.data.list[i].roleType == '2'){
-              res.data.list[i].roleType = '团队长'
+              res.data.list[i].roleType = '金麒麟'
             }else if(res.data.list[i].roleType == '3'){
-              res.data.list[i].roleType = '超级合伙人'
+              res.data.list[i].roleType = '玉麒麟'
             }
 
             if(res.data.list[i].status == '1'){
@@ -817,13 +825,13 @@
               res.data.list[i].status = '拒绝'
             }
           }
-          this.tableData = res.data.list
-          this.totalCount = parseInt(res.data.total)
-          this.subRevenuePrice = res.data.subRevenuePrice
-          this.subExpendPrice = res.data.subExpendPrice
-          this.pageCount = res.data.pageCount
-          this.totalRevenuePrice = res.data.totalRevenuePrice
-          this.totalExpendPrice = res.data.totalExpendPrice
+          this.tableData = res.data.list;
+          this.totalCount = parseInt(res.data.total);
+          this.subRevenuePrice = res.data.subRevenuePrice;
+          this.subExpendPrice = res.data.subExpendPrice;
+          this.pageCount = res.data.pageCount;
+          this.totalRevenuePrice = res.data.totalRevenuePrice;
+          this.totalExpendPrice = res.data.totalExpendPrice;
         } else {
           this.$message({
             type: 'error',

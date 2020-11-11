@@ -137,7 +137,7 @@ export default {
     }
   },
   created() {
-    this.realName = getSession('mobileCookie');
+    this.realName = getSession('realname');
     this.role = getSession('roleName');
     this.getPower();
   },

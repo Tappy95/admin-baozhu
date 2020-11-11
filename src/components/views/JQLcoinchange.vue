@@ -123,8 +123,8 @@
             </el-table-column>
             <el-table-column min-width="120" prop="phoneNum" label="手机">
             </el-table-column>
-<!--            <el-table-column min-width="120" sortable coinBalance prop="level" label="成长等级">-->
-<!--            </el-table-column>-->
+            <!--            <el-table-column min-width="120" sortable coinBalance prop="level" label="成长等级">-->
+            <!--            </el-table-column>-->
             <el-table-column prop="changedType" min-width="170px" label="变更类型">
             </el-table-column>
             <el-table-column prop="revenue" sortable min-width="150" label="收入">
@@ -436,6 +436,7 @@
                     flowType: '',
                     searchType: '',
                     rewardType: '',
+                    isJQL: "1",
                 },
                 tableData: [],
                 message: {},
@@ -678,8 +679,9 @@
                     coinMin: this.formInline.coinMin,
                     coinMax: this.formInline.coinMax,
                     searchType: this.formInline.searchType,
-                    rewardType: this.formInline.rewardType
-                }
+                    rewardType: this.formInline.rewardType,
+                    isJQL: this.formInline.isJQL,
+                };
 
                 this.$fetch('/py/coinchange', parameterData).then(res => {
                     if ((res.statusCode + "").startsWith("2")) {
