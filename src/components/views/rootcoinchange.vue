@@ -71,7 +71,7 @@
                   <el-option label="合伙人二级直属用户贡献" value="36"></el-option>
                   <el-option label="闯关助力" value="37"></el-option>
                   <el-option label="合伙人二级以下直属用户贡献 " value="38"></el-option>
-                  <el-option label="徒弟贡献金额" value="39"></el-option>
+                  <el-option label="代理推广收益分成" value="39"></el-option>
                   <el-option label="徒孙贡献金额" value="40"></el-option>
                   <el-option label="好友开通VIP奖励" value="41"></el-option>
                   <el-option label="团队开通VIP奖励" value="42"></el-option>
@@ -795,7 +795,7 @@
                 res.data.list[i].changedType = '合伙人二级以下直属用户贡献';
                 break;
               case 39:
-                res.data.list[i].changedType = '徒弟贡献金额';
+                res.data.list[i].changedType = '代理推广收益分成';
                 break;
               case 40:
                 res.data.list[i].changedType = '徒孙贡献金额';
