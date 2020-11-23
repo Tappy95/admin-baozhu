@@ -10,6 +10,9 @@
               <el-form-item label="用户id:">
                 <el-input v-model="formInline.accountId" placeholder="请输入用户id" clearable></el-input>
               </el-form-item>
+              <el-form-item label="领导人用户id:">
+                <el-input v-model="formInline.leader_accountId" placeholder="请输入用户id" clearable></el-input>
+              </el-form-item>
               <el-form-item  label="电话号码:">
                 <el-input  v-model="formInline.mobile" placeholder="请输入电话号码" clearable></el-input>
               </el-form-item>
@@ -422,6 +425,7 @@
         totalRevenuePrice:'',
         totalExpendPrice:'',
         formInline: {
+          leader_accountId:"",
           userName:"",
           changedType:'',
           mobile:'',
@@ -503,6 +507,7 @@
           let  changedType=this.formInline.changedType;
           let mobile=this.formInline.mobile;
           let  accountId=this.formInline.accountId;
+          let  leader_accountId=this.formInline.leader_accountId;
           let  startTime=this.formInline.startTime;
           let  endTime=this.formInline.endTime;
           let  coinMin=this.formInline.coinMin;
@@ -515,7 +520,7 @@
           let relation= getSession("userRelation");
 
           let url = '/excl/exclCoinChange';
-          let data = {url,changedType,mobile,accountId,startTime,endTime,coinMin,coinMax,token,channel,relation};
+          let data = {url,changedType,mobile,accountId,leader_accountId,startTime,endTime,coinMin,coinMax,token,channel,relation};
           this.doDownload(data);
       },
       doDownload(obj) {
@@ -523,6 +528,7 @@
 
           mobile=obj.mobile,
           accountId=obj.accountId,
+          leader_accountId=obj.leader_accountId,
           changedType=obj.changedType,
           startTime=obj.startTime,
           endTime=obj.endTime,
@@ -538,6 +544,12 @@
         if(http==url){
           if(accountId){
             http=http+'?accountId=' + accountId
+          }
+        }
+
+        if(http==url){
+          if(leader_accountId){
+            http=http+'?leader_accountId=' + leader_accountId
           }
         }
 
@@ -665,6 +677,7 @@
           changedType:this.formInline.changedType,
           mobile:this.formInline.mobile,
           accountId:this.formInline.accountId,
+          leader_accountId:this.formInline.leader_accountId,
           /*flowType:this.formInline.flowType*/
           startTime:this.formInline.startTime,
           endTime:this.formInline.endTime,

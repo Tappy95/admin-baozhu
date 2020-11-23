@@ -3,7 +3,7 @@
     <div class="vip-manage-inner">
       <div class="vip-manage-header">
         <h3>运营管理/闯关管理</h3>
-        <hr />
+        <hr/>
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -16,17 +16,18 @@
       </div>
       <div class="vip-manage-table">
         <template>
-          <el-table :data="tableData" style="width: 100%" max-height="600"  >
-            <el-table-column fixed="left" label="关卡数" type="index" :index="indexMethod" prop="checkpoint_number" width='120'>
+          <el-table :data="tableData" style="width: 100%" max-height="600">
+            <el-table-column fixed="left" label="关卡数" type="index" :index="indexMethod" prop="checkpoint_number"
+                             width='120'>
             </el-table-column>
             <el-table-column fixed="left" label="过关奖励" prop="reward_amount" width='120'>
             </el-table-column>
-			<el-table-column label="过关条件" min-width="120px">
-				<template slot-scope="scope">
-					<span  class="green" v-if="scope.row.clearance_conditions==0">指定金币</span>
-					<span  class="yellow" v-if="scope.row.clearance_conditions==1">邀请好友</span>
-				</template>
-			</el-table-column>
+            <el-table-column label="过关条件" min-width="120px">
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.clearance_conditions==0">指定金币</span>
+                <span class="yellow" v-if="scope.row.clearance_conditions==1">邀请好友</span>
+              </template>
+            </el-table-column>
             <el-table-column min-width="170px" prop="gold_number" label="金币数">
             </el-table-column>
             <el-table-column min-width="170px" prop="friends_number" label="好友数">
@@ -36,10 +37,10 @@
             <!-- <el-table-column :formatter="dateFormat" prop="createTime" min-width="170" label="创建时间">
             </el-table-column> -->
             <el-table-column min-width="170" label="状态">
-				<template slot-scope="scope">
-					<span  class="green" v-if="scope.row.state==0">关闭</span>
-					<span  class="yellow" v-if="scope.row.state==1">开启</span>
-				</template>
+              <template slot-scope="scope">
+                <span class="green" v-if="scope.row.state==0">关闭</span>
+                <span class="yellow" v-if="scope.row.state==1">开启</span>
+              </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
@@ -50,7 +51,7 @@
             </el-table-column>
           </el-table>
         </template>
-       
+
         <el-dialog title="添加关卡" :close-on-click-modal="$close" :visible.sync="dialogFormVisible" width="900px">
           <el-form :model="form" :rules="rules" ref="form">
             <el-row>
@@ -68,31 +69,35 @@
               </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
-				<el-form-item label="过关条件:" :label-width="formLabelWidth" prop="clearanceConditions">
-					<el-select style="width: 187px" v-model="form.clearanceConditions" @change="selectAddFn" placeholder="">
-					<el-option label="指定金币" value="0"></el-option>
-					<el-option label="邀请好友" value="1"></el-option>
-					</el-select>
-				</el-form-item>
-			</el-col>
+                <el-form-item label="过关条件:" :label-width="formLabelWidth" prop="clearanceConditions">
+                  <el-select style="width: 187px" v-model="form.clearanceConditions" @change="selectAddFn"
+                             placeholder="">
+                    <el-option label="指定金币" value="0"></el-option>
+                    <el-option label="邀请好友" value="1"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="金币数:" :label-width="formLabelWidth" prop="goldNumber">
-                  <el-input v-model="form.goldNumber" v-bind:disabled="form.clearanceConditions == 1" auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.goldNumber" v-bind:disabled="form.clearanceConditions == 1"
+                            auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
 
-                  <el-col :span="12" style="margin-bottom: 10px">
-                    <el-form-item label="好友数:" label-width="190px" prop="friendsNumber">
-                      <el-input v-model="form.friendsNumber" v-bind:disabled="form.clearanceConditions == 0"  auto-complete="off" style="width:187px" clearable>
-                      </el-input>
-                    </el-form-item>
-                  </el-col>
+              <el-col :span="12" style="margin-bottom: 10px">
+                <el-form-item label="好友数:" label-width="190px" prop="friendsNumber">
+                  <el-input v-model="form.friendsNumber" v-bind:disabled="form.clearanceConditions == 0"
+                            auto-complete="off" style="width:187px" clearable>
+                  </el-input>
+                </el-form-item>
+              </el-col>
 
               <el-col :span="12" style="margin-bottom: 10px">
                 <el-form-item label="好友须完成关数:" :label-width="formLabelWidth" prop="friendsCheckpointNumber">
-                  <el-input v-model="form.friendsCheckpointNumber" v-bind:disabled="form.clearanceConditions == 0"  auto-complete="off" style="width:187px" clearable>
+                  <el-input v-model="form.friendsCheckpointNumber" v-bind:disabled="form.clearanceConditions == 0"
+                            auto-complete="off" style="width:187px" clearable>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -114,62 +119,67 @@
         </el-dialog>
       </div>
       <div class="block">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+                       :page-sizes="[10, 20, 50, 70]" :page-size="pageSize"
+                       layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
       </div>
     </div>
   </div>
 </template>
 <script type="text/javascript">
-  import { formatDate } from '../../utils/date.js'
-  import { delSession, getSession } from '../../utils/cookie'
+  import {formatDate} from '../../utils/date.js'
+  import {delSession, getSession} from '../../utils/cookie'
   import BigImg from './BigImg'
+
   export default {
     name: 'CheckpointManage',
     data() {
       return {
-        showImg:false,
-        imgSrc:'',
-        uploadData:{},
-        optionW:'75px',
-        menuId:'',
-        add:false,
-        del:false,
-        upd:false,
-      
+        showImg: false,
+        imgSrc: '',
+        uploadData: {},
+        optionW: '75px',
+        menuId: '',
+        add: false,
+        del: false,
+        upd: false,
+
         dialogTableVisible: false,
         formtwo: {},
         dialogFormVisible: false,
-        dialogTableDetail:false,
-        formtwoInfo:{},
+        dialogTableDetail: false,
+        formtwoInfo: {},
         form: {
-          logo:'',
-          backgroundImg:'',
-          overdueImg:'',
+          logo: '',
+          backgroundImg: '',
+          overdueImg: '',
           clearanceConditions: 0
         },
         rules: {
           // vipType vip类型 1.普通vip 2.中青赚点
           // cashMoney 可提现金额 单位元，-1无限制
-          checkpointNumber: [{required: true, message: '请输入关卡数', trigger: 'blur'},{
-			  validator:(rule,value,callback)=>{
+          checkpointNumber: [{required: true, message: '请输入关卡数', trigger: 'blur'}, {
+            validator: (rule, value, callback) => {
               var pattern = /^-?[1-9]\d*$/;
               if (!pattern.test(value)) {
                 callback(new Error("请输入正整数"));
-              }else{
+              } else {
                 callback();
               }
-            }, trigger:'blur'}],
-          rewardAmount: [{required: true, message: '请输入过关奖励', trigger: 'blur'},{
-			  validator:(rule,value,callback)=>{
+            }, trigger: 'blur'
+          }],
+          rewardAmount: [{required: true, message: '请输入过关奖励', trigger: 'blur'}, {
+            validator: (rule, value, callback) => {
               var pattern = /^-?[1-9]\d*$/;
               if (!pattern.test(value)) {
                 callback(new Error("请输入正整数"));
-              }else{
+              } else {
                 callback();
               }
-            }, trigger:'blur'}],
-          clearanceConditions:[{required: true, message: '请选择过关条件', trigger: 'change'}],
+            }, trigger: 'blur'
+          }],
+          clearanceConditions: [{required: true, message: '请选择过关条件', trigger: 'change'}],
           state: [{required: true, message: '请选择状态', trigger: 'change'}],
         },
         formLabelWidth: '190px',
@@ -179,7 +189,7 @@
         totalCount: 0,
         formInline: {},
         tableData: [],
-        isSubmit:false,
+        isSubmit: false,
       }
     },
     components: {
@@ -187,55 +197,55 @@
     },
     filters: {
       //每隔三位数字以逗号隔开，保留小数点后两位
-      currenNum: function (num){
+      currenNum: function (num) {
         var dataval = parseInt(num);
-        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,'$&,');
+        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
       },
     },
     created() {
-      this.menuId=this.$route.query.id;
+      this.menuId = this.$route.query.id;
       this.dataList();
       this.queryBtns();
-      this.uploadData={
-        token:getSession("token")
+      this.uploadData = {
+        token: getSession("token")
       }
     },
     methods: {
-      selectAddFn(){
-        if(this.form.clearanceConditions == 1){
+      selectAddFn() {
+        if (this.form.clearanceConditions == 1) {
           this.form.goldNumber = 0
-        }else{
+        } else {
           this.form.friendsNumber = 0
           this.form.friendsCheckpointNumber = 0
         }
       },
-      queryBtns(){
+      queryBtns() {
         let parameterData = {
           menuId: this.menuId
         }
         this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
-          if ((res.statusCode+"").startsWith("2")) {
-          for(let i = res.data.length - 1; i >= 0; i--) {
-            if(res.data[i].btnCode == 'add') {
-              this.add=true;
+          if ((res.statusCode + "").startsWith("2")) {
+            for (let i = res.data.length - 1; i >= 0; i--) {
+              if (res.data[i].btnCode == 'add') {
+                this.add = true;
+              }
+              if (res.data[i].btnCode == 'upd') {
+                this.upd = true;
+                this.optionW = '160px';
+              }
+              if (res.data[i].btnCode == 'del') {
+                this.del = true;
+                this.optionW = '220px';
+              }
             }
-            if(res.data[i].btnCode == 'upd') {
-              this.upd=true;
-              this.optionW = '160px';
-            }
-            if(res.data[i].btnCode == 'del') {
-              this.del=true;
-              this.optionW = '220px';
-            }
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message,
+              duration: 3000
+            })
           }
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message,
-            duration: 3000
-          })
-        }
-      })
+        })
       },
       indexMethod(index) {
         return index * 1 + 1
@@ -251,38 +261,38 @@
         let parameterData = {
           pageNum: this.currentPage,
           pageSize: this.pageSize
-		    }
-		// this.$message({
-		// 	type: 'error',
-		// 	message: '接口暂未接通',
-		// 	duration: 3000
-		// })
+        }
+        // this.$message({
+        // 	type: 'error',
+        // 	message: '接口暂未接通',
+        // 	duration: 3000
+        // })
         this.$fetchlocal('/py/checkpoint/list', parameterData).then(res => {
           if (res) {
             this.tableData = res
-            console.log('sssssssssss',res)
-          // for(let i = res.data.list.length - 1; i >= 0; i--) {
-          //   if(res.data.list[i].status == '1') {
-          //     res.data.list[i].status = '是'
-          //   } else {
-          //     res.data.list[i].status = '否'
-          //   }
-          //   if(res.data.list[i].highVip == '1') {
-          //     res.data.list[i].highVip = '不是'
-          //   } else {
-          //     res.data.list[i].highVip = '是'
-          //   }
-          // }
-          // this.tableData = res.data.list
-          // this.totalCount = res.data.total
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message,
-            duration: 3000
-          })
-        }
-      })
+            console.log('sssssssssss', res)
+            // for(let i = res.data.list.length - 1; i >= 0; i--) {
+            //   if(res.data.list[i].status == '1') {
+            //     res.data.list[i].status = '是'
+            //   } else {
+            //     res.data.list[i].status = '否'
+            //   }
+            //   if(res.data.list[i].highVip == '1') {
+            //     res.data.list[i].highVip = '不是'
+            //   } else {
+            //     res.data.list[i].highVip = '是'
+            //   }
+            // }
+            // this.tableData = res.data.list
+            // this.totalCount = res.data.total
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message,
+              duration: 3000
+            })
+          }
+        })
       },
       search() {
         this.currentPage = 1;
@@ -290,34 +300,34 @@
         this.dataList();
       },
       load() {
-        this.form={};
+        this.form = {};
         this.dialogFormVisible = true;
       },
 
       addBtn(form) {
-       
+
         this.$refs[form].validate(valid => {
-          if(valid) {
-            
-            if(this.form.clearanceConditions == 1){
-              if (!this.form.friendsNumber){
+          if (valid) {
+
+            if (this.form.clearanceConditions == 1) {
+              if (!this.form.friendsNumber) {
                 this.$message({type: 'error', message: '请输入好友数！'})
                 return
               }
-              if (!this.form.friendsCheckpointNumber){
+              if (!this.form.friendsCheckpointNumber) {
                 this.$message({type: 'error', message: '请输入好友须完成关数！'})
                 return
               }
             }
-            if(this.form.clearanceConditions == 0){
-              if (!this.form.goldNumber){
+            if (this.form.clearanceConditions == 0) {
+              if (!this.form.goldNumber) {
                 this.$message({type: 'error', message: '请输入金币数！'})
                 return
               }
             }
-          
-             this.$nextTick(function () {
-              this.isSubmit=true;
+
+            this.$nextTick(function () {
+              this.isSubmit = true;
             })
             this.$postlocal('/py/checkpoint/add', this.form).then(res => {
               if (res.success == 1) {
@@ -346,44 +356,44 @@
           center: true
         })
           .then(() => {
-          this.delData(id)
-      })
-      .catch(() => {
-          this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
+            this.delData(id)
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
       },
       delData(id) {
         let parameterData = {
           id: id
-		}
-		this.$message({
-			type: 'error',
-			message: '接口未接'
-		})
-    //     this.$fetch('/api/mVipInfo/remove', parameterData).then(res => {
-    //       if ((res.statusCode+"").startsWith("2")) {
-    //       this.$message({
-    //         type: 'success',
-    //         message: '删除成功！'
-    //       })
-    //       this.dataList()
-    //     } else {
-    //       this.$message({
-    //         type: 'error',
-    //         message: '删除失败！'
-    //       })
-    //     }
-    //   })
-	  },
-	  //编辑
+        }
+        this.$message({
+          type: 'error',
+          message: '接口未接'
+        })
+        //     this.$fetch('/api/mVipInfo/remove', parameterData).then(res => {
+        //       if ((res.statusCode+"").startsWith("2")) {
+        //       this.$message({
+        //         type: 'success',
+        //         message: '删除成功！'
+        //       })
+        //       this.dataList()
+        //     } else {
+        //       this.$message({
+        //         type: 'error',
+        //         message: '删除失败！'
+        //       })
+        //     }
+        //   })
+      },
+      //编辑
       getInfo(id) {
-		  this.$message({
-			type: 'error',
-			message: '接口未接'
-		})
+        this.$message({
+          type: 'error',
+          message: '接口未接'
+        })
         // this.$fetch('/api/mVipInfo/queryOne', {
         //   id: id
         // }).then(res => {
@@ -394,58 +404,58 @@
         //       this.overdueImg = res.data.overdueImg;
         //     }
         // })
-	  },
-	  //添加
+      },
+      //添加
       update(formtwo) {
         console.log(this.formtwo)
-		this.$message({
-			type: 'error',
-			message: '接口暂未接通',
-			duration: 3000
-		})
-		return false;
-        this.formtwo.logo=this.imageUrl;
+        this.$message({
+          type: 'error',
+          message: '接口暂未接通',
+          duration: 3000
+        })
+        return false;
+        this.formtwo.logo = this.imageUrl;
         this.formtwo.backgroundImg = this.backgroundImg;
         this.formtwo.overdueImg = this.overdueImg;
         this.$refs[formtwo].validate(valid => {
           if (valid) {
-            if (!this.formtwo.logo){
+            if (!this.formtwo.logo) {
               this.$message({type: 'error', message: '请上传logo！'})
               return
             }
-            if (!this.formtwo.backgroundImg){
+            if (!this.formtwo.backgroundImg) {
               this.$message({type: 'error', message: '请上传背景图！'})
               return
             }
 
-            if (!this.formtwo.overdueImg){
+            if (!this.formtwo.overdueImg) {
               this.$message({type: 'error', message: '请上传过期logo！'})
               return
             }
 
             this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
-              if ((res.statusCode+"").startsWith("2")) {
-              this.$message({type: 'success', message: '修改成功！'})
-              this.dialogTableVisible = false;
-              this.dataList()
-            }else {
+              if ((res.statusCode + "").startsWith("2")) {
+                this.$message({type: 'success', message: '修改成功！'})
+                this.dialogTableVisible = false;
+                this.dataList()
+              } else {
                 this.$message({type: 'error', message: res.message})
               }
             })
           }
         })
       },
-    //   getOne(id){
-    //     this.dialogTableDetail = true;
-    //     this.$fetch('/api/mVipInfo/queryOne', {
-    //       id: id
-    //     }).then(res => {
-    //         if ((res.statusCode+"").startsWith("2")) {
-    //           res.data.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss');
-    //           this.formtwoInfo = res.data;
-    //         }
-    //      })
-    //   },
+      //   getOne(id){
+      //     this.dialogTableDetail = true;
+      //     this.$fetch('/api/mVipInfo/queryOne', {
+      //       id: id
+      //     }).then(res => {
+      //         if ((res.statusCode+"").startsWith("2")) {
+      //           res.data.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss');
+      //           this.formtwoInfo = res.data;
+      //         }
+      //      })
+      //   },
       handleSizeChange(val) {
         this.pageSize = val;
         this.dataList();
@@ -460,14 +470,16 @@
 </script>
 <style type="text/css">
 
-  .avatar{
-     width: 148px;
+  .avatar {
+    width: 148px;
     height: 148px;
     display: block;
   }
-  .el-input--suffix .el-input__inner{
+
+  .el-input--suffix .el-input__inner {
     padding-right: 0;
   }
+
   .vip-manage-wrap {
     width: 100%;
   }
@@ -502,9 +514,11 @@
     position: relative;
     overflow: hidden;
   }
+
   .bannerAvatar-uploader .el-upload:hover {
     border-color: #409eff;
   }
+
   .bannerAvatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
