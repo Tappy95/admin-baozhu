@@ -2,7 +2,7 @@
 	<div class="index-main">
 		<div class="index-inner">
 			<div class="index-header">
-				<h2>赚米吧后台管理系统</h2>
+				<h2>麒麟趣玩后台管理系统</h2>
 				<div class="login-message">
 					<span class="dl_name">{{role}}  {{realName}} </span>
 					<!--<span class="cutline">|</span>-->

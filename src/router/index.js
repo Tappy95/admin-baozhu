@@ -11,14 +11,14 @@ const routes = [
     path: '/',
     name: 'LogIn',
     component: resolve => require(['../components/LogIn.vue'], resolve),
-    meta: { title: '赚米吧后台管理系统'}
+    meta: { title: '麒麟趣玩后台管理系统'}
   },
   {
     path: '/',
     redirect: '/home-page',
     name: 'Index',
     component: resolve => require(['../components/Index.vue'], resolve),
-    meta: {auth: true,title:'赚米吧后台管理系统'},
+    meta: {auth: true,title:'麒麟趣玩后台管理系统'},
     children: [{
       path: 'administrator-manage',
       name: 'AdministratorManage',

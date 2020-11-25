@@ -4,6 +4,7 @@ import {getSession} from './cookie'
 import router from '../router'
 
 import { Message } from 'element-ui';
+import fa from "element-ui/src/locale/lang/fa";
 
 axios.defaults.timeout = 20000;
 axios.defaults.baseURL ='';
@@ -15,8 +16,8 @@ var ua2 = window.navigator.userAgent.toLowerCase();
 //本地
 // var https='http://192.168.0.192:30001';
 // var newPlatformUrl = 'http://192.168.0.192:30001';
-var https='http://lottery.shouzhuan518.com';
-var httpslocal='http://127.0.0.1:30001';
+var production_env = true;
+var https=production_env ? 'http://lottery.shouzhuan518.com': 'http://47.112.96.218:8000';
 var newPlatformUrl = 'http://lottery.shouzhuan518.com';
 //小明
 // var https='http://192.168.1.226:8088';

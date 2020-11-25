@@ -109,7 +109,6 @@
             <el-button type="success" plain @click="queryExport()" v-if="exportExle">导出表格</el-button>
           </el-form-item>
         </el-form>
-        </el-form>
       </div>
       <div class="coin-change-table">
         <template>
@@ -166,7 +165,6 @@
             <el-table-column sortable prop="registerTime" :formatter="dateFormat" min-width="170px" label="注册时间">
             </el-table-column>
             <el-table-column min-width="150" prop="remarks" label="备注">
-            </el-table-column>
             </el-table-column>
             <el-table-column min-width="150" prop="reason" label="平台备注">
             </el-table-column>

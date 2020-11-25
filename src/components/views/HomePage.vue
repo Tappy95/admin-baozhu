@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>欢迎来到赚米吧后台管理系统</h1>
+    <h1>欢迎来到麒麟趣玩后台管理系统</h1>
   </div>
 </template>
 <script>

@@ -11,7 +11,7 @@
             <el-input v-model="formInline.name" placeholder="请输入关卡数" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
-          <el-button type="success" plain v-if="add" @click="load()">添加</el-button>
+<!--          <el-button type="success" plain v-if="add" @click="load()">添加</el-button>-->
         </el-form>
       </div>
       <div class="vip-manage-table">
@@ -34,8 +34,16 @@
             </el-table-column>
             <el-table-column min-width="170px" prop="friends_checkpoint_number" label="好友须完成关数">
             </el-table-column>
-            <!-- <el-table-column :formatter="dateFormat" prop="createTime" min-width="170" label="创建时间">
-            </el-table-column> -->
+            <el-table-column min-width="170px" prop="game_number" label="游戏任务数">
+            </el-table-column>
+            <el-table-column min-width="170px" prop="video_number" label="视频数">
+            </el-table-column>
+            <el-table-column min-width="170px" prop="task_info" label="任务说明">
+            </el-table-column>
+            <el-table-column min-width="170px" prop="friends_checkpoint_number" label="好友须完成关数">
+            </el-table-column>
+            <el-table-column :formatter="dateFormat" prop="create_time" min-width="170" label="创建时间">
+            </el-table-column>
             <el-table-column min-width="170" label="状态">
               <template slot-scope="scope">
                 <span class="green" v-if="scope.row.state==0">关闭</span>
@@ -128,345 +136,346 @@
   </div>
 </template>
 <script type="text/javascript">
-  import {formatDate} from '../../utils/date.js'
-  import {delSession, getSession} from '../../utils/cookie'
-  import BigImg from './BigImg'
+    import {formatDate} from '../../utils/date.js'
+    import {delSession, getSession} from '../../utils/cookie'
+    import BigImg from './BigImg'
 
-  export default {
-    name: 'CheckpointManage',
-    data() {
-      return {
-        showImg: false,
-        imgSrc: '',
-        uploadData: {},
-        optionW: '75px',
-        menuId: '',
-        add: false,
-        del: false,
-        upd: false,
+    export default {
+        name: 'CheckpointManage',
+        data() {
+            return {
+                showImg: false,
+                imgSrc: '',
+                uploadData: {},
+                optionW: '75px',
+                menuId: '',
+                add: false,
+                del: false,
+                upd: false,
 
-        dialogTableVisible: false,
-        formtwo: {},
-        dialogFormVisible: false,
-        dialogTableDetail: false,
-        formtwoInfo: {},
-        form: {
-          logo: '',
-          backgroundImg: '',
-          overdueImg: '',
-          clearanceConditions: 0
+                dialogTableVisible: false,
+                formtwo: {},
+                dialogFormVisible: false,
+                dialogTableDetail: false,
+                formtwoInfo: {},
+                form: {
+                    logo: '',
+                    backgroundImg: '',
+                    overdueImg: '',
+                    clearanceConditions: 0
+                },
+                rules: {
+                    // vipType vip类型 1.普通vip 2.中青赚点
+                    // cashMoney 可提现金额 单位元，-1无限制
+                    checkpointNumber: [{required: true, message: '请输入关卡数', trigger: 'blur'}, {
+                        validator: (rule, value, callback) => {
+                            var pattern = /^-?[1-9]\d*$/;
+                            if (!pattern.test(value)) {
+                                callback(new Error("请输入正整数"));
+                            } else {
+                                callback();
+                            }
+                        }, trigger: 'blur'
+                    }],
+                    rewardAmount: [{required: true, message: '请输入过关奖励', trigger: 'blur'}, {
+                        validator: (rule, value, callback) => {
+                            var pattern = /^-?[1-9]\d*$/;
+                            if (!pattern.test(value)) {
+                                callback(new Error("请输入正整数"));
+                            } else {
+                                callback();
+                            }
+                        }, trigger: 'blur'
+                    }],
+                    clearanceConditions: [{required: true, message: '请选择过关条件', trigger: 'change'}],
+                    state: [{required: true, message: '请选择状态', trigger: 'change'}],
+                },
+                formLabelWidth: '190px',
+                /* 分页*/
+                currentPage: 1,
+                pageSize: 10,
+                totalCount: 0,
+                formInline: {},
+                tableData: [],
+                isSubmit: false,
+            }
         },
-        rules: {
-          // vipType vip类型 1.普通vip 2.中青赚点
-          // cashMoney 可提现金额 单位元，-1无限制
-          checkpointNumber: [{required: true, message: '请输入关卡数', trigger: 'blur'}, {
-            validator: (rule, value, callback) => {
-              var pattern = /^-?[1-9]\d*$/;
-              if (!pattern.test(value)) {
-                callback(new Error("请输入正整数"));
-              } else {
-                callback();
-              }
-            }, trigger: 'blur'
-          }],
-          rewardAmount: [{required: true, message: '请输入过关奖励', trigger: 'blur'}, {
-            validator: (rule, value, callback) => {
-              var pattern = /^-?[1-9]\d*$/;
-              if (!pattern.test(value)) {
-                callback(new Error("请输入正整数"));
-              } else {
-                callback();
-              }
-            }, trigger: 'blur'
-          }],
-          clearanceConditions: [{required: true, message: '请选择过关条件', trigger: 'change'}],
-          state: [{required: true, message: '请选择状态', trigger: 'change'}],
+        components: {
+            'big-img': BigImg
         },
-        formLabelWidth: '190px',
-        /* 分页*/
-        currentPage: 1,
-        pageSize: 10,
-        totalCount: 0,
-        formInline: {},
-        tableData: [],
-        isSubmit: false,
-      }
-    },
-    components: {
-      'big-img': BigImg
-    },
-    filters: {
-      //每隔三位数字以逗号隔开，保留小数点后两位
-      currenNum: function (num) {
-        var dataval = parseInt(num);
-        return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
-      },
-    },
-    created() {
-      this.menuId = this.$route.query.id;
-      this.dataList();
-      this.queryBtns();
-      this.uploadData = {
-        token: getSession("token")
-      }
-    },
-    methods: {
-      selectAddFn() {
-        if (this.form.clearanceConditions == 1) {
-          this.form.goldNumber = 0
-        } else {
-          this.form.friendsNumber = 0
-          this.form.friendsCheckpointNumber = 0
-        }
-      },
-      queryBtns() {
-        let parameterData = {
-          menuId: this.menuId
-        }
-        this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
-          if ((res.statusCode + "").startsWith("2")) {
-            for (let i = res.data.length - 1; i >= 0; i--) {
-              if (res.data[i].btnCode == 'add') {
-                this.add = true;
-              }
-              if (res.data[i].btnCode == 'upd') {
-                this.upd = true;
-                this.optionW = '160px';
-              }
-              if (res.data[i].btnCode == 'del') {
-                this.del = true;
-                this.optionW = '220px';
-              }
+        filters: {
+            //每隔三位数字以逗号隔开，保留小数点后两位
+            currenNum: function (num) {
+                var dataval = parseInt(num);
+                return dataval.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+            },
+        },
+        created() {
+            this.menuId = this.$route.query.id;
+            this.dataList();
+            this.queryBtns();
+            this.uploadData = {
+                token: getSession("token")
             }
-          } else {
-            this.$message({
-              type: 'error',
-              message: res.message,
-              duration: 3000
-            })
-          }
-        })
-      },
-      indexMethod(index) {
-        return index * 1 + 1
-      },
-      dateFormat(row, column) {
-        var date = row[column.property]
-        if (date == undefined) {
-          return ''
-        }
-        return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
-      },
-      dataList() {
-        let parameterData = {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize
-        }
-        // this.$message({
-        // 	type: 'error',
-        // 	message: '接口暂未接通',
-        // 	duration: 3000
-        // })
-        this.$fetchlocal('/py/checkpoint/list', parameterData).then(res => {
-          if (res) {
-            this.tableData = res
-            console.log('sssssssssss', res)
-            // for(let i = res.data.list.length - 1; i >= 0; i--) {
-            //   if(res.data.list[i].status == '1') {
-            //     res.data.list[i].status = '是'
-            //   } else {
-            //     res.data.list[i].status = '否'
-            //   }
-            //   if(res.data.list[i].highVip == '1') {
-            //     res.data.list[i].highVip = '不是'
-            //   } else {
-            //     res.data.list[i].highVip = '是'
-            //   }
-            // }
-            // this.tableData = res.data.list
-            // this.totalCount = res.data.total
-          } else {
-            this.$message({
-              type: 'error',
-              message: res.message,
-              duration: 3000
-            })
-          }
-        })
-      },
-      search() {
-        this.currentPage = 1;
-        this.pageSize = 10;
-        this.dataList();
-      },
-      load() {
-        this.form = {};
-        this.dialogFormVisible = true;
-      },
+        },
+        methods: {
+            selectAddFn() {
+                if (this.form.clearanceConditions == 1) {
+                    this.form.goldNumber = 0
+                } else {
+                    this.form.friendsNumber = 0
+                    this.form.friendsCheckpointNumber = 0
+                }
+            },
+            queryBtns() {
+                let parameterData = {
+                    menuId: this.menuId
+                }
+                this.$fetch('/api/pMenuBtn/queryBtns', parameterData).then(res => {
+                    if ((res.statusCode + "").startsWith("2")) {
+                        for (let i = res.data.length - 1; i >= 0; i--) {
+                            if (res.data[i].btnCode == 'add') {
+                                this.add = true;
+                            }
+                            if (res.data[i].btnCode == 'upd') {
+                                this.upd = true;
+                                this.optionW = '160px';
+                            }
+                            if (res.data[i].btnCode == 'del') {
+                                this.del = true;
+                                this.optionW = '220px';
+                            }
+                        }
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: res.message,
+                            duration: 3000
+                        })
+                    }
+                })
+            },
+            indexMethod(index) {
+                return index * 1 + 1
+            },
+            dateFormat(row, column) {
+                var date = row[column.property]
+                if (date == undefined) {
+                    return ''
+                }
+                return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
+            },
+            dataList() {
+                let parameterData = {
+                    pageNum: this.currentPage,
+                    pageSize: this.pageSize
+                };
+                // this.$message({
+                // 	type: 'error',
+                // 	message: '接口暂未接通',
+                // 	duration: 3000
+                // })
+                this.$fetch('/py/checkpoint/list', parameterData).then(res => {
+                    if (res) {
+                        this.tableData = res.data;
+                        console.log('sssssssssss', res.data);
+                        // for(let i = res.data.list.length - 1; i >= 0; i--) {
+                        //   if(res.data.list[i].status == '1') {
+                        //     res.data.list[i].status = '是'
+                        //   } else {
+                        //     res.data.list[i].status = '否'
+                        //   }
+                        //   if(res.data.list[i].highVip == '1') {
+                        //     res.data.list[i].highVip = '不是'
+                        //   } else {
+                        //     res.data.list[i].highVip = '是'
+                        //   }
+                        // }
+                        // this.tableData = res.data.list
+                        // this.totalCount = res.data.total
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: res.message,
+                            duration: 3000
+                        })
+                    }
+                })
+            },
+            search() {
+                this.currentPage = 1;
+                this.pageSize = 10;
+                this.dataList();
+            },
+            load() {
+                this.form = {};
+                this.dialogFormVisible = true;
+            },
 
-      addBtn(form) {
+            addBtn(form) {
 
-        this.$refs[form].validate(valid => {
-          if (valid) {
+                this.$refs[form].validate(valid => {
+                    if (valid) {
 
-            if (this.form.clearanceConditions == 1) {
-              if (!this.form.friendsNumber) {
-                this.$message({type: 'error', message: '请输入好友数！'})
-                return
-              }
-              if (!this.form.friendsCheckpointNumber) {
-                this.$message({type: 'error', message: '请输入好友须完成关数！'})
-                return
-              }
-            }
-            if (this.form.clearanceConditions == 0) {
-              if (!this.form.goldNumber) {
-                this.$message({type: 'error', message: '请输入金币数！'})
-                return
-              }
-            }
+                        if (this.form.clearanceConditions == 1) {
+                            if (!this.form.friendsNumber) {
+                                this.$message({type: 'error', message: '请输入好友数！'})
+                                return
+                            }
+                            if (!this.form.friendsCheckpointNumber) {
+                                this.$message({type: 'error', message: '请输入好友须完成关数！'})
+                                return
+                            }
+                        }
+                        if (this.form.clearanceConditions == 0) {
+                            if (!this.form.goldNumber) {
+                                this.$message({type: 'error', message: '请输入金币数！'})
+                                return
+                            }
+                        }
 
-            this.$nextTick(function () {
-              this.isSubmit = true;
-            })
-            this.$postlocal('/py/checkpoint/add', this.form).then(res => {
-              if (res.success == 1) {
-              this.dialogFormVisible = false
-              this.$message({
-                type: 'success',
-                message: '添加成功！'
-              })
-              this.dataList()
-            } else {
-              this.$message({
-                type: 'error',
-                message: res.message
-              })
-                this.isSubmit=false;
-            }
-          })
-          } else {}
-        })
-      },
-      Delete(id) {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        })
-          .then(() => {
-            this.delData(id)
-          })
-          .catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消删除'
-            })
-          })
-      },
-      delData(id) {
-        let parameterData = {
-          id: id
-        }
-        this.$message({
-          type: 'error',
-          message: '接口未接'
-        })
-        //     this.$fetch('/api/mVipInfo/remove', parameterData).then(res => {
-        //       if ((res.statusCode+"").startsWith("2")) {
-        //       this.$message({
-        //         type: 'success',
-        //         message: '删除成功！'
-        //       })
-        //       this.dataList()
-        //     } else {
-        //       this.$message({
-        //         type: 'error',
-        //         message: '删除失败！'
-        //       })
-        //     }
-        //   })
-      },
-      //编辑
-      getInfo(id) {
-        this.$message({
-          type: 'error',
-          message: '接口未接'
-        })
-        // this.$fetch('/api/mVipInfo/queryOne', {
-        //   id: id
-        // }).then(res => {
-        //     if ((res.statusCode + "").startsWith("2")) {
-        //       this.formtwo = res.data;
-        //       this.imageUrl=res.data.logo;
-        //       this.backgroundImg = res.data.backgroundImg;
-        //       this.overdueImg = res.data.overdueImg;
-        //     }
-        // })
-      },
-      //添加
-      update(formtwo) {
-        console.log(this.formtwo)
-        this.$message({
-          type: 'error',
-          message: '接口暂未接通',
-          duration: 3000
-        })
-        return false;
-        this.formtwo.logo = this.imageUrl;
-        this.formtwo.backgroundImg = this.backgroundImg;
-        this.formtwo.overdueImg = this.overdueImg;
-        this.$refs[formtwo].validate(valid => {
-          if (valid) {
-            if (!this.formtwo.logo) {
-              this.$message({type: 'error', message: '请上传logo！'})
-              return
-            }
-            if (!this.formtwo.backgroundImg) {
-              this.$message({type: 'error', message: '请上传背景图！'})
-              return
-            }
+                        this.$nextTick(function () {
+                            this.isSubmit = true;
+                        })
+                        this.$postlocal('/py/checkpoint/add', this.form).then(res => {
+                            if (res.success == 1) {
+                                this.dialogFormVisible = false
+                                this.$message({
+                                    type: 'success',
+                                    message: '添加成功！'
+                                })
+                                this.dataList()
+                            } else {
+                                this.$message({
+                                    type: 'error',
+                                    message: res.message
+                                })
+                                this.isSubmit = false;
+                            }
+                        })
+                    } else {
+                    }
+                })
+            },
+            Delete(id) {
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
+                    center: true
+                })
+                    .then(() => {
+                        this.delData(id)
+                    })
+                    .catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        })
+                    })
+            },
+            delData(id) {
+                let parameterData = {
+                    id: id
+                }
+                this.$message({
+                    type: 'error',
+                    message: '接口未接'
+                })
+                //     this.$fetch('/api/mVipInfo/remove', parameterData).then(res => {
+                //       if ((res.statusCode+"").startsWith("2")) {
+                //       this.$message({
+                //         type: 'success',
+                //         message: '删除成功！'
+                //       })
+                //       this.dataList()
+                //     } else {
+                //       this.$message({
+                //         type: 'error',
+                //         message: '删除失败！'
+                //       })
+                //     }
+                //   })
+            },
+            //编辑
+            getInfo(id) {
+                this.$message({
+                    type: 'error',
+                    message: '接口未接'
+                })
+                // this.$fetch('/api/mVipInfo/queryOne', {
+                //   id: id
+                // }).then(res => {
+                //     if ((res.statusCode + "").startsWith("2")) {
+                //       this.formtwo = res.data;
+                //       this.imageUrl=res.data.logo;
+                //       this.backgroundImg = res.data.backgroundImg;
+                //       this.overdueImg = res.data.overdueImg;
+                //     }
+                // })
+            },
+            //添加
+            update(formtwo) {
+                console.log(this.formtwo)
+                this.$message({
+                    type: 'error',
+                    message: '接口暂未接通',
+                    duration: 3000
+                })
+                return false;
+                this.formtwo.logo = this.imageUrl;
+                this.formtwo.backgroundImg = this.backgroundImg;
+                this.formtwo.overdueImg = this.overdueImg;
+                this.$refs[formtwo].validate(valid => {
+                    if (valid) {
+                        if (!this.formtwo.logo) {
+                            this.$message({type: 'error', message: '请上传logo！'})
+                            return
+                        }
+                        if (!this.formtwo.backgroundImg) {
+                            this.$message({type: 'error', message: '请上传背景图！'})
+                            return
+                        }
 
-            if (!this.formtwo.overdueImg) {
-              this.$message({type: 'error', message: '请上传过期logo！'})
-              return
-            }
+                        if (!this.formtwo.overdueImg) {
+                            this.$message({type: 'error', message: '请上传过期logo！'})
+                            return
+                        }
 
-            this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
-              if ((res.statusCode + "").startsWith("2")) {
-                this.$message({type: 'success', message: '修改成功！'})
-                this.dialogTableVisible = false;
-                this.dataList()
-              } else {
-                this.$message({type: 'error', message: res.message})
-              }
-            })
-          }
-        })
-      },
-      //   getOne(id){
-      //     this.dialogTableDetail = true;
-      //     this.$fetch('/api/mVipInfo/queryOne', {
-      //       id: id
-      //     }).then(res => {
-      //         if ((res.statusCode+"").startsWith("2")) {
-      //           res.data.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss');
-      //           this.formtwoInfo = res.data;
-      //         }
-      //      })
-      //   },
-      handleSizeChange(val) {
-        this.pageSize = val;
-        this.dataList();
-      },
-      handleCurrentChange(val) {
-        this.currentPage = val;
-        this.dataList();
-      },
-    },
+                        this.$post('/api/mVipInfo/modify', this.formtwo).then(res => {
+                            if ((res.statusCode + "").startsWith("2")) {
+                                this.$message({type: 'success', message: '修改成功！'})
+                                this.dialogTableVisible = false;
+                                this.dataList()
+                            } else {
+                                this.$message({type: 'error', message: res.message})
+                            }
+                        })
+                    }
+                })
+            },
+            //   getOne(id){
+            //     this.dialogTableDetail = true;
+            //     this.$fetch('/api/mVipInfo/queryOne', {
+            //       id: id
+            //     }).then(res => {
+            //         if ((res.statusCode+"").startsWith("2")) {
+            //           res.data.createTime = formatDate(new Date(res.data.createTime), 'yyyy-MM-dd hh:mm:sss');
+            //           this.formtwoInfo = res.data;
+            //         }
+            //      })
+            //   },
+            handleSizeChange(val) {
+                this.pageSize = val;
+                this.dataList();
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val;
+                this.dataList();
+            },
+        },
 
-  }
+    }
 </script>
 <style type="text/css">
 

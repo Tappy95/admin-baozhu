@@ -2,7 +2,7 @@
 	<div class="login-main">
 		<div class="login-inner">
 			<div class="login-header">
-				<h2>赚米吧后台管理系统</h2>
+				<h2>麒麟趣玩后台管理系统</h2>
 			</div>
 			<div class="login-content ku">
 				<!--<h3 class="login-dl">后台登录</h3>-->

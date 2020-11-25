@@ -3,7 +3,7 @@
     <div class="vip-manage-inner">
       <div class="vip-manage-header">
         <h3>运营管理/闯关收益</h3>
-        <hr />
+        <hr/>
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -18,129 +18,115 @@
       </div>
       <div class="vip-manage-table">
         <template>
-          <el-table :data="tableData" style="width: 100%" max-height="600"  >
-            <el-table-column fixed="left" label="用户id" type="index" prop="user_id" width='350'>
+          <el-table :data="tableData" style="width: 100%" max-height="600">
+            <el-table-column label="用户id" prop="user_id" width='350'>
             </el-table-column>
-            <el-table-column fixed="left" label="用户姓名" type="index" prop="userName" width='350'>
+
+            <el-table-column label="金额" prop="amount" width='300'>
             </el-table-column>
-            <el-table-column fixed="left" label="金额" type="index" prop="amount" width='300'>
+
+            <el-table-column :formatter="dateFormat" label="获取奖励时间" prop="create_time" width='120'>
             </el-table-column>
           </el-table>
         </template>
 
       </div>
       <div class="block">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 70]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+                       :page-sizes="[10, 20, 50, 70]" :page-size="pageSize"
+                       layout="total, sizes, prev, pager, next, jumper" :total="totalCount">
         </el-pagination>
       </div>
     </div>
   </div>
 
 
-
-
-  
 </template>
 <script type="text/javascript">
-  import { formatDate } from '../../utils/date.js'
-  import { delSession, getSession } from '../../utils/cookie'
-  import BigImg from './BigImg'
-  export default {
-    name: 'CheckpointIncome',
-    data() {
-      return {
-		selectCreateTime:'',
-		dialogTableDetail:false,
-        /* 分页*/
-        currentPage: 1,
-        pageSize: 10,
-        totalCount: 0,
-        formInline: {},
-        tableData: [],
-		isSubmit:false,
-		detailInfo:[1,2,3],
-      }
-    },
-    components: {
-      'big-img': BigImg
-    },
-    created() {
-      this.menuId=this.$route.query.id;
-      this.dataList();
-    },
-    methods: {
-      dateFormat(row, column) {
-        var date = row[column.property]
-        if (date == undefined) {
-          return ''
-        }
-        return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
-      },
-      dataList() {
-        let parameterData = {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          name: this.formInline.name,
-          status: this.formInline.status
-		}
-		this.$message({
-			type: 'error',
-			message: '接口暂未接通',
-			duration: 3000
-		})
-		return false;
-    //     this.$fetch('/api/mVipInfo/list', parameterData).then(res => {
-    //       if ((res.statusCode+"").startsWith("2")) {
-    //       for(let i = res.data.list.length - 1; i >= 0; i--) {
-    //         if(res.data.list[i].status == '1') {
-    //           res.data.list[i].status = '是'
-    //         } else {
-    //           res.data.list[i].status = '否'
-    //         }
-    //         if(res.data.list[i].highVip == '1') {
-    //           res.data.list[i].highVip = '不是'
-    //         } else {
-    //           res.data.list[i].highVip = '是'
-    //         }
-    //       }
-    //       this.tableData = res.data.list
-    //       this.totalCount = res.data.total
-    //     } else {
-    //       this.$message({
-    //         type: 'error',
-    //         message: res.message,
-    //         duration: 3000
-    //       })
-    //     }
-    //   })
-      },
-      search() {
-        this.currentPage = 1;
-        this.pageSize = 10;
-        this.dataList();
-      },
-      
-      handleSizeChange(val) {
-        this.pageSize = val;
-        this.dataList();
-      },
-      handleCurrentChange(val) {
-        this.currentPage = val;
-        this.dataList();
-      },
-    },
+    import {formatDate} from '../../utils/date.js'
+    import {delSession, getSession} from '../../utils/cookie'
+    import BigImg from './BigImg'
 
-  }
+    export default {
+        name: 'CheckpointIncome',
+        data() {
+            return {
+                selectCreateTime: '',
+                dialogTableDetail: false,
+                /* 分页*/
+                currentPage: 1,
+                pageSize: 10,
+                totalCount: 0,
+                formInline: {},
+                tableData: [],
+                isSubmit: false,
+                detailInfo: [1, 2, 3],
+            }
+        },
+        components: {
+            'big-img': BigImg
+        },
+        created() {
+            this.menuId = this.$route.query.id;
+            this.dataList();
+        },
+        methods: {
+            dateFormat(row, column) {
+                var date = row[column.property]
+                if (date == undefined) {
+                    return ''
+                }
+                return formatDate(new Date(date), 'yyyy-MM-dd hh:mm:sss')
+            },
+            dataList() {
+                let parameterData = {
+                    pageNum: this.currentPage,
+                    pageSize: this.pageSize,
+                    name: this.formInline.name,
+                    status: this.formInline.status
+                }
+                this.$fetch('/py/checkpointincome/list', parameterData).then(res => {
+                    if (res) {
+                      this.tableData = res.data;
+                      this.totalCount = res.total;
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: res.message,
+                            duration: 3000
+                        })
+                    }
+                });
+            },
+            search() {
+                this.currentPage = 1;
+                this.pageSize = 10;
+                this.dataList();
+            },
+
+            handleSizeChange(val) {
+                this.pageSize = val;
+                this.dataList();
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val;
+                this.dataList();
+            },
+        },
+
+    }
 </script>
 <style type="text/css">
-  .avatar{
-     width: 148px;
+  .avatar {
+    width: 148px;
     height: 148px;
     display: block;
   }
-  .el-input--suffix .el-input__inner{
+
+  .el-input--suffix .el-input__inner {
     padding-right: 0;
   }
+
   .vip-manage-wrap {
     width: 100%;
   }
@@ -175,9 +161,11 @@
     position: relative;
     overflow: hidden;
   }
+
   .bannerAvatar-uploader .el-upload:hover {
     border-color: #409eff;
   }
+
   .bannerAvatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
