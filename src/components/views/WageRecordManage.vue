@@ -2,7 +2,7 @@
   <div class="vip-manage-wrap">
     <div class="vip-manage-inner">
       <div class="vip-manage-header">
-        <h3>运营管理/闯关记录</h3>
+        <h3>运营管理/每日工资记录</h3>
         <hr/>
       </div>
       <div>
@@ -13,38 +13,28 @@
           <!-- <el-form-item label="用户姓名:">
             <el-input v-model="formInline.realName" placeholder="请输入用户姓名" clearable></el-input>
           </el-form-item> -->
-          <el-form-item label="关卡数:">
-            <el-input v-model="formInline.checkpoint_number" placeholder="请输入关卡数" clearable></el-input>
+          <el-form-item label="工资等级:">
+            <el-input v-model="formInline.wage_level" placeholder="工资等级" clearable></el-input>
           </el-form-item>
-          <el-form-item label="关卡状态" prop="state">
+          <el-form-item label="任务状态" prop="status">
             <el-select v-model="formInline.status" style="width:90%;">
               <el-option label="请选择" value=""></el-option>
-              <el-option label="未接取" value="0"></el-option>
-              <el-option label="闯关中" value="1"></el-option>
-              <el-option label="已过关" value="2"></el-option>
+<!--              <el-option label="未接取" value="0"></el-option>-->
+              <el-option label="已接取" value="1"></el-option>
+              <el-option label="已结算" value="2"></el-option>
+              <el-option label="已提现" value="3"></el-option>
             </el-select>
           </el-form-item>
 
 
-          <el-form-item label="闯关时间:">
+          <el-form-item label="任务开始时间:">
             <el-date-picker
               v-model="selectCreateTime"
               type="datetimerange"
               :picker-options="pickerOptions"
               range-separator="至"
-              start-placeholder="闯关时间"
-              end-placeholder="闯关时间"
-              align="left">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="闯关完成时间:">
-            <el-date-picker
-              v-model="selectEndTime"
-              type="datetimerange"
-              :picker-options="pickerOptions"
-              range-separator="至"
-              start-placeholder="闯关完成时间"
-              end-placeholder="闯关完成时间"
+              start-placeholder="任务时间"
+              end-placeholder="任务时间"
               align="left">
             </el-date-picker>
           </el-form-item>
@@ -59,30 +49,22 @@
             <el-table-column fixed="left" label="用户id" prop="account_id" width='120'>
             </el-table-column>
 
-            <el-table-column label="关卡数" prop="checkpoint_number" width='120'>
+            <el-table-column label="工资等级" prop="wage_level" width='120'>
             </el-table-column>
-            <el-table-column label="当前关已获得金币数" prop="current_coin" width='120'>
+            <el-table-column label="当前关已完成游戏数" prop="current_game" width='120'>
             </el-table-column>
-            <el-table-column label="当前关已完成游戏数" prop="current_games" width='120'>
+            <el-table-column label="当前关已完成视频数" prop="current_video" width='120'>
             </el-table-column>
-            <el-table-column label="当前关已邀请过关人数" prop="current_invite" width='120'>
-            </el-table-column>
-            <el-table-column label="当前关邀请人总过关数" prop="current_points" width='120'>
-            </el-table-column>
-            <el-table-column label="当前关已完成视频数" prop="current_videos" width='120'>
-            </el-table-column>
-            <el-table-column label="过关奖励" prop="reward_amount" width='120'>
+            <el-table-column label="过关奖励" prop="reward" width='120'>
             </el-table-column>
             <el-table-column min-width="170" label="状态">
               <template slot-scope="scope">
-                <span class="red" v-if="scope.row.state==0">未接取</span>
-                <span class="yellow" v-if="scope.row.state==1">闯关中</span>
-                <span class="green" v-if="scope.row.state==2">已过关</span>
+                <span class="red" v-if="scope.row.status==1">已接取</span>
+                <span class="yellow" v-if="scope.row.status==2">已结算</span>
+                <span class="green" v-if="scope.row.status==3">已提现</span>
               </template>
             </el-table-column>
-            <el-table-column :formatter="dateFormat" fixed="right" label="闯关开始时间" prop="create_time" width='120'>
-            </el-table-column>
-            <el-table-column :formatter="dateFormat" label="闯关完成时间" prop="end_time" width='120'>
+            <el-table-column :formatter="dateFormat" fixed="right" label="任务开始时间" prop="update_time" width='120'>
             </el-table-column>
 <!--            <el-table-column fixed="right" label="操作" :width="optionW">-->
 <!--              <template slot-scope="scope">-->
@@ -185,14 +167,12 @@
                     name: this.formInline.name,
                     status: this.formInline.status,
                     user_id: this.formInline.user_id,
-                    checkpoint_number: this.formInline.checkpoint_number,
+                    wage_level: this.formInline.wage_level,
                     start_create_time: new Date(this.selectCreateTime[0]).getTime()||null,
-                    end_create_time: new Date(this.selectCreateTime[1]).getTime()||null,
-                    start_end_time: new Date(this.selectEndTime[0]).getTime()||null,
-                    end_end_time: new Date(this.selectEndTime[1]).getTime()||null,
+                    end_create_time: new Date(this.selectCreateTime[1]).getTime()||null
                 };
                 console.log(parameterData);
-                this.$fetch('/py/checkpointrecord/list', parameterData).then(res => {
+                this.$fetch('/py/wagerecord/list', parameterData).then(res => {
                     if (res) {
                         this.tableData = res.data;
                         this.totalCount = res.total;

@@ -2,13 +2,13 @@
   <div class="vip-manage-wrap">
     <div class="vip-manage-inner">
       <div class="vip-manage-header">
-        <h3>运营管理/闯关管理</h3>
+        <h3>运营管理/每日工资任务管理</h3>
         <hr/>
       </div>
       <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="关卡数:">
-            <el-input v-model="formInline.name" placeholder="请输入关卡数" clearable></el-input>
+          <el-form-item label="工资等级:">
+            <el-input v-model="formInline.wage_level" placeholder="请输入工资等级" clearable></el-input>
           </el-form-item>
           <el-button type="primary" plain @click="search()">查询</el-button>
 <!--          <el-button type="success" plain v-if="add" @click="load()">添加</el-button>-->
@@ -17,10 +17,10 @@
       <div class="vip-manage-table">
         <template>
           <el-table :data="tableData" style="width: 100%" max-height="600">
-            <el-table-column fixed="left" label="关卡数" type="index" :index="indexMethod" prop="checkpoint_number"
+            <el-table-column label="工资等级" :index="indexMethod" prop="wage_level"
                              width='120'>
             </el-table-column>
-            <el-table-column fixed="left" label="过关奖励" prop="reward_amount" width='120'>
+            <el-table-column label="工资奖励" prop="reward" width='120'>
             </el-table-column>
 <!--            <el-table-column label="过关条件" min-width="120px">-->
 <!--              <template slot-scope="scope">-->
@@ -28,28 +28,20 @@
 <!--                <span class="yellow" v-if="scope.row.clearance_conditions==1">邀请好友</span>-->
 <!--              </template>-->
 <!--            </el-table-column>-->
-            <el-table-column min-width="170px" prop="gold_number" label="指标金币数">
+            <el-table-column min-width="170px" prop="game_number" label="游戏任务数">
             </el-table-column>
-            <el-table-column min-width="170px" prop="friends_number" label="指标好友数">
+            <el-table-column min-width="170px" prop="video_number" label="视频数">
             </el-table-column>
-            <el-table-column min-width="170px" prop="friends_checkpoint_number" label="好友须完成关数">
+            <el-table-column min-width="170px" prop="wage_info" label="任务说明">
             </el-table-column>
-            <el-table-column min-width="170px" prop="game_number" label="指标游戏任务数">
+            <el-table-column :formatter="dateFormat" prop="update_time" min-width="170" label="更新时间">
             </el-table-column>
-            <el-table-column min-width="170px" prop="video_number" label="指标视频数">
-            </el-table-column>
-            <el-table-column min-width="170px" prop="task_info" label="任务说明">
-            </el-table-column>
-            <el-table-column min-width="170px" prop="friends_checkpoint_number" label="好友须完成关数">
-            </el-table-column>
-            <el-table-column :formatter="dateFormat" prop="create_time" min-width="170" label="创建时间">
-            </el-table-column>
-            <el-table-column min-width="170" label="状态">
-              <template slot-scope="scope">
-                <span class="green" v-if="scope.row.state==0">关闭</span>
-                <span class="yellow" v-if="scope.row.state==1">开启</span>
-              </template>
-            </el-table-column>
+<!--            <el-table-column min-width="170" label="状态">-->
+<!--              <template slot-scope="scope">-->
+<!--                <span class="green" v-if="scope.row.state==0">关闭</span>-->
+<!--                <span class="yellow" v-if="scope.row.state==1">开启</span>-->
+<!--              </template>-->
+<!--            </el-table-column>-->
             <el-table-column fixed="right" label="操作" :width="optionW">
               <template slot-scope="scope">
                 <!-- <el-button type="info" plain @click="getOne(scope.row.id)" size="mini">详情</el-button> -->
@@ -268,14 +260,15 @@
             dataList() {
                 let parameterData = {
                     pageNum: this.currentPage,
-                    pageSize: this.pageSize
+                    pageSize: this.pageSize,
+                    wage_level: this.formInline.wage_level
                 };
                 // this.$message({
                 // 	type: 'error',
                 // 	message: '接口暂未接通',
                 // 	duration: 3000
                 // })
-                this.$fetch('/py/checkpoint/list', parameterData).then(res => {
+                this.$fetch('/py/wagelevel/list', parameterData).then(res => {
                     if (res) {
                         this.tableData = res.data;
                         console.log('sssssssssss', res.data);

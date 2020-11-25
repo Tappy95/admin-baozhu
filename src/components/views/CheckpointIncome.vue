@@ -19,13 +19,13 @@
       <div class="vip-manage-table">
         <template>
           <el-table :data="tableData" style="width: 100%" max-height="600">
-            <el-table-column label="用户id" prop="user_id" width='350'>
+            <el-table-column label="用户id" prop="account_id" width='350'>
             </el-table-column>
 
             <el-table-column label="金额" prop="amount" width='300'>
             </el-table-column>
 
-            <el-table-column :formatter="dateFormat" label="获取奖励时间" prop="create_time" width='120'>
+            <el-table-column :formatter="dateFormat" label="获取奖励时间" prop="create_time" width='300'>
             </el-table-column>
           </el-table>
         </template>
@@ -83,7 +83,9 @@
                     pageNum: this.currentPage,
                     pageSize: this.pageSize,
                     name: this.formInline.name,
-                    status: this.formInline.status
+                    status: this.formInline.status,
+                    account_id: this.formInline.user_id,
+                    user_name: this.formInline.realName
                 }
                 this.$fetch('/py/checkpointincome/list', parameterData).then(res => {
                     if (res) {

@@ -192,7 +192,19 @@ const routes = [
         path: 'checkpoint-income-change',
         name: 'CheckpointIncomeChange',
         component: resolve => require(['../components/views/CheckpointIncomeChange.vue'], resolve),
-        meta: { title: '收益转余额'}
+        meta: {title: '收益转余额'}
+      },
+      {
+        path: 'WageLevel-Manage',
+        name: 'WageLevelManage',
+        component: resolve => require(['../components/views/WageLevelManage.vue'], resolve),
+        meta: { title: '每日工资任务管理'}
+      },
+      {
+        path: 'WageRecord-Manage',
+        name: 'WageRecordManage',
+        component: resolve => require(['../components/views/WageRecordManage.vue'], resolve),
+        meta: { title: '每日工资任务记录'}
       },
       {
         path: 'pig-change',
